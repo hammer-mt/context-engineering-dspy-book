@@ -1,0 +1,8 @@
+dspy==3.0.3
+python-dotenv
+pandas
+mlflow
+tqdm
+openai
+ipykernel
+
