@@ -19,3 +19,8 @@ gepa
 beautifulsoup4
 pillow
 playwright
+
+# Ch 5 evaluation-metric deps
+levenshtein
+nltk
+rouge
