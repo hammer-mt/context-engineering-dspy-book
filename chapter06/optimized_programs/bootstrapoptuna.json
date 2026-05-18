@@ -1,0 +1,18 @@
+{
+  "name": "bootstrapoptuna",
+  "predictors": [
+    {
+      "name": "detect.predict",
+      "signature": "StringSignature(text -> reasoning, is_ai\n    instructions='Detects whether text is AI-generated.'\n    text = Field(annotation=str required=True description='The text to analyze' json_schema_extra={'__dspy_field_type': 'input', 'desc': 'The text to analyze', 'prefix': 'Text:'})\n    reasoning = Field(annotation=str required=True json_schema_extra={'prefix': \"Reasoning: Let's think step by step in order to\", 'desc': '${reasoning}', '__dspy_field_type': 'output'})\n    is_ai = Field(annotation=bool required=True description='Whether the text is AI-generated' json_schema_extra={'__dspy_field_type': 'output', 'desc': 'Whether the text is AI-generated', 'prefix': 'Is Ai:'})\n)",
+      "instructions": "Detects whether text is AI-generated.",
+      "demos": [
+        {
+          "augmented": true,
+          "text": "The time I sent an email to the wrong person lives rent free in my memory and keeps me double-checking addresses now.",
+          "reasoning": "The text reflects a personal anecdote with emotional depth and a relatable experience, suggesting a human perspective. The conversational style and specific details enhance its authenticity, making it unlikely to be AI-generated.",
+          "is_ai": false
+        }
+      ]
+    }
+  ]
+}

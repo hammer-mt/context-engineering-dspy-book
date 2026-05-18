@@ -1,0 +1,32 @@
+{
+  "name": "labeledfewshot",
+  "predictors": [
+    {
+      "name": "detect.predict",
+      "signature": "StringSignature(text -> reasoning, is_ai\n    instructions='Detects whether text is AI-generated.'\n    text = Field(annotation=str required=True description='The text to analyze' json_schema_extra={'__dspy_field_type': 'input', 'desc': 'The text to analyze', 'prefix': 'Text:'})\n    reasoning = Field(annotation=str required=True json_schema_extra={'prefix': \"Reasoning: Let's think step by step in order to\", 'desc': '${reasoning}', '__dspy_field_type': 'output'})\n    is_ai = Field(annotation=bool required=True description='Whether the text is AI-generated' json_schema_extra={'__dspy_field_type': 'output', 'desc': 'Whether the text is AI-generated', 'prefix': 'Is Ai:'})\n)",
+      "instructions": "Detects whether text is AI-generated.",
+      "demos": [
+        {
+          "text": "I followed the recipe exactly and still ended up with something that looked like it lost a fight with the oven.",
+          "is_ai": false,
+          "notes": "Human: vivid, humorous description of failure."
+        },
+        {
+          "text": "My first talk was in front of ten people, and my hands still shook like I was on stage in a stadium.",
+          "is_ai": false,
+          "notes": "Human: fear exaggerated through simile."
+        },
+        {
+          "text": "I tell myself I am only checking one notification and end up in a maze of random feeds before I blink twice.",
+          "is_ai": false,
+          "notes": "Human: abstracted feeling of getting lost, casual voice."
+        },
+        {
+          "text": "We made a chore chart and then ignored it for three weeks until the sink reminded us what we skipped.",
+          "is_ai": false,
+          "notes": "Human: chore chart failure and personified sink."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,96 @@
+{
+  "name": "inferrules",
+  "predictors": [
+    {
+      "name": "detect.predict",
+      "signature": "StringSignature(text -> reasoning, is_ai\n    instructions='Detects whether text is AI-generated.\\n\\nPlease adhere to the following rules when making your prediction:\\n1. Text that contains structured information, general advice, or universally applicable statements tends to be classified as AI-generated (is_ai: True).\\n2. Text that presents as personal anecdotes or stories, using first-person narratives or casual language, is often classified as human-written (is_ai: False).\\n3. Sentences that provide structured steps, clear tips, or professional advice are usually marked as AI-generated.\\n4. Text featuring informal language, humor, or subjective opinions is typically categorized as human-generated.\\n5. Statements containing abstract, high-level discussions about processes, concepts, or systems are usually identified as AI-generated.'\n    text = Field(annotation=str required=True description='The text to analyze' json_schema_extra={'__dspy_field_type': 'input', 'desc': 'The text to analyze', 'prefix': 'Text:'})\n    reasoning = Field(annotation=str required=True json_schema_extra={'prefix': \"Reasoning: Let's think step by step in order to\", 'desc': '${reasoning}', '__dspy_field_type': 'output'})\n    is_ai = Field(annotation=bool required=True description='Whether the text is AI-generated' json_schema_extra={'__dspy_field_type': 'output', 'desc': 'Whether the text is AI-generated', 'prefix': 'Is Ai:'})\n)",
+      "instructions": "Detects whether text is AI-generated.\n\nPlease adhere to the following rules when making your prediction:\n1. Text that contains structured information, general advice, or universally applicable statements tends to be classified as AI-generated (is_ai: True).\n2. Text that presents as personal anecdotes or stories, using first-person narratives or casual language, is often classified as human-written (is_ai: False).\n3. Sentences that provide structured steps, clear tips, or professional advice are usually marked as AI-generated.\n4. Text featuring informal language, humor, or subjective opinions is typically categorized as human-generated.\n5. Statements containing abstract, high-level discussions about processes, concepts, or systems are usually identified as AI-generated.",
+      "demos": [
+        {
+          "augmented": true,
+          "text": "Online arguments often generate more heat than understanding when people focus on winning instead of listening.",
+          "reasoning": "The statement observes a common issue with online arguments, delivering it in a neutral tone. This type of generalized statement about human behavior and the dynamics of online interaction often appears in AI-generated content. It lacks personal anecdote, specific opinions, or unique personality that might suggest a human writer's touch.",
+          "is_ai": true
+        },
+        {
+          "augmented": true,
+          "text": "The time I sent an email to the wrong person lives rent free in my memory and keeps me double-checking addresses now.",
+          "reasoning": "The text reflects a personal anecdote and contains emotional language indicating a touch of humor and a personal style. It describes a specific, relatable experience with a memorable impact, which suggests it was likely written by a human.",
+          "is_ai": false
+        },
+        {
+          "augmented": true,
+          "text": "My kid asked why I have screen rules for them but still scroll on my phone at night, and I did not have a good answer.",
+          "reasoning": "The text describes a personal and relatable parenting scenario with humor and introspection. The narrative style, personal reflection, and touch of humor indicate that it is likely written by a human, as AI-generated text tends to be more formal and lacks personal anecdotes.",
+          "is_ai": false
+        },
+        {
+          "augmented": true,
+          "text": "If I do not put something on my calendar the moment I hear about it, there is a good chance I forget it existed.",
+          "reasoning": "The text demonstrates a personal anecdote with a tone typical of human-like speech patterns, including a hint of humor and relatability regarding forgetfulness and reliance on calendars, which suggests it is not AI-generated. The phrasing is casual with a focus on personal habits, often seen in human storytelling.",
+          "is_ai": false
+        },
+        {
+          "text": "Perfectionism can keep people from finishing projects by encouraging endless revisions and self-criticism.",
+          "is_ai": true,
+          "notes": "AI: broad critique of perfectionism."
+        },
+        {
+          "text": "Finding the right mix of solo focus time and collaborative sessions allows people to work efficiently while still sharing ideas.",
+          "is_ai": true,
+          "notes": "AI: aspirational balance statement."
+        },
+        {
+          "text": "Constructive feedback, delivered with clarity and respect, can accelerate skill development and improve team performance.",
+          "is_ai": true,
+          "notes": "AI: standard management phrase with motivational tone."
+        },
+        {
+          "text": "My budget is a spreadsheet I open when I am scared I spent too much, not a thing I follow day to day.",
+          "is_ai": false,
+          "notes": "Human: honest admission of sporadic use."
+        },
+        {
+          "text": "Online education has expanded access to learning while also raising questions about motivation, focus, and accountability.",
+          "is_ai": true,
+          "notes": "AI: balanced framing with abstract nouns."
+        },
+        {
+          "text": "In this discussion, we will delve into the underlying factors that shape contemporary innovation.",
+          "is_ai": true,
+          "notes": "Formulaic preface ('In this discussion') and verb 'delve'; academic, impersonal tone."
+        },
+        {
+          "text": "I tell myself I am going to sleep, then end up scrolling nonsense for an hour with the screen right in my face.",
+          "is_ai": false,
+          "notes": "Human: specific bedtime habit, casual 'nonsense', and sensory detail."
+        },
+        {
+          "text": "The interview I got was the one where I admitted I had to search half the jargon in the job ad.",
+          "is_ai": false,
+          "notes": "Human: surprising outcome and self-deprecating honesty."
+        },
+        {
+          "text": "Intentional career planning includes reflecting on strengths, exploring paths, and trying small steps in new directions.",
+          "is_ai": true,
+          "notes": "AI: career advice with introspective language."
+        },
+        {
+          "text": "When I write down three things that did not go wrong before bed, my day feels calmer in hindsight.",
+          "is_ai": false,
+          "notes": "Human: quirky twist on gratitude and personal effect."
+        },
+        {
+          "text": "Effective scheduling requires prioritizing tasks, allocating realistic time blocks, and adjusting plans as conditions change.",
+          "is_ai": true,
+          "notes": "AI: planning language with abstract 'conditions'."
+        },
+        {
+          "text": "Learning to code typically involves persistent practice, careful debugging, and a willingness to learn from mistakes.",
+          "is_ai": true,
+          "notes": "AI: generic guidance using abstract nouns like 'practice' and 'willingness'."
+        }
+      ]
+    }
+  ]
+}
