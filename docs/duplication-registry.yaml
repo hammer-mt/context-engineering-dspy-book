@@ -1,0 +1,37 @@
+# Cross-notebook inline-copy registry.
+#
+# When a class, signature, or module is defined in one notebook and re-defined
+# inline in another, list the canonical source and every duplicate location
+# here. A simple grep+diff over these entries detects drift.
+#
+# Format:
+#   - symbol: <class-or-function-name>
+#     canonical: <path-to-canonical-notebook>
+#     duplicates:
+#       - <path-to-notebook-with-inline-copy>
+
+duplications:
+  - symbol: MarkdownAdapter
+    canonical: chapter07/adapters.ipynb
+    duplicates:
+      - chapter11/fastapi-invoice-api.ipynb
+
+  - symbol: SentimentClassifier
+    canonical: chapter09/sentiment-classifier.ipynb
+    duplicates:
+      - chapter11/mlflow-tracking.ipynb
+
+  - symbol: InvoiceExtraction
+    canonical: chapter09/invoice-extraction.ipynb
+    duplicates:
+      - chapter11/fastapi-invoice-api.ipynb
+
+  - symbol: MajorityVotingExtractor
+    canonical: chapter09/invoice-extraction.ipynb
+    duplicates:
+      - chapter11/fastapi-invoice-api.ipynb
+
+  - symbol: FIELD_KEYS
+    canonical: chapter09/invoice-extraction.ipynb
+    duplicates:
+      - chapter11/fastapi-invoice-api.ipynb
