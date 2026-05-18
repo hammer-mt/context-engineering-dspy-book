@@ -8,23 +8,21 @@ Companion code for **Context Engineering with DSPy** (O'Reilly).
 
 ## Chapter coverage
 
-This repo currently covers **7 of 11 chapters** — the ones with notebooks the author has already finished. The remaining four (Ch 1, 4, 5, 7, 8, 11) are tracked separately and are coming soon.
+| Chapter | Notebook(s) |
+|---|---|
+| Ch 1 — Introduction to Context Engineering | `chapter01/hello-dspy.ipynb` |
+| Ch 2 — Introduction to DSPy | `chapter02/dspy-quickstart.ipynb`, `chapter02/formatted_prompt.ipynb`, `chapter02/dspy-tour.ipynb` |
+| Ch 3 — DSPy in 8 Steps | `chapter03/dspy-in-8-steps.ipynb`, `chapter03/humanize-quickstart.ipynb` |
+| Ch 4 — Strategies for Collecting Datasets | `chapter04/` — 5 notebooks (error analysis, HF, Kaggle, synthetic, PII) |
+| Ch 5 — Formalizing Evaluation Metrics | `chapter05/` — 5 notebooks (string/regex, semantic, BLEU/ROUGE/F1, human+LLM judge, rubric+multi-predictor) |
+| Ch 6 — Deepdive into Prompt Optimizers | `chapter06/` — 9 notebooks (benchmark + per-optimizer satellites) |
+| Ch 7 — Customizing DSPy Programs | `chapter07/` — 8 notebooks (modules, ReAct, PoT/CodeAct/RLM, multi-stage, parallel, multimodal, adapters) |
+| Ch 8 — Building AI Agents | `chapter08/` — 7 notebooks (ReAct basics, framework comparison, MCP, RAG in-memory, RAG Qdrant, web search + multi-hop, history/Mem0/RLM) |
+| Ch 9 — Real-World Use Cases | `chapter09/` — 7 notebooks (one per use case) |
+| Ch 10 — Optimizing Coding Agents with DSPy | `chapter10/` — 8 notebooks (long-prompt, §10.4 skill optimizers, landing-page + image-cli optimizers) |
+| Ch 11 — Getting Ready for Production | `chapter11/` — 3 notebooks (MLflow tracking, FastAPI invoice API, Gradio DSPyUI) |
 
-| Chapter | Notebook(s) | Status |
-|---|---|---|
-| Ch 1 — Introduction to Context Engineering | — | coming soon |
-| Ch 2 — Introduction to DSPy | `chapter02/dspy-quickstart.ipynb`, `chapter02/formatted_prompt.ipynb` | ready |
-| Ch 3 — DSPy in 8 Steps | `chapter03/dspy-in-8-steps.ipynb`, `chapter03/humanize-quickstart.ipynb` | ready |
-| Ch 4 — Strategies for Collecting Datasets | — | coming soon |
-| Ch 5 — Formalizing Evaluation Metrics | — | coming soon |
-| Ch 6 — Deepdive into Prompt Optimizers | `chapter06/` (9 notebooks: benchmark + per-optimizer satellites) | ready |
-| Ch 7 — Customizing DSPy Programs | — | coming soon |
-| Ch 8 — Building AI Agents | — | coming soon |
-| Ch 9 — Real-World Use Cases | `chapter09/` (7 notebooks, one per use case) | ready |
-| Ch 10 — Optimizing Coding Agents with DSPy | `chapter10/` (6 notebooks for §10.3.4 + §10.4; §10.2 + §10.3 coming soon) | partial |
-| Ch 11 — Getting Ready for Production | — | coming soon |
-
-> **Heads up — Chapter 10 path references.** The printed book occasionally references these Ch 10 notebooks as `working/<filename>.ipynb` (from the author's draft repo). In this repo they live at `chapter10/<filename>.ipynb`. The mapping is in [the Ch 10 reference table below](#chapter-10--book-path-mapping).
+> **Heads up — Chapter 10 path references.** The printed book occasionally references Ch 10 notebooks as `working/<filename>.ipynb` (from the author's draft repo). In this repo they live at `chapter10/<filename>.ipynb`. The mapping is in [the Ch 10 reference table below](#chapter-10--book-path-mapping).
 
 ## Setup
 
@@ -52,18 +50,20 @@ source .venv/bin/activate    # Windows: .\.venv\Scripts\activate
 uv pip install -r requirements.txt
 ```
 
+A few notebooks need additional dependencies (LangGraph, CrewAI, Mem0, Qdrant client, MCP, Redis, Gradio, MLflow MCP extras). Those install at the top of their own notebook so the default install stays small.
+
 ### Environment variables
 
 Copy `.env.example` to `.env` and fill in your API keys. The book uses these:
 
 | Variable | Required for |
 |---|---|
-| `OPENAI_API_KEY` | Most notebooks (Ch 2, 3, 6, 9, 10) |
-| `ANTHROPIC_API_KEY` | Provider-switch demos (Ch 2) + several Ch 10 notebooks |
-| `OPENROUTER_API_KEY` | Ch 10 §10.4 notebooks (clawsona, skill-discovery, etc. — they call `openrouter/anthropic/claude-opus-4.7`) |
+| `OPENAI_API_KEY` | Most notebooks (Ch 1–11 setup) |
+| `ANTHROPIC_API_KEY` | Provider-switch demos (Ch 2), several Ch 10 notebooks, Anthropic prompt-cache examples in Ch 11 |
+| `OPENROUTER_API_KEY` | Ch 10 §10.4 notebooks (call `openrouter/anthropic/claude-opus-4.7`) |
 | `GOOGLE_API_KEY` | Optional — Gemini provider-switch demos |
 | `FAL_KEY` | Ch 9 §9.5 (fashion video generator) only |
-| `SERPER_API_KEY` | Ch 9 §9.4 (news researcher) only |
+| `SERPER_API_KEY` | Ch 8 web search; Ch 9 §9.4 news researcher |
 
 `.env` is gitignored. You should never commit it.
 
@@ -83,10 +83,15 @@ A few chapters need an extra service running locally. All commands below use loo
 
 | Service | Chapter | Setup |
 |---|---|---|
-| MLflow | Ch 3 (optional tracing) | `mlflow server --backend-store-uri sqlite:///mydb.sqlite --host 127.0.0.1 --port 5000` |
+| MLflow | Ch 3 (optional tracing), Ch 11 §11.1 | `mlflow server --backend-store-uri sqlite:///mydb.sqlite --host 127.0.0.1 --port 5000` |
+| Qdrant | Ch 8 RAG variant | `docker run --rm -p 127.0.0.1:6333:6333 qdrant/qdrant` |
+| Redis | Ch 11 §11.2 cache variant | `docker run --rm -p 127.0.0.1:6379:6379 redis:alpine` |
 | Arbor | Ch 6 §6.3.3 GRPO only | See [Arbor docs](https://github.com/Ziems/arbor); GPU required |
-| Deno | Ch 9 §9.7 financial analyst (PoT mode only) | `curl -fsSL https://deno.land/install.sh \| sh` |
-| GPU (CUDA / MPS) | Ch 6 fine-tuning notebooks | Local NVIDIA GPU for `grpo.ipynb`/`better-together.ipynb`; MPS for `finetune-mac-m3.ipynb` |
+| Deno | Ch 7 §7.1.7–7.1.8 (PoT, CodeAct); Ch 9 §9.7 financial analyst PoT mode | `curl -fsSL https://deno.land/install.sh \| sh` |
+| MCP server | Ch 8 §8.2.5 MCP integration | Reader-provided. See https://modelcontextprotocol.io |
+| Playwright browsers | Ch 10 landing-page optimizer | `playwright install` |
+| Claude Code CLI | Ch 10 landing-page + image-CLI optimizers | https://docs.claude.com/en/docs/claude-code |
+| GPU (CUDA / MPS) | Ch 6 fine-tuning notebooks | NVIDIA GPU for `grpo.ipynb`/`better-together.ipynb`; MPS for `finetune-mac-m3.ipynb` |
 
 The model slugs in notebooks (e.g., `openai/gpt-5-mini`, `openai/gpt-5.5-pro`, `anthropic/claude-opus-4.7`, `gemini/gemini-2.5-flash`) are preserved verbatim from the book. Use the slugs as-is.
 
@@ -98,16 +103,23 @@ Each notebook is self-contained. From the repo root:
 jupyter lab
 ```
 
-Open the chapter directory, pick a notebook, run the first install cell (`%pip install -r ../requirements.txt -q`), then run cells top-to-bottom. Heavy optimizer or agent notebooks ship with smoke-test budget caps in their default cells — full reproduction cells are commented as opt-in so you don't accidentally burn through API budget.
+Open a chapter directory, pick a notebook, run the first install cell (`%pip install -r ../requirements.txt -q`), then run cells top-to-bottom. Heavy optimizer or agent notebooks ship with smoke-test budget caps in their default cells — full reproduction cells are commented as opt-in so you don't accidentally burn through API budget.
 
 Approximate per-chapter LLM spend if you run every notebook end-to-end with default smoke caps:
 
 | Chapter | Estimated cost |
 |---|---|
+| Ch 1 | under $0.10 |
+| Ch 2 tour | $0.30–0.80 |
 | Ch 3 | $0.20–0.50 |
-| Ch 6 | $2–5 (heavy with full optimizer runs; smoke caps keep it under $5) |
+| Ch 4 | $0.30–1.00 (HF + synthetic generation) |
+| Ch 5 | $0.30–1.00 (judge training is the heaviest) |
+| Ch 6 | $2–5 with smoke caps; full optimizer runs can hit $10+ if opted in |
+| Ch 7 | $0.50–2.00 |
+| Ch 8 | $1–3 (framework comparison + multi-hop agents) |
 | Ch 9 | $0.50–1.50 (depends on which use cases you run) |
-| Ch 10 | $1–3 (smoke caps; full GEPA runs can run $10+ per notebook if opted in) |
+| Ch 10 | $1–3 with smoke caps; full GEPA runs can run $10+ per notebook if opted in |
+| Ch 11 | $0.30–1.00 |
 
 ## Chapter 10 — book path mapping
 
@@ -130,6 +142,7 @@ Bug reports, fixes, and improvements welcome. Before opening a PR:
 - Clear notebook outputs (see Security note above).
 - Match the existing notebook conventions (top markdown cell linking to chapter section, `%pip install -r ../requirements.txt -q` first cell, env-var documentation).
 - Keep model slugs verbatim — never silently substitute one slug for another.
+- If you change a class or signature that's duplicated across notebooks (see `docs/duplication-registry.yaml`), update every copy.
 
 ## License
 
