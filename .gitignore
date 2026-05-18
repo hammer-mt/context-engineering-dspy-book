@@ -205,3 +205,14 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+
+# Book-companion runtime artifacts (regenerable; do not ship)
+mlruns/
+finetuned_models/
+sft_finetune_output/
+optimized_programs/*.pkl
+
+# Per-chapter local outputs / caches
+chapter*/.ipynb_checkpoints/
+chapter*/__pycache__/
+

@@ -1,8 +1,21 @@
-dspy==3.0.3
+dspy==3.2.1
 python-dotenv
 pandas
+numpy
 mlflow
 tqdm
-openai
 ipykernel
 
+# LLM providers
+openai
+anthropic
+google-generativeai
+fal-client
+
+# Optimizers / agents
+gepa
+
+# Ch 9 / Ch 10 supporting deps
+beautifulsoup4
+pillow
+playwright
