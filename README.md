@@ -19,7 +19,7 @@ Companion code for **Context Engineering with DSPy** (O'Reilly).
 | Ch 7 — Customizing DSPy Programs | `chapter07/` — 8 notebooks (modules, ReAct, PoT/CodeAct/RLM, multi-stage, parallel, multimodal, adapters) |
 | Ch 8 — Building AI Agents | `chapter08/` — 7 notebooks (ReAct basics, framework comparison, MCP, RAG in-memory, RAG Qdrant, web search + multi-hop, history/Mem0/RLM) |
 | Ch 9 — Real-World Use Cases | `chapter09/` — 7 notebooks (one per use case) |
-| Ch 10 — Optimizing Coding Agents with DSPy | `chapter10/` — 8 notebooks (long-prompt, §10.4 skill optimizers, landing-page + image-cli optimizers) |
+| Ch 10 — Optimizing Coding Agents with DSPy | `chapter10/` — 5 notebooks (landing-page skill optimizer, image-CLI optimizer, RLM skill discovery, AGENTS.md testing, Clawsona persona) |
 | Ch 11 — Getting Ready for Production | `chapter11/` — 3 notebooks (MLflow tracking, FastAPI invoice API, Gradio DSPyUI) |
 
 > **Heads up — Chapter 10 path references.** The printed book occasionally references Ch 10 notebooks as `working/<filename>.ipynb` (from the author's draft repo). In this repo they live at `chapter10/<filename>.ipynb`. The mapping is in [the Ch 10 reference table below](#chapter-10--book-path-mapping).
@@ -123,14 +123,12 @@ Approximate per-chapter LLM spend if you run every notebook end-to-end with defa
 
 ## Chapter 10 — book path mapping
 
-The printed book sometimes references Ch 10 §10.4 notebooks at paths like `working/clawsona-dspy.ipynb` (from the author's draft repo). In this companion repo they live under `chapter10/`:
+The printed book references Ch 10 §10.3 notebooks at paths like `working/clawsona-dspy.ipynb` (from the author's draft repo). In this companion repo they live under `chapter10/`:
 
 | Book reference | Repo location |
 |---|---|
 | `working/clawsona-dspy.ipynb` | `chapter10/clawsona-dspy.ipynb` |
 | `working/skill-discovery-rlm.ipynb` | `chapter10/skill-discovery-rlm.ipynb` |
-| `working/cli-generation-skill.ipynb` | `chapter10/cli-generation-skill.ipynb` |
-| `working/optimize-tool-descriptions.ipynb` | `chapter10/optimize-tool-descriptions.ipynb` |
 | `working/test-agents-md.ipynb` | `chapter10/test-agents-md.ipynb` |
 
 The book text will be updated to point at `chapter10/...` in a future printing.
