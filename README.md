@@ -11,7 +11,7 @@ Companion code for **Context Engineering with DSPy** (O'Reilly).
 | Chapter | Notebook(s) |
 |---|---|
 | Ch 1 — Introduction to Context Engineering | `chapter01/hello-dspy.ipynb` |
-| Ch 2 — Introduction to DSPy | `chapter02/dspy-quickstart.ipynb`, `chapter02/formatted_prompt.ipynb`, `chapter02/dspy-tour.ipynb` |
+| Ch 2 — Introduction to DSPy | `chapter02/dspy-tour.ipynb` |
 | Ch 3 — DSPy in 8 Steps | `chapter03/dspy-in-8-steps.ipynb`, `chapter03/humanize-quickstart.ipynb` |
 | Ch 4 — Strategies for Collecting Datasets | `chapter04/` — 5 notebooks (error analysis, HF, Kaggle, synthetic, PII) |
 | Ch 5 — Formalizing Evaluation Metrics | `chapter05/` — 5 notebooks (string/regex, semantic, BLEU/ROUGE/F1, human+LLM judge, rubric+multi-predictor) |
