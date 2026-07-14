@@ -1,0 +1,4 @@
+{
+    "reasoning": "The passage uses compact, domain-specific documentation language and gives concrete function names such as `count()`, `count_distinct()`, `avg()`, `max()`, and `min()`. Its repetition and capitalization (\u201cBuilt-in Aggregation Functions,\u201d \u201cUser Defined Aggregate Functions\u201d) resemble inherited software documentation rather than generalized AI exposition.",
+    "is_ai": false
+}

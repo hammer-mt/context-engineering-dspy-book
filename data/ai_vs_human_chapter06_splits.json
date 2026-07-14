@@ -1,0 +1,54 @@
+{
+  "schema_version": 2,
+  "seed": 42,
+  "split_strategy": "baseline_adversarial_worst_case_repeated",
+  "dataset_path": "data/ai_vs_human_chapter06.csv",
+  "dataset_sha256": "b244dbd980c08add4ceccfa1257dcf107e1a1a4dd208a53069a0431b7c5f1f1e",
+  "row_count": 74,
+  "pair_count": 37,
+  "splits": {
+    "train": [
+      "docs-rails-started-v7.0.0-014",
+      "docs-pytorch-readme-v1.10.0-017",
+      "docs-python-tutorial-v3.10.0-004",
+      "docs-spark-sql-v3.2.0-014",
+      "docs-rails-started-v7.0.0-019",
+      "docs-flask-quickstart-2.0.2-002",
+      "docs-django-queries-4.0-006",
+      "docs-pytorch-readme-v1.10.0-004",
+      "docs-rails-started-v7.0.0-006",
+      "docs-spark-sql-v3.2.0-001",
+      "docs-pytorch-readme-v1.10.0-012",
+      "docs-rails-started-v7.0.0-017",
+      "docs-airflow-dags-2.2.0-015",
+      "docs-rails-started-v7.0.0-003",
+      "docs-spark-sql-v3.2.0-009",
+      "docs-pytorch-readme-v1.10.0-019",
+      "docs-airflow-dags-2.2.0-016",
+      "docs-rails-started-v7.0.0-015"
+    ],
+    "validation": [
+      "docs-spark-sql-v3.2.0-010",
+      "docs-airflow-dags-2.2.0-019",
+      "docs-sklearn-started-1.0-007",
+      "docs-flask-quickstart-2.0.2-010",
+      "docs-flask-quickstart-2.0.2-012",
+      "docs-spark-sql-v3.2.0-006",
+      "docs-airflow-dags-2.2.0-013",
+      "docs-airflow-dags-2.2.0-017",
+      "docs-sklearn-started-1.0-001"
+    ],
+    "test": [
+      "docs-python-tutorial-v3.10.0-005",
+      "docs-numpy-quickstart-v1.21.0-001",
+      "docs-pytorch-readme-v1.10.0-011",
+      "docs-airflow-dags-2.2.0-009",
+      "docs-airflow-dags-2.2.0-010",
+      "docs-django-queries-4.0-020",
+      "docs-flask-quickstart-2.0.2-004",
+      "docs-flask-quickstart-2.0.2-008",
+      "docs-kubernetes-objects-release-1.22-003",
+      "docs-pandas-ten-minutes-v1.3.0-006"
+    ]
+  }
+}

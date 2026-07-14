@@ -1,0 +1,67 @@
+{
+  "status": "completed",
+  "optimizer": "quickstart",
+  "profile": "smoke",
+  "baseline_score": 50.0,
+  "optimized_score": 50.0,
+  "uplift_points": 0.0,
+  "optimization_seconds": 0.0,
+  "baseline_latency": {
+    "count": 4,
+    "mean_seconds": 1.5969924275004814,
+    "median_seconds": 1.4398616255002707,
+    "p50_seconds": 1.4398616255002707,
+    "p95_seconds": 2.243768850052038,
+    "min_seconds": 1.12756783399891,
+    "max_seconds": 2.3806786250024743
+  },
+  "optimized_latency": {
+    "count": 4,
+    "mean_seconds": 1.5969924275004814,
+    "median_seconds": 1.4398616255002707,
+    "p50_seconds": 1.4398616255002707,
+    "p95_seconds": 2.243768850052038,
+    "min_seconds": 1.12756783399891,
+    "max_seconds": 2.3806786250024743
+  },
+  "baseline_usage": {
+    "request_count": 4,
+    "cache_hits": 0,
+    "prompt_tokens": 1005,
+    "completion_tokens": 505,
+    "reasoning_tokens": 228,
+    "total_tokens": 1510,
+    "cost_usd": 0.004035,
+    "models": {
+      "openai/gpt-5.6-luna": {
+        "request_count": 4,
+        "cache_hits": 0,
+        "prompt_tokens": 1005,
+        "completion_tokens": 505,
+        "reasoning_tokens": 228,
+        "total_tokens": 1510,
+        "cost_usd": 0.004035
+      }
+    }
+  },
+  "optimization_usage": {
+    "request_count": 0,
+    "cache_hits": 0,
+    "prompt_tokens": 0,
+    "completion_tokens": 0,
+    "reasoning_tokens": 0,
+    "total_tokens": 0,
+    "cost_usd": 0,
+    "models": {}
+  },
+  "optimized_evaluation_usage": {
+    "request_count": 0,
+    "cache_hits": 0,
+    "prompt_tokens": 0,
+    "completion_tokens": 0,
+    "reasoning_tokens": 0,
+    "total_tokens": 0,
+    "cost_usd": 0,
+    "models": {}
+  }
+}

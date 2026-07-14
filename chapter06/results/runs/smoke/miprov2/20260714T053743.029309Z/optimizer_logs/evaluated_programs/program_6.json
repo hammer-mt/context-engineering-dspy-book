@@ -1,0 +1,55 @@
+{
+  "detect.predict": {
+    "traces": [],
+    "train": [],
+    "demos": [
+      {
+        "augmented": true,
+        "text": "This peculiar Operator bypasses every downstream task unless it belongs to the “latest” DAG run; that is, wall-clock time must fall between its execution_time and the next scheduled execution_time, and the run must not have been triggered externally.",
+        "reasoning": "The passage is a polished, mechanically structured paraphrase with deliberate synonym substitutions such as “bypasses every downstream task” and “triggered externally.” Its wording and punctuation are characteristic of AI-generated reformulation rather than an independently written technical description.",
+        "is_ai": true
+      },
+      {
+        "pair_id": "docs-airflow-dags-2.2.0-017",
+        "example_id": "docs-airflow-dags-2.2.0-017-human",
+        "text": "This special Operator skips all tasks downstream of itself if you are not on the \"latest\" DAG run (if the wall-clock time right now is between its execution_time and the next scheduled execution_time, and it was not an externally-triggered run).",
+        "is_ai": false
+      }
+    ],
+    "signature": {
+      "instructions": "Classify the supplied software-documentation passage as either human-authored or AI-generated, using the stylistic distinctions represented in this dataset.\n\nAnalyze the passage for dataset-relevant signals:\n\n- **Human-authored text (`is_ai: False`)** is often direct, practical, and conventionally phrased. It may contain natural repetition, uneven sentence flow, or slightly cumbersome wording while using technical terminology precisely.\n- **AI-generated text (`is_ai: True`)** is typically a meaning-preserving paraphrase of documentation. It may be smoother, more compressed, or more syntactically polished; explicitly restate relationships; replace ordinary words with conspicuous synonyms; or contain ornate, overly formal, and subtly unnatural phrases.\n\nPay particular attention to unnecessary synonym substitution, polished restructuring, compressed conditionals, explanatory restatement, and wording that sounds like a deliberate paraphrase. Do not classify a passage as AI-generated merely because it is fluent, technical, grammatical, or uses specialized vocabulary. Likewise, do not assume awkwardness alone proves human authorship, since AI paraphrases can introduce unnatural word choices. Judge the overall pattern and choose the most likely dataset label even when the evidence is not definitive.\n\nReturn:\n1. `reasoning`: a concise explanation citing the most relevant wording, structural, fluency, or paraphrasing signals.\n2. `is_ai`: exactly `True` if the passage is likely AI-generated, or `False` if it is likely human-authored.",
+      "fields": [
+        {
+          "prefix": "Text:",
+          "description": "Passage to classify"
+        },
+        {
+          "prefix": "Reasoning:",
+          "description": "${reasoning}"
+        },
+        {
+          "prefix": "Is Ai:",
+          "description": "True for AI-generated text; otherwise False"
+        }
+      ]
+    },
+    "lm": {
+      "model": "openai/gpt-5.6-luna",
+      "model_type": "chat",
+      "cache": false,
+      "num_retries": 2,
+      "finetuning_model": null,
+      "launch_kwargs": {},
+      "train_kwargs": {},
+      "temperature": null,
+      "max_tokens": null
+    }
+  },
+  "metadata": {
+    "dependency_versions": {
+      "python": "3.11",
+      "dspy": "3.2.1",
+      "cloudpickle": "3.1"
+    }
+  }
+}

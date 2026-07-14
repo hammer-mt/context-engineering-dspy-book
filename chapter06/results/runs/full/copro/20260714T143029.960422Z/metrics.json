@@ -1,0 +1,97 @@
+{
+  "status": "completed",
+  "optimizer": "copro",
+  "profile": "full",
+  "baseline_score": 35.0,
+  "optimized_score": 65.0,
+  "uplift_points": 30.0,
+  "optimization_seconds": 979.7942821249999,
+  "baseline_latency": {
+    "count": 20,
+    "mean_seconds": 2.6759446896505326,
+    "median_seconds": 2.4572982085010153,
+    "p50_seconds": 2.4572982085010153,
+    "p95_seconds": 4.567923548250475,
+    "min_seconds": 1.397906875001354,
+    "max_seconds": 5.734478541999124
+  },
+  "optimized_latency": {
+    "count": 20,
+    "mean_seconds": 2.7666146103507345,
+    "median_seconds": 2.657677999999578,
+    "p50_seconds": 2.657677999999578,
+    "p95_seconds": 3.711027656253282,
+    "min_seconds": 1.8384467079958995,
+    "max_seconds": 4.295171375000791
+  },
+  "baseline_usage": {
+    "request_count": 20,
+    "cache_hits": 0,
+    "prompt_tokens": 5200,
+    "completion_tokens": 2731,
+    "reasoning_tokens": 1301,
+    "total_tokens": 7931,
+    "cost_usd": 0.021586,
+    "models": {
+      "openai/gpt-5.6-luna": {
+        "request_count": 20,
+        "cache_hits": 0,
+        "prompt_tokens": 5200,
+        "completion_tokens": 2731,
+        "reasoning_tokens": 1301,
+        "total_tokens": 7931,
+        "cost_usd": 0.021586
+      }
+    }
+  },
+  "optimization_usage": {
+    "request_count": 333,
+    "cache_hits": 0,
+    "prompt_tokens": 132187,
+    "completion_tokens": 57038,
+    "reasoning_tokens": 35805,
+    "total_tokens": 189225,
+    "cost_usd": 0.529635,
+    "models": {
+      "openai/gpt-5.6-sol": {
+        "request_count": 2,
+        "cache_hits": 0,
+        "prompt_tokens": 971,
+        "completion_tokens": 2139,
+        "reasoning_tokens": 899,
+        "total_tokens": 3110,
+        "cost_usd": 0.069025
+      },
+      "openai/gpt-5.6-luna": {
+        "request_count": 331,
+        "cache_hits": 0,
+        "prompt_tokens": 131216,
+        "completion_tokens": 54899,
+        "reasoning_tokens": 34906,
+        "total_tokens": 186115,
+        "cost_usd": 0.46061
+      }
+    }
+  },
+  "optimized_evaluation_usage": {
+    "request_count": 21,
+    "cache_hits": 0,
+    "prompt_tokens": 7066,
+    "completion_tokens": 3652,
+    "reasoning_tokens": 1933,
+    "total_tokens": 10718,
+    "cost_usd": 0.028978,
+    "models": {
+      "openai/gpt-5.6-luna": {
+        "request_count": 21,
+        "cache_hits": 0,
+        "prompt_tokens": 7066,
+        "completion_tokens": 3652,
+        "reasoning_tokens": 1933,
+        "total_tokens": 10718,
+        "cost_usd": 0.028978
+      }
+    }
+  },
+  "reload_prompt_parity": true
+}

@@ -1,0 +1,56 @@
+{
+  "detect.predict": {
+    "traces": [],
+    "train": [],
+    "demos": [
+      {
+        "augmented": true,
+        "text": "The update action fetches the article anew from the database, then endeavors to apply the submitted form data, as filtered through `article_params`. If validation passes and the update succeeds, the browser is redirected to the article’s page. Otherwise, the form is shown once more, errors and all, by rendering `app/views/articles/edit.html.erb` with a 4XX status code, thereby ensuring that the application plays nicely with Turbo.",
+        "reasoning": "The passage has a polished, instructional tone with highly structured sequencing and explanatory phrasing such as “thereby ensuring that the application plays nicely with Turbo,” which is characteristic of AI-generated technical prose.",
+        "is_ai": true
+      },
+      {
+        "augmented": true,
+        "text": "First, fashion an RDD of tuples or lists from the original RDD. Next, define a schema as a StructType whose fields correspond, in proper order, to the structure produced in the first step. Finally, apply that schema to the RDD using SparkSession’s createDataFrame method.",
+        "reasoning": "The passage uses a highly structured, generic three-step explanation with consistent imperative phrasing and no personal or contextual details. This kind of concise procedural wording is characteristic of AI-generated technical prose.",
+        "is_ai": true
+      }
+    ],
+    "signature": {
+      "instructions": "You are the final reviewer in a high-stakes software supply-chain audit. Documentation provenance must be classified accurately because a mistaken decision could either allow undisclosed AI-generated material into a regulated release or falsely accuse a human author.\n\nExamine the supplied passage and decide whether it is AI-generated (`True`) or human-written (`False`). Evaluate the text comparatively rather than treating technical polish alone as proof. AI paraphrases in this dataset usually preserve technical meaning, identifiers, and procedural order but transform concise source material into smoother, longer, and more formal prose. Strong signals include formulaic transitions, conspicuously balanced or complex sentences, elevated or archaic diction, rhetorical flourishes, redundant explanation, generic instructional framing, and polished yet slightly unnatural wording. Human documentation is more often concise, direct, utilitarian, and locally irregular.\n\nBase the verdict only on evidence in the passage. Consider several signals together, distinguish genuine stylistic evidence from normal technical terminology, and choose the most likely label even when uncertain. Return:\n\n- `reasoning`: a brief, specific explanation citing the most diagnostic wording or structural features; do not provide hidden step-by-step deliberation.\n- `is_ai`: exactly `True` if the passage is most likely AI-generated, otherwise exactly `False`.\n\nDo not hedge in the Boolean output or introduce any additional fields.",
+      "fields": [
+        {
+          "prefix": "Text:",
+          "description": "Passage to classify"
+        },
+        {
+          "prefix": "Reasoning:",
+          "description": "${reasoning}"
+        },
+        {
+          "prefix": "Is Ai:",
+          "description": "True for AI-generated text; otherwise False"
+        }
+      ]
+    },
+    "lm": {
+      "model": "openai/gpt-5.6-luna",
+      "model_type": "chat",
+      "cache": false,
+      "num_retries": 1,
+      "finetuning_model": null,
+      "launch_kwargs": {},
+      "train_kwargs": {},
+      "temperature": null,
+      "max_tokens": null,
+      "timeout": 120.0
+    }
+  },
+  "metadata": {
+    "dependency_versions": {
+      "python": "3.11",
+      "dspy": "3.2.1",
+      "cloudpickle": "3.1"
+    }
+  }
+}

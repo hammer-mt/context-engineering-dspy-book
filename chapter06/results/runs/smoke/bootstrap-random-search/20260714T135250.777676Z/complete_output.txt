@@ -1,0 +1,132 @@
+{
+  "run_id": "20260714T135250.777676Z",
+  "optimizer": "bootstrap-random-search",
+  "profile": "smoke",
+  "train": 6,
+  "validation": 4,
+  "test": 4
+}
+Baseline score: 50.00%
+Going to sample between 1 and 2 traces per predictor.
+Will attempt to bootstrap 2 candidate sets.
+  0%|          | 0/4 [00:00<?, ?it/s]Average Metric: 0.00 / 1 (0.0%):   0%|          | 0/4 [00:02<?, ?it/s]Average Metric: 0.00 / 1 (0.0%):  25%|##5       | 1/4 [00:02<00:07,  2.61s/it]Average Metric: 1.00 / 2 (50.0%):  25%|##5       | 1/4 [00:04<00:07,  2.61s/it]Average Metric: 1.00 / 2 (50.0%):  50%|#####     | 2/4 [00:04<00:04,  2.22s/it]Average Metric: 1.00 / 3 (33.3%):  50%|#####     | 2/4 [00:07<00:04,  2.22s/it]Average Metric: 1.00 / 3 (33.3%):  75%|#######5  | 3/4 [00:07<00:02,  2.37s/it]Average Metric: 2.00 / 4 (50.0%):  75%|#######5  | 3/4 [00:09<00:02,  2.37s/it]Average Metric: 2.00 / 4 (50.0%): 100%|##########| 4/4 [00:09<00:00,  2.20s/it]Average Metric: 2.00 / 4 (50.0%): 100%|##########| 4/4 [00:09<00:00,  2.26s/it]
+2026/07/14 09:53:09 INFO dspy.evaluate.evaluate: Average Metric: 2.0 / 4 (50.0%)
+New best score: 50.0 for seed -3
+Scores so far: [50.0]
+Best score so far: 50.0
+  0%|          | 0/4 [00:00<?, ?it/s]Average Metric: 0.00 / 1 (0.0%):   0%|          | 0/4 [00:01<?, ?it/s]Average Metric: 0.00 / 1 (0.0%):  25%|##5       | 1/4 [00:01<00:05,  1.94s/it]Average Metric: 1.00 / 2 (50.0%):  25%|##5       | 1/4 [00:04<00:05,  1.94s/it]Average Metric: 1.00 / 2 (50.0%):  50%|#####     | 2/4 [00:04<00:04,  2.20s/it]Average Metric: 2.00 / 3 (66.7%):  50%|#####     | 2/4 [00:06<00:04,  2.20s/it]Average Metric: 2.00 / 3 (66.7%):  75%|#######5  | 3/4 [00:06<00:02,  2.24s/it]Average Metric: 3.00 / 4 (75.0%):  75%|#######5  | 3/4 [00:09<00:02,  2.24s/it]Average Metric: 3.00 / 4 (75.0%): 100%|##########| 4/4 [00:09<00:00,  2.32s/it]Average Metric: 3.00 / 4 (75.0%): 100%|##########| 4/4 [00:09<00:00,  2.26s/it]
+2026/07/14 09:53:18 INFO dspy.evaluate.evaluate: Average Metric: 3.0 / 4 (75.0%)
+New best score: 75.0 for seed -2
+Scores so far: [50.0, 75.0]
+Best score so far: 75.0
+  0%|          | 0/6 [00:00<?, ?it/s] 17%|#6        | 1/6 [00:01<00:09,  1.83s/it] 33%|###3      | 2/6 [00:03<00:06,  1.70s/it] 50%|#####     | 3/6 [00:05<00:05,  1.86s/it] 67%|######6   | 4/6 [00:07<00:03,  1.78s/it] 67%|######6   | 4/6 [00:07<00:03,  1.78s/it]
+Bootstrapped 2 full traces after 4 examples for up to 1 rounds, amounting to 4 attempts.
+  0%|          | 0/4 [00:00<?, ?it/s]Average Metric: 1.00 / 1 (100.0%):   0%|          | 0/4 [00:03<?, ?it/s]Average Metric: 1.00 / 1 (100.0%):  25%|##5       | 1/4 [00:03<00:09,  3.16s/it]Average Metric: 2.00 / 2 (100.0%):  25%|##5       | 1/4 [00:04<00:09,  3.16s/it]Average Metric: 2.00 / 2 (100.0%):  50%|#####     | 2/4 [00:04<00:04,  2.12s/it]Average Metric: 3.00 / 3 (100.0%):  50%|#####     | 2/4 [00:06<00:04,  2.12s/it]Average Metric: 3.00 / 3 (100.0%):  75%|#######5  | 3/4 [00:06<00:02,  2.06s/it]Average Metric: 4.00 / 4 (100.0%):  75%|#######5  | 3/4 [00:08<00:02,  2.06s/it]Average Metric: 4.00 / 4 (100.0%): 100%|##########| 4/4 [00:08<00:00,  1.85s/it]Average Metric: 4.00 / 4 (100.0%): 100%|##########| 4/4 [00:08<00:00,  2.02s/it]
+2026/07/14 09:53:33 INFO dspy.evaluate.evaluate: Average Metric: 4.0 / 4 (100.0%)
+New best score: 100.0 for seed -1
+Scores so far: [50.0, 75.0, 100.0]
+Best score so far: 100.0
+  0%|          | 0/6 [00:00<?, ?it/s] 17%|#6        | 1/6 [00:02<00:13,  2.68s/it] 33%|###3      | 2/6 [00:04<00:08,  2.11s/it] 50%|#####     | 3/6 [00:06<00:05,  1.99s/it] 50%|#####     | 3/6 [00:06<00:06,  2.08s/it]
+Bootstrapped 2 full traces after 3 examples for up to 1 rounds, amounting to 3 attempts.
+  0%|          | 0/4 [00:00<?, ?it/s]Average Metric: 0.00 / 1 (0.0%):   0%|          | 0/4 [00:02<?, ?it/s]Average Metric: 0.00 / 1 (0.0%):  25%|##5       | 1/4 [00:02<00:06,  2.24s/it]Average Metric: 1.00 / 2 (50.0%):  25%|##5       | 1/4 [00:04<00:06,  2.24s/it]Average Metric: 1.00 / 2 (50.0%):  50%|#####     | 2/4 [00:04<00:04,  2.01s/it]Average Metric: 2.00 / 3 (66.7%):  50%|#####     | 2/4 [00:05<00:04,  2.01s/it]Average Metric: 2.00 / 3 (66.7%):  75%|#######5  | 3/4 [00:05<00:01,  1.76s/it]Average Metric: 3.00 / 4 (75.0%):  75%|#######5  | 3/4 [00:07<00:01,  1.76s/it]Average Metric: 3.00 / 4 (75.0%): 100%|##########| 4/4 [00:07<00:00,  1.99s/it]Average Metric: 3.00 / 4 (75.0%): 100%|##########| 4/4 [00:07<00:00,  1.98s/it]
+2026/07/14 09:53:47 INFO dspy.evaluate.evaluate: Average Metric: 3.0 / 4 (75.0%)
+Scores so far: [50.0, 75.0, 100.0, 75.0]
+Best score so far: 100.0
+  0%|          | 0/6 [00:00<?, ?it/s] 17%|#6        | 1/6 [00:02<00:10,  2.18s/it] 33%|###3      | 2/6 [00:03<00:07,  1.95s/it] 33%|###3      | 2/6 [00:03<00:07,  1.99s/it]
+Bootstrapped 1 full traces after 2 examples for up to 1 rounds, amounting to 2 attempts.
+  0%|          | 0/4 [00:00<?, ?it/s]Average Metric: 0.00 / 1 (0.0%):   0%|          | 0/4 [00:02<?, ?it/s]Average Metric: 0.00 / 1 (0.0%):  25%|##5       | 1/4 [00:02<00:08,  2.87s/it]Average Metric: 1.00 / 2 (50.0%):  25%|##5       | 1/4 [00:05<00:08,  2.87s/it]Average Metric: 1.00 / 2 (50.0%):  50%|#####     | 2/4 [00:05<00:04,  2.50s/it]Average Metric: 2.00 / 3 (66.7%):  50%|#####     | 2/4 [00:07<00:04,  2.50s/it]Average Metric: 2.00 / 3 (66.7%):  75%|#######5  | 3/4 [00:07<00:02,  2.43s/it]Average Metric: 3.00 / 4 (75.0%):  75%|#######5  | 3/4 [00:09<00:02,  2.43s/it]Average Metric: 3.00 / 4 (75.0%): 100%|##########| 4/4 [00:09<00:00,  2.09s/it]Average Metric: 3.00 / 4 (75.0%): 100%|##########| 4/4 [00:09<00:00,  2.26s/it]
+2026/07/14 09:54:00 INFO dspy.evaluate.evaluate: Average Metric: 3.0 / 4 (75.0%)
+Scores so far: [50.0, 75.0, 100.0, 75.0, 75.0]
+Best score so far: 100.0
+5 candidate programs found.
+Optimized score: 100.00%
+Uplift: +50.00 points
+Optimization time: 60.49s
+{
+  "status": "completed",
+  "optimizer": "bootstrap-random-search",
+  "profile": "smoke",
+  "baseline_score": 50.0,
+  "optimized_score": 100.0,
+  "uplift_points": 50.0,
+  "optimization_seconds": 60.49045141700117,
+  "baseline_latency": {
+    "count": 4,
+    "mean_seconds": 2.308172635500341,
+    "median_seconds": 2.31932785400204,
+    "p50_seconds": 2.31932785400204,
+    "p95_seconds": 3.0389688213987025,
+    "min_seconds": 1.4994872499992198,
+    "max_seconds": 3.0945475839980645
+  },
+  "optimized_latency": {
+    "count": 4,
+    "mean_seconds": 2.9371264372493897,
+    "median_seconds": 2.4455937704988173,
+    "p50_seconds": 2.4455937704988173,
+    "p95_seconds": 4.436002399898279,
+    "min_seconds": 2.072244833001605,
+    "max_seconds": 4.785073374998319
+  },
+  "baseline_usage": {
+    "request_count": 4,
+    "cache_hits": 0,
+    "prompt_tokens": 1049,
+    "completion_tokens": 850,
+    "reasoning_tokens": 563,
+    "total_tokens": 1899,
+    "cost_usd": 0.006149,
+    "models": {
+      "openai/gpt-5.6-luna": {
+        "request_count": 4,
+        "cache_hits": 0,
+        "prompt_tokens": 1049,
+        "completion_tokens": 850,
+        "reasoning_tokens": 563,
+        "total_tokens": 1899,
+        "cost_usd": 0.006149
+      }
+    }
+  },
+  "optimization_usage": {
+    "request_count": 29,
+    "cache_hits": 0,
+    "prompt_tokens": 13582,
+    "completion_tokens": 4259,
+    "reasoning_tokens": 2143,
+    "total_tokens": 17841,
+    "cost_usd": 0.039136,
+    "models": {
+      "openai/gpt-5.6-luna": {
+        "request_count": 29,
+        "cache_hits": 0,
+        "prompt_tokens": 13582,
+        "completion_tokens": 4259,
+        "reasoning_tokens": 2143,
+        "total_tokens": 17841,
+        "cost_usd": 0.039136
+      }
+    }
+  },
+  "optimized_evaluation_usage": {
+    "request_count": 4,
+    "cache_hits": 0,
+    "prompt_tokens": 2189,
+    "completion_tokens": 584,
+    "reasoning_tokens": 284,
+    "total_tokens": 2773,
+    "cost_usd": 0.005693,
+    "models": {
+      "openai/gpt-5.6-luna": {
+        "request_count": 4,
+        "cache_hits": 0,
+        "prompt_tokens": 2189,
+        "completion_tokens": 584,
+        "reasoning_tokens": 284,
+        "total_tokens": 2773,
+        "cost_usd": 0.005693
+      }
+    }
+  },
+  "reload_prompt_parity": true
+}

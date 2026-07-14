@@ -1,0 +1,42 @@
+{
+  "cutoff": "2020-01-01 00:00:00+00:00",
+  "license": "CC BY-SA 3.0",
+  "license_url": "https://en.wikipedia.org/wiki/Wikipedia:Copyrights",
+  "sources": [
+    {
+      "page_title": "Sustainability",
+      "revision_id": 932573702,
+      "revision_timestamp": "2019-12-26T22:15:37Z",
+      "url": "https://en.wikipedia.org/w/index.php?oldid=932573702",
+      "license": "CC BY-SA 3.0"
+    },
+    {
+      "page_title": "Leadership",
+      "revision_id": 933182672,
+      "revision_timestamp": "2019-12-30T12:33:16Z",
+      "url": "https://en.wikipedia.org/w/index.php?oldid=933182672",
+      "license": "CC BY-SA 3.0"
+    },
+    {
+      "page_title": "Innovation",
+      "revision_id": 930564768,
+      "revision_timestamp": "2019-12-13T10:00:41Z",
+      "url": "https://en.wikipedia.org/w/index.php?oldid=930564768",
+      "license": "CC BY-SA 3.0"
+    },
+    {
+      "page_title": "Strategic management",
+      "revision_id": 933294875,
+      "revision_timestamp": "2019-12-31T02:32:00Z",
+      "url": "https://en.wikipedia.org/w/index.php?oldid=933294875",
+      "license": "CC BY-SA 3.0"
+    },
+    {
+      "page_title": "Organizational culture",
+      "revision_id": 932792416,
+      "revision_timestamp": "2019-12-28T06:36:28Z",
+      "url": "https://en.wikipedia.org/w/index.php?oldid=932792416",
+      "license": "CC BY-SA 3.0"
+    }
+  ]
+}

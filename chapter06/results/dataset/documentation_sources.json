@@ -1,0 +1,164 @@
+{
+  "sources": [
+    {
+      "id": "python-tutorial",
+      "title": "The Python Tutorial - An Informal Introduction",
+      "author": "Python documentation contributors",
+      "frozen_ref": "v3.10.0",
+      "raw_url": "https://raw.githubusercontent.com/python/cpython/v3.10.0/Doc/tutorial/introduction.rst",
+      "source_url": "https://github.com/python/cpython/blob/v3.10.0/Doc/tutorial/introduction.rst",
+      "license": "Python Software Foundation License Version 2",
+      "license_url": "https://github.com/python/cpython/blob/v3.10.0/LICENSE"
+    },
+    {
+      "id": "kubernetes-objects",
+      "title": "Kubernetes Objects",
+      "author": "Kubernetes documentation contributors",
+      "frozen_ref": "release-1.22",
+      "raw_url": "https://raw.githubusercontent.com/kubernetes/website/release-1.22/content/en/docs/concepts/overview/working-with-objects/kubernetes-objects.md",
+      "source_url": "https://github.com/kubernetes/website/blob/release-1.22/content/en/docs/concepts/overview/working-with-objects/kubernetes-objects.md",
+      "license": "Creative Commons Attribution 4.0",
+      "license_url": "https://github.com/kubernetes/website/blob/release-1.22/LICENSE"
+    },
+    {
+      "id": "django-queries",
+      "title": "Making queries",
+      "author": "Django documentation contributors",
+      "frozen_ref": "4.0",
+      "raw_url": "https://raw.githubusercontent.com/django/django/4.0/docs/topics/db/queries.txt",
+      "source_url": "https://github.com/django/django/blob/4.0/docs/topics/db/queries.txt",
+      "license": "BSD 3-Clause",
+      "license_url": "https://github.com/django/django/blob/4.0/LICENSE"
+    },
+    {
+      "id": "pandas-ten-minutes",
+      "title": "10 minutes to pandas",
+      "author": "pandas documentation contributors",
+      "frozen_ref": "v1.3.0",
+      "raw_url": "https://raw.githubusercontent.com/pandas-dev/pandas/v1.3.0/doc/source/user_guide/10min.rst",
+      "source_url": "https://github.com/pandas-dev/pandas/blob/v1.3.0/doc/source/user_guide/10min.rst",
+      "license": "BSD 3-Clause",
+      "license_url": "https://github.com/pandas-dev/pandas/blob/v1.3.0/LICENSE"
+    },
+    {
+      "id": "sklearn-started",
+      "title": "Getting Started",
+      "author": "scikit-learn documentation contributors",
+      "frozen_ref": "1.0",
+      "raw_url": "https://raw.githubusercontent.com/scikit-learn/scikit-learn/1.0/doc/getting_started.rst",
+      "source_url": "https://github.com/scikit-learn/scikit-learn/blob/1.0/doc/getting_started.rst",
+      "license": "BSD 3-Clause",
+      "license_url": "https://github.com/scikit-learn/scikit-learn/blob/1.0/COPYING"
+    },
+    {
+      "id": "numpy-quickstart",
+      "title": "NumPy quickstart",
+      "author": "NumPy documentation contributors",
+      "frozen_ref": "v1.21.0",
+      "raw_url": "https://raw.githubusercontent.com/numpy/numpy/v1.21.0/doc/source/user/quickstart.rst",
+      "source_url": "https://github.com/numpy/numpy/blob/v1.21.0/doc/source/user/quickstart.rst",
+      "license": "BSD 3-Clause",
+      "license_url": "https://github.com/numpy/numpy/blob/v1.21.0/LICENSE.txt"
+    },
+    {
+      "id": "flask-quickstart",
+      "title": "Flask Quickstart",
+      "author": "Flask documentation contributors",
+      "frozen_ref": "2.0.2",
+      "raw_url": "https://raw.githubusercontent.com/pallets/flask/2.0.2/docs/quickstart.rst",
+      "source_url": "https://github.com/pallets/flask/blob/2.0.2/docs/quickstart.rst",
+      "license": "BSD 3-Clause",
+      "license_url": "https://github.com/pallets/flask/blob/2.0.2/LICENSE.rst"
+    },
+    {
+      "id": "fastapi-body",
+      "title": "Request Body",
+      "author": "FastAPI documentation contributors",
+      "frozen_ref": "0.70.0",
+      "raw_url": "https://raw.githubusercontent.com/fastapi/fastapi/0.70.0/docs/en/docs/tutorial/body.md",
+      "source_url": "https://github.com/fastapi/fastapi/blob/0.70.0/docs/en/docs/tutorial/body.md",
+      "license": "MIT",
+      "license_url": "https://github.com/fastapi/fastapi/blob/0.70.0/LICENSE"
+    },
+    {
+      "id": "spark-sql",
+      "title": "Getting Started with Spark SQL",
+      "author": "Apache Spark documentation contributors",
+      "frozen_ref": "v3.2.0",
+      "raw_url": "https://raw.githubusercontent.com/apache/spark/v3.2.0/docs/sql-getting-started.md",
+      "source_url": "https://github.com/apache/spark/blob/v3.2.0/docs/sql-getting-started.md",
+      "license": "Apache License 2.0",
+      "license_url": "https://github.com/apache/spark/blob/v3.2.0/LICENSE"
+    },
+    {
+      "id": "pytorch-readme",
+      "title": "PyTorch README",
+      "author": "PyTorch contributors",
+      "frozen_ref": "v1.10.0",
+      "raw_url": "https://raw.githubusercontent.com/pytorch/pytorch/v1.10.0/README.md",
+      "source_url": "https://github.com/pytorch/pytorch/blob/v1.10.0/README.md",
+      "license": "BSD 3-Clause",
+      "license_url": "https://github.com/pytorch/pytorch/blob/v1.10.0/LICENSE"
+    },
+    {
+      "id": "node-documentation",
+      "title": "About this documentation",
+      "author": "Node.js documentation contributors",
+      "frozen_ref": "v16.13.0",
+      "raw_url": "https://raw.githubusercontent.com/nodejs/node/v16.13.0/doc/api/documentation.md",
+      "source_url": "https://github.com/nodejs/node/blob/v16.13.0/doc/api/documentation.md",
+      "license": "MIT",
+      "license_url": "https://github.com/nodejs/node/blob/v16.13.0/LICENSE"
+    },
+    {
+      "id": "rails-started",
+      "title": "Getting Started with Rails",
+      "author": "Ruby on Rails documentation contributors",
+      "frozen_ref": "v7.0.0",
+      "raw_url": "https://raw.githubusercontent.com/rails/rails/v7.0.0/guides/source/getting_started.md",
+      "source_url": "https://github.com/rails/rails/blob/v7.0.0/guides/source/getting_started.md",
+      "license": "MIT",
+      "license_url": "https://github.com/rails/rails/blob/v7.0.0/MIT-LICENSE"
+    },
+    {
+      "id": "airflow-dags",
+      "title": "DAGs",
+      "author": "Apache Airflow documentation contributors",
+      "frozen_ref": "2.2.0",
+      "raw_url": "https://raw.githubusercontent.com/apache/airflow/2.2.0/docs/apache-airflow/concepts/dags.rst",
+      "source_url": "https://github.com/apache/airflow/blob/2.2.0/docs/apache-airflow/concepts/dags.rst",
+      "license": "Apache License 2.0",
+      "license_url": "https://github.com/apache/airflow/blob/2.2.0/LICENSE"
+    },
+    {
+      "id": "requests-quickstart",
+      "title": "Requests Quickstart",
+      "author": "Requests documentation contributors",
+      "frozen_ref": "v2.26.0",
+      "raw_url": "https://raw.githubusercontent.com/psf/requests/v2.26.0/docs/user/quickstart.rst",
+      "source_url": "https://github.com/psf/requests/blob/v2.26.0/docs/user/quickstart.rst",
+      "license": "Apache License 2.0",
+      "license_url": "https://github.com/psf/requests/blob/v2.26.0/LICENSE"
+    },
+    {
+      "id": "pytest-started",
+      "title": "Get Started",
+      "author": "pytest documentation contributors",
+      "frozen_ref": "6.2.5",
+      "raw_url": "https://raw.githubusercontent.com/pytest-dev/pytest/6.2.5/doc/en/getting-started.rst",
+      "source_url": "https://github.com/pytest-dev/pytest/blob/6.2.5/doc/en/getting-started.rst",
+      "license": "MIT",
+      "license_url": "https://github.com/pytest-dev/pytest/blob/6.2.5/LICENSE"
+    },
+    {
+      "id": "dask-ten-minutes",
+      "title": "10 Minutes to Dask",
+      "author": "Dask documentation contributors",
+      "frozen_ref": "2021.11.0",
+      "raw_url": "https://raw.githubusercontent.com/dask/dask/2021.11.0/docs/source/10-minutes-to-dask.rst",
+      "source_url": "https://github.com/dask/dask/blob/2021.11.0/docs/source/10-minutes-to-dask.rst",
+      "license": "BSD 3-Clause",
+      "license_url": "https://github.com/dask/dask/blob/2021.11.0/LICENSE.txt"
+    }
+  ]
+}

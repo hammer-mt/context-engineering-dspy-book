@@ -1,0 +1,4 @@
+{
+    "reasoning": "The passage is concise and domain-specific, with a concrete condition (\u201ca dictionary of kwargs cannot be defined ahead of time\u201d) and practical examples. Its slightly awkward phrasing, especially \u201cthe structure of records is encoded in a string\u201d and \u201cfields will be projected differently,\u201d fits technical documentation rather than generalized AI exposition. There is no strong templated repetition or unnecessary abstraction.",
+    "is_ai": false
+}

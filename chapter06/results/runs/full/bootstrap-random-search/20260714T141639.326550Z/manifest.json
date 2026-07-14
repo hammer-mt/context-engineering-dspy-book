@@ -1,0 +1,122 @@
+{
+  "schema_version": 1,
+  "run_id": "20260714T141639.326550Z",
+  "optimizer": "bootstrap-random-search",
+  "profile": {
+    "name": "full",
+    "train_limit": 0,
+    "validation_limit": 0,
+    "test_limit": 0,
+    "bootstrap_candidates": 8,
+    "copro_breadth": 4,
+    "copro_depth": 2,
+    "gepa_max_full_evals": 6,
+    "simba_candidates": 4,
+    "simba_steps": 6,
+    "projected_stage_cost_usd": 20.0
+  },
+  "task_model": "openai/gpt-5.6-luna",
+  "reflection_model": "openai/gpt-5.6-sol",
+  "request_timeout_seconds": 120.0,
+  "num_retries": 1,
+  "started_at": "2026-07-14T14:16:39.326908+00:00",
+  "git_sha": "3d847ba82d81ec0a7de02bc34d1839615ba5eec7",
+  "dataset_manifest": {
+    "schema_version": 2,
+    "seed": 42,
+    "split_strategy": "baseline_adversarial_worst_case_repeated",
+    "dataset_path": "data/ai_vs_human_chapter06.csv",
+    "dataset_sha256": "b244dbd980c08add4ceccfa1257dcf107e1a1a4dd208a53069a0431b7c5f1f1e",
+    "row_count": 74,
+    "pair_count": 37,
+    "splits": {
+      "train": [
+        "docs-rails-started-v7.0.0-014",
+        "docs-pytorch-readme-v1.10.0-017",
+        "docs-python-tutorial-v3.10.0-004",
+        "docs-spark-sql-v3.2.0-014",
+        "docs-rails-started-v7.0.0-019",
+        "docs-flask-quickstart-2.0.2-002",
+        "docs-django-queries-4.0-006",
+        "docs-pytorch-readme-v1.10.0-004",
+        "docs-rails-started-v7.0.0-006",
+        "docs-spark-sql-v3.2.0-001",
+        "docs-pytorch-readme-v1.10.0-012",
+        "docs-rails-started-v7.0.0-017",
+        "docs-airflow-dags-2.2.0-015",
+        "docs-rails-started-v7.0.0-003",
+        "docs-spark-sql-v3.2.0-009",
+        "docs-pytorch-readme-v1.10.0-019",
+        "docs-airflow-dags-2.2.0-016",
+        "docs-rails-started-v7.0.0-015"
+      ],
+      "validation": [
+        "docs-spark-sql-v3.2.0-010",
+        "docs-airflow-dags-2.2.0-019",
+        "docs-sklearn-started-1.0-007",
+        "docs-flask-quickstart-2.0.2-010",
+        "docs-flask-quickstart-2.0.2-012",
+        "docs-spark-sql-v3.2.0-006",
+        "docs-airflow-dags-2.2.0-013",
+        "docs-airflow-dags-2.2.0-017",
+        "docs-sklearn-started-1.0-001"
+      ],
+      "test": [
+        "docs-python-tutorial-v3.10.0-005",
+        "docs-numpy-quickstart-v1.21.0-001",
+        "docs-pytorch-readme-v1.10.0-011",
+        "docs-airflow-dags-2.2.0-009",
+        "docs-airflow-dags-2.2.0-010",
+        "docs-django-queries-4.0-020",
+        "docs-flask-quickstart-2.0.2-004",
+        "docs-flask-quickstart-2.0.2-008",
+        "docs-kubernetes-objects-release-1.22-003",
+        "docs-pandas-ten-minutes-v1.3.0-006"
+      ]
+    }
+  },
+  "split_manifest_sha256": "f42a92eb2dd2c3eed0137b1588467dda89d0ba8b176477900f8559fae7914093",
+  "packages": {
+    "dspy": "3.2.1",
+    "gepa": "0.0.27",
+    "openai": "2.8.1",
+    "litellm": "1.80.7",
+    "pandas": "2.3.3",
+    "scikit-learn": "1.7.2"
+  },
+  "platform": {
+    "system": "Darwin",
+    "machine": "arm64"
+  },
+  "status": "completed",
+  "error": "",
+  "completed_at": "2026-07-14T14:28:34.226679+00:00",
+  "total_usage": {
+    "request_count": 263,
+    "cache_hits": 0,
+    "prompt_tokens": 125870,
+    "completion_tokens": 36163,
+    "reasoning_tokens": 17105,
+    "total_tokens": 162033,
+    "cost_usd": 0.342848,
+    "models": {
+      "openai/gpt-5.6-luna": {
+        "request_count": 263,
+        "cache_hits": 0,
+        "prompt_tokens": 125870,
+        "completion_tokens": 36163,
+        "reasoning_tokens": 17105,
+        "total_tokens": 162033,
+        "cost_usd": 0.342848
+      }
+    }
+  },
+  "artifacts": {
+    "complete_output": "complete_output.txt",
+    "lm_history": "lm_history.jsonl",
+    "predictions": "predictions.jsonl",
+    "program": "program.json",
+    "prompts": "prompts.json",
+    "metrics": "metrics.json"
+  }
+}

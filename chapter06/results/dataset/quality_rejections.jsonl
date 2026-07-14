@@ -1,0 +1,12 @@
+{"pair_id": "docs-python-tutorial-v3.10.0-007", "example_id": "docs-python-tutorial-v3.10.0-007-human", "reasons": ["too_short"]}
+{"pair_id": "docs-django-queries-4.0-010", "example_id": "docs-django-queries-4.0-010-human", "reasons": ["residual_markup"]}
+{"pair_id": "docs-django-queries-4.0-012", "example_id": "docs-django-queries-4.0-012-human", "reasons": ["residual_markup"]}
+{"pair_id": "docs-sklearn-started-1.0-008", "example_id": "docs-sklearn-started-1.0-008-human", "reasons": ["too_short"]}
+{"pair_id": "docs-flask-quickstart-2.0.2-016", "example_id": "docs-flask-quickstart-2.0.2-016-human", "reasons": ["too_short", "residual_markup"]}
+{"pair_id": "docs-fastapi-body-0.70.0-004", "example_id": "docs-fastapi-body-0.70.0-004-human", "reasons": ["too_short"]}
+{"pair_id": "docs-pytorch-readme-v1.10.0-020", "example_id": "docs-pytorch-readme-v1.10.0-020-human", "reasons": ["too_short"]}
+{"pair_id": "docs-rails-started-v7.0.0-011", "example_id": "docs-rails-started-v7.0.0-011-human", "reasons": ["too_short"]}
+{"pair_id": "docs-rails-started-v7.0.0-012", "example_id": "docs-rails-started-v7.0.0-012-human", "reasons": ["too_short"]}
+{"pair_id": "docs-pytest-started-6.2.5-004", "example_id": "docs-pytest-started-6.2.5-004-human", "reasons": ["too_short"]}
+{"pair_id": "docs-pytest-started-6.2.5-005", "example_id": "docs-pytest-started-6.2.5-005-human", "reasons": ["too_short"]}
+{"pair_id": "docs-dask-ten-minutes-2021.11.0-005", "example_id": "docs-dask-ten-minutes-2021.11.0-005-human", "reasons": ["too_short"]}

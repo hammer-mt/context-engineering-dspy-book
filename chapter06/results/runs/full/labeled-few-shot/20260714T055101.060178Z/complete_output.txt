@@ -1,0 +1,9 @@
+{
+  "run_id": "20260714T055101.060178Z",
+  "optimizer": "labeled-few-shot",
+  "profile": "full",
+  "train": 36,
+  "validation": 18,
+  "test": 20
+}
+Baseline score: 60.00%

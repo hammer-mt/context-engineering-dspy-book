@@ -1,0 +1,8 @@
+{
+  "status": "artifact_serialization_failed",
+  "baseline_score": 75.0,
+  "optimized_score": 50.0,
+  "uplift_points": -25.0,
+  "optimization_seconds": 34.10173950000171,
+  "known_cost_usd": 0.036988
+}

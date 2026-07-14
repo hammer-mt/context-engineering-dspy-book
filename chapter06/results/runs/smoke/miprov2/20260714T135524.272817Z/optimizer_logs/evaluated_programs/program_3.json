@@ -1,0 +1,43 @@
+{
+  "detect.predict": {
+    "traces": [],
+    "train": [],
+    "demos": [],
+    "signature": {
+      "instructions": "Classify the supplied software-documentation passage as either AI-generated/paraphrased or human-written. Base the decision primarily on writing style, not on the technical topic, factual correctness, formatting, or mere formality.\n\nLook for converging signs of AI paraphrasing, such as:\n- unusually polished, ceremonious, or awkwardly formal wording where simpler technical phrasing would be more natural;\n- smooth but formulaic transitions and conspicuously orderly step-by-step exposition;\n- unnecessary elaboration, restatement, or explanation of straightforward ideas;\n- generic instructional language, balanced sentence patterns, or deliberately varied sentence structures;\n- synthetic-sounding synonym substitutions, indirect phrasing, and expressions that are grammatical yet unnatural in practical documentation.\n\nSigns favoring human authorship include:\n- concise, direct, utilitarian explanations;\n- natural domain-specific wording and economical sentence structure;\n- concrete technical detail presented without excessive framing;\n- minor roughness, abruptness, or idiosyncratic phrasing typical of authentic documentation.\n\nDo not label a passage AI-generated merely because it is clear, grammatical, formal, or textbook-like. Short technical reference text can be polished and still be human-written. Conversely, AI text may preserve the exact meaning and terminology of human documentation, so focus on whether the phrasing appears over-refined, expanded, or artificially reworded. Weigh the overall pattern rather than relying on any single phrase.\n\nReturn:\n- `reasoning`: a brief, specific explanation citing the most diagnostic stylistic evidence and, when relevant, noting counterevidence.\n- `is_ai`: `True` if the passage is more likely AI-generated or AI-paraphrased; otherwise `False`.\n\nUse exactly the Boolean values `True` or `False` and make the explanation consistent with the verdict.",
+      "fields": [
+        {
+          "prefix": "Text:",
+          "description": "Passage to classify"
+        },
+        {
+          "prefix": "Reasoning:",
+          "description": "${reasoning}"
+        },
+        {
+          "prefix": "Is Ai:",
+          "description": "True for AI-generated text; otherwise False"
+        }
+      ]
+    },
+    "lm": {
+      "model": "openai/gpt-5.6-luna",
+      "model_type": "chat",
+      "cache": false,
+      "num_retries": 1,
+      "finetuning_model": null,
+      "launch_kwargs": {},
+      "train_kwargs": {},
+      "temperature": null,
+      "max_tokens": null,
+      "timeout": 120.0
+    }
+  },
+  "metadata": {
+    "dependency_versions": {
+      "python": "3.11",
+      "dspy": "3.2.1",
+      "cloudpickle": "3.1"
+    }
+  }
+}

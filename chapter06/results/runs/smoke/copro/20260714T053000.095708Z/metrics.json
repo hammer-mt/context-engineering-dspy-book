@@ -1,0 +1,78 @@
+{
+  "status": "completed",
+  "optimizer": "copro",
+  "profile": "smoke",
+  "baseline_score": 50.0,
+  "optimized_score": 50.0,
+  "uplift_points": 0.0,
+  "optimization_seconds": 32.949592582997866,
+  "baseline_latency": {
+    "count": 4,
+    "mean_seconds": 1.752415125249172,
+    "median_seconds": 1.7088208544992085,
+    "p50_seconds": 1.7088208544992085,
+    "p95_seconds": 2.1331516499976715,
+    "min_seconds": 1.4038401670004532,
+    "max_seconds": 2.1881786249978177
+  },
+  "optimized_latency": {
+    "count": 4,
+    "mean_seconds": 1.6545879169998443,
+    "median_seconds": 1.5872188339999411,
+    "p50_seconds": 1.5872188339999411,
+    "p95_seconds": 2.0043793643986647,
+    "min_seconds": 1.3976736670010723,
+    "max_seconds": 2.0462403329984227
+  },
+  "baseline_usage": {
+    "request_count": 4,
+    "cache_hits": 0,
+    "prompt_tokens": 1005,
+    "completion_tokens": 547,
+    "reasoning_tokens": 254,
+    "total_tokens": 1552,
+    "cost_usd": 0.004287,
+    "models": {
+      "openai/gpt-5.6-luna": {
+        "request_count": 4,
+        "cache_hits": 0,
+        "prompt_tokens": 1005,
+        "completion_tokens": 547,
+        "reasoning_tokens": 254,
+        "total_tokens": 1552,
+        "cost_usd": 0.004287
+      }
+    }
+  },
+  "optimization_usage": {
+    "request_count": 1,
+    "cache_hits": 0,
+    "prompt_tokens": 275,
+    "completion_tokens": 264,
+    "reasoning_tokens": 139,
+    "total_tokens": 539,
+    "cost_usd": 0.009295,
+    "models": {
+      "openai/gpt-5.6-sol": {
+        "request_count": 1,
+        "cache_hits": 0,
+        "prompt_tokens": 275,
+        "completion_tokens": 264,
+        "reasoning_tokens": 139,
+        "total_tokens": 539,
+        "cost_usd": 0.009295
+      }
+    }
+  },
+  "optimized_evaluation_usage": {
+    "request_count": 0,
+    "cache_hits": 0,
+    "prompt_tokens": 0,
+    "completion_tokens": 0,
+    "reasoning_tokens": 0,
+    "total_tokens": 0,
+    "cost_usd": 0,
+    "models": {}
+  },
+  "reload_prompt_parity": true
+}

@@ -1,0 +1,118 @@
+{
+  "schema_version": 1,
+  "run_id": "20260714T052734.322795Z",
+  "optimizer": "knn-few-shot",
+  "profile": {
+    "name": "smoke",
+    "train_limit": 6,
+    "validation_limit": 4,
+    "test_limit": 4,
+    "bootstrap_candidates": 2,
+    "copro_breadth": 2,
+    "copro_depth": 1,
+    "gepa_max_full_evals": 1,
+    "simba_candidates": 2,
+    "simba_steps": 1,
+    "projected_stage_cost_usd": 1.0
+  },
+  "task_model": "openai/gpt-5.6-luna",
+  "reflection_model": "openai/gpt-5.6-sol",
+  "started_at": "2026-07-14T05:27:34.323140+00:00",
+  "git_sha": "3d847ba82d81ec0a7de02bc34d1839615ba5eec7",
+  "dataset_manifest": {
+    "schema_version": 1,
+    "seed": 42,
+    "dataset_path": "data/ai_vs_human_chapter06.csv",
+    "dataset_sha256": "b244dbd980c08add4ceccfa1257dcf107e1a1a4dd208a53069a0431b7c5f1f1e",
+    "row_count": 74,
+    "pair_count": 37,
+    "splits": {
+      "train": [
+        "docs-airflow-dags-2.2.0-017",
+        "docs-pytorch-readme-v1.10.0-011",
+        "docs-flask-quickstart-2.0.2-010",
+        "docs-flask-quickstart-2.0.2-002",
+        "docs-pytorch-readme-v1.10.0-017",
+        "docs-rails-started-v7.0.0-014",
+        "docs-rails-started-v7.0.0-015",
+        "docs-airflow-dags-2.2.0-016",
+        "docs-rails-started-v7.0.0-003",
+        "docs-rails-started-v7.0.0-019",
+        "docs-spark-sql-v3.2.0-006",
+        "docs-sklearn-started-1.0-007",
+        "docs-spark-sql-v3.2.0-001",
+        "docs-flask-quickstart-2.0.2-004",
+        "docs-flask-quickstart-2.0.2-008",
+        "docs-pytorch-readme-v1.10.0-004",
+        "docs-rails-started-v7.0.0-017",
+        "docs-pandas-ten-minutes-v1.3.0-006"
+      ],
+      "validation": [
+        "docs-spark-sql-v3.2.0-014",
+        "docs-airflow-dags-2.2.0-019",
+        "docs-rails-started-v7.0.0-006",
+        "docs-airflow-dags-2.2.0-009",
+        "docs-spark-sql-v3.2.0-010",
+        "docs-flask-quickstart-2.0.2-012",
+        "docs-python-tutorial-v3.10.0-005",
+        "docs-airflow-dags-2.2.0-013",
+        "docs-spark-sql-v3.2.0-009"
+      ],
+      "test": [
+        "docs-sklearn-started-1.0-001",
+        "docs-pytorch-readme-v1.10.0-012",
+        "docs-airflow-dags-2.2.0-015",
+        "docs-pytorch-readme-v1.10.0-019",
+        "docs-django-queries-4.0-020",
+        "docs-kubernetes-objects-release-1.22-003",
+        "docs-numpy-quickstart-v1.21.0-001",
+        "docs-python-tutorial-v3.10.0-004",
+        "docs-airflow-dags-2.2.0-010",
+        "docs-django-queries-4.0-006"
+      ]
+    }
+  },
+  "packages": {
+    "dspy": "3.2.1",
+    "gepa": "0.0.27",
+    "openai": "2.45.0",
+    "litellm": "1.91.1",
+    "pandas": "3.0.3",
+    "scikit-learn": "not-installed"
+  },
+  "platform": {
+    "system": "Darwin",
+    "machine": "arm64"
+  },
+  "status": "failed",
+  "error": "ModuleNotFoundError: No module named 'sklearn'",
+  "completed_at": "2026-07-14T05:27:42.707548+00:00",
+  "total_usage": {
+    "request_count": 4,
+    "cache_hits": 0,
+    "prompt_tokens": 1005,
+    "completion_tokens": 518,
+    "reasoning_tokens": 259,
+    "total_tokens": 1523,
+    "cost_usd": 0.004113,
+    "models": {
+      "openai/gpt-5.6-luna": {
+        "request_count": 4,
+        "cache_hits": 0,
+        "prompt_tokens": 1005,
+        "completion_tokens": 518,
+        "reasoning_tokens": 259,
+        "total_tokens": 1523,
+        "cost_usd": 0.004113
+      }
+    }
+  },
+  "artifacts": {
+    "complete_output": "complete_output.txt",
+    "lm_history": "lm_history.jsonl",
+    "predictions": "predictions.jsonl",
+    "program": "program.json",
+    "prompts": "prompts.json",
+    "metrics": "metrics.json"
+  }
+}

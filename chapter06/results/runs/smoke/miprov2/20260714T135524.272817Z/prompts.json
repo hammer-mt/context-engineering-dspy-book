@@ -1,0 +1,19 @@
+{
+  "detect.predict": {
+    "instructions": "Classify the supplied software-documentation passage as AI-paraphrased or human-written. Because both classes cover similar technical content, base the decision primarily on style rather than topic or correctness.\n\nLook for AI-paraphrase signals such as:\n- unnecessarily polished, formal, or ceremonious wording;\n- smoother transitions and conspicuously organized exposition;\n- added elaboration, restatement, or explicit step-by-step narration;\n- varied but engineered-looking sentence structures;\n- generic explanatory language or awkward synonym substitutions;\n- phrasing that feels less direct and practical than ordinary documentation.\n\nHuman-written passages are more likely to be concise, utilitarian, locally specific, and willing to state technical facts without extra framing. However, do not label a passage AI merely because it is grammatical, precise, formal, or textbook-like; require a meaningful combination of synthetic-paraphrase cues. Weigh the whole passage, cite the most diagnostic stylistic evidence, and make a decisive best judgment even when evidence is limited.\n\nReturn:\n- `reasoning`: a brief explanation focused on relevant stylistic evidence.\n- `is_ai`: `True` if the passage is likely AI-generated or AI-paraphrased; otherwise `False`.",
+    "demos": [
+      {
+        "augmented": true,
+        "text": "Having covered the “CR” in CRUD, we now turn to “U” for Update. Updating a resource closely resembles creating one, for both are multi-step affairs. First, the user requests a form for editing the data; next, the completed form is submitted. If no errors arise, the resource is duly updated. Otherwise, the form reappears with error messages, and the process begins anew until the submission succeeds.",
+        "reasoning": "The passage is likely AI-generated. It is a polished paraphrase with unusually formal wording such as “multi-step affairs,” “duly updated,” and “the process begins anew,” while closely preserving the structure and content of a simpler instructional explanation.",
+        "is_ai": true
+      },
+      {
+        "pair_id": "docs-rails-started-v7.0.0-014",
+        "example_id": "docs-rails-started-v7.0.0-014-human",
+        "text": "We've covered the \"CR\" of CRUD. Now let's move on to the \"U\" (Update). Updating a resource is very similar to creating a resource. They are both multi-step processes. First, the user requests a form to edit the data. Then, the user submits the form. If there are no errors, then the resource is updated. Else, the form is redisplayed with error messages, and the process is repeated.",
+        "is_ai": false
+      }
+    ]
+  }
+}

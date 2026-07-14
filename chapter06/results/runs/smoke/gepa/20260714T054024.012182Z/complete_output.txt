@@ -1,0 +1,9 @@
+{
+  "run_id": "20260714T054024.012182Z",
+  "optimizer": "gepa",
+  "profile": "smoke",
+  "train": 6,
+  "validation": 4,
+  "test": 4
+}
+Baseline score: 50.00%
