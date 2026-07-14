@@ -15,7 +15,7 @@ Companion code for **Context Engineering with DSPy** (O'Reilly).
 | Ch 3 — DSPy in 8 Steps | `chapter03/dspy-in-8-steps.ipynb`, `chapter03/humanize-quickstart.ipynb` |
 | Ch 4 — Strategies for Collecting Datasets | `chapter04/` — 5 notebooks (error analysis, HF, Kaggle, synthetic, PII) |
 | Ch 5 — Formalizing Evaluation Metrics | `chapter05/` — 5 notebooks (string/regex, semantic, BLEU/ROUGE/F1, human+LLM judge, rubric+multi-predictor) |
-| Ch 6 — Deepdive into Prompt Optimizers | `chapter06/` — 9 notebooks (benchmark + per-optimizer satellites) |
+| Ch 6 — Deep Dive into Prompt Optimizers | `chapter06/` — one self-contained notebook per optimizer, plus baseline and platform appendices |
 | Ch 7 — Customizing DSPy Programs | `chapter07/` — 8 notebooks (modules, ReAct, PoT/CodeAct/RLM, multi-stage, parallel, multimodal, adapters) |
 | Ch 8 — Building AI Agents | `chapter08/` — 7 notebooks (ReAct basics, framework comparison, MCP, RAG in-memory, RAG Qdrant, web search + multi-hop, history/Mem0/RLM) |
 | Ch 9 — Real-World Use Cases | `chapter09/` — 7 notebooks (one per use case) |
@@ -91,9 +91,9 @@ A few chapters need an extra service running locally. All commands below use loo
 | MCP server | Ch 8 §8.2.5 MCP integration | Reader-provided. See https://modelcontextprotocol.io |
 | Playwright browsers | Ch 10 landing-page optimizer | `playwright install` |
 | Claude Code CLI | Ch 10 landing-page + image-CLI optimizers | https://docs.claude.com/en/docs/claude-code |
-| GPU (CUDA / MPS) | Ch 6 fine-tuning notebooks | NVIDIA GPU for `grpo.ipynb`/`better-together.ipynb`; MPS for `finetune-mac-m3.ipynb` |
+| GPU (CUDA / MPS) | Ch 6 fine-tuning notebooks | NVIDIA GPU for `bootstrap-finetune.ipynb`/`better-together.ipynb`; multiple NVIDIA GPUs for `grpo.ipynb`; MPS for `finetune-mac-m3.ipynb` |
 
-The model slugs in notebooks (e.g., `openai/gpt-5-mini`, `openai/gpt-5.5-pro`, `anthropic/claude-opus-4.7`, `gemini/gemini-2.5-flash`) are preserved verbatim from the book. Use the slugs as-is.
+Model slugs normally stay aligned with the printed book. Chapter 6 is an explicit exception: its optimizer notebooks default to `openai/gpt-5.6-luna` for high-volume task calls and `openai/gpt-5.6-sol` for reflection and prompt proposal. Set `TASK_MODEL` or `REFLECTION_MODEL` in the environment to override either default.
 
 ## Running the notebooks
 
@@ -114,7 +114,7 @@ Approximate per-chapter LLM spend if you run every notebook end-to-end with defa
 | Ch 3 | $0.20–0.50 |
 | Ch 4 | $0.30–1.00 (HF + synthetic generation) |
 | Ch 5 | $0.30–1.00 (judge training is the heaviest) |
-| Ch 6 | $2–5 with smoke caps; full optimizer runs can hit $10+ if opted in |
+| Ch 6 | $5–15 if every Luna/Sol optimizer notebook is run with smoke caps; full runs can cost substantially more |
 | Ch 7 | $0.50–2.00 |
 | Ch 8 | $1–3 (framework comparison + multi-hop agents) |
 | Ch 9 | $0.50–1.50 (depends on which use cases you run) |
@@ -139,7 +139,7 @@ Bug reports, fixes, and improvements welcome. Before opening a PR:
 
 - Clear notebook outputs (see Security note above).
 - Match the existing notebook conventions (top markdown cell linking to chapter section, `%pip install -r ../requirements.txt -q` first cell, env-var documentation).
-- Keep model slugs verbatim — never silently substitute one slug for another.
+- Keep model slugs aligned with the book unless a documented compatibility update (such as the Chapter 6 Luna/Sol migration) deliberately changes them.
 - If you change a class or signature that's duplicated across notebooks (see `docs/duplication-registry.yaml`), update every copy.
 
 ## License
