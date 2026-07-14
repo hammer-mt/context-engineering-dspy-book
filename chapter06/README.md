@@ -56,9 +56,3 @@ Do not pass `num_threads` to `KNNFewShot`. DSPy forwards unknown constructor
 arguments to `BootstrapFewShot`, which does not accept it; that is the source of
 `KNNFewShot.__init__() got an unexpected keyword argument 'num_threads'`-style
 evaluation failures.
-
-## Maintaining duplicated setup code
-
-The notebooks deliberately repeat setup, data loading, signature, metric, and
-evaluation cells so each file stands alone. Edit `build_optimizer_notebooks.py`
-and rerun it after changing shared Chapter 6 code.

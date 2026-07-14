@@ -11,33 +11,6 @@
 #       - <path-to-notebook-with-inline-copy>
 
 duplications:
-  # Chapter 6 intentionally duplicates these definitions so every optimizer
-  # notebook runs independently. Regenerate all copies from the canonical script.
-  - symbol: DetectAIText
-    canonical: chapter06/build_optimizer_notebooks.py
-    duplicates: &chapter06_optimizer_notebooks
-      - chapter06/quickstart-ai-detector.ipynb
-      - chapter06/labeled-few-shot.ipynb
-      - chapter06/bootstrap-few-shot.ipynb
-      - chapter06/bootstrap-random-search.ipynb
-      - chapter06/bootstrap-optuna.ipynb
-      - chapter06/knn-few-shot.ipynb
-      - chapter06/infer-rules.ipynb
-      - chapter06/copro.ipynb
-      - chapter06/miprov2.ipynb
-      - chapter06/gepa.ipynb
-      - chapter06/gepa-word-limit-proposer.ipynb
-      - chapter06/simba.ipynb
-      - chapter06/ensemble.ipynb
-      - chapter06/bootstrap-finetune.ipynb
-      - chapter06/better-together.ipynb
-      - chapter06/grpo.ipynb
-      - chapter06/finetune-mac-m3.ipynb
-
-  - symbol: AIDetector
-    canonical: chapter06/build_optimizer_notebooks.py
-    duplicates: *chapter06_optimizer_notebooks
-
   - symbol: MarkdownAdapter
     canonical: chapter07/adapters.ipynb
     duplicates:
