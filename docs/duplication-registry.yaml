@@ -26,6 +26,7 @@ duplications:
       - chapter06/copro.ipynb
       - chapter06/miprov2.ipynb
       - chapter06/gepa.ipynb
+      - chapter06/gepa-word-limit-proposer.ipynb
       - chapter06/simba.ipynb
       - chapter06/ensemble.ipynb
       - chapter06/bootstrap-finetune.ipynb

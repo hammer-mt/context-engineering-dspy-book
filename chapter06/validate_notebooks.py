@@ -33,6 +33,12 @@ def validate_notebook(path: Path) -> list[str]:
         errors.append(f"{path.name}: expected notebook format 4 with a cells list")
         return errors
 
+    notebook_text = path.read_text(encoding="utf-8")
+    if "../requirements.txt" in notebook_text:
+        errors.append(f"{path.name}: install cell uses a working-directory-dependent requirements path")
+    if "ai_vs_human200.csv" in notebook_text and "cwd.parents" not in notebook_text:
+        errors.append(f"{path.name}: dataset path does not search repository ancestors")
+
     for index, cell in enumerate(notebook["cells"]):
         if cell.get("cell_type") != "code":
             continue
@@ -61,6 +67,22 @@ def validate_dspy_api() -> list[str]:
         errors.append("BootstrapFewShot now accepts num_threads; review the KNN warning and example")
     if "size" in inspect.signature(dspy.Ensemble.compile).parameters:
         errors.append("Ensemble.compile now accepts size; review where the notebook supplies it")
+    if not hasattr(dspy, "BootstrapRS"):
+        errors.append("DSPy does not export the expected BootstrapRS alias")
+    elif dspy.BootstrapRS is not dspy.BootstrapFewShotWithRandomSearch:
+        errors.append("BootstrapRS no longer aliases BootstrapFewShotWithRandomSearch")
+
+    random_search_text = (CHAPTER_DIR / "bootstrap-random-search.ipynb").read_text(encoding="utf-8")
+    if "optimizer = dspy.BootstrapRS" not in random_search_text:
+        errors.append("Random-search notebook should demonstrate the DSPy 3.2.1 BootstrapRS alias")
+
+    proposer_text = (CHAPTER_DIR / "gepa-word-limit-proposer.ipynb").read_text(encoding="utf-8")
+    if "class WordLimitProposer(ProposalFn)" not in proposer_text:
+        errors.append("GEPA proposer notebook is missing the chapter's WordLimitProposer")
+    if "instruction_proposer=WordLimitProposer(max_words=50)" not in proposer_text:
+        errors.append("GEPA proposer notebook does not compile with the 50-word proposer")
+    if 'split()[: self.max_words]' not in proposer_text:
+        errors.append("WordLimitProposer does not deterministically enforce its word limit")
 
     knn_notebook = json.loads((CHAPTER_DIR / "knn-few-shot.ipynb").read_text(encoding="utf-8"))
     optimizer_tree = None

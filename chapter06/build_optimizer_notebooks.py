@@ -49,11 +49,28 @@ def notebook(cells: list[dict]) -> dict:
     }
 
 
-INSTALL = code(
-    """
-    %pip install -r ../requirements.txt -q
-    """
-)
+def install_cell(*extras: str) -> dict:
+    extra_packages = " ".join(extras)
+    return code(
+        f'''
+        from pathlib import Path
+
+        _requirements = next(
+            (
+                candidate / "requirements.txt"
+                for candidate in (Path.cwd().resolve(), *Path.cwd().resolve().parents)
+                if (candidate / "requirements.txt").is_file()
+            ),
+            None,
+        )
+        if _requirements is None:
+            raise FileNotFoundError("Could not locate requirements.txt from the current working directory.")
+        %pip install -r "{{_requirements}}" -q {extra_packages}
+        '''
+    )
+
+
+INSTALL = install_cell()
 
 
 COMMON_SETUP = code(
@@ -66,12 +83,23 @@ COMMON_SETUP = code(
     import pandas as pd
     from dotenv import load_dotenv
 
-    # Resolve paths whether Jupyter starts in the repo root or chapter06/.
+    # Resolve paths from the repo root, chapter06/, or any nested repo directory.
     cwd = Path.cwd().resolve()
-    REPO_ROOT = cwd if (cwd / "data" / "ai_vs_human200.csv").exists() else cwd.parent
+    REPO_ROOT = next(
+        (
+            candidate
+            for candidate in (cwd, *cwd.parents)
+            if (candidate / "requirements.txt").is_file()
+            and (candidate / "data" / "ai_vs_human200.csv").is_file()
+        ),
+        None,
+    )
+    if REPO_ROOT is None:
+        raise FileNotFoundError(
+            f"Could not locate the repository root from {cwd}. "
+            "Start Jupyter somewhere inside the cloned repository."
+        )
     DATA_PATH = REPO_ROOT / "data" / "ai_vs_human200.csv"
-    if not DATA_PATH.exists():
-        raise FileNotFoundError("Start Jupyter in the repo root or chapter06 directory.")
 
     load_dotenv(REPO_ROOT / ".env")
     if not os.getenv("OPENAI_API_KEY"):
@@ -111,10 +139,21 @@ LOCAL_SETUP = code(
     from dotenv import load_dotenv
 
     cwd = Path.cwd().resolve()
-    REPO_ROOT = cwd if (cwd / "data" / "ai_vs_human200.csv").exists() else cwd.parent
+    REPO_ROOT = next(
+        (
+            candidate
+            for candidate in (cwd, *cwd.parents)
+            if (candidate / "requirements.txt").is_file()
+            and (candidate / "data" / "ai_vs_human200.csv").is_file()
+        ),
+        None,
+    )
+    if REPO_ROOT is None:
+        raise FileNotFoundError(
+            f"Could not locate the repository root from {cwd}. "
+            "Start Jupyter somewhere inside the cloned repository."
+        )
     DATA_PATH = REPO_ROOT / "data" / "ai_vs_human200.csv"
-    if not DATA_PATH.exists():
-        raise FileNotFoundError("Start Jupyter in the repo root or chapter06 directory.")
 
     load_dotenv(REPO_ROOT / ".env")
     NUM_THREADS = int(os.getenv("DSPY_NUM_THREADS", "4"))
@@ -161,18 +200,25 @@ COMMON_PROGRAM = code(
 
     def feedback_metric(example, prediction, trace=None, **kwargs):
         score = exact_match(example, prediction)
+        expert_note = getattr(example, "notes", "")
         feedback = (
             "The classification is correct. Preserve the reasoning cues that led to it."
             if score
             else f"The classification is incorrect. The expected is_ai value is {bool(example.is_ai)}. "
                  "Focus on concrete stylistic evidence instead of topic or polish alone."
         )
+        if expert_note:
+            feedback += f" Expert note: {expert_note}"
         return dspy.Prediction(score=score, feedback=feedback)
 
 
     frame = pd.read_csv(DATA_PATH)
     examples = [
-        dspy.Example(text=row.text, is_ai=bool(row.is_ai)).with_inputs("text")
+        dspy.Example(
+            text=row.text,
+            is_ai=as_bool(row.is_ai),
+            notes="" if pd.isna(row.notes) else str(row.notes),
+        ).with_inputs("text")
         for row in frame.itertuples(index=False)
     ]
     random.Random(42).shuffle(examples)
@@ -293,10 +339,10 @@ NOTEBOOKS["bootstrap-few-shot.ipynb"] = optimizer_notebook(
 
 
 NOTEBOOKS["bootstrap-random-search.ipynb"] = optimizer_notebook(
-    "BootstrapFewShotWithRandomSearch",
-    "Searches over several bootstrapped demonstration sets and selects on validation data.",
+    "BootstrapRS (BootstrapFewShotWithRandomSearch)",
+    "Uses DSPy 3.2.1's BootstrapRS alias to search demonstration sets and select on validation data.",
     """
-    optimizer = dspy.BootstrapFewShotWithRandomSearch(
+    optimizer = dspy.BootstrapRS(
         metric=exact_match,
         max_bootstrapped_demos=2,
         max_labeled_demos=2,
@@ -333,19 +379,11 @@ NOTEBOOKS["bootstrap-optuna.ipynb"] = optimizer_notebook(
         valset=valset,
     )
     """,
-    install=code(
-        """
-        %pip install -r ../requirements.txt -q optuna
-        """
-    ),
+    install=install_cell("optuna"),
 )
 
 
-KNN_INSTALL = code(
-    """
-    %pip install -r ../requirements.txt -q sentence-transformers
-    """
-)
+KNN_INSTALL = install_cell("sentence-transformers")
 
 
 KNN_RESULT = code(
@@ -473,15 +511,14 @@ NOTEBOOKS["miprov2.ipynb"] = optimizer_notebook(
 
 NOTEBOOKS["gepa.ipynb"] = optimizer_notebook(
     "GEPA",
-    "Uses textual metric feedback and a reflection model to evolve program instructions.",
+    "Uses textual metric feedback and a reflection model to evolve program instructions. "
+    "The chapter's custom word-limit variant is in `gepa-word-limit-proposer.ipynb`.",
     """
-    use_word_limit = os.getenv("USE_WORD_LIMIT_PROPOSER", "0") == "1"
     optimizer = dspy.GEPA(
         metric=feedback_metric,
         max_full_evals=2,
         reflection_minibatch_size=3,
         reflection_lm=reflection_lm,
-        instruction_proposer=WordLimitProposer(max_words=50) if use_word_limit else None,
         num_threads=NUM_THREADS,
         use_merge=False,
         track_stats=True,
@@ -493,51 +530,76 @@ NOTEBOOKS["gepa.ipynb"] = optimizer_notebook(
         valset=valset,
     )
     """,
-    extra_cells=[
-        code(
-            r'''
-            from gepa.core.adapter import ProposalFn
+)
 
 
-            class GenerateWordLimitedInstruction(dspy.Signature):
-                """Improve an instruction from feedback while respecting a word limit."""
-
-                current_instruction: str = dspy.InputField()
-                feedback_summary: str = dspy.InputField()
-                max_words: int = dspy.InputField()
-                improved_instruction: str = dspy.OutputField()
+WORD_LIMIT_PROPOSER = code(
+    r'''
+    from gepa.core.adapter import ProposalFn
 
 
-            class WordLimitProposer(ProposalFn):
-                """Optional GEPA proposer corresponding to the chapter's custom-proposer block."""
+    class GenerateWordLimitedInstruction(dspy.Signature):
+        """Improve an instruction from feedback while respecting a word limit."""
 
-                def __init__(self, max_words: int = 50):
-                    self.max_words = max_words
-                    self.improver = dspy.ChainOfThought(GenerateWordLimitedInstruction)
-                    self.improver.set_lm(reflection_lm)
-
-                def __call__(self, candidate, reflective_dataset, components_to_update):
-                    updated = {}
-                    for name in components_to_update:
-                        if name not in candidate or name not in reflective_dataset:
-                            continue
-                        feedback = "\n".join(
-                            f"Example {index + 1}: {example.get('Feedback', '')}"
-                            for index, example in enumerate(reflective_dataset[name])
-                        )
-                        proposal = self.improver(
-                            current_instruction=candidate[name],
-                            feedback_summary=feedback,
-                            max_words=self.max_words,
-                        ).improved_instruction
-                        updated[name] = " ".join(str(proposal).split()[: self.max_words])
-                    return updated
+        current_instruction: str = dspy.InputField()
+        feedback_summary: str = dspy.InputField()
+        max_words: int = dspy.InputField()
+        improved_instruction: str = dspy.OutputField()
 
 
-            print("Set USE_WORD_LIMIT_PROPOSER=1 to run GEPA with the 50-word custom proposer.")
-            ''',
-        )
-    ],
+    class WordLimitProposer(ProposalFn):
+        """Generate GEPA instruction mutations and enforce a maximum word count."""
+
+        def __init__(self, max_words: int = 50):
+            if max_words < 1:
+                raise ValueError("max_words must be at least 1")
+            self.max_words = max_words
+            self.improver = dspy.ChainOfThought(GenerateWordLimitedInstruction)
+            self.improver.set_lm(reflection_lm)
+
+        def __call__(self, candidate, reflective_dataset, components_to_update):
+            updated = {}
+            for name in components_to_update:
+                if name not in candidate or name not in reflective_dataset:
+                    continue
+                feedback = "\n".join(
+                    f"Example {index + 1}: {example.get('Feedback', '')}"
+                    for index, example in enumerate(reflective_dataset[name])
+                )
+                proposal = self.improver(
+                    current_instruction=candidate[name],
+                    feedback_summary=feedback,
+                    max_words=self.max_words,
+                ).improved_instruction
+                # Prompting for a limit is not enough; enforce it deterministically.
+                updated[name] = " ".join(str(proposal).split()[: self.max_words])
+            return updated
+    '''
+)
+
+
+NOTEBOOKS["gepa-word-limit-proposer.ipynb"] = optimizer_notebook(
+    "GEPA with a WordLimitProposer",
+    "Implements the chapter's custom ProposalFn example and caps every proposed instruction at 50 words.",
+    """
+    optimizer = dspy.GEPA(
+        metric=feedback_metric,
+        max_full_evals=2,
+        reflection_minibatch_size=3,
+        reflection_lm=reflection_lm,
+        instruction_proposer=WordLimitProposer(max_words=50),
+        num_threads=NUM_THREADS,
+        use_merge=False,
+        track_stats=True,
+        seed=42,
+    )
+    optimized_detector = optimizer.compile(
+        detector,
+        trainset=trainset,
+        valset=valset,
+    )
+    """,
+    extra_cells=[WORD_LIMIT_PROPOSER],
 )
 
 
@@ -572,7 +634,7 @@ NOTEBOOKS["ensemble.ipynb"] = optimizer_notebook(
         max_rounds=1,
     ).compile(detector.deepcopy(), trainset=trainset)
 
-    searched = dspy.BootstrapFewShotWithRandomSearch(
+    searched = dspy.BootstrapRS(
         metric=exact_match,
         max_bootstrapped_demos=2,
         max_labeled_demos=2,
@@ -588,10 +650,14 @@ NOTEBOOKS["ensemble.ipynb"] = optimizer_notebook(
 )
 
 
-FINETUNE_INSTALL = code(
-    """
-    %pip install -r ../requirements.txt -q torch transformers datasets accelerate peft trl "sglang[all]"
-    """
+FINETUNE_INSTALL = install_cell(
+    "torch",
+    "transformers",
+    "datasets",
+    "accelerate",
+    "peft",
+    "trl",
+    '"sglang[all]"',
 )
 
 
@@ -756,11 +822,7 @@ NOTEBOOKS["better-together.ipynb"] = notebook(
 )
 
 
-GRPO_INSTALL = code(
-    """
-    %pip install -r ../requirements.txt -q arbor-ai
-    """
-)
+GRPO_INSTALL = install_cell("arbor-ai")
 
 
 NOTEBOOKS["grpo.ipynb"] = notebook(
@@ -841,11 +903,7 @@ NOTEBOOKS["finetune-mac-m3.ipynb"] = notebook(
             optimizer API example.
             """
         ),
-        code(
-            """
-            %pip install -r ../requirements.txt -q torch transformers datasets accelerate peft trl
-            """
-        ),
+        install_cell("torch", "transformers", "datasets", "accelerate", "peft", "trl"),
         LOCAL_SETUP,
         COMMON_PROGRAM,
         code(
@@ -950,13 +1008,14 @@ NOTEBOOKS["optimizer-benchmark.ipynb"] = notebook(
             |---|---|---|
             | LabeledFewShot | `labeled-few-shot.ipynb` | no synthesized traces |
             | BootstrapFewShot | `bootstrap-few-shot.ipynb` | bootstrapped traces |
-            | Random search | `bootstrap-random-search.ipynb` | candidate demo sets |
+            | BootstrapRS | `bootstrap-random-search.ipynb` | alias for BootstrapFewShotWithRandomSearch |
             | Optuna | `bootstrap-optuna.ipynb` | Optuna selection |
             | KNNFewShot | `knn-few-shot.ipynb` | dynamic retrieval; special compile API |
             | InferRules | `infer-rules.ipynb` | inferred natural-language rules |
             | COPRO | `copro.ipynb` | instruction search |
             | MIPROv2 | `miprov2.ipynb` | instruction + demo search |
             | GEPA | `gepa.ipynb` | reflective textual feedback |
+            | GEPA custom proposer | `gepa-word-limit-proposer.ipynb` | chapter's 50-word instruction cap |
             | SIMBA | `simba.ipynb` | stochastic introspection |
             | Ensemble | `ensemble.ipynb` | combines optimized programs |
             | BootstrapFinetune | `bootstrap-finetune.ipynb` | CUDA/SGLang |

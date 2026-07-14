@@ -20,13 +20,14 @@ and `EVAL_LIMIT=0` to use the full deterministic 50/25/25 split.
 | `quickstart-ai-detector.ipynb` | shared unoptimized baseline |
 | `labeled-few-shot.ipynb` | LabeledFewShot |
 | `bootstrap-few-shot.ipynb` | BootstrapFewShot |
-| `bootstrap-random-search.ipynb` | BootstrapFewShotWithRandomSearch |
+| `bootstrap-random-search.ipynb` | BootstrapRS (alias for BootstrapFewShotWithRandomSearch) |
 | `bootstrap-optuna.ipynb` | BootstrapFewShotWithOptuna |
 | `knn-few-shot.ipynb` | KNNFewShot |
 | `infer-rules.ipynb` | InferRules |
 | `copro.ipynb` | COPRO |
 | `miprov2.ipynb` | MIPROv2 |
 | `gepa.ipynb` | GEPA |
+| `gepa-word-limit-proposer.ipynb` | GEPA with the chapter's custom WordLimitProposer |
 | `simba.ipynb` | SIMBA |
 | `ensemble.ipynb` | Ensemble |
 | `bootstrap-finetune.ipynb` | BootstrapFinetune (CUDA) |
