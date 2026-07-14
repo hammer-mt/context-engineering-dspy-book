@@ -26,8 +26,7 @@ and `EVAL_LIMIT=0` to use the full deterministic 50/25/25 split.
 | `infer-rules.ipynb` | InferRules |
 | `copro.ipynb` | COPRO |
 | `miprov2.ipynb` | MIPROv2 |
-| `gepa.ipynb` | GEPA |
-| `gepa-word-limit-proposer.ipynb` | GEPA with the chapter's custom WordLimitProposer |
+| `gepa.ipynb` | GEPA and the chapter's custom WordLimitProposer |
 | `simba.ipynb` | SIMBA |
 | `ensemble.ipynb` | Ensemble |
 | `bootstrap-finetune.ipynb` | BootstrapFinetune (CUDA) |
