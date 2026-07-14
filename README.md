@@ -86,12 +86,11 @@ A few chapters need an extra service running locally. All commands below use loo
 | MLflow | Ch 3 (optional tracing), Ch 11 §11.1 | `mlflow server --backend-store-uri sqlite:///mydb.sqlite --host 127.0.0.1 --port 5000` |
 | Qdrant | Ch 8 RAG variant | `docker run --rm -p 127.0.0.1:6333:6333 qdrant/qdrant` |
 | Redis | Ch 11 §11.2 cache variant | `docker run --rm -p 127.0.0.1:6379:6379 redis:alpine` |
-| Arbor | Ch 6 §6.3.3 GRPO only | See [Arbor docs](https://github.com/Ziems/arbor); GPU required |
 | Deno | Ch 7 §7.1.7–7.1.8 (PoT, CodeAct); Ch 9 §9.7 financial analyst PoT mode | `curl -fsSL https://deno.land/install.sh \| sh` |
 | MCP server | Ch 8 §8.2.5 MCP integration | Reader-provided. See https://modelcontextprotocol.io |
 | Playwright browsers | Ch 10 landing-page optimizer | `playwright install` |
 | Claude Code CLI | Ch 10 landing-page + image-CLI optimizers | https://docs.claude.com/en/docs/claude-code |
-| GPU (CUDA / MPS) | Ch 6 fine-tuning notebooks | NVIDIA GPU for `bootstrap-finetune.ipynb`/`better-together.ipynb`; multiple NVIDIA GPUs for `grpo.ipynb`; MPS for `finetune-mac-m3.ipynb` |
+| GPU (CUDA) | Ch 6 fine-tuning notebooks | NVIDIA GPU for `bootstrap-finetune.ipynb` and `better-together.ipynb` |
 
 Model slugs normally stay aligned with the printed book. Chapter 6 is an explicit exception: its optimizer notebooks default to `openai/gpt-5.6-luna` for high-volume task calls and `openai/gpt-5.6-sol` for reflection and prompt proposal. Set `TASK_MODEL` or `REFLECTION_MODEL` in the environment to override either default.
 

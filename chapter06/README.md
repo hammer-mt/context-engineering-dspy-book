@@ -1,8 +1,8 @@
 # Chapter 6 notebooks
 
 Each optimizer has its own self-contained notebook. Run the install cell and then
-execute the notebook top-to-bottom. `optimizer-benchmark.ipynb` is now an index so
-one optimizer failure cannot cancel every other experiment.
+execute the notebook top-to-bottom, so one optimizer failure cannot cancel every
+other experiment.
 
 The default configuration targets stable DSPy 3.2.1 and uses:
 
@@ -21,9 +21,7 @@ and `EVAL_LIMIT=0` to use the full deterministic 50/25/25 split.
 | `labeled-few-shot.ipynb` | LabeledFewShot |
 | `bootstrap-few-shot.ipynb` | BootstrapFewShot |
 | `bootstrap-random-search.ipynb` | BootstrapRS (alias for BootstrapFewShotWithRandomSearch) |
-| `bootstrap-optuna.ipynb` | BootstrapFewShotWithOptuna |
 | `knn-few-shot.ipynb` | KNNFewShot |
-| `infer-rules.ipynb` | InferRules |
 | `copro.ipynb` | COPRO |
 | `miprov2.ipynb` | MIPROv2 |
 | `gepa.ipynb` | GEPA and the chapter's custom WordLimitProposer |
@@ -31,8 +29,6 @@ and `EVAL_LIMIT=0` to use the full deterministic 50/25/25 split.
 | `ensemble.ipynb` | Ensemble |
 | `bootstrap-finetune.ipynb` | BootstrapFinetune (CUDA) |
 | `better-together.ipynb` | BetterTogether (CUDA) |
-| `grpo.ipynb` | Arbor GRPO (experimental multi-GPU) |
-| `finetune-mac-m3.ipynb` | manual LoRA appendix for Apple Silicon |
 
 ## KNNFewShot on DSPy 3.x
 
