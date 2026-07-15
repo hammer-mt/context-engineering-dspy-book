@@ -19,7 +19,7 @@ import time
 from dataclasses import asdict, dataclass
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any, Iterable, Sequence
+from typing import Any, Sequence
 
 import dspy
 import numpy as np
@@ -141,7 +141,9 @@ def feedback_metric(
 def boolean_majority(predictions: list[Any]):
     """Reduce boolean predictions without DSPy's string-only default normalizer."""
 
-    return dspy.majority(predictions, field="is_ai", normalize=lambda value: str(value).lower())
+    return dspy.majority(
+        predictions, field="is_ai", normalize=lambda value: str(value).lower()
+    )
 
 
 def _limit(values: list[Any], limit: int) -> list[Any]:
@@ -229,7 +231,10 @@ class LMHistoryTracker(BaseCallback):
             self._starts[call_id] = (instance, len(instance.history), time.monotonic())
 
     def on_lm_end(
-        self, call_id: str, outputs: dict[str, Any] | None, exception: Exception | None = None
+        self,
+        call_id: str,
+        outputs: dict[str, Any] | None,
+        exception: Exception | None = None,
     ) -> None:
         del outputs
         with self._lock:
@@ -271,7 +276,9 @@ class LMHistoryTracker(BaseCallback):
             return list(self.history[start:])
 
 
-def hashed_ngram_embeddings(texts: Sequence[str], *, dimensions: int = 512) -> np.ndarray:
+def hashed_ngram_embeddings(
+    texts: Sequence[str], *, dimensions: int = 512
+) -> np.ndarray:
     """Create deterministic dependency-free unit vectors for local KNN retrieval."""
 
     if dimensions < 1:
@@ -279,7 +286,9 @@ def hashed_ngram_embeddings(texts: Sequence[str], *, dimensions: int = 512) -> n
     matrix = np.zeros((len(texts), dimensions), dtype=np.float32)
     for row_index, text in enumerate(texts):
         tokens = re.findall(r"[A-Za-z0-9_]+", text.lower())
-        features = tokens + [f"{left}::{right}" for left, right in zip(tokens, tokens[1:])]
+        features = tokens + [
+            f"{left}::{right}" for left, right in zip(tokens, tokens[1:])
+        ]
         for feature in features:
             digest = hashlib.sha256(feature.encode("utf-8")).digest()
             column = int.from_bytes(digest[:4], "big") % dimensions
@@ -472,7 +481,11 @@ def _build_optimizer(
         ).compile(
             detector,
             trainset=trainset,
-            eval_kwargs={"num_threads": threads, "display_progress": True, "display_table": 0},
+            eval_kwargs={
+                "num_threads": threads,
+                "display_progress": True,
+                "display_table": 0,
+            },
         )
     if name == "miprov2":
         return dspy.MIPROv2(
@@ -541,7 +554,9 @@ def _build_optimizer(
         ).compile(detector.deepcopy(), trainset=trainset, valset=valset)
         # size=None evaluates the full fixed pool, avoiding DSPy's unimplemented
         # deterministic sampling path while keeping majority voting reproducible.
-        return dspy.Ensemble(reduce_fn=boolean_majority).compile([labeled, bootstrapped, searched])
+        return dspy.Ensemble(reduce_fn=boolean_majority).compile(
+            [labeled, bootstrapped, searched]
+        )
     raise ValueError(f"optimizer {name!r} is not runnable on this host")
 
 
@@ -562,7 +577,11 @@ class _Tee(io.TextIOBase):
 
 def _git_sha() -> str:
     result = subprocess.run(
-        ["git", "rev-parse", "HEAD"], cwd=REPO_ROOT, text=True, capture_output=True, check=False
+        ["git", "rev-parse", "HEAD"],
+        cwd=REPO_ROOT,
+        text=True,
+        capture_output=True,
+        check=False,
     )
     return result.stdout.strip() or "unknown"
 
@@ -600,7 +619,11 @@ def _finalize_preflight_failure(
     manifest: dict[str, Any],
     error: BaseException,
 ) -> tuple[str, str]:
-    status = "interrupted" if isinstance(error, KeyboardInterrupt) else classify_api_error(error)
+    status = (
+        "interrupted"
+        if isinstance(error, KeyboardInterrupt)
+        else classify_api_error(error)
+    )
     error_text = f"{type(error).__name__}: {error}"
     metrics = {"status": status, "error": error_text}
     (run_dir / "complete_output.txt").write_text(error_text + "\n", encoding="utf-8")
@@ -632,10 +655,12 @@ def run_experiment(
     profile = profile_for(profile_name or os.getenv("CHAPTER06_PROFILE") or "smoke")
     load_dotenv(REPO_ROOT / ".env")
     task_model = task_model or os.getenv("TASK_MODEL") or "openai/gpt-5.6-luna"
-    reflection_model = reflection_model or os.getenv(
-        "REFLECTION_MODEL"
-    ) or "openai/gpt-5.6-sol"
-    request_timeout_seconds = float(os.getenv("CHAPTER06_REQUEST_TIMEOUT_SECONDS", "120"))
+    reflection_model = (
+        reflection_model or os.getenv("REFLECTION_MODEL") or "openai/gpt-5.6-sol"
+    )
+    request_timeout_seconds = float(
+        os.getenv("CHAPTER06_REQUEST_TIMEOUT_SECONDS", "120")
+    )
     num_retries = int(os.getenv("CHAPTER06_NUM_RETRIES", "1"))
     parity_limit = int(os.getenv("CHAPTER06_PARITY_LIMIT", "3"))
     run_id = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S.%fZ")
@@ -663,7 +688,9 @@ def run_experiment(
         manifest.update(
             {
                 "dataset_manifest": json.loads(SPLIT_PATH.read_text(encoding="utf-8")),
-                "split_manifest_sha256": hashlib.sha256(SPLIT_PATH.read_bytes()).hexdigest(),
+                "split_manifest_sha256": hashlib.sha256(
+                    SPLIT_PATH.read_bytes()
+                ).hexdigest(),
             }
         )
         atomic_write_json(run_dir / "manifest.json", manifest)
@@ -725,7 +752,11 @@ def run_experiment(
                 stage=f"optimizer_{profile.name}",
                 run_id=f"{optimizer_name}-{profile.name}-{run_id}",
                 cost_usd=0.0,
-                metadata={"optimizer": optimizer_name, "profile": profile.name, "status": status},
+                metadata={
+                    "optimizer": optimizer_name,
+                    "profile": profile.name,
+                    "status": status,
+                },
             )
         raise
 
@@ -736,10 +767,14 @@ def run_experiment(
     console_path = run_dir / "complete_output.txt"
 
     try:
-        with console_path.open("w", encoding="utf-8") as console, contextlib.redirect_stdout(
-            _Tee(sys.stdout, console)  # type: ignore[type-var]
-        ), contextlib.redirect_stderr(
-            _Tee(sys.stderr, console)  # type: ignore[type-var]
+        with (
+            console_path.open("w", encoding="utf-8") as console,
+            contextlib.redirect_stdout(
+                _Tee(sys.stdout, console)  # type: ignore[type-var]
+            ),
+            contextlib.redirect_stderr(
+                _Tee(sys.stderr, console)  # type: ignore[type-var]
+            ),
         ):
             print(
                 json.dumps(
@@ -815,17 +850,23 @@ def run_experiment(
             final_prompts = extract_program_prompts(optimized_detector)
             reloaded_detector = optimized_detector.deepcopy()
             reloaded_detector.load(program_path)
-            reload_prompt_parity = extract_program_prompts(reloaded_detector) == final_prompts
+            reload_prompt_parity = (
+                extract_program_prompts(reloaded_detector) == final_prompts
+            )
             if not reload_prompt_parity:
-                raise RuntimeError("serialized program did not preserve the final prompts on reload")
+                raise RuntimeError(
+                    "serialized program did not preserve the final prompts on reload"
+                )
             reload_history_start = tracker.snapshot()
-            reload_prediction_parity, reload_predictions = _verify_reload_prediction_parity(
-                reloaded_detector,
-                testset,
-                optimized["predictions"],
-                limit=parity_limit,
-                ledger=ledger,
-                tracker=tracker,
+            reload_prediction_parity, reload_predictions = (
+                _verify_reload_prediction_parity(
+                    reloaded_detector,
+                    testset,
+                    optimized["predictions"],
+                    limit=parity_limit,
+                    ledger=ledger,
+                    tracker=tracker,
+                )
             )
             reload_history = tracker.since(reload_history_start)
             all_predictions.extend(reload_predictions)
@@ -852,7 +893,11 @@ def run_experiment(
             print(f"Optimization time: {optimization_seconds:.2f}s")
             print(json.dumps(metrics, indent=2))
     except BaseException as exc:
-        status = "interrupted" if isinstance(exc, KeyboardInterrupt) else classify_api_error(exc)
+        status = (
+            "interrupted"
+            if isinstance(exc, KeyboardInterrupt)
+            else classify_api_error(exc)
+        )
         error = f"{type(exc).__name__}: {exc}"
         if status == "failed":
             status = "failed"
@@ -878,7 +923,11 @@ def run_experiment(
             stage=f"optimizer_{profile.name}",
             run_id=f"{optimizer_name}-{profile.name}-{run_id}",
             cost_usd=usage["cost_usd"],
-            metadata={"optimizer": optimizer_name, "profile": profile.name, "status": status},
+            metadata={
+                "optimizer": optimizer_name,
+                "profile": profile.name,
+                "status": status,
+            },
         )
     return {"run_dir": str(run_dir), **metrics}
 
