@@ -1,0 +1,284 @@
+license_policy_url: https://www.gutenberg.org/policy/license
+retrieved: 2026-07-14
+selection_note: >-
+  Formal, expository, autobiographical, scientific, and political prose was
+  selected because genuine human writing in these genres can resemble modern
+  AI-generated prose. Each catalog page identifies the work as public domain
+  in the USA. The builder also rejects an embedded copyright restriction.
+wikipedia_cutoff: 2020-01-01T00:00:00Z
+wikipedia_license: CC BY-SA 3.0
+wikipedia_pages:
+  - Sustainability
+  - Leadership
+  - Innovation
+  - Strategic management
+  - Organizational culture
+  - Corporate social responsibility
+  - Social entrepreneurship
+  - Knowledge management
+  - Systems thinking
+  - Holism
+  - Psychological resilience
+  - Community development
+  - Capacity building
+  - Cultural diversity
+  - Globalization
+  - Digital transformation
+  - Public relations
+  - Environmental education
+  - Urban planning
+  - Landscape architecture
+  - Interdisciplinarity
+  - Creativity
+  - Design thinking
+  - Collaboration
+  - Communication
+  - Technology
+  - Education
+  - Well-being
+  - Mindfulness
+  - Corporate governance
+documentation_sources:
+  - id: python-tutorial
+    title: The Python Tutorial - An Informal Introduction
+    author: Python documentation contributors
+    frozen_ref: v3.10.0
+    raw_url: https://raw.githubusercontent.com/python/cpython/v3.10.0/Doc/tutorial/introduction.rst
+    source_url: https://github.com/python/cpython/blob/v3.10.0/Doc/tutorial/introduction.rst
+    license: Python Software Foundation License Version 2
+    license_url: https://github.com/python/cpython/blob/v3.10.0/LICENSE
+  - id: kubernetes-objects
+    title: Kubernetes Objects
+    author: Kubernetes documentation contributors
+    frozen_ref: release-1.22
+    raw_url: https://raw.githubusercontent.com/kubernetes/website/release-1.22/content/en/docs/concepts/overview/working-with-objects/kubernetes-objects.md
+    source_url: https://github.com/kubernetes/website/blob/release-1.22/content/en/docs/concepts/overview/working-with-objects/kubernetes-objects.md
+    license: Creative Commons Attribution 4.0
+    license_url: https://github.com/kubernetes/website/blob/release-1.22/LICENSE
+  - id: django-queries
+    title: Making queries
+    author: Django documentation contributors
+    frozen_ref: "4.0"
+    raw_url: https://raw.githubusercontent.com/django/django/4.0/docs/topics/db/queries.txt
+    source_url: https://github.com/django/django/blob/4.0/docs/topics/db/queries.txt
+    license: BSD 3-Clause
+    license_url: https://github.com/django/django/blob/4.0/LICENSE
+  - id: pandas-ten-minutes
+    title: 10 minutes to pandas
+    author: pandas documentation contributors
+    frozen_ref: v1.3.0
+    raw_url: https://raw.githubusercontent.com/pandas-dev/pandas/v1.3.0/doc/source/user_guide/10min.rst
+    source_url: https://github.com/pandas-dev/pandas/blob/v1.3.0/doc/source/user_guide/10min.rst
+    license: BSD 3-Clause
+    license_url: https://github.com/pandas-dev/pandas/blob/v1.3.0/LICENSE
+  - id: sklearn-started
+    title: Getting Started
+    author: scikit-learn documentation contributors
+    frozen_ref: "1.0"
+    raw_url: https://raw.githubusercontent.com/scikit-learn/scikit-learn/1.0/doc/getting_started.rst
+    source_url: https://github.com/scikit-learn/scikit-learn/blob/1.0/doc/getting_started.rst
+    license: BSD 3-Clause
+    license_url: https://github.com/scikit-learn/scikit-learn/blob/1.0/COPYING
+  - id: numpy-quickstart
+    title: NumPy quickstart
+    author: NumPy documentation contributors
+    frozen_ref: v1.21.0
+    raw_url: https://raw.githubusercontent.com/numpy/numpy/v1.21.0/doc/source/user/quickstart.rst
+    source_url: https://github.com/numpy/numpy/blob/v1.21.0/doc/source/user/quickstart.rst
+    license: BSD 3-Clause
+    license_url: https://github.com/numpy/numpy/blob/v1.21.0/LICENSE.txt
+  - id: flask-quickstart
+    title: Flask Quickstart
+    author: Flask documentation contributors
+    frozen_ref: 2.0.2
+    raw_url: https://raw.githubusercontent.com/pallets/flask/2.0.2/docs/quickstart.rst
+    source_url: https://github.com/pallets/flask/blob/2.0.2/docs/quickstart.rst
+    license: BSD 3-Clause
+    license_url: https://github.com/pallets/flask/blob/2.0.2/LICENSE.rst
+  - id: fastapi-body
+    title: Request Body
+    author: FastAPI documentation contributors
+    frozen_ref: 0.70.0
+    raw_url: https://raw.githubusercontent.com/fastapi/fastapi/0.70.0/docs/en/docs/tutorial/body.md
+    source_url: https://github.com/fastapi/fastapi/blob/0.70.0/docs/en/docs/tutorial/body.md
+    license: MIT
+    license_url: https://github.com/fastapi/fastapi/blob/0.70.0/LICENSE
+  - id: spark-sql
+    title: Getting Started with Spark SQL
+    author: Apache Spark documentation contributors
+    frozen_ref: v3.2.0
+    raw_url: https://raw.githubusercontent.com/apache/spark/v3.2.0/docs/sql-getting-started.md
+    source_url: https://github.com/apache/spark/blob/v3.2.0/docs/sql-getting-started.md
+    license: Apache License 2.0
+    license_url: https://github.com/apache/spark/blob/v3.2.0/LICENSE
+  - id: pytorch-readme
+    title: PyTorch README
+    author: PyTorch contributors
+    frozen_ref: v1.10.0
+    raw_url: https://raw.githubusercontent.com/pytorch/pytorch/v1.10.0/README.md
+    source_url: https://github.com/pytorch/pytorch/blob/v1.10.0/README.md
+    license: BSD 3-Clause
+    license_url: https://github.com/pytorch/pytorch/blob/v1.10.0/LICENSE
+  - id: node-documentation
+    title: About this documentation
+    author: Node.js documentation contributors
+    frozen_ref: v16.13.0
+    raw_url: https://raw.githubusercontent.com/nodejs/node/v16.13.0/doc/api/documentation.md
+    source_url: https://github.com/nodejs/node/blob/v16.13.0/doc/api/documentation.md
+    license: MIT
+    license_url: https://github.com/nodejs/node/blob/v16.13.0/LICENSE
+  - id: rails-started
+    title: Getting Started with Rails
+    author: Ruby on Rails documentation contributors
+    frozen_ref: v7.0.0
+    raw_url: https://raw.githubusercontent.com/rails/rails/v7.0.0/guides/source/getting_started.md
+    source_url: https://github.com/rails/rails/blob/v7.0.0/guides/source/getting_started.md
+    license: MIT
+    license_url: https://github.com/rails/rails/blob/v7.0.0/MIT-LICENSE
+  - id: airflow-dags
+    title: DAGs
+    author: Apache Airflow documentation contributors
+    frozen_ref: 2.2.0
+    raw_url: https://raw.githubusercontent.com/apache/airflow/2.2.0/docs/apache-airflow/concepts/dags.rst
+    source_url: https://github.com/apache/airflow/blob/2.2.0/docs/apache-airflow/concepts/dags.rst
+    license: Apache License 2.0
+    license_url: https://github.com/apache/airflow/blob/2.2.0/LICENSE
+  - id: requests-quickstart
+    title: Requests Quickstart
+    author: Requests documentation contributors
+    frozen_ref: v2.26.0
+    raw_url: https://raw.githubusercontent.com/psf/requests/v2.26.0/docs/user/quickstart.rst
+    source_url: https://github.com/psf/requests/blob/v2.26.0/docs/user/quickstart.rst
+    license: Apache License 2.0
+    license_url: https://github.com/psf/requests/blob/v2.26.0/LICENSE
+  - id: pytest-started
+    title: Get Started
+    author: pytest documentation contributors
+    frozen_ref: 6.2.5
+    raw_url: https://raw.githubusercontent.com/pytest-dev/pytest/6.2.5/doc/en/getting-started.rst
+    source_url: https://github.com/pytest-dev/pytest/blob/6.2.5/doc/en/getting-started.rst
+    license: MIT
+    license_url: https://github.com/pytest-dev/pytest/blob/6.2.5/LICENSE
+  - id: dask-ten-minutes
+    title: 10 Minutes to Dask
+    author: Dask documentation contributors
+    frozen_ref: 2021.11.0
+    raw_url: https://raw.githubusercontent.com/dask/dask/2021.11.0/docs/source/10-minutes-to-dask.rst
+    source_url: https://github.com/dask/dask/blob/2021.11.0/docs/source/10-minutes-to-dask.rst
+    license: BSD 3-Clause
+    license_url: https://github.com/dask/dask/blob/2021.11.0/LICENSE.txt
+sources:
+  - id: federalist
+    title: The Federalist Papers
+    author: Alexander Hamilton, James Madison, and John Jay
+    url: https://www.gutenberg.org/cache/epub/18/pg18.txt
+    catalog_url: https://www.gutenberg.org/ebooks/18
+    license: Public domain in the USA (Project Gutenberg catalog)
+  - id: douglass
+    title: Narrative of the Life of Frederick Douglass, an American Slave
+    author: Frederick Douglass
+    url: https://www.gutenberg.org/cache/epub/23/pg23.txt
+    catalog_url: https://www.gutenberg.org/ebooks/23
+    license: Public domain in the USA (Project Gutenberg catalog)
+  - id: manifesto
+    title: The Communist Manifesto
+    author: Karl Marx and Friedrich Engels
+    url: https://www.gutenberg.org/cache/epub/61/pg61.txt
+    catalog_url: https://www.gutenberg.org/ebooks/61
+    license: Public domain in the USA (Project Gutenberg catalog)
+  - id: walden
+    title: Walden, and On the Duty of Civil Disobedience
+    author: Henry David Thoreau
+    url: https://www.gutenberg.org/cache/epub/205/pg205.txt
+    catalog_url: https://www.gutenberg.org/ebooks/205
+    license: Public domain in the USA (Project Gutenberg catalog)
+  - id: souls
+    title: The Souls of Black Folk
+    author: W. E. B. Du Bois
+    url: https://www.gutenberg.org/cache/epub/408/pg408.txt
+    catalog_url: https://www.gutenberg.org/ebooks/408
+    license: Public domain in the USA (Project Gutenberg catalog)
+  - id: leisure-class
+    title: The Theory of the Leisure Class
+    author: Thorstein Veblen
+    url: https://www.gutenberg.org/cache/epub/833/pg833.txt
+    catalog_url: https://www.gutenberg.org/ebooks/833
+    license: Public domain in the USA (Project Gutenberg catalog)
+  - id: origin
+    title: On the Origin of Species By Means of Natural Selection
+    author: Charles Darwin
+    url: https://www.gutenberg.org/cache/epub/1228/pg1228.txt
+    catalog_url: https://www.gutenberg.org/ebooks/1228
+    license: Public domain in the USA (Project Gutenberg catalog)
+  - id: hull-house
+    title: Twenty Years at Hull House; with Autobiographical Notes
+    author: Jane Addams
+    url: https://www.gutenberg.org/cache/epub/1325/pg1325.txt
+    catalog_url: https://www.gutenberg.org/ebooks/1325
+    license: Public domain in the USA (Project Gutenberg catalog)
+  - id: slavery
+    title: Up from Slavery - An Autobiography
+    author: Booker T. Washington
+    url: https://www.gutenberg.org/cache/epub/2376/pg2376.txt
+    catalog_url: https://www.gutenberg.org/ebooks/2376
+    license: Public domain in the USA (Project Gutenberg catalog)
+  - id: leviathan
+    title: Leviathan
+    author: Thomas Hobbes
+    url: https://www.gutenberg.org/cache/epub/3207/pg3207.txt
+    catalog_url: https://www.gutenberg.org/ebooks/3207
+    license: Public domain in the USA (Project Gutenberg catalog)
+  - id: wealth
+    title: An Inquiry into the Nature and Causes of the Wealth of Nations
+    author: Adam Smith
+    url: https://www.gutenberg.org/cache/epub/3300/pg3300.txt
+    catalog_url: https://www.gutenberg.org/ebooks/3300
+    license: Public domain in the USA (Project Gutenberg catalog)
+  - id: rights-woman
+    title: A Vindication of the Rights of Woman
+    author: Mary Wollstonecraft
+    url: https://www.gutenberg.org/cache/epub/3420/pg3420.txt
+    catalog_url: https://www.gutenberg.org/ebooks/3420
+    license: Public domain in the USA (Project Gutenberg catalog)
+  - id: ethan-frome
+    title: Ethan Frome
+    author: Edith Wharton
+    url: https://www.gutenberg.org/cache/epub/4517/pg4517.txt
+    catalog_url: https://www.gutenberg.org/ebooks/4517
+    license: Public domain in the USA (Project Gutenberg catalog)
+  - id: human-nature
+    title: A Treatise of Human Nature
+    author: David Hume
+    url: https://www.gutenberg.org/cache/epub/4705/pg4705.txt
+    catalog_url: https://www.gutenberg.org/ebooks/4705
+    license: Public domain in the USA (Project Gutenberg catalog)
+  - id: pragmatism
+    title: Pragmatism - A New Name for Some Old Ways of Thinking
+    author: William James
+    url: https://www.gutenberg.org/cache/epub/5116/pg5116.txt
+    catalog_url: https://www.gutenberg.org/ebooks/5116
+    license: Public domain in the USA (Project Gutenberg catalog)
+  - id: philosophy
+    title: The Problems of Philosophy
+    author: Bertrand Russell
+    url: https://www.gutenberg.org/cache/epub/5827/pg5827.txt
+    catalog_url: https://www.gutenberg.org/ebooks/5827
+    license: Public domain in the USA (Project Gutenberg catalog)
+  - id: government
+    title: Second Treatise of Government
+    author: John Locke
+    url: https://www.gutenberg.org/cache/epub/7370/pg7370.txt
+    catalog_url: https://www.gutenberg.org/ebooks/7370
+    license: Public domain in the USA (Project Gutenberg catalog)
+  - id: nursing
+    title: Notes on Nursing - What It Is, and What It Is Not
+    author: Florence Nightingale
+    url: https://www.gutenberg.org/cache/epub/17366/pg17366.txt
+    catalog_url: https://www.gutenberg.org/ebooks/17366
+    license: Public domain in the USA (Project Gutenberg catalog)
+  - id: liberty
+    title: On Liberty
+    author: John Stuart Mill
+    url: https://www.gutenberg.org/cache/epub/34901/pg34901.txt
+    catalog_url: https://www.gutenberg.org/ebooks/34901
+    license: Public domain in the USA (Project Gutenberg catalog)

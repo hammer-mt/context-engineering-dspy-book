@@ -1,17 +1,32 @@
-# Chapter 6 notebooks
+# Chapter 6: optimizer notebooks
 
-Each optimizer has its own self-contained notebook. Run the install cell and then
-execute the notebook top-to-bottom, so one optimizer failure cannot cancel every
-other experiment.
+This download contains one concise, executed notebook per optimizer. Each notebook
+explains when to use the optimizer, shows the essential DSPy compile call, reports
+the frozen Chapter 6 result, and previews the learned instruction and demonstrations.
+Choose **Run All** to inspect the checked-in artifacts locally; the notebooks make
+no network calls and require no API key.
 
-The default configuration targets stable DSPy 3.2.1 and uses:
+The full comparison and its limitations are in [`CHAPTER_RESULTS.md`](CHAPTER_RESULTS.md).
+Canonical program snapshots and prompts are under `optimized_programs/final/`
+and `results/final_prompts/`. Large provider transcripts, smoke-run duplicates,
+caches, model adapters, and temporary training files are intentionally not part of the student
+download.
 
-- `openai/gpt-5.6-luna` for task execution
-- `openai/gpt-5.6-sol` for reflection, judging, and prompt proposal
+## Benchmark data
 
-Override those defaults with `TASK_MODEL` and `REFLECTION_MODEL`. Default dataset
-and optimizer budgets are intentionally small. Set `TRAIN_LIMIT=0`, `VAL_LIMIT=0`,
-and `EVAL_LIMIT=0` to use the full deterministic 50/25/25 split.
+The frozen benchmark in `data/ai_vs_human_chapter06.csv` contains 74 passages in
+37 human/AI semantic pairs. Pair IDs—not rows—define the split, preventing a source
+passage and its rewrite from leaking across train, validation, and test. Exact split
+membership and the dataset hash are in `data/ai_vs_human_chapter06_splits.json`;
+source and license information is in `data_sources.yaml`.
+
+The test partition is deliberately baseline-adversarial. It is useful for teaching
+optimizer behavior, not for estimating general-purpose AI-detector accuracy.
+
+BootstrapFinetune and BetterTogether were run through DSPy with
+`Qwen/Qwen2.5-0.5B-Instruct`, Transformers, TRL, and PEFT on Apple Silicon MPS.
+Those two rows share the frozen split but are reported separately from the Luna
+prompt-optimizer comparison because the base model differs.
 
 ## Notebook map
 
@@ -27,10 +42,10 @@ and `EVAL_LIMIT=0` to use the full deterministic 50/25/25 split.
 | `gepa.ipynb` | GEPA and the chapter's custom WordLimitProposer |
 | `simba.ipynb` | SIMBA |
 | `ensemble.ipynb` | Ensemble |
-| `bootstrap-finetune.ipynb` | BootstrapFinetune (CUDA) |
-| `better-together.ipynb` | BetterTogether (CUDA) |
+| `bootstrap-finetune.ipynb` | BootstrapFinetune (local Apple Silicon MPS or CPU) |
+| `better-together.ipynb` | BetterTogether `p -> w` (local Apple Silicon MPS or CPU) |
 
-## KNNFewShot on DSPy 3.x
+## DSPy 3.x note for KNNFewShot
 
 `KNNFewShot` is different from the other few-shot optimizers. Supply `k`,
 `trainset`, and `vectorizer` to the constructor, then compile with only the student:
@@ -48,6 +63,4 @@ optimized_detector = optimizer.compile(detector)
 ```
 
 Do not pass `num_threads` to `KNNFewShot`. DSPy forwards unknown constructor
-arguments to `BootstrapFewShot`, which does not accept it; that is the source of
-`KNNFewShot.__init__() got an unexpected keyword argument 'num_threads'`-style
-evaluation failures.
+arguments to `BootstrapFewShot`, which does not accept it.

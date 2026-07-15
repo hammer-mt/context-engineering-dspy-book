@@ -90,9 +90,7 @@ A few chapters need an extra service running locally. All commands below use loo
 | MCP server | Ch 8 §8.2.5 MCP integration | Reader-provided. See https://modelcontextprotocol.io |
 | Playwright browsers | Ch 10 landing-page optimizer | `playwright install` |
 | Claude Code CLI | Ch 10 landing-page + image-CLI optimizers | https://docs.claude.com/en/docs/claude-code |
-| GPU (CUDA) | Ch 6 fine-tuning notebooks | NVIDIA GPU for `bootstrap-finetune.ipynb` and `better-together.ipynb` |
-
-Model slugs normally stay aligned with the printed book. Chapter 6 is an explicit exception: its optimizer notebooks default to `openai/gpt-5.6-luna` for high-volume task calls and `openai/gpt-5.6-sol` for reflection and prompt proposal. Set `TASK_MODEL` or `REFLECTION_MODEL` in the environment to override either default.
+| Apple Silicon MPS or CPU | Ch 6 fine-tuning examples | PyTorch/Transformers/TRL/PEFT support the BootstrapFinetune and BetterTogether compile patterns; inspecting the published results requires no model download |
 
 ## Running the notebooks
 

@@ -14,6 +14,15 @@ fal-client
 
 # Optimizers / agents
 gepa
+optuna
+
+# Chapter 6 local Apple Silicon fine-tuning
+torch>=2.6
+transformers>=4.53,<5
+datasets>=3,<5
+accelerate>=1,<2
+trl>=0.24,<0.25
+peft>=0.17,<1
 
 # Ch 9 / Ch 10 supporting deps
 beautifulsoup4

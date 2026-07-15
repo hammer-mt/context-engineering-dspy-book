@@ -1,0 +1,6 @@
+{
+  "detect.predict": {
+    "instructions": "Analyze the supplied passage for signals associated with AI-generated versus human-written text, including repetitiveness, formulaic structure, generic phrasing, unnatural consistency, unsupported specificity, stylistic variation, and coherent personal context. Weigh the evidence on both sides and make the best binary classification, while recognizing that authorship cannot be determined with certainty from prose alone. Return only `AI-generated` or `Human-written`; do not add explanations or qualifiers.",
+    "demos": []
+  }
+}
