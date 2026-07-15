@@ -26,12 +26,9 @@ class PublishedNotebookTest(unittest.TestCase):
             row = optimizer_row(optimizer)
             check = verify_prompt_artifact(optimizer)
             with self.subTest(optimizer=optimizer):
-                if row["status"] == "completed":
-                    self.assertTrue(check["checked"])
-                    self.assertTrue(check["prompt_state_equal"])
-                else:
-                    self.assertEqual(row["status"], "hardware_blocked")
-                    self.assertFalse(check["checked"])
+                self.assertEqual(row["status"], "completed")
+                self.assertTrue(check["checked"])
+                self.assertTrue(check["prompt_state_equal"])
 
 
 if __name__ == "__main__":

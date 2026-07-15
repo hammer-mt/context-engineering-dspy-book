@@ -71,8 +71,8 @@ trainer device as `mps`.
 |---|---|---|---|
 | [BootstrapFinetune smoke](results/runs/smoke/bootstrap-finetune/20260715T011714.494591Z/) | completed, 50% → 50%, 14.18s | 3 accepted traces, 1 MPS step | prompt/model/prediction parity |
 | [BetterTogether smoke](results/runs/smoke/better-together/20260715T011812.511232Z/) | completed, 50% → 50%, 52.27s | `p -> w`, 3 accepted traces, 1 MPS step | prompt/model/prediction parity |
-| [BootstrapFinetune full](results/runs/full/bootstrap-finetune/20260715T012015.458162Z/) | completed, 50% → 50%, 70.70s | 17 accepted traces, 18 MPS steps, train loss 1.6358 | prompt/model/prediction parity |
-| [BetterTogether full](results/runs/full/better-together/20260715T012442.371551Z/) | completed, 50% → 50%, 290.87s | original, `p`, and `p -> w`; 17 accepted traces; 18 MPS steps | prompt/model/prediction parity |
+| [BootstrapFinetune full](results/runs/full/bootstrap-finetune/20260715T034040.794581Z/) | completed, 50% → 50%, 67.53s | 17 accepted traces, 18 MPS steps, train loss 1.6397 | prompt/model parity; predictions 3/3 |
+| [BetterTogether full](results/runs/full/better-together/20260715T034246.168669Z/) | completed, 50% → 50%, 278.30s | original, `p`, and `p -> w`; 17 accepted traces; 18 MPS steps | prompt/model parity; predictions 3/3 |
 
 BetterTogether's three validation strategies tied at 50%, so DSPy selected the
 original program. The `p -> w` candidate nevertheless contains the trained adapter

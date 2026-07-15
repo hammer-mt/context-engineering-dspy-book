@@ -225,8 +225,9 @@ def _chapter_results_markdown(summary: dict[str, Any]) -> str:
             ),
             "",
             (
-                "Serialization was checked two ways where the optimizer ran: prompt/demo state equality "
-                f"after reload and bounded prediction-label parity on frozen test examples. Across the "
+                "Serialization was checked with prompt/demo state equality after reload and bounded "
+                f"prediction-label parity on frozen test examples; the local weight rows additionally "
+                f"verify the saved base-model and adapter references. Across the "
                 f"selected runs, {parity_matching}/{parity_checked} reloaded predictions matched their "
                 "pre-serialization labels. The per-run counts are reported in the table because a mismatch "
                 "from an uncached stochastic model is evidence to preserve, not a reason to retry until it "

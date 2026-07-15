@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "ceiling_usd": 95.0,
-  "total_cost_usd": 12.340935900000002,
+  "total_cost_usd": 12.3409359,
   "remaining_usd": 82.6590641,
   "entries": [
     {
@@ -941,6 +941,26 @@
       "cost_usd": 0.42736,
       "metadata": {
         "optimizer": "ensemble",
+        "profile": "full",
+        "status": "completed"
+      }
+    },
+    {
+      "stage": "optimizer_full",
+      "run_id": "bootstrap-finetune-full-20260715T034040.794581Z",
+      "cost_usd": 0.0,
+      "metadata": {
+        "optimizer": "bootstrap-finetune",
+        "profile": "full",
+        "status": "completed"
+      }
+    },
+    {
+      "stage": "optimizer_full",
+      "run_id": "better-together-full-20260715T034246.168669Z",
+      "cost_usd": 0.0,
+      "metadata": {
+        "optimizer": "better-together",
         "profile": "full",
         "status": "completed"
       }

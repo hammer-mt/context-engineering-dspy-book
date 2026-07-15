@@ -1,0 +1,158 @@
+{
+  "status": "completed",
+  "optimizer": "better-together",
+  "profile": "full",
+  "baseline_score": 50.0,
+  "optimized_score": 50.0,
+  "uplift_points": 0.0,
+  "optimization_seconds": 278.2980576669943,
+  "baseline_latency": {
+    "count": 20,
+    "mean_seconds": 1.3745495582501461,
+    "median_seconds": 1.3351302500013844,
+    "p50_seconds": 1.3351302500013844,
+    "p95_seconds": 1.9157325288499125,
+    "min_seconds": 0.844480667001335,
+    "max_seconds": 2.1421687499969266
+  },
+  "optimized_latency": {
+    "count": 20,
+    "mean_seconds": 1.3864019270979042,
+    "median_seconds": 1.3358773959989776,
+    "p50_seconds": 1.3358773959989776,
+    "p95_seconds": 1.9367833565993353,
+    "min_seconds": 0.8675147080066381,
+    "max_seconds": 2.1620105839974713
+  },
+  "baseline_usage": {
+    "request_count": 40,
+    "cache_hits": 0,
+    "prompt_tokens": 10466,
+    "completion_tokens": 1629,
+    "reasoning_tokens": 0,
+    "total_tokens": 12095,
+    "cost_usd": 0.0,
+    "models": {
+      "hf-mps:Qwen/Qwen2.5-0.5B-Instruct": {
+        "request_count": 40,
+        "cache_hits": 0,
+        "prompt_tokens": 10466,
+        "completion_tokens": 1629,
+        "reasoning_tokens": 0,
+        "total_tokens": 12095,
+        "cost_usd": 0.0
+      }
+    }
+  },
+  "optimization_usage": {
+    "request_count": 331,
+    "cache_hits": 0,
+    "prompt_tokens": 117091,
+    "completion_tokens": 15283,
+    "reasoning_tokens": 0,
+    "total_tokens": 132374,
+    "cost_usd": 0.0,
+    "models": {
+      "hf-mps:Qwen/Qwen2.5-0.5B-Instruct": {
+        "request_count": 313,
+        "cache_hits": 0,
+        "prompt_tokens": 112521,
+        "completion_tokens": 14487,
+        "reasoning_tokens": 0,
+        "total_tokens": 127008,
+        "cost_usd": 0.0
+      },
+      "hf-mps:Qwen/Qwen2.5-0.5B-Instruct::adapter=chapter06/results/runs/full/better-together/20260715T034246.168669Z/training/job-1784087237670429000/adapter": {
+        "request_count": 18,
+        "cache_hits": 0,
+        "prompt_tokens": 4570,
+        "completion_tokens": 796,
+        "reasoning_tokens": 0,
+        "total_tokens": 5366,
+        "cost_usd": 0.0
+      }
+    }
+  },
+  "optimized_evaluation_usage": {
+    "request_count": 40,
+    "cache_hits": 0,
+    "prompt_tokens": 10466,
+    "completion_tokens": 1629,
+    "reasoning_tokens": 0,
+    "total_tokens": 12095,
+    "cost_usd": 0.0,
+    "models": {
+      "hf-mps:Qwen/Qwen2.5-0.5B-Instruct": {
+        "request_count": 40,
+        "cache_hits": 0,
+        "prompt_tokens": 10466,
+        "completion_tokens": 1629,
+        "reasoning_tokens": 0,
+        "total_tokens": 12095,
+        "cost_usd": 0.0
+      }
+    }
+  },
+  "reload_verification_usage": {
+    "request_count": 6,
+    "cache_hits": 0,
+    "prompt_tokens": 1548,
+    "completion_tokens": 174,
+    "reasoning_tokens": 0,
+    "total_tokens": 1722,
+    "cost_usd": 0.0,
+    "models": {
+      "hf-mps:Qwen/Qwen2.5-0.5B-Instruct": {
+        "request_count": 6,
+        "cache_hits": 0,
+        "prompt_tokens": 1548,
+        "completion_tokens": 174,
+        "reasoning_tokens": 0,
+        "total_tokens": 1722,
+        "cost_usd": 0.0
+      }
+    }
+  },
+  "reload_prompt_parity": true,
+  "reload_model_parity": true,
+  "reload_prediction_parity": {
+    "checked": 3,
+    "completed": 3,
+    "matching": 3,
+    "all_equal": true,
+    "example_ids": [
+      "docs-python-tutorial-v3.10.0-005-human",
+      "docs-python-tutorial-v3.10.0-005-ai",
+      "docs-numpy-quickstart-v1.21.0-001-human"
+    ]
+  },
+  "optimizer_state": {
+    "predictor_models": [
+      "hf-mps:Qwen/Qwen2.5-0.5B-Instruct"
+    ],
+    "candidate_programs": [
+      {
+        "score": 50.0,
+        "strategy": "",
+        "predictor_models": [
+          "hf-mps:Qwen/Qwen2.5-0.5B-Instruct"
+        ]
+      },
+      {
+        "score": 50.0,
+        "strategy": "p",
+        "predictor_models": [
+          "hf-mps:Qwen/Qwen2.5-0.5B-Instruct"
+        ]
+      },
+      {
+        "score": 50.0,
+        "strategy": "p -> w",
+        "predictor_models": [
+          "hf-mps:Qwen/Qwen2.5-0.5B-Instruct::adapter=chapter06/results/runs/full/better-together/20260715T034246.168669Z/training/job-1784087237670429000/adapter"
+        ]
+      }
+    ],
+    "flag_compilation_error_occurred": false
+  }
+}
