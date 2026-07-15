@@ -1,0 +1,109 @@
+{
+  "status": "completed",
+  "optimizer": "labeled-few-shot",
+  "profile": "full",
+  "baseline_score": 60.0,
+  "optimized_score": 75.0,
+  "uplift_points": 15.0,
+  "optimization_seconds": 0.005801582999993116,
+  "baseline_latency": {
+    "count": 20,
+    "mean_seconds": 2.077096618602809,
+    "median_seconds": 1.7979077710115234,
+    "p50_seconds": 1.7979077710115234,
+    "p95_seconds": 3.326708058294026,
+    "min_seconds": 1.387032916987664,
+    "max_seconds": 4.607962291003787
+  },
+  "optimized_latency": {
+    "count": 20,
+    "mean_seconds": 2.2910126311493513,
+    "median_seconds": 2.041750291507924,
+    "p50_seconds": 2.041750291507924,
+    "p95_seconds": 3.4983748101054517,
+    "min_seconds": 1.541495917001157,
+    "max_seconds": 3.527076250000391
+  },
+  "baseline_usage": {
+    "request_count": 20,
+    "cache_hits": 0,
+    "prompt_tokens": 5200,
+    "completion_tokens": 2766,
+    "reasoning_tokens": 1254,
+    "total_tokens": 7966,
+    "cost_usd": 0.021796,
+    "models": {
+      "openai/gpt-5.6-luna": {
+        "request_count": 20,
+        "cache_hits": 0,
+        "prompt_tokens": 5200,
+        "completion_tokens": 2766,
+        "reasoning_tokens": 1254,
+        "total_tokens": 7966,
+        "cost_usd": 0.021796
+      }
+    }
+  },
+  "optimization_usage": {
+    "request_count": 0,
+    "cache_hits": 0,
+    "prompt_tokens": 0,
+    "completion_tokens": 0,
+    "reasoning_tokens": 0,
+    "total_tokens": 0,
+    "cost_usd": 0,
+    "models": {}
+  },
+  "optimized_evaluation_usage": {
+    "request_count": 20,
+    "cache_hits": 0,
+    "prompt_tokens": 14780,
+    "completion_tokens": 3534,
+    "reasoning_tokens": 2064,
+    "total_tokens": 18314,
+    "cost_usd": 0.035984,
+    "models": {
+      "openai/gpt-5.6-luna": {
+        "request_count": 20,
+        "cache_hits": 0,
+        "prompt_tokens": 14780,
+        "completion_tokens": 3534,
+        "reasoning_tokens": 2064,
+        "total_tokens": 18314,
+        "cost_usd": 0.035984
+      }
+    }
+  },
+  "reload_verification_usage": {
+    "request_count": 3,
+    "cache_hits": 0,
+    "prompt_tokens": 2207,
+    "completion_tokens": 459,
+    "reasoning_tokens": 238,
+    "total_tokens": 2666,
+    "cost_usd": 0.004961,
+    "models": {
+      "openai/gpt-5.6-luna": {
+        "request_count": 3,
+        "cache_hits": 0,
+        "prompt_tokens": 2207,
+        "completion_tokens": 459,
+        "reasoning_tokens": 238,
+        "total_tokens": 2666,
+        "cost_usd": 0.004961
+      }
+    }
+  },
+  "reload_prompt_parity": true,
+  "reload_prediction_parity": {
+    "checked": 3,
+    "completed": 3,
+    "matching": 3,
+    "all_equal": true,
+    "example_ids": [
+      "docs-python-tutorial-v3.10.0-005-human",
+      "docs-python-tutorial-v3.10.0-005-ai",
+      "docs-numpy-quickstart-v1.21.0-001-human"
+    ]
+  }
+}

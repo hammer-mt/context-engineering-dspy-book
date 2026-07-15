@@ -1,0 +1,99 @@
+{
+  "status": "completed",
+  "optimizer": "quickstart",
+  "profile": "full",
+  "baseline_score": 50.0,
+  "optimized_score": 50.0,
+  "uplift_points": 0.0,
+  "optimization_seconds": 0.0,
+  "baseline_latency": {
+    "count": 20,
+    "mean_seconds": 1.9962433750486526,
+    "median_seconds": 1.8377794995030854,
+    "p50_seconds": 1.8377794995030854,
+    "p95_seconds": 3.504997647895653,
+    "min_seconds": 1.332702166007948,
+    "max_seconds": 4.306204332999187
+  },
+  "optimized_latency": {
+    "count": 20,
+    "mean_seconds": 1.9962433750486526,
+    "median_seconds": 1.8377794995030854,
+    "p50_seconds": 1.8377794995030854,
+    "p95_seconds": 3.504997647895653,
+    "min_seconds": 1.332702166007948,
+    "max_seconds": 4.306204332999187
+  },
+  "baseline_usage": {
+    "request_count": 20,
+    "cache_hits": 0,
+    "prompt_tokens": 5200,
+    "completion_tokens": 2878,
+    "reasoning_tokens": 1358,
+    "total_tokens": 8078,
+    "cost_usd": 0.022468,
+    "models": {
+      "openai/gpt-5.6-luna": {
+        "request_count": 20,
+        "cache_hits": 0,
+        "prompt_tokens": 5200,
+        "completion_tokens": 2878,
+        "reasoning_tokens": 1358,
+        "total_tokens": 8078,
+        "cost_usd": 0.022468
+      }
+    }
+  },
+  "optimization_usage": {
+    "request_count": 0,
+    "cache_hits": 0,
+    "prompt_tokens": 0,
+    "completion_tokens": 0,
+    "reasoning_tokens": 0,
+    "total_tokens": 0,
+    "cost_usd": 0,
+    "models": {}
+  },
+  "optimized_evaluation_usage": {
+    "request_count": 0,
+    "cache_hits": 0,
+    "prompt_tokens": 0,
+    "completion_tokens": 0,
+    "reasoning_tokens": 0,
+    "total_tokens": 0,
+    "cost_usd": 0,
+    "models": {}
+  },
+  "reload_verification_usage": {
+    "request_count": 3,
+    "cache_hits": 0,
+    "prompt_tokens": 770,
+    "completion_tokens": 550,
+    "reasoning_tokens": 305,
+    "total_tokens": 1320,
+    "cost_usd": 0.00407,
+    "models": {
+      "openai/gpt-5.6-luna": {
+        "request_count": 3,
+        "cache_hits": 0,
+        "prompt_tokens": 770,
+        "completion_tokens": 550,
+        "reasoning_tokens": 305,
+        "total_tokens": 1320,
+        "cost_usd": 0.00407
+      }
+    }
+  },
+  "reload_prompt_parity": true,
+  "reload_prediction_parity": {
+    "checked": 3,
+    "completed": 3,
+    "matching": 2,
+    "all_equal": false,
+    "example_ids": [
+      "docs-python-tutorial-v3.10.0-005-human",
+      "docs-python-tutorial-v3.10.0-005-ai",
+      "docs-numpy-quickstart-v1.21.0-001-human"
+    ]
+  }
+}

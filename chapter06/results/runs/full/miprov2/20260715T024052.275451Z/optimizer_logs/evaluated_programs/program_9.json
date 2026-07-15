@@ -1,0 +1,56 @@
+{
+  "detect.predict": {
+    "traces": [],
+    "train": [],
+    "demos": [
+      {
+        "augmented": true,
+        "text": "PyTorch imposes little framework overhead; moreover, it incorporates acceleration libraries such as Intel MKL and NVIDIA’s cuDNN and NCCL to attain high speed. At its heart, the CPU and GPU tensor and neural-network backends are mature, having been proven over many years.",
+        "reasoning": "The passage uses polished, generic technical prose with a balanced explanatory structure and broad claims about framework overhead, acceleration libraries, and backend maturity. This style is consistent with AI-generated technical summarization, though it could also plausibly come from documentation. Overall, it is more likely AI-generated.",
+        "is_ai": true
+      },
+      {
+        "pair_id": "docs-rails-started-v7.0.0-003",
+        "example_id": "docs-rails-started-v7.0.0-003-ai",
+        "text": "A blog article may bear several statuses: public, and thus visible to all; private, visible only to its author; or archived, hidden from everyone yet still retrievable. Comments may likewise be shown or concealed. For a tidy and practical design, each model could therefore include a status column to record these sundry states.",
+        "is_ai": true
+      }
+    ],
+    "signature": {
+      "instructions": "Classify the supplied technical passage as AI-generated/paraphrased or human-written, focusing primarily on writing style rather than technical content or factual accuracy.\n\nLook for AI-paraphrase signals such as:\n- unusually polished, smoothed, or uniformly formal prose;\n- elevated, archaic, or unnatural diction (for example, “if you please,” “thus,” or “as need be”);\n- ornamental transitions, balanced sentence structures, and conspicuously formal punctuation;\n- conversion of direct instructions or lists into flowing explanatory prose;\n- generic elaboration, mild embellishment, or subtle reinterpretation that adds little information;\n- phrasing that sounds like a stylistic rewrite of technical documentation rather than original instruction-focused writing.\n\nHuman-authored passages in this dataset are more often concise, direct, repetitive, practical, and organized around explicit steps. Do not label a passage AI merely because it is grammatical, technical, or clear. Consider the combination and strength of stylistic signals, and make the best binary judgment even when evidence is ambiguous.\n\nReturn:\n- `reasoning`: a concise explanation citing the most diagnostic wording or structural features.\n- `is_ai`: `True` if the passage is more likely AI-generated or AI-paraphrased; otherwise `False`.",
+      "fields": [
+        {
+          "prefix": "Text:",
+          "description": "Passage to classify"
+        },
+        {
+          "prefix": "Reasoning:",
+          "description": "${reasoning}"
+        },
+        {
+          "prefix": "Is Ai:",
+          "description": "True for AI-generated text; otherwise False"
+        }
+      ]
+    },
+    "lm": {
+      "model": "openai/gpt-5.6-luna",
+      "model_type": "chat",
+      "cache": false,
+      "num_retries": 1,
+      "finetuning_model": null,
+      "launch_kwargs": {},
+      "train_kwargs": {},
+      "temperature": null,
+      "max_tokens": null,
+      "timeout": 120.0
+    }
+  },
+  "metadata": {
+    "dependency_versions": {
+      "python": "3.11",
+      "dspy": "3.2.1",
+      "cloudpickle": "3.1"
+    }
+  }
+}

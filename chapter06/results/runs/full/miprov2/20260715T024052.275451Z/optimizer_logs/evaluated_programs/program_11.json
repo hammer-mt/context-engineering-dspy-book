@@ -1,0 +1,56 @@
+{
+  "detect.predict": {
+    "traces": [],
+    "train": [],
+    "demos": [
+      {
+        "pair_id": "docs-airflow-dags-2.2.0-015",
+        "example_id": "docs-airflow-dags-2.2.0-015-human",
+        "text": "join is downstream of follow_branch_a and branch_false. The join task will show up as skipped because its trigger_rule is set to all_success by default, and the skip caused by the branching operation cascades down to skip a task marked as all_success.",
+        "is_ai": false
+      },
+      {
+        "pair_id": "docs-rails-started-v7.0.0-003",
+        "example_id": "docs-rails-started-v7.0.0-003-human",
+        "text": "A given blog article might have various statuses - for instance, it might be visible to everyone (i.e. public), or only visible to the author (i.e. private). It may also be hidden to all but still retrievable (i.e. archived). Comments may similarly be hidden or visible. This could be represented using a status column in each model.",
+        "is_ai": false
+      }
+    ],
+    "signature": {
+      "instructions": "You are the final forensic reviewer in a high-stakes technical publishing audit. A mistaken verdict could either allow undisclosed AI-rewritten documentation into a safety-critical release or falsely accuse a human author, so assess each passage carefully and impartially.\n\nDetermine whether the supplied passage is AI-generated or AI-paraphrased (`True`) versus human-written (`False`). Because paired passages may contain nearly identical technical facts, judge the **writing style rather than the topic, correctness, or sophistication of the content**.\n\nLook for clusters of evidence:\n\n- **AI tendencies:** conspicuously polished transitions; elevated, archaic, or needlessly formal diction; excessive syntactic smoothing; balanced or uniformly fluent sentence structures; formal punctuation; conversion of concise steps or lists into flowing prose; awkwardly ornate wording; generic broad claims; mild embellishment or reinterpretation that adds little information.\n- **Human tendencies in this dataset:** concise and direct instruction; repetition of terms; straightforward sequencing; list-like or procedural structure; locally awkward but practical phrasing; limited transitions; economical documentation style.\n\nDo not classify text as AI merely because it is grammatical, technical, or professional. Likewise, do not assume repetition or roughness alone proves human authorship. Weigh multiple passage-specific cues, and choose the most likely source even when evidence is mixed.\n\nReturn:\n1. `reasoning`: a concise justification citing the most diagnostic stylistic features without inventing facts.\n2. `is_ai`: exactly `True` if the passage is more likely AI-generated or AI-paraphrased; otherwise exactly `False`.",
+      "fields": [
+        {
+          "prefix": "Text:",
+          "description": "Passage to classify"
+        },
+        {
+          "prefix": "Reasoning:",
+          "description": "${reasoning}"
+        },
+        {
+          "prefix": "Is Ai:",
+          "description": "True for AI-generated text; otherwise False"
+        }
+      ]
+    },
+    "lm": {
+      "model": "openai/gpt-5.6-luna",
+      "model_type": "chat",
+      "cache": false,
+      "num_retries": 1,
+      "finetuning_model": null,
+      "launch_kwargs": {},
+      "train_kwargs": {},
+      "temperature": null,
+      "max_tokens": null,
+      "timeout": 120.0
+    }
+  },
+  "metadata": {
+    "dependency_versions": {
+      "python": "3.11",
+      "dspy": "3.2.1",
+      "cloudpickle": "3.1"
+    }
+  }
+}

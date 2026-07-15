@@ -4,9 +4,16 @@ The completed experiment, interpretation, and manuscript-ready comparison are in
 [`CHAPTER_RESULTS.md`](CHAPTER_RESULTS.md). Machine-generated tables and canonical
 artifacts remain under `results/`.
 
-Each optimizer has its own self-contained notebook. Run the install cell and then
-execute the notebook top-to-bottom, so one optimizer failure cannot cancel every
-other experiment.
+Each optimizer has its own concise, executed notebook. Opening a notebook and
+choosing **Run All** defaults to `inspect` mode: it reads the checked-in full-run
+artifacts, prints score/cost/time/latency, previews the learned prompt and demos,
+and makes no API calls. This makes the downloaded notebooks useful even before a
+reader installs DSPy or configures credentials.
+
+For a live run, install the repository requirements, configure `OPENAI_API_KEY`,
+and launch Jupyter with `CHAPTER06_RUN=smoke` for a bounded code-path check or
+`CHAPTER06_RUN=full` for the complete frozen split. The paid/full path is
+deliberately opt-in; it is never triggered by the notebook's default execution.
 
 The default configuration targets stable DSPy 3.2.1 and uses:
 
@@ -51,7 +58,21 @@ prompt under `results/runs/`. The summarizer copies canonical programs to
 `optimized_programs/final/`, canonical prompts to `results/final_prompts/`, and
 generates the chapter-facing benchmark table in `results/benchmark_summary.md`.
 The same rows are also exported as `results/benchmark_summary.csv` and structured
-`results/benchmark_summary.json`.
+`results/benchmark_summary.json`. It also rebuilds `CHAPTER_RESULTS.md` from the
+selected reruns. Completed runs verify prompt/demo equality after serialization
+and prediction-label parity on a bounded test subset.
+
+To regenerate and publication-check the notebooks after rebuilding the summary:
+
+```bash
+python -m chapter06.build_optimizer_notebooks
+python -m chapter06.execute_optimizer_notebooks
+python -m chapter06.validate_notebooks
+```
+
+The first command intentionally clears outputs, the second really executes every
+notebook in safe mode from the repository root, and the final command rejects
+unexecuted cells or missing saved output.
 
 ## Notebook map
 

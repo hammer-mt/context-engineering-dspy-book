@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "ceiling_usd": 95.0,
-  "total_cost_usd": 7.533706400000002,
-  "remaining_usd": 87.4662936,
+  "total_cost_usd": 12.340935900000002,
+  "remaining_usd": 82.6590641,
   "entries": [
     {
       "stage": "dataset_baseline_screen",
@@ -839,6 +839,106 @@
       "stage": "optimizer_full",
       "run_id": "ensemble-full-20260714T155720.091225Z",
       "cost_usd": 0.41354,
+      "metadata": {
+        "optimizer": "ensemble",
+        "profile": "full",
+        "status": "completed"
+      }
+    },
+    {
+      "stage": "optimizer_full",
+      "run_id": "quickstart-full-20260715T021346.545192Z",
+      "cost_usd": 0.026538,
+      "metadata": {
+        "optimizer": "quickstart",
+        "profile": "full",
+        "status": "completed"
+      }
+    },
+    {
+      "stage": "optimizer_full",
+      "run_id": "labeled-few-shot-full-20260715T021433.053902Z",
+      "cost_usd": 0.062741,
+      "metadata": {
+        "optimizer": "labeled-few-shot",
+        "profile": "full",
+        "status": "completed"
+      }
+    },
+    {
+      "stage": "optimizer_full",
+      "run_id": "bootstrap-few-shot-full-20260715T021606.863407Z",
+      "cost_usd": 0.059572,
+      "metadata": {
+        "optimizer": "bootstrap-few-shot",
+        "profile": "full",
+        "status": "completed"
+      }
+    },
+    {
+      "stage": "optimizer_full",
+      "run_id": "bootstrap-random-search-full-20260715T021734.417538Z",
+      "cost_usd": 0.338851,
+      "metadata": {
+        "optimizer": "bootstrap-random-search",
+        "profile": "full",
+        "status": "completed"
+      }
+    },
+    {
+      "stage": "optimizer_full",
+      "run_id": "knn-few-shot-full-20260715T022522.568313Z",
+      "cost_usd": 0.06612,
+      "metadata": {
+        "optimizer": "knn-few-shot",
+        "profile": "full",
+        "status": "completed"
+      }
+    },
+    {
+      "stage": "optimizer_full",
+      "run_id": "copro-full-20260715T022649.246290Z",
+      "cost_usd": 0.603906,
+      "metadata": {
+        "optimizer": "copro",
+        "profile": "full",
+        "status": "completed"
+      }
+    },
+    {
+      "stage": "optimizer_full",
+      "run_id": "miprov2-full-20260715T024052.275451Z",
+      "cost_usd": 0.564718,
+      "metadata": {
+        "optimizer": "miprov2",
+        "profile": "full",
+        "status": "completed"
+      }
+    },
+    {
+      "stage": "optimizer_full",
+      "run_id": "gepa-full-20260715T024939.319893Z",
+      "cost_usd": 1.6539035,
+      "metadata": {
+        "optimizer": "gepa",
+        "profile": "full",
+        "status": "completed"
+      }
+    },
+    {
+      "stage": "optimizer_full",
+      "run_id": "simba-full-20260715T030554.809087Z",
+      "cost_usd": 1.00352,
+      "metadata": {
+        "optimizer": "simba",
+        "profile": "full",
+        "status": "completed"
+      }
+    },
+    {
+      "stage": "optimizer_full",
+      "run_id": "ensemble-full-20260715T032559.141471Z",
+      "cost_usd": 0.42736,
       "metadata": {
         "optimizer": "ensemble",
         "profile": "full",

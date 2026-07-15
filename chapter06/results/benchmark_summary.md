@@ -1,19 +1,19 @@
 # Chapter 6 optimizer benchmark
 
-Frozen reference baseline: **40.0%**. Adversarial selection replicates: 35.0%, 45.0%.
+Frozen reference baseline: **50.0%**. Adversarial selection replicates: 35.0%, 45.0%.
 
-| Optimizer | Accuracy | Uplift vs. 40.0% reference | Relative uplift | Optimize cost | Optimize time | Mean latency | P95 latency |
+| Optimizer | Accuracy | Uplift vs. 50.0% reference | Relative uplift | Optimize cost | Optimize time | Mean latency | P95 latency |
 |---|---:|---:|---:|---:|---:|---:|---:|
-| Unoptimized baseline | 40.0% | +0.0 pts | +0.0% | $0.0000 | 0.0s | 2.26s | 4.11s |
-| LabeledFewShot | 50.0% | +10.0 pts | +25.0% | $0.0000 | 0.0s | 2.20s | 2.85s |
-| BootstrapFewShot | 75.0% | +35.0 pts | +87.5% | $0.0026 | 6.4s | 4.05s | 13.62s |
-| BootstrapRS | 65.0% | +25.0 pts | +62.5% | $0.2960 | 10.1min | 2.64s | 3.63s |
-| KNNFewShot | 75.0% | +35.0 pts | +87.5% | $0.0000 | 0.0s | 2.97s | 3.84s |
-| COPRO | 65.0% | +25.0 pts | +62.5% | $0.5296 | 16.3min | 2.77s | 3.71s |
-| MIPROv2 | 90.0% | +50.0 pts | +125.0% | $0.4881 | 12.9min | 2.43s | 3.72s |
-| GEPA | 90.0% | +50.0 pts | +125.0% | $1.3275 | 25.8min | 2.25s | 2.99s |
-| SIMBA | 65.0% | +25.0 pts | +62.5% | $0.8292 | 25.2min | 2.19s | 3.32s |
-| Ensemble | 85.0% | +45.0 pts | +112.5% | $0.2988 | 8.0min | 7.14s | 10.38s |
+| Unoptimized baseline | 50.0% | +0.0 pts | +0.0% | $0.0000 | 0.0s | 2.00s | 3.50s |
+| LabeledFewShot | 75.0% | +25.0 pts | +50.0% | $0.0000 | 0.0s | 2.29s | 3.50s |
+| BootstrapFewShot | 75.0% | +25.0 pts | +50.0% | $0.0029 | 4.3s | 1.94s | 3.14s |
+| BootstrapRS | 70.0% | +20.0 pts | +40.0% | $0.2860 | 6.6min | 1.79s | 2.66s |
+| KNNFewShot | 70.0% | +20.0 pts | +40.0% | $0.0000 | 0.0s | 2.06s | 2.57s |
+| COPRO | 50.0% | +0.0 pts | +0.0% | $0.5491 | 12.6min | 2.31s | 3.05s |
+| MIPROv2 | 95.0% | +45.0 pts | +90.0% | $0.5072 | 7.6min | 1.67s | 2.87s |
+| GEPA | 90.0% | +40.0 pts | +80.0% | $1.5658 | 15.0min | 1.78s | 2.32s |
+| SIMBA | 70.0% | +20.0 pts | +40.0% | $0.9482 | 18.8min | 1.63s | 2.22s |
+| Ensemble | 80.0% | +30.0 pts | +60.0% | $0.3028 | 6.7min | 5.10s | 6.35s |
 | BootstrapFinetune | hardware_blocked | — | — | — | — | — | — |
 | BetterTogether | hardware_blocked | — | — | — | — | — | — |
 

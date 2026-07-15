@@ -1,0 +1,128 @@
+{
+  "status": "completed",
+  "optimizer": "miprov2",
+  "profile": "full",
+  "baseline_score": 40.0,
+  "optimized_score": 95.0,
+  "uplift_points": 55.0,
+  "optimization_seconds": 455.46304958401015,
+  "baseline_latency": {
+    "count": 20,
+    "mean_seconds": 1.6633211728993047,
+    "median_seconds": 1.5787077295026393,
+    "p50_seconds": 1.5787077295026393,
+    "p95_seconds": 1.9548158225909003,
+    "min_seconds": 1.305735874993843,
+    "max_seconds": 3.3335506250004983
+  },
+  "optimized_latency": {
+    "count": 20,
+    "mean_seconds": 1.6725125561963068,
+    "median_seconds": 1.4561492079956224,
+    "p50_seconds": 1.4561492079956224,
+    "p95_seconds": 2.87423832528948,
+    "min_seconds": 1.298340041001211,
+    "max_seconds": 3.0875234579871176
+  },
+  "baseline_usage": {
+    "request_count": 20,
+    "cache_hits": 0,
+    "prompt_tokens": 5200,
+    "completion_tokens": 2311,
+    "reasoning_tokens": 850,
+    "total_tokens": 7511,
+    "cost_usd": 0.019066,
+    "models": {
+      "openai/gpt-5.6-luna": {
+        "request_count": 20,
+        "cache_hits": 0,
+        "prompt_tokens": 5200,
+        "completion_tokens": 2311,
+        "reasoning_tokens": 850,
+        "total_tokens": 7511,
+        "cost_usd": 0.019066
+      }
+    }
+  },
+  "optimization_usage": {
+    "request_count": 223,
+    "cache_hits": 0,
+    "prompt_tokens": 171122,
+    "completion_tokens": 29728,
+    "reasoning_tokens": 10010,
+    "total_tokens": 200850,
+    "cost_usd": 0.507154,
+    "models": {
+      "openai/gpt-5.6-luna": {
+        "request_count": 209,
+        "cache_hits": 0,
+        "prompt_tokens": 153714,
+        "completion_tokens": 26060,
+        "reasoning_tokens": 9369,
+        "total_tokens": 179774,
+        "cost_usd": 0.310074
+      },
+      "openai/gpt-5.6-sol": {
+        "request_count": 14,
+        "cache_hits": 0,
+        "prompt_tokens": 17408,
+        "completion_tokens": 3668,
+        "reasoning_tokens": 641,
+        "total_tokens": 21076,
+        "cost_usd": 0.19708
+      }
+    }
+  },
+  "optimized_evaluation_usage": {
+    "request_count": 20,
+    "cache_hits": 0,
+    "prompt_tokens": 18360,
+    "completion_tokens": 2534,
+    "reasoning_tokens": 949,
+    "total_tokens": 20894,
+    "cost_usd": 0.033564,
+    "models": {
+      "openai/gpt-5.6-luna": {
+        "request_count": 20,
+        "cache_hits": 0,
+        "prompt_tokens": 18360,
+        "completion_tokens": 2534,
+        "reasoning_tokens": 949,
+        "total_tokens": 20894,
+        "cost_usd": 0.033564
+      }
+    }
+  },
+  "reload_verification_usage": {
+    "request_count": 3,
+    "cache_hits": 0,
+    "prompt_tokens": 2744,
+    "completion_tokens": 365,
+    "reasoning_tokens": 126,
+    "total_tokens": 3109,
+    "cost_usd": 0.004934,
+    "models": {
+      "openai/gpt-5.6-luna": {
+        "request_count": 3,
+        "cache_hits": 0,
+        "prompt_tokens": 2744,
+        "completion_tokens": 365,
+        "reasoning_tokens": 126,
+        "total_tokens": 3109,
+        "cost_usd": 0.004934
+      }
+    }
+  },
+  "reload_prompt_parity": true,
+  "reload_prediction_parity": {
+    "checked": 3,
+    "completed": 3,
+    "matching": 3,
+    "all_equal": true,
+    "example_ids": [
+      "docs-python-tutorial-v3.10.0-005-human",
+      "docs-python-tutorial-v3.10.0-005-ai",
+      "docs-numpy-quickstart-v1.21.0-001-human"
+    ]
+  }
+}
