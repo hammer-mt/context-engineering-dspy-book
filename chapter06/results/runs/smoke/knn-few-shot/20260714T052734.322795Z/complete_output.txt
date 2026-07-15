@@ -1,9 +1,0 @@
-{
-  "run_id": "20260714T052734.322795Z",
-  "optimizer": "knn-few-shot",
-  "profile": "smoke",
-  "train": 6,
-  "validation": 4,
-  "test": 4
-}
-Baseline score: 50.00%

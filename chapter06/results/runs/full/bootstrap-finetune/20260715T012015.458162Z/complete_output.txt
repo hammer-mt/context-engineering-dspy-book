@@ -1,175 +1,0 @@
-{
-  "run_id": "20260715T012015.458162Z",
-  "optimizer": "bootstrap-finetune",
-  "profile": "full",
-  "train": 36,
-  "validation": 18,
-  "test": 20,
-  "student_model": "hf-mps:Qwen/Qwen2.5-0.5B-Instruct",
-  "teacher_mode": "local",
-  "local_capabilities": {
-    "torch_version": "2.13.0",
-    "mps_built": true,
-    "mps_available": true,
-    "selected_device": "mps"
-  }
-}
-`torch_dtype` is deprecated! Use `dtype` instead!
-The following generation flags are not valid and may be ignored: ['temperature', 'top_p', 'top_k']. Set `TRANSFORMERS_VERBOSITY=info` for more details.
-Baseline score: 50.00%
-2026/07/14 21:20:46 INFO dspy.teleprompt.bootstrap_finetune: Preparing the student and teacher programs...
-2026/07/14 21:20:46 INFO dspy.teleprompt.bootstrap_finetune: Bootstrapping data...
-  0%|          | 0/36 [00:00<?, ?it/s]Average Metric: 1.00 / 1 (100.0%):   0%|          | 0/36 [00:02<?, ?it/s]Average Metric: 1.00 / 1 (100.0%):   3%|2         | 1/36 [00:02<01:22,  2.37s/it]Average Metric: 1.00 / 2 (50.0%):   3%|2         | 1/36 [00:04<01:22,  2.37s/it] Average Metric: 1.00 / 2 (50.0%):   6%|5         | 2/36 [00:04<01:17,  2.27s/it]Average Metric: 2.00 / 3 (66.7%):   6%|5         | 2/36 [00:05<01:17,  2.27s/it]Average Metric: 2.00 / 3 (66.7%):   8%|8         | 3/36 [00:05<00:58,  1.77s/it]Average Metric: 2.00 / 4 (50.0%):   8%|8         | 3/36 [00:06<00:58,  1.77s/it]Average Metric: 2.00 / 4 (50.0%):  11%|#1        | 4/36 [00:06<00:47,  1.49s/it]Average Metric: 3.00 / 5 (60.0%):  11%|#1        | 4/36 [00:08<00:47,  1.49s/it]Average Metric: 3.00 / 5 (60.0%):  14%|#3        | 5/36 [00:08<00:43,  1.40s/it]Average Metric: 3.00 / 6 (50.0%):  14%|#3        | 5/36 [00:09<00:43,  1.40s/it]Average Metric: 3.00 / 6 (50.0%):  17%|#6        | 6/36 [00:09<00:41,  1.39s/it]Average Metric: 4.00 / 7 (57.1%):  17%|#6        | 6/36 [00:12<00:41,  1.39s/it]Average Metric: 4.00 / 7 (57.1%):  19%|#9        | 7/36 [00:12<00:56,  1.95s/it]Average Metric: 4.00 / 8 (50.0%):  19%|#9        | 7/36 [00:13<00:56,  1.95s/it]Average Metric: 4.00 / 8 (50.0%):  22%|##2       | 8/36 [00:13<00:49,  1.77s/it]Average Metric: 5.00 / 9 (55.6%):  22%|##2       | 8/36 [00:15<00:49,  1.77s/it]Average Metric: 5.00 / 9 (55.6%):  25%|##5       | 9/36 [00:15<00:50,  1.86s/it]Average Metric: 5.00 / 10 (50.0%):  25%|##5       | 9/36 [00:16<00:50,  1.86s/it]Average Metric: 5.00 / 10 (50.0%):  28%|##7       | 10/36 [00:16<00:36,  1.42s/it]Average Metric: 6.00 / 11 (54.5%):  28%|##7       | 10/36 [00:18<00:36,  1.42s/it]Average Metric: 6.00 / 11 (54.5%):  31%|###       | 11/36 [00:18<00:37,  1.48s/it]Average Metric: 6.00 / 12 (50.0%):  31%|###       | 11/36 [00:19<00:37,  1.48s/it]Average Metric: 6.00 / 12 (50.0%):  33%|###3      | 12/36 [00:19<00:33,  1.39s/it]Average Metric: 7.00 / 13 (53.8%):  33%|###3      | 12/36 [00:19<00:33,  1.39s/it]Average Metric: 7.00 / 13 (53.8%):  36%|###6      | 13/36 [00:19<00:27,  1.20s/it]Average Metric: 7.00 / 14 (50.0%):  36%|###6      | 13/36 [00:20<00:27,  1.20s/it]Average Metric: 7.00 / 14 (50.0%):  39%|###8      | 14/36 [00:20<00:24,  1.11s/it]Average Metric: 8.00 / 15 (53.3%):  39%|###8      | 14/36 [00:22<00:24,  1.11s/it]Average Metric: 8.00 / 15 (53.3%):  42%|####1     | 15/36 [00:22<00:29,  1.41s/it]Average Metric: 8.00 / 16 (50.0%):  42%|####1     | 15/36 [00:25<00:29,  1.41s/it]Average Metric: 8.00 / 16 (50.0%):  44%|####4     | 16/36 [00:25<00:32,  1.61s/it]Average Metric: 9.00 / 17 (52.9%):  44%|####4     | 16/36 [00:26<00:32,  1.61s/it]Average Metric: 9.00 / 17 (52.9%):  47%|####7     | 17/36 [00:26<00:32,  1.70s/it]Average Metric: 9.00 / 18 (50.0%):  47%|####7     | 17/36 [00:27<00:32,  1.70s/it]Average Metric: 9.00 / 18 (50.0%):  50%|#####     | 18/36 [00:27<00:26,  1.49s/it]Average Metric: 10.00 / 19 (52.6%):  50%|#####     | 18/36 [00:29<00:26,  1.49s/it]Average Metric: 10.00 / 19 (52.6%):  53%|#####2    | 19/36 [00:29<00:26,  1.58s/it]Average Metric: 10.00 / 20 (50.0%):  53%|#####2    | 19/36 [00:31<00:26,  1.58s/it]Average Metric: 10.00 / 20 (50.0%):  56%|#####5    | 20/36 [00:31<00:28,  1.78s/it]Average Metric: 11.00 / 21 (52.4%):  56%|#####5    | 20/36 [00:33<00:28,  1.78s/it]Average Metric: 11.00 / 21 (52.4%):  58%|#####8    | 21/36 [00:33<00:27,  1.80s/it]Average Metric: 11.00 / 22 (50.0%):  58%|#####8    | 21/36 [00:34<00:27,  1.80s/it]Average Metric: 11.00 / 22 (50.0%):  61%|######1   | 22/36 [00:34<00:22,  1.58s/it]Average Metric: 12.00 / 23 (52.2%):  61%|######1   | 22/36 [00:36<00:22,  1.58s/it]Average Metric: 12.00 / 23 (52.2%):  64%|######3   | 23/36 [00:36<00:19,  1.52s/it]Average Metric: 12.00 / 24 (50.0%):  64%|######3   | 23/36 [00:37<00:19,  1.52s/it]Average Metric: 12.00 / 24 (50.0%):  67%|######6   | 24/36 [00:37<00:16,  1.35s/it]Average Metric: 13.00 / 25 (52.0%):  67%|######6   | 24/36 [00:38<00:16,  1.35s/it]Average Metric: 13.00 / 25 (52.0%):  69%|######9   | 25/36 [00:38<00:13,  1.20s/it]Average Metric: 13.00 / 26 (50.0%):  69%|######9   | 25/36 [00:39<00:13,  1.20s/it]Average Metric: 13.00 / 26 (50.0%):  72%|#######2  | 26/36 [00:39<00:11,  1.16s/it]Average Metric: 14.00 / 27 (51.9%):  72%|#######2  | 26/36 [00:40<00:11,  1.16s/it]Average Metric: 14.00 / 27 (51.9%):  75%|#######5  | 27/36 [00:40<00:11,  1.24s/it]Average Metric: 14.00 / 28 (50.0%):  75%|#######5  | 27/36 [00:42<00:11,  1.24s/it]Average Metric: 14.00 / 28 (50.0%):  78%|#######7  | 28/36 [00:42<00:10,  1.32s/it]Average Metric: 15.00 / 29 (51.7%):  78%|#######7  | 28/36 [00:44<00:10,  1.32s/it]Average Metric: 15.00 / 29 (51.7%):  81%|########  | 29/36 [00:44<00:11,  1.69s/it]Average Metric: 15.00 / 30 (50.0%):  81%|########  | 29/36 [00:46<00:11,  1.69s/it]Average Metric: 15.00 / 30 (50.0%):  83%|########3 | 30/36 [00:46<00:11,  1.84s/it]Average Metric: 15.00 / 31 (48.4%):  83%|########3 | 30/36 [00:48<00:11,  1.84s/it]Average Metric: 15.00 / 31 (48.4%):  86%|########6 | 31/36 [00:48<00:08,  1.78s/it]Average Metric: 15.00 / 32 (46.9%):  86%|########6 | 31/36 [00:49<00:08,  1.78s/it]Average Metric: 15.00 / 32 (46.9%):  89%|########8 | 32/36 [00:49<00:06,  1.58s/it]Average Metric: 16.00 / 33 (48.5%):  89%|########8 | 32/36 [00:51<00:06,  1.58s/it]Average Metric: 16.00 / 33 (48.5%):  92%|#########1| 33/36 [00:51<00:05,  1.69s/it]Average Metric: 16.00 / 34 (47.1%):  92%|#########1| 33/36 [00:52<00:05,  1.69s/it]Average Metric: 16.00 / 34 (47.1%):  94%|#########4| 34/36 [00:52<00:02,  1.47s/it]Average Metric: 17.00 / 35 (48.6%):  94%|#########4| 34/36 [00:53<00:02,  1.47s/it]Average Metric: 17.00 / 35 (48.6%):  97%|#########7| 35/36 [00:53<00:01,  1.39s/it]Average Metric: 17.00 / 36 (47.2%):  97%|#########7| 35/36 [00:55<00:01,  1.39s/it]Average Metric: 17.00 / 36 (47.2%): 100%|##########| 36/36 [00:55<00:00,  1.63s/it]Average Metric: 17.00 / 36 (47.2%): 100%|##########| 36/36 [00:55<00:00,  1.55s/it]
-2026/07/14 21:21:42 INFO dspy.evaluate.evaluate: Average Metric: 17.0 / 36 (47.2%)
-2026/07/14 21:21:42 INFO dspy.teleprompt.bootstrap_finetune: Preparing the train data...
-2026/07/14 21:21:42 INFO dspy.teleprompt.bootstrap_finetune: Collected data for 36 examples
-2026/07/14 21:21:42 INFO dspy.teleprompt.bootstrap_finetune: After filtering with the metric, 17 examples remain
-2026/07/14 21:21:42 INFO dspy.teleprompt.bootstrap_finetune: Using 17 data points for fine-tuning the model: hf-mps:Qwen/Qwen2.5-0.5B-Instruct
-2026/07/14 21:21:42 INFO dspy.teleprompt.bootstrap_finetune: Starting LM fine-tuning...
-2026/07/14 21:21:42 INFO dspy.teleprompt.bootstrap_finetune: 1 fine-tuning job(s) to start
-2026/07/14 21:21:42 INFO dspy.teleprompt.bootstrap_finetune: Starting 1 fine-tuning job(s)...
-2026/07/14 21:21:42 INFO dspy.teleprompt.bootstrap_finetune: Calling lm.kill() on the LM to be fine-tuned to free up resources. This won't have any effect if the LM is not running.
-Tokenizing train dataset:   0%|          | 0/17 [00:00<?, ? examples/s]Tokenizing train dataset: 100%|##########| 17/17 [00:00<00:00, 1768.61 examples/s]
-Truncating train dataset:   0%|          | 0/17 [00:00<?, ? examples/s]Truncating train dataset: 100%|##########| 17/17 [00:00<00:00, 14407.59 examples/s]
-The tokenizer has new PAD/BOS/EOS tokens that differ from the model config and generation config. The model config and generation config were aligned accordingly, being updated with the tokenizer's values. Updated tokens: {'bos_token_id': None, 'pad_token_id': 151643}.
-  0%|          | 0/18 [00:00<?, ?it/s]  6%|5         | 1/18 [00:01<00:31,  1.85s/it]                                              {'loss': 2.9711, 'grad_norm': 14.630248069763184, 'learning_rate': 0.0002, 'entropy': 1.687749445438385, 'num_tokens': 1321.0, 'mean_token_accuracy': 0.5227325856685638, 'epoch': 0.24}
-  6%|5         | 1/18 [00:01<00:31,  1.85s/it] 11%|#1        | 2/18 [00:02<00:22,  1.38s/it]                                              {'loss': 2.64, 'grad_norm': 2.748558282852173, 'learning_rate': 0.00018888888888888888, 'entropy': 2.066315174102783, 'num_tokens': 2580.0, 'mean_token_accuracy': 0.534032016992569, 'epoch': 0.47}
- 11%|#1        | 2/18 [00:02<00:22,  1.38s/it] 17%|#6        | 3/18 [00:03<00:18,  1.24s/it]                                              {'loss': 2.3979, 'grad_norm': 2.325563430786133, 'learning_rate': 0.00017777777777777779, 'entropy': 2.1521703898906708, 'num_tokens': 3865.0, 'mean_token_accuracy': 0.54783995449543, 'epoch': 0.71}
- 17%|#6        | 3/18 [00:03<00:18,  1.24s/it] 22%|##2       | 4/18 [00:04<00:14,  1.07s/it]                                              {'loss': 2.0775, 'grad_norm': 2.014716148376465, 'learning_rate': 0.0001666666666666667, 'entropy': 2.079696536064148, 'num_tokens': 5184.0, 'mean_token_accuracy': 0.59383125603199, 'epoch': 0.94}
- 22%|##2       | 4/18 [00:04<00:14,  1.07s/it] 28%|##7       | 5/18 [00:05<00:09,  1.31it/s]                                              {'loss': 2.162, 'grad_norm': 2.131254196166992, 'learning_rate': 0.00015555555555555556, 'entropy': 2.1494076251983643, 'num_tokens': 5474.0, 'mean_token_accuracy': 0.5951557159423828, 'epoch': 1.0}
- 28%|##7       | 5/18 [00:05<00:09,  1.31it/s] 33%|###3      | 6/18 [00:05<00:08,  1.34it/s]                                              {'loss': 1.8245, 'grad_norm': 1.607338547706604, 'learning_rate': 0.00014444444444444444, 'entropy': 2.010884076356888, 'num_tokens': 6860.0, 'mean_token_accuracy': 0.6256807595491409, 'epoch': 1.24}
- 33%|###3      | 6/18 [00:05<00:08,  1.34it/s] 39%|###8      | 7/18 [00:06<00:07,  1.39it/s]                                              {'loss': 1.694, 'grad_norm': 1.746589183807373, 'learning_rate': 0.00013333333333333334, 'entropy': 1.9823210537433624, 'num_tokens': 8132.0, 'mean_token_accuracy': 0.6464548408985138, 'epoch': 1.47}
- 39%|###8      | 7/18 [00:06<00:07,  1.39it/s] 44%|####4     | 8/18 [00:07<00:06,  1.44it/s]                                              {'loss': 1.6497, 'grad_norm': 1.819234013557434, 'learning_rate': 0.00012222222222222224, 'entropy': 1.978414237499237, 'num_tokens': 9361.0, 'mean_token_accuracy': 0.6433267742395401, 'epoch': 1.71}
- 44%|####4     | 8/18 [00:07<00:06,  1.44it/s] 50%|#####     | 9/18 [00:07<00:06,  1.46it/s]                                              {'loss': 1.5261, 'grad_norm': 1.8101409673690796, 'learning_rate': 0.00011111111111111112, 'entropy': 1.8912471532821655, 'num_tokens': 10623.0, 'mean_token_accuracy': 0.6881522983312607, 'epoch': 1.94}
- 50%|#####     | 9/18 [00:07<00:06,  1.46it/s] 56%|#####5    | 10/18 [00:07<00:04,  1.88it/s]                                               {'loss': 1.6528, 'grad_norm': 2.0754129886627197, 'learning_rate': 0.0001, 'entropy': 1.9205949306488037, 'num_tokens': 10948.0, 'mean_token_accuracy': 0.6481481194496155, 'epoch': 2.0}
- 56%|#####5    | 10/18 [00:07<00:04,  1.88it/s] 61%|######1   | 11/18 [00:08<00:04,  1.74it/s]                                               {'loss': 1.2901, 'grad_norm': 1.855912208557129, 'learning_rate': 8.888888888888889e-05, 'entropy': 1.6628409028053284, 'num_tokens': 12249.0, 'mean_token_accuracy': 0.7107983976602554, 'epoch': 2.24}
- 61%|######1   | 11/18 [00:08<00:04,  1.74it/s] 67%|######6   | 12/18 [00:09<00:03,  1.65it/s]                                               {'loss': 1.1527, 'grad_norm': 1.910033106803894, 'learning_rate': 7.777777777777778e-05, 'entropy': 1.5456676483154297, 'num_tokens': 13562.0, 'mean_token_accuracy': 0.7294510751962662, 'epoch': 2.47}
- 67%|######6   | 12/18 [00:09<00:03,  1.65it/s] 72%|#######2  | 13/18 [00:09<00:03,  1.61it/s]                                               {'loss': 1.1494, 'grad_norm': 1.8984977006912231, 'learning_rate': 6.666666666666667e-05, 'entropy': 1.4993841052055359, 'num_tokens': 14826.0, 'mean_token_accuracy': 0.7482495754957199, 'epoch': 2.71}
- 72%|#######2  | 13/18 [00:09<00:03,  1.61it/s] 78%|#######7  | 14/18 [00:10<00:02,  1.57it/s]                                               {'loss': 1.0952, 'grad_norm': 1.820345163345337, 'learning_rate': 5.555555555555556e-05, 'entropy': 1.489412784576416, 'num_tokens': 16097.0, 'mean_token_accuracy': 0.7610093206167221, 'epoch': 2.94}
- 78%|#######7  | 14/18 [00:10<00:02,  1.57it/s] 83%|########3 | 15/18 [00:10<00:01,  1.99it/s]                                               {'loss': 1.2573, 'grad_norm': 2.095643997192383, 'learning_rate': 4.4444444444444447e-05, 'entropy': 1.5717756748199463, 'num_tokens': 16422.0, 'mean_token_accuracy': 0.7376543283462524, 'epoch': 3.0}
- 83%|########3 | 15/18 [00:10<00:01,  1.99it/s] 89%|########8 | 16/18 [00:11<00:01,  1.78it/s]                                               {'loss': 0.9681, 'grad_norm': 1.7558077573776245, 'learning_rate': 3.3333333333333335e-05, 'entropy': 1.343809723854065, 'num_tokens': 17781.0, 'mean_token_accuracy': 0.7957500368356705, 'epoch': 3.24}
- 89%|########8 | 16/18 [00:11<00:01,  1.78it/s] 94%|#########4| 17/18 [00:12<00:00,  1.70it/s]                                               {'loss': 0.9384, 'grad_norm': 1.9214801788330078, 'learning_rate': 2.2222222222222223e-05, 'entropy': 1.32144895195961, 'num_tokens': 19020.0, 'mean_token_accuracy': 0.8084229677915573, 'epoch': 3.47}
- 94%|#########4| 17/18 [00:12<00:00,  1.70it/s]100%|##########| 18/18 [00:12<00:00,  1.62it/s]                                               {'loss': 0.9976, 'grad_norm': 1.858484148979187, 'learning_rate': 1.1111111111111112e-05, 'entropy': 1.334163337945938, 'num_tokens': 20301.0, 'mean_token_accuracy': 0.7994483709335327, 'epoch': 3.71}
-100%|##########| 18/18 [00:12<00:00,  1.62it/s]                                               {'train_runtime': 12.7836, 'train_samples_per_second': 5.632, 'train_steps_per_second': 1.408, 'train_loss': 1.6357995569705963, 'epoch': 3.71}
-100%|##########| 18/18 [00:12<00:00,  1.62it/s]100%|##########| 18/18 [00:12<00:00,  1.41it/s]
-2026/07/14 21:21:57 INFO dspy.teleprompt.bootstrap_finetune: Job 1/1 is done
-2026/07/14 21:21:57 INFO dspy.teleprompt.bootstrap_finetune: Updating the student program with the fine-tuned LMs...
-2026/07/14 21:21:57 INFO dspy.teleprompt.bootstrap_finetune: BootstrapFinetune has finished compiling the student program
-Optimized score: 50.00%
-Uplift: +0.00 points
-Optimization time: 70.70s
-{
-  "status": "completed",
-  "optimizer": "bootstrap-finetune",
-  "profile": "full",
-  "baseline_score": 50.0,
-  "optimized_score": 50.0,
-  "uplift_points": 0.0,
-  "optimization_seconds": 70.70109895800124,
-  "baseline_latency": {
-    "count": 20,
-    "mean_seconds": 1.5433694958490378,
-    "median_seconds": 1.4100108124985127,
-    "p50_seconds": 1.4100108124985127,
-    "p95_seconds": 2.334810391942302,
-    "min_seconds": 0.8654035840008873,
-    "max_seconds": 3.7665192910062615
-  },
-  "optimized_latency": {
-    "count": 20,
-    "mean_seconds": 1.2052540437012795,
-    "median_seconds": 0.9809719580080127,
-    "p50_seconds": 0.9809719580080127,
-    "p95_seconds": 1.851999700301531,
-    "min_seconds": 0.8550314170133788,
-    "max_seconds": 2.3431503329920815
-  },
-  "baseline_usage": {
-    "request_count": 40,
-    "cache_hits": 0,
-    "prompt_tokens": 10466,
-    "completion_tokens": 1629,
-    "reasoning_tokens": 0,
-    "total_tokens": 12095,
-    "cost_usd": 0.0,
-    "models": {
-      "hf-mps:Qwen/Qwen2.5-0.5B-Instruct": {
-        "request_count": 40,
-        "cache_hits": 0,
-        "prompt_tokens": 10466,
-        "completion_tokens": 1629,
-        "reasoning_tokens": 0,
-        "total_tokens": 12095,
-        "cost_usd": 0.0
-      }
-    }
-  },
-  "optimization_usage": {
-    "request_count": 71,
-    "cache_hits": 0,
-    "prompt_tokens": 18918,
-    "completion_tokens": 3295,
-    "reasoning_tokens": 0,
-    "total_tokens": 22213,
-    "cost_usd": 0.0,
-    "models": {
-      "hf-mps:Qwen/Qwen2.5-0.5B-Instruct": {
-        "request_count": 71,
-        "cache_hits": 0,
-        "prompt_tokens": 18918,
-        "completion_tokens": 3295,
-        "reasoning_tokens": 0,
-        "total_tokens": 22213,
-        "cost_usd": 0.0
-      }
-    }
-  },
-  "optimized_evaluation_usage": {
-    "request_count": 20,
-    "cache_hits": 0,
-    "prompt_tokens": 5293,
-    "completion_tokens": 978,
-    "reasoning_tokens": 0,
-    "total_tokens": 6271,
-    "cost_usd": 0.0,
-    "models": {
-      "hf-mps:Qwen/Qwen2.5-0.5B-Instruct::adapter=chapter06/results/runs/full/bootstrap-finetune/20260715T012015.458162Z/training/job-1784078502612002000/adapter": {
-        "request_count": 20,
-        "cache_hits": 0,
-        "prompt_tokens": 5293,
-        "completion_tokens": 978,
-        "reasoning_tokens": 0,
-        "total_tokens": 6271,
-        "cost_usd": 0.0
-      }
-    }
-  },
-  "reload_usage": {
-    "request_count": 1,
-    "cache_hits": 0,
-    "prompt_tokens": 247,
-    "completion_tokens": 55,
-    "reasoning_tokens": 0,
-    "total_tokens": 302,
-    "cost_usd": 0.0,
-    "models": {
-      "hf-mps:Qwen/Qwen2.5-0.5B-Instruct::adapter=chapter06/results/runs/full/bootstrap-finetune/20260715T012015.458162Z/training/job-1784078502612002000/adapter": {
-        "request_count": 1,
-        "cache_hits": 0,
-        "prompt_tokens": 247,
-        "completion_tokens": 55,
-        "reasoning_tokens": 0,
-        "total_tokens": 302,
-        "cost_usd": 0.0
-      }
-    }
-  },
-  "reload_prompt_parity": true,
-  "reload_model_parity": true,
-  "reload_prediction_parity": true,
-  "optimizer_state": {
-    "predictor_models": [
-      "hf-mps:Qwen/Qwen2.5-0.5B-Instruct::adapter=chapter06/results/runs/full/bootstrap-finetune/20260715T012015.458162Z/training/job-1784078502612002000/adapter"
-    ]
-  }
-}

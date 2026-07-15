@@ -1,158 +1,0 @@
-{
-  "run_id": "20260715T011714.494591Z",
-  "optimizer": "bootstrap-finetune",
-  "profile": "smoke",
-  "train": 6,
-  "validation": 4,
-  "test": 4,
-  "student_model": "hf-mps:Qwen/Qwen2.5-0.5B-Instruct",
-  "teacher_mode": "local",
-  "local_capabilities": {
-    "torch_version": "2.13.0",
-    "mps_built": true,
-    "mps_available": true,
-    "selected_device": "mps"
-  }
-}
-`torch_dtype` is deprecated! Use `dtype` instead!
-The following generation flags are not valid and may be ignored: ['temperature', 'top_p', 'top_k']. Set `TRANSFORMERS_VERBOSITY=info` for more details.
-Baseline score: 50.00%
-2026/07/14 21:17:33 INFO dspy.teleprompt.bootstrap_finetune: Preparing the student and teacher programs...
-2026/07/14 21:17:33 INFO dspy.teleprompt.bootstrap_finetune: Bootstrapping data...
-  0%|          | 0/6 [00:00<?, ?it/s]Average Metric: 1.00 / 1 (100.0%):   0%|          | 0/6 [00:02<?, ?it/s]Average Metric: 1.00 / 1 (100.0%):  17%|#6        | 1/6 [00:02<00:12,  2.51s/it]Average Metric: 1.00 / 2 (50.0%):  17%|#6        | 1/6 [00:04<00:12,  2.51s/it] Average Metric: 1.00 / 2 (50.0%):  33%|###3      | 2/6 [00:04<00:09,  2.29s/it]Average Metric: 2.00 / 3 (66.7%):  33%|###3      | 2/6 [00:05<00:09,  2.29s/it]Average Metric: 2.00 / 3 (66.7%):  50%|#####     | 3/6 [00:05<00:05,  1.78s/it]Average Metric: 2.00 / 4 (50.0%):  50%|#####     | 3/6 [00:06<00:05,  1.78s/it]Average Metric: 2.00 / 4 (50.0%):  67%|######6   | 4/6 [00:06<00:02,  1.49s/it]Average Metric: 3.00 / 5 (60.0%):  67%|######6   | 4/6 [00:08<00:02,  1.49s/it]Average Metric: 3.00 / 5 (60.0%):  83%|########3 | 5/6 [00:08<00:01,  1.39s/it]Average Metric: 3.00 / 6 (50.0%):  83%|########3 | 5/6 [00:09<00:01,  1.39s/it]Average Metric: 3.00 / 6 (50.0%): 100%|##########| 6/6 [00:09<00:00,  1.43s/it]Average Metric: 3.00 / 6 (50.0%): 100%|##########| 6/6 [00:09<00:00,  1.60s/it]
-2026/07/14 21:17:42 INFO dspy.evaluate.evaluate: Average Metric: 3.0 / 6 (50.0%)
-2026/07/14 21:17:42 INFO dspy.teleprompt.bootstrap_finetune: Preparing the train data...
-2026/07/14 21:17:42 INFO dspy.teleprompt.bootstrap_finetune: Collected data for 6 examples
-2026/07/14 21:17:42 INFO dspy.teleprompt.bootstrap_finetune: After filtering with the metric, 3 examples remain
-2026/07/14 21:17:42 INFO dspy.teleprompt.bootstrap_finetune: Using 3 data points for fine-tuning the model: hf-mps:Qwen/Qwen2.5-0.5B-Instruct
-2026/07/14 21:17:42 INFO dspy.teleprompt.bootstrap_finetune: Starting LM fine-tuning...
-2026/07/14 21:17:42 INFO dspy.teleprompt.bootstrap_finetune: 1 fine-tuning job(s) to start
-2026/07/14 21:17:42 INFO dspy.teleprompt.bootstrap_finetune: Starting 1 fine-tuning job(s)...
-2026/07/14 21:17:42 INFO dspy.teleprompt.bootstrap_finetune: Calling lm.kill() on the LM to be fine-tuned to free up resources. This won't have any effect if the LM is not running.
-Tokenizing train dataset:   0%|          | 0/3 [00:00<?, ? examples/s]Tokenizing train dataset: 100%|##########| 3/3 [00:00<00:00, 666.50 examples/s]
-Truncating train dataset:   0%|          | 0/3 [00:00<?, ? examples/s]Truncating train dataset: 100%|##########| 3/3 [00:00<00:00, 3592.04 examples/s]
-The tokenizer has new PAD/BOS/EOS tokens that differ from the model config and generation config. The model config and generation config were aligned accordingly, being updated with the tokenizer's values. Updated tokens: {'bos_token_id': None, 'pad_token_id': 151643}.
-  0%|          | 0/1 [00:00<?, ?it/s]100%|##########| 1/1 [00:02<00:00,  2.67s/it]                                             {'loss': 2.9125, 'grad_norm': 14.666501998901367, 'learning_rate': 0.0002, 'entropy': 1.776399850845337, 'num_tokens': 338.0, 'mean_token_accuracy': 0.5341246128082275, 'epoch': 0.33}
-100%|##########| 1/1 [00:02<00:00,  2.67s/it]                                             {'train_runtime': 2.6809, 'train_samples_per_second': 0.373, 'train_steps_per_second': 0.373, 'train_loss': 2.9125187397003174, 'epoch': 0.33}
-100%|##########| 1/1 [00:02<00:00,  2.67s/it]100%|##########| 1/1 [00:02<00:00,  2.68s/it]
-2026/07/14 21:17:47 INFO dspy.teleprompt.bootstrap_finetune: Job 1/1 is done
-2026/07/14 21:17:47 INFO dspy.teleprompt.bootstrap_finetune: Updating the student program with the fine-tuned LMs...
-2026/07/14 21:17:47 INFO dspy.teleprompt.bootstrap_finetune: BootstrapFinetune has finished compiling the student program
-Optimized score: 50.00%
-Uplift: +0.00 points
-Optimization time: 14.18s
-{
-  "status": "completed",
-  "optimizer": "bootstrap-finetune",
-  "profile": "smoke",
-  "baseline_score": 50.0,
-  "optimized_score": 50.0,
-  "uplift_points": 0.0,
-  "optimization_seconds": 14.180033249998814,
-  "baseline_latency": {
-    "count": 4,
-    "mean_seconds": 4.624940770499961,
-    "median_seconds": 1.1086701660024119,
-    "p50_seconds": 1.1086701660024119,
-    "p95_seconds": 13.163825440051,
-    "min_seconds": 1.005425915995147,
-    "max_seconds": 15.276996833999874
-  },
-  "optimized_latency": {
-    "count": 4,
-    "mean_seconds": 1.1507250520007801,
-    "median_seconds": 0.8569133955024881,
-    "p50_seconds": 0.8569133955024881,
-    "p95_seconds": 2.1663483168958915,
-    "min_seconds": 0.5456790000025649,
-    "max_seconds": 2.3433944169955794
-  },
-  "baseline_usage": {
-    "request_count": 8,
-    "cache_hits": 0,
-    "prompt_tokens": 2108,
-    "completion_tokens": 233,
-    "reasoning_tokens": 0,
-    "total_tokens": 2341,
-    "cost_usd": 0.0,
-    "models": {
-      "hf-mps:Qwen/Qwen2.5-0.5B-Instruct": {
-        "request_count": 8,
-        "cache_hits": 0,
-        "prompt_tokens": 2108,
-        "completion_tokens": 233,
-        "reasoning_tokens": 0,
-        "total_tokens": 2341,
-        "cost_usd": 0.0
-      }
-    }
-  },
-  "optimization_usage": {
-    "request_count": 12,
-    "cache_hits": 0,
-    "prompt_tokens": 3152,
-    "completion_tokens": 556,
-    "reasoning_tokens": 0,
-    "total_tokens": 3708,
-    "cost_usd": 0.0,
-    "models": {
-      "hf-mps:Qwen/Qwen2.5-0.5B-Instruct": {
-        "request_count": 12,
-        "cache_hits": 0,
-        "prompt_tokens": 3152,
-        "completion_tokens": 556,
-        "reasoning_tokens": 0,
-        "total_tokens": 3708,
-        "cost_usd": 0.0
-      }
-    }
-  },
-  "optimized_evaluation_usage": {
-    "request_count": 5,
-    "cache_hits": 0,
-    "prompt_tokens": 1307,
-    "completion_tokens": 140,
-    "reasoning_tokens": 0,
-    "total_tokens": 1447,
-    "cost_usd": 0.0,
-    "models": {
-      "hf-mps:Qwen/Qwen2.5-0.5B-Instruct::adapter=chapter06/results/runs/smoke/bootstrap-finetune/20260715T011714.494591Z/training/job-1784078262912182000/adapter": {
-        "request_count": 5,
-        "cache_hits": 0,
-        "prompt_tokens": 1307,
-        "completion_tokens": 140,
-        "reasoning_tokens": 0,
-        "total_tokens": 1447,
-        "cost_usd": 0.0
-      }
-    }
-  },
-  "reload_usage": {
-    "request_count": 2,
-    "cache_hits": 0,
-    "prompt_tokens": 488,
-    "completion_tokens": 52,
-    "reasoning_tokens": 0,
-    "total_tokens": 540,
-    "cost_usd": 0.0,
-    "models": {
-      "hf-mps:Qwen/Qwen2.5-0.5B-Instruct::adapter=chapter06/results/runs/smoke/bootstrap-finetune/20260715T011714.494591Z/training/job-1784078262912182000/adapter": {
-        "request_count": 2,
-        "cache_hits": 0,
-        "prompt_tokens": 488,
-        "completion_tokens": 52,
-        "reasoning_tokens": 0,
-        "total_tokens": 540,
-        "cost_usd": 0.0
-      }
-    }
-  },
-  "reload_prompt_parity": true,
-  "reload_model_parity": true,
-  "reload_prediction_parity": true,
-  "optimizer_state": {
-    "predictor_models": [
-      "hf-mps:Qwen/Qwen2.5-0.5B-Instruct::adapter=chapter06/results/runs/smoke/bootstrap-finetune/20260715T011714.494591Z/training/job-1784078262912182000/adapter"
-    ]
-  }
-}

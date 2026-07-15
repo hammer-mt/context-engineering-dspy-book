@@ -1,6 +1,0 @@
-{
-  "detect.predict": {
-    "instructions": "Analyze the supplied passage and determine whether it is more likely AI-generated or human-written. Base the decision on textual evidence such as formulaic phrasing, repetition, specificity, coherence, stylistic variation, and unusual artifacts; do not rely solely on the passage’s topic or polished grammar. Even if the evidence is uncertain, select the single most likely classification. Output exactly one label: `AI-generated` or `Human-written`.",
-    "demos": []
-  }
-}

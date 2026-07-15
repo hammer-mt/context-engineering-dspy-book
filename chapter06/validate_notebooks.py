@@ -1,4 +1,4 @@
-"""Validate Chapter 6 notebook education, safe defaults, outputs, and coverage."""
+"""Validate Chapter 6 notebook education, outputs, and optimizer coverage."""
 
 from __future__ import annotations
 
@@ -35,12 +35,10 @@ def validate_notebook(
         "What compilation changes",
         "Compile shape",
         "Read the result",
-        "Run it yourself",
-        "CHAPTER06_RUN=full",
+        "Apply the pattern",
         "benchmark_snapshot",
         "learned_program_preview",
         "verify_prompt_artifact",
-        "run_experiment",
     )
     if repr(expected_optimizer) not in source:
         errors.append(
@@ -49,14 +47,12 @@ def validate_notebook(
     for lesson in required_lessons:
         if lesson not in source:
             errors.append(f"{path.name}: missing educational/run content {lesson!r}")
-    if 'os.getenv("CHAPTER06_RUN", "inspect")' not in source:
-        errors.append(f"{path.name}: safe inspect mode is not the default")
-    if len(cells) < 8:
-        errors.append(f"{path.name}: expected at least eight concise teaching cells")
+    if len(cells) < 7:
+        errors.append(f"{path.name}: expected at least seven concise teaching cells")
     code_cells = [cell for cell in cells if cell.get("cell_type") == "code"]
-    if len(code_cells) < 4:
+    if len(code_cells) < 3:
         errors.append(
-            f"{path.name}: expected setup, inspection, prompt, and opt-in run cells"
+            f"{path.name}: expected setup, benchmark, and learned-program cells"
         )
     for index, cell in enumerate(cells):
         if cell.get("cell_type") != "code":

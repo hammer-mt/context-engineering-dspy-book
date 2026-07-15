@@ -1,4 +1,0 @@
-{
-  "status": "failed",
-  "error": "RuntimeError: optimized evaluation completed 0/4 examples"
-}

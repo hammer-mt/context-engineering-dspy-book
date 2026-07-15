@@ -33,7 +33,7 @@ Inference tradeoffs are visible as well. Ensemble had the highest mean latency (
 
 ## Reproducibility and limits
 
-The completed rows used $4.81 in measured baseline, optimization, optimized-evaluation, and bounded reload-verification calls. Every selected run includes its manifest, console transcript, sanitized LM history, per-example predictions, metrics, serialized program, and extracted prompt under `chapter06/results/runs/full/`. Canonical programs and prompts are copied to `chapter06/optimized_programs/final/` and `chapter06/results/final_prompts/`.
+The completed rows used $4.81 in measured baseline, optimization, optimized-evaluation, and bounded reload-verification calls. The publication package keeps the compact benchmark summary plus each canonical program snapshot and extracted prompt in `chapter06/optimized_programs/final/` and `chapter06/results/final_prompts/`. Provider transcripts, smoke runs, caches, model adapters, and temporary training outputs were retained during verification but intentionally excluded from the student download.
 
 Serialization was checked with prompt/demo state equality after reload and bounded prediction-label parity on frozen test examples; the local weight rows additionally verify the saved base-model and adapter references. Across the selected runs, 35/36 reloaded predictions matched their pre-serialization labels. The per-run counts are reported in the table because a mismatch from an uncached stochastic model is evidence to preserve, not a reason to retry until it disappears; this remains a bounded reproducibility check rather than a claim of global determinism.
 

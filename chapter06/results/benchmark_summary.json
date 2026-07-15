@@ -54,46 +54,19 @@
       ]
     }
   },
-  "baseline_gate": {
-    "criterion": "every uncached test replicate accuracy < 50%",
-    "selection_replicates": [
-      {
-        "repeat": 0,
-        "correct": 7,
-        "row_count": 20,
-        "accuracy": 35.0
-      },
-      {
-        "repeat": 1,
-        "correct": 9,
-        "row_count": 20,
-        "accuracy": 45.0
-      }
-    ],
-    "selection_mean_accuracy": 40.0,
-    "independent_confirmation_accuracy": 50.0,
-    "disclosure": "The test partition is deliberately selected using only baseline errors; it is an adversarial optimizer stress test, not an unbiased estimate of generalization."
-  },
   "reference_baseline_accuracy": 50.0,
   "rows": [
     {
       "optimizer": "quickstart",
       "display_name": "Unoptimized baseline",
       "status": "completed",
-      "run_id": "20260715T021346.545192Z",
-      "run_dir": "chapter06/results/runs/full/quickstart/20260715T021346.545192Z",
       "task_model": "openai/gpt-5.6-luna",
-      "teacher_model": null,
-      "finetune_teacher_mode": null,
-      "run_baseline_accuracy": 50.0,
-      "accuracy": 50.0,
       "reference_comparable": true,
+      "accuracy": 50.0,
+      "run_baseline_accuracy": 50.0,
       "uplift_vs_reference_points": 0.0,
-      "relative_uplift_vs_reference_percent": 0.0,
       "run_uplift_points": 0.0,
       "optimization_cost_usd": 0.0,
-      "evaluation_cost_usd": 0.0,
-      "total_measured_cost_usd": 0.026538,
       "optimization_seconds": 0.0,
       "mean_inference_latency_seconds": 1.9962433750486526,
       "p95_inference_latency_seconds": 3.504997647895653,
@@ -109,34 +82,19 @@
           "docs-python-tutorial-v3.10.0-005-ai",
           "docs-numpy-quickstart-v1.21.0-001-human"
         ]
-      },
-      "artifacts": {
-        "complete_output": "chapter06/results/runs/full/quickstart/20260715T021346.545192Z/complete_output.txt",
-        "lm_history": "chapter06/results/runs/full/quickstart/20260715T021346.545192Z/lm_history.jsonl",
-        "predictions": "chapter06/results/runs/full/quickstart/20260715T021346.545192Z/predictions.jsonl",
-        "program": "chapter06/results/runs/full/quickstart/20260715T021346.545192Z/program.json",
-        "prompts": "chapter06/results/runs/full/quickstart/20260715T021346.545192Z/prompts.json",
-        "metrics": "chapter06/results/runs/full/quickstart/20260715T021346.545192Z/metrics.json"
       }
     },
     {
       "optimizer": "labeled-few-shot",
       "display_name": "LabeledFewShot",
       "status": "completed",
-      "run_id": "20260715T021433.053902Z",
-      "run_dir": "chapter06/results/runs/full/labeled-few-shot/20260715T021433.053902Z",
       "task_model": "openai/gpt-5.6-luna",
-      "teacher_model": null,
-      "finetune_teacher_mode": null,
-      "run_baseline_accuracy": 60.0,
-      "accuracy": 75.0,
       "reference_comparable": true,
+      "accuracy": 75.0,
+      "run_baseline_accuracy": 60.0,
       "uplift_vs_reference_points": 25.0,
-      "relative_uplift_vs_reference_percent": 50.0,
       "run_uplift_points": 15.0,
       "optimization_cost_usd": 0.0,
-      "evaluation_cost_usd": 0.035984,
-      "total_measured_cost_usd": 0.062741,
       "optimization_seconds": 0.005801582999993116,
       "mean_inference_latency_seconds": 2.2910126311493513,
       "p95_inference_latency_seconds": 3.4983748101054517,
@@ -152,34 +110,19 @@
           "docs-python-tutorial-v3.10.0-005-ai",
           "docs-numpy-quickstart-v1.21.0-001-human"
         ]
-      },
-      "artifacts": {
-        "complete_output": "chapter06/results/runs/full/labeled-few-shot/20260715T021433.053902Z/complete_output.txt",
-        "lm_history": "chapter06/results/runs/full/labeled-few-shot/20260715T021433.053902Z/lm_history.jsonl",
-        "predictions": "chapter06/results/runs/full/labeled-few-shot/20260715T021433.053902Z/predictions.jsonl",
-        "program": "chapter06/results/runs/full/labeled-few-shot/20260715T021433.053902Z/program.json",
-        "prompts": "chapter06/results/runs/full/labeled-few-shot/20260715T021433.053902Z/prompts.json",
-        "metrics": "chapter06/results/runs/full/labeled-few-shot/20260715T021433.053902Z/metrics.json"
       }
     },
     {
       "optimizer": "bootstrap-few-shot",
       "display_name": "BootstrapFewShot",
       "status": "completed",
-      "run_id": "20260715T021606.863407Z",
-      "run_dir": "chapter06/results/runs/full/bootstrap-few-shot/20260715T021606.863407Z",
       "task_model": "openai/gpt-5.6-luna",
-      "teacher_model": null,
-      "finetune_teacher_mode": null,
-      "run_baseline_accuracy": 50.0,
-      "accuracy": 75.0,
       "reference_comparable": true,
+      "accuracy": 75.0,
+      "run_baseline_accuracy": 50.0,
       "uplift_vs_reference_points": 25.0,
-      "relative_uplift_vs_reference_percent": 50.0,
       "run_uplift_points": 25.0,
       "optimization_cost_usd": 0.002932,
-      "evaluation_cost_usd": 0.0291,
-      "total_measured_cost_usd": 0.059572,
       "optimization_seconds": 4.302689457996166,
       "mean_inference_latency_seconds": 1.9374482584004,
       "p95_inference_latency_seconds": 3.1364260913578623,
@@ -195,34 +138,19 @@
           "docs-python-tutorial-v3.10.0-005-ai",
           "docs-numpy-quickstart-v1.21.0-001-human"
         ]
-      },
-      "artifacts": {
-        "complete_output": "chapter06/results/runs/full/bootstrap-few-shot/20260715T021606.863407Z/complete_output.txt",
-        "lm_history": "chapter06/results/runs/full/bootstrap-few-shot/20260715T021606.863407Z/lm_history.jsonl",
-        "predictions": "chapter06/results/runs/full/bootstrap-few-shot/20260715T021606.863407Z/predictions.jsonl",
-        "program": "chapter06/results/runs/full/bootstrap-few-shot/20260715T021606.863407Z/program.json",
-        "prompts": "chapter06/results/runs/full/bootstrap-few-shot/20260715T021606.863407Z/prompts.json",
-        "metrics": "chapter06/results/runs/full/bootstrap-few-shot/20260715T021606.863407Z/metrics.json"
       }
     },
     {
       "optimizer": "bootstrap-random-search",
       "display_name": "BootstrapRS",
       "status": "completed",
-      "run_id": "20260715T021734.417538Z",
-      "run_dir": "chapter06/results/runs/full/bootstrap-random-search/20260715T021734.417538Z",
       "task_model": "openai/gpt-5.6-luna",
-      "teacher_model": null,
-      "finetune_teacher_mode": null,
-      "run_baseline_accuracy": 45.0,
-      "accuracy": 70.0,
       "reference_comparable": true,
+      "accuracy": 70.0,
+      "run_baseline_accuracy": 45.0,
       "uplift_vs_reference_points": 20.0,
-      "relative_uplift_vs_reference_percent": 40.0,
       "run_uplift_points": 25.0,
       "optimization_cost_usd": 0.28601,
-      "evaluation_cost_usd": 0.02825,
-      "total_measured_cost_usd": 0.338851,
       "optimization_seconds": 393.53610187499726,
       "mean_inference_latency_seconds": 1.7850447269476717,
       "p95_inference_latency_seconds": 2.658071471141739,
@@ -238,34 +166,19 @@
           "docs-python-tutorial-v3.10.0-005-ai",
           "docs-numpy-quickstart-v1.21.0-001-human"
         ]
-      },
-      "artifacts": {
-        "complete_output": "chapter06/results/runs/full/bootstrap-random-search/20260715T021734.417538Z/complete_output.txt",
-        "lm_history": "chapter06/results/runs/full/bootstrap-random-search/20260715T021734.417538Z/lm_history.jsonl",
-        "predictions": "chapter06/results/runs/full/bootstrap-random-search/20260715T021734.417538Z/predictions.jsonl",
-        "program": "chapter06/results/runs/full/bootstrap-random-search/20260715T021734.417538Z/program.json",
-        "prompts": "chapter06/results/runs/full/bootstrap-random-search/20260715T021734.417538Z/prompts.json",
-        "metrics": "chapter06/results/runs/full/bootstrap-random-search/20260715T021734.417538Z/metrics.json"
       }
     },
     {
       "optimizer": "knn-few-shot",
       "display_name": "KNNFewShot",
       "status": "completed",
-      "run_id": "20260715T022522.568313Z",
-      "run_dir": "chapter06/results/runs/full/knn-few-shot/20260715T022522.568313Z",
       "task_model": "openai/gpt-5.6-luna",
-      "teacher_model": null,
-      "finetune_teacher_mode": null,
-      "run_baseline_accuracy": 50.0,
-      "accuracy": 70.0,
       "reference_comparable": true,
+      "accuracy": 70.0,
+      "run_baseline_accuracy": 50.0,
       "uplift_vs_reference_points": 20.0,
-      "relative_uplift_vs_reference_percent": 40.0,
       "run_uplift_points": 20.0,
       "optimization_cost_usd": 0.0,
-      "evaluation_cost_usd": 0.036547,
-      "total_measured_cost_usd": 0.06612,
       "optimization_seconds": 0.01608075000694953,
       "mean_inference_latency_seconds": 2.060307524950622,
       "p95_inference_latency_seconds": 2.571182085442706,
@@ -281,34 +194,19 @@
           "docs-python-tutorial-v3.10.0-005-ai",
           "docs-numpy-quickstart-v1.21.0-001-human"
         ]
-      },
-      "artifacts": {
-        "complete_output": "chapter06/results/runs/full/knn-few-shot/20260715T022522.568313Z/complete_output.txt",
-        "lm_history": "chapter06/results/runs/full/knn-few-shot/20260715T022522.568313Z/lm_history.jsonl",
-        "predictions": "chapter06/results/runs/full/knn-few-shot/20260715T022522.568313Z/predictions.jsonl",
-        "program": "chapter06/results/runs/full/knn-few-shot/20260715T022522.568313Z/program.json",
-        "prompts": "chapter06/results/runs/full/knn-few-shot/20260715T022522.568313Z/prompts.json",
-        "metrics": "chapter06/results/runs/full/knn-few-shot/20260715T022522.568313Z/metrics.json"
       }
     },
     {
       "optimizer": "copro",
       "display_name": "COPRO",
       "status": "completed",
-      "run_id": "20260715T022649.246290Z",
-      "run_dir": "chapter06/results/runs/full/copro/20260715T022649.246290Z",
       "task_model": "openai/gpt-5.6-luna",
-      "teacher_model": null,
-      "finetune_teacher_mode": null,
-      "run_baseline_accuracy": 45.0,
-      "accuracy": 50.0,
       "reference_comparable": true,
+      "accuracy": 50.0,
+      "run_baseline_accuracy": 45.0,
       "uplift_vs_reference_points": 0.0,
-      "relative_uplift_vs_reference_percent": 0.0,
       "run_uplift_points": 5.0,
       "optimization_cost_usd": 0.549074,
-      "evaluation_cost_usd": 0.02896,
-      "total_measured_cost_usd": 0.6039059999999999,
       "optimization_seconds": 755.0297021669976,
       "mean_inference_latency_seconds": 2.314404746049695,
       "p95_inference_latency_seconds": 3.053258429499693,
@@ -324,34 +222,19 @@
           "docs-python-tutorial-v3.10.0-005-ai",
           "docs-numpy-quickstart-v1.21.0-001-human"
         ]
-      },
-      "artifacts": {
-        "complete_output": "chapter06/results/runs/full/copro/20260715T022649.246290Z/complete_output.txt",
-        "lm_history": "chapter06/results/runs/full/copro/20260715T022649.246290Z/lm_history.jsonl",
-        "predictions": "chapter06/results/runs/full/copro/20260715T022649.246290Z/predictions.jsonl",
-        "program": "chapter06/results/runs/full/copro/20260715T022649.246290Z/program.json",
-        "prompts": "chapter06/results/runs/full/copro/20260715T022649.246290Z/prompts.json",
-        "metrics": "chapter06/results/runs/full/copro/20260715T022649.246290Z/metrics.json"
       }
     },
     {
       "optimizer": "miprov2",
       "display_name": "MIPROv2",
       "status": "completed",
-      "run_id": "20260715T024052.275451Z",
-      "run_dir": "chapter06/results/runs/full/miprov2/20260715T024052.275451Z",
       "task_model": "openai/gpt-5.6-luna",
-      "teacher_model": null,
-      "finetune_teacher_mode": null,
-      "run_baseline_accuracy": 40.0,
-      "accuracy": 95.0,
       "reference_comparable": true,
+      "accuracy": 95.0,
+      "run_baseline_accuracy": 40.0,
       "uplift_vs_reference_points": 45.0,
-      "relative_uplift_vs_reference_percent": 90.0,
       "run_uplift_points": 55.0,
       "optimization_cost_usd": 0.507154,
-      "evaluation_cost_usd": 0.033564,
-      "total_measured_cost_usd": 0.5647179999999999,
       "optimization_seconds": 455.46304958401015,
       "mean_inference_latency_seconds": 1.6725125561963068,
       "p95_inference_latency_seconds": 2.87423832528948,
@@ -367,34 +250,19 @@
           "docs-python-tutorial-v3.10.0-005-ai",
           "docs-numpy-quickstart-v1.21.0-001-human"
         ]
-      },
-      "artifacts": {
-        "complete_output": "chapter06/results/runs/full/miprov2/20260715T024052.275451Z/complete_output.txt",
-        "lm_history": "chapter06/results/runs/full/miprov2/20260715T024052.275451Z/lm_history.jsonl",
-        "predictions": "chapter06/results/runs/full/miprov2/20260715T024052.275451Z/predictions.jsonl",
-        "program": "chapter06/results/runs/full/miprov2/20260715T024052.275451Z/program.json",
-        "prompts": "chapter06/results/runs/full/miprov2/20260715T024052.275451Z/prompts.json",
-        "metrics": "chapter06/results/runs/full/miprov2/20260715T024052.275451Z/metrics.json"
       }
     },
     {
       "optimizer": "gepa",
       "display_name": "GEPA",
       "status": "completed",
-      "run_id": "20260715T024939.319893Z",
-      "run_dir": "chapter06/results/runs/full/gepa/20260715T024939.319893Z",
       "task_model": "openai/gpt-5.6-luna",
-      "teacher_model": null,
-      "finetune_teacher_mode": null,
-      "run_baseline_accuracy": 35.0,
-      "accuracy": 90.0,
       "reference_comparable": true,
+      "accuracy": 90.0,
+      "run_baseline_accuracy": 35.0,
       "uplift_vs_reference_points": 40.0,
-      "relative_uplift_vs_reference_percent": 80.0,
       "run_uplift_points": 55.0,
       "optimization_cost_usd": 1.5658036,
-      "evaluation_cost_usd": 0.063946,
-      "total_measured_cost_usd": 1.6539035,
       "optimization_seconds": 900.667743500002,
       "mean_inference_latency_seconds": 1.7837633125011052,
       "p95_inference_latency_seconds": 2.3194824482110565,
@@ -410,34 +278,19 @@
           "docs-python-tutorial-v3.10.0-005-ai",
           "docs-numpy-quickstart-v1.21.0-001-human"
         ]
-      },
-      "artifacts": {
-        "complete_output": "chapter06/results/runs/full/gepa/20260715T024939.319893Z/complete_output.txt",
-        "lm_history": "chapter06/results/runs/full/gepa/20260715T024939.319893Z/lm_history.jsonl",
-        "predictions": "chapter06/results/runs/full/gepa/20260715T024939.319893Z/predictions.jsonl",
-        "program": "chapter06/results/runs/full/gepa/20260715T024939.319893Z/program.json",
-        "prompts": "chapter06/results/runs/full/gepa/20260715T024939.319893Z/prompts.json",
-        "metrics": "chapter06/results/runs/full/gepa/20260715T024939.319893Z/metrics.json"
       }
     },
     {
       "optimizer": "simba",
       "display_name": "SIMBA",
       "status": "completed",
-      "run_id": "20260715T030554.809087Z",
-      "run_dir": "chapter06/results/runs/full/simba/20260715T030554.809087Z",
       "task_model": "openai/gpt-5.6-luna",
-      "teacher_model": null,
-      "finetune_teacher_mode": null,
-      "run_baseline_accuracy": 40.0,
-      "accuracy": 70.0,
       "reference_comparable": true,
+      "accuracy": 70.0,
+      "run_baseline_accuracy": 40.0,
       "uplift_vs_reference_points": 20.0,
-      "relative_uplift_vs_reference_percent": 40.0,
       "run_uplift_points": 30.0,
       "optimization_cost_usd": 0.948238,
-      "evaluation_cost_usd": 0.028414,
-      "total_measured_cost_usd": 1.00352,
       "optimization_seconds": 1129.9889339580113,
       "mean_inference_latency_seconds": 1.6311589582001034,
       "p95_inference_latency_seconds": 2.2191285714514377,
@@ -453,34 +306,19 @@
           "docs-python-tutorial-v3.10.0-005-ai",
           "docs-numpy-quickstart-v1.21.0-001-human"
         ]
-      },
-      "artifacts": {
-        "complete_output": "chapter06/results/runs/full/simba/20260715T030554.809087Z/complete_output.txt",
-        "lm_history": "chapter06/results/runs/full/simba/20260715T030554.809087Z/lm_history.jsonl",
-        "predictions": "chapter06/results/runs/full/simba/20260715T030554.809087Z/predictions.jsonl",
-        "program": "chapter06/results/runs/full/simba/20260715T030554.809087Z/program.json",
-        "prompts": "chapter06/results/runs/full/simba/20260715T030554.809087Z/prompts.json",
-        "metrics": "chapter06/results/runs/full/simba/20260715T030554.809087Z/metrics.json"
       }
     },
     {
       "optimizer": "ensemble",
       "display_name": "Ensemble",
       "status": "completed",
-      "run_id": "20260715T032559.141471Z",
-      "run_dir": "chapter06/results/runs/full/ensemble/20260715T032559.141471Z",
       "task_model": "openai/gpt-5.6-luna",
-      "teacher_model": null,
-      "finetune_teacher_mode": null,
-      "run_baseline_accuracy": 55.0,
-      "accuracy": 80.0,
       "reference_comparable": true,
+      "accuracy": 80.0,
+      "run_baseline_accuracy": 55.0,
       "uplift_vs_reference_points": 30.0,
-      "relative_uplift_vs_reference_percent": 60.0,
       "run_uplift_points": 25.0,
       "optimization_cost_usd": 0.302766,
-      "evaluation_cost_usd": 0.0873,
-      "total_measured_cost_usd": 0.42735999999999996,
       "optimization_seconds": 401.6368692910037,
       "mean_inference_latency_seconds": 5.095484966600634,
       "p95_inference_latency_seconds": 6.353434037858096,
@@ -496,34 +334,19 @@
           "docs-python-tutorial-v3.10.0-005-ai",
           "docs-numpy-quickstart-v1.21.0-001-human"
         ]
-      },
-      "artifacts": {
-        "complete_output": "chapter06/results/runs/full/ensemble/20260715T032559.141471Z/complete_output.txt",
-        "lm_history": "chapter06/results/runs/full/ensemble/20260715T032559.141471Z/lm_history.jsonl",
-        "predictions": "chapter06/results/runs/full/ensemble/20260715T032559.141471Z/predictions.jsonl",
-        "program": "chapter06/results/runs/full/ensemble/20260715T032559.141471Z/program.json",
-        "prompts": "chapter06/results/runs/full/ensemble/20260715T032559.141471Z/prompts.json",
-        "metrics": "chapter06/results/runs/full/ensemble/20260715T032559.141471Z/metrics.json"
       }
     },
     {
       "optimizer": "bootstrap-finetune",
       "display_name": "BootstrapFinetune",
       "status": "completed",
-      "run_id": "20260715T034040.794581Z",
-      "run_dir": "chapter06/results/runs/full/bootstrap-finetune/20260715T034040.794581Z",
       "task_model": "Qwen/Qwen2.5-0.5B-Instruct",
-      "teacher_model": "Qwen/Qwen2.5-0.5B-Instruct",
-      "finetune_teacher_mode": "local",
-      "run_baseline_accuracy": 50.0,
-      "accuracy": 50.0,
       "reference_comparable": false,
+      "accuracy": 50.0,
+      "run_baseline_accuracy": 50.0,
       "uplift_vs_reference_points": null,
-      "relative_uplift_vs_reference_percent": null,
       "run_uplift_points": 0.0,
       "optimization_cost_usd": 0.0,
-      "evaluation_cost_usd": 0.0,
-      "total_measured_cost_usd": 0.0,
       "optimization_seconds": 67.52741745799722,
       "mean_inference_latency_seconds": 1.1567233666013634,
       "p95_inference_latency_seconds": 1.8751152023971378,
@@ -539,36 +362,19 @@
           "docs-python-tutorial-v3.10.0-005-ai",
           "docs-numpy-quickstart-v1.21.0-001-human"
         ]
-      },
-      "artifacts": {
-        "complete_output": "chapter06/results/runs/full/bootstrap-finetune/20260715T034040.794581Z/complete_output.txt",
-        "lm_history": "chapter06/results/runs/full/bootstrap-finetune/20260715T034040.794581Z/lm_history.jsonl",
-        "predictions": "chapter06/results/runs/full/bootstrap-finetune/20260715T034040.794581Z/predictions.jsonl",
-        "program": "chapter06/results/runs/full/bootstrap-finetune/20260715T034040.794581Z/program.json",
-        "prompts": "chapter06/results/runs/full/bootstrap-finetune/20260715T034040.794581Z/prompts.json",
-        "optimizer_state": "chapter06/results/runs/full/bootstrap-finetune/20260715T034040.794581Z/optimizer_state.json",
-        "metrics": "chapter06/results/runs/full/bootstrap-finetune/20260715T034040.794581Z/metrics.json",
-        "training": "chapter06/results/runs/full/bootstrap-finetune/20260715T034040.794581Z/training"
       }
     },
     {
       "optimizer": "better-together",
       "display_name": "BetterTogether",
       "status": "completed",
-      "run_id": "20260715T034246.168669Z",
-      "run_dir": "chapter06/results/runs/full/better-together/20260715T034246.168669Z",
       "task_model": "Qwen/Qwen2.5-0.5B-Instruct",
-      "teacher_model": "Qwen/Qwen2.5-0.5B-Instruct",
-      "finetune_teacher_mode": "local",
-      "run_baseline_accuracy": 50.0,
-      "accuracy": 50.0,
       "reference_comparable": false,
+      "accuracy": 50.0,
+      "run_baseline_accuracy": 50.0,
       "uplift_vs_reference_points": null,
-      "relative_uplift_vs_reference_percent": null,
       "run_uplift_points": 0.0,
       "optimization_cost_usd": 0.0,
-      "evaluation_cost_usd": 0.0,
-      "total_measured_cost_usd": 0.0,
       "optimization_seconds": 278.2980576669943,
       "mean_inference_latency_seconds": 1.3864019270979042,
       "p95_inference_latency_seconds": 1.9367833565993353,
@@ -584,17 +390,6 @@
           "docs-python-tutorial-v3.10.0-005-ai",
           "docs-numpy-quickstart-v1.21.0-001-human"
         ]
-      },
-      "artifacts": {
-        "complete_output": "chapter06/results/runs/full/better-together/20260715T034246.168669Z/complete_output.txt",
-        "lm_history": "chapter06/results/runs/full/better-together/20260715T034246.168669Z/lm_history.jsonl",
-        "predictions": "chapter06/results/runs/full/better-together/20260715T034246.168669Z/predictions.jsonl",
-        "program": "chapter06/results/runs/full/better-together/20260715T034246.168669Z/program.json",
-        "prompts": "chapter06/results/runs/full/better-together/20260715T034246.168669Z/prompts.json",
-        "optimizer_state": "chapter06/results/runs/full/better-together/20260715T034246.168669Z/optimizer_state.json",
-        "metrics": "chapter06/results/runs/full/better-together/20260715T034246.168669Z/metrics.json",
-        "training": "chapter06/results/runs/full/better-together/20260715T034246.168669Z/training",
-        "candidate_programs": "chapter06/results/runs/full/better-together/20260715T034246.168669Z/candidate_programs"
       }
     }
   ]

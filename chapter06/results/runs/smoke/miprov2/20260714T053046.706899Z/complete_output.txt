@@ -1,30 +1,0 @@
-{
-  "run_id": "20260714T053046.706899Z",
-  "optimizer": "miprov2",
-  "profile": "smoke",
-  "train": 6,
-  "validation": 4,
-  "test": 4
-}
-Baseline score: 50.00%
-2026/07/14 01:30:52 WARNING dspy.teleprompt.mipro_optimizer_v2: 'requires_permission_to_run' is deprecated and will be removed in a future version.
-2026/07/14 01:30:52 INFO dspy.teleprompt.mipro_optimizer_v2: 
-RUNNING WITH THE FOLLOWING LIGHT AUTO RUN SETTINGS:
-num_trials: 10
-minibatch: False
-num_fewshot_candidates: 6
-num_instruct_candidates: 3
-valset size: 4
-
-2026/07/14 01:30:52 INFO dspy.teleprompt.mipro_optimizer_v2: 
-==> STEP 1: BOOTSTRAP FEWSHOT EXAMPLES <==
-2026/07/14 01:30:52 INFO dspy.teleprompt.mipro_optimizer_v2: These will be used as few-shot example candidates for our program and for creating instructions.
-
-2026/07/14 01:30:52 INFO dspy.teleprompt.mipro_optimizer_v2: Bootstrapping N=6 sets of demonstrations...
-Bootstrapping set 1/6
-Bootstrapping set 2/6
-Bootstrapping set 3/6
-  0%|          | 0/6 [00:00<?, ?it/s] 17%|#6        | 1/6 [00:02<00:13,  2.63s/it] 33%|###3      | 2/6 [00:04<00:08,  2.24s/it] 50%|#####     | 3/6 [00:06<00:05,  1.92s/it] 67%|######6   | 4/6 [00:08<00:04,  2.01s/it] 67%|######6   | 4/6 [00:08<00:04,  2.07s/it]
-Bootstrapped 2 full traces after 4 examples for up to 1 rounds, amounting to 4 attempts.
-Bootstrapping set 4/6
-  0%|          | 0/6 [00:00<?, ?it/s] 17%|#6        | 1/6 [00:01<00:07,  1.54s/it] 33%|###3      | 2/6 [00:03<00:06,  1.65s/it] 50%|#####     | 3/6 [00:06<00:07,  2.36s/it] 50%|#####     | 3/6 [00:06<00:06,  2.20s/it]

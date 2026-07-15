@@ -1,8 +1,7 @@
-"""Small, dependency-free helpers for the executed Chapter 6 notebooks.
+"""Dependency-free helpers for the published Chapter 6 notebooks.
 
-The notebooks default to inspecting checked-in benchmark artifacts.  Keeping this
-module in the standard library means a reader can open and execute that path before
-installing DSPy or configuring a paid model provider.
+The notebooks inspect compact, checked-in results and make no network calls. This
+lets readers run the educational material without credentials or a DSPy install.
 """
 
 from __future__ import annotations
@@ -84,20 +83,18 @@ def benchmark_snapshot(optimizer: str) -> str:
         lines.append(
             f"reason: {row.get('reason', 'No runnable artifact is available.')}"
         )
-    lines.append(f"complete run: {row.get('run_dir', '—')}")
     return "\n".join(lines)
 
 
 def artifact_paths(optimizer: str) -> str:
     row = optimizer_row(optimizer)
-    lines = ["Complete artifacts:"]
-    for name, path in sorted(row.get("artifacts", {}).items()):
-        lines.append(f"- {name}: {path}")
+    lines = ["Published artifacts:"]
     if row["status"] == "completed":
         lines.extend(
             [
-                f"- canonical program: chapter06/optimized_programs/final/{optimizer}.json",
+                f"- canonical program snapshot: chapter06/optimized_programs/final/{optimizer}.json",
                 f"- canonical prompt: chapter06/results/final_prompts/{optimizer}.json",
+                "- chapter comparison: chapter06/CHAPTER_RESULTS.md",
             ]
         )
     return "\n".join(lines)

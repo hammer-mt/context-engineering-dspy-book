@@ -1,5 +1,0 @@
-{
-  "predictor_models": [
-    "hf-mps:Qwen/Qwen2.5-0.5B-Instruct::adapter=chapter06/results/runs/smoke/bootstrap-finetune/20260715T011714.494591Z/training/job-1784078262912182000/adapter"
-  ]
-}

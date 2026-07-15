@@ -1,8 +1,0 @@
-{
-  "run_id": "20260714T100528.753546Z",
-  "optimizer": "quickstart",
-  "profile": "full",
-  "train": 36,
-  "validation": 18,
-  "test": 20
-}

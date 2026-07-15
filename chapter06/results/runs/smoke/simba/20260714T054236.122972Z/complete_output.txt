@@ -1,149 +1,0 @@
-{
-  "run_id": "20260714T054236.122972Z",
-  "optimizer": "simba",
-  "profile": "smoke",
-  "train": 6,
-  "validation": 4,
-  "test": 4
-}
-Baseline score: 50.00%
-2026/07/14 01:42:42 INFO dspy.teleprompt.simba: Starting batch 1 of 1.
-2026/07/14 01:42:42 INFO dspy.teleprompt.simba: Sampling program trajectories on 6 examples x 2 samples.
-  0%|          | 0/12 [00:00<?, ?it/s]Processed 1 / 12 examples:   0%|          | 0/12 [00:02<?, ?it/s]Processed 1 / 12 examples:   8%|8         | 1/12 [00:02<00:24,  2.23s/it]Processed 2 / 12 examples:   8%|8         | 1/12 [00:03<00:24,  2.23s/it]Processed 2 / 12 examples:  17%|#6        | 2/12 [00:03<00:19,  1.94s/it]Processed 3 / 12 examples:  17%|#6        | 2/12 [00:05<00:19,  1.94s/it]Processed 3 / 12 examples:  25%|##5       | 3/12 [00:05<00:16,  1.86s/it]Processed 4 / 12 examples:  25%|##5       | 3/12 [00:07<00:16,  1.86s/it]Processed 4 / 12 examples:  33%|###3      | 4/12 [00:07<00:13,  1.72s/it]Processed 5 / 12 examples:  33%|###3      | 4/12 [00:09<00:13,  1.72s/it]Processed 5 / 12 examples:  42%|####1     | 5/12 [00:09<00:12,  1.80s/it]Processed 6 / 12 examples:  42%|####1     | 5/12 [00:10<00:12,  1.80s/it]Processed 6 / 12 examples:  50%|#####     | 6/12 [00:10<00:09,  1.64s/it]Processed 7 / 12 examples:  50%|#####     | 6/12 [00:12<00:09,  1.64s/it]Processed 7 / 12 examples:  58%|#####8    | 7/12 [00:12<00:08,  1.71s/it]Processed 8 / 12 examples:  58%|#####8    | 7/12 [00:13<00:08,  1.71s/it]Processed 8 / 12 examples:  67%|######6   | 8/12 [00:13<00:06,  1.68s/it]Processed 9 / 12 examples:  67%|######6   | 8/12 [00:15<00:06,  1.68s/it]Processed 9 / 12 examples:  75%|#######5  | 9/12 [00:15<00:04,  1.59s/it]Processed 10 / 12 examples:  75%|#######5  | 9/12 [00:16<00:04,  1.59s/it]Processed 10 / 12 examples:  83%|########3 | 10/12 [00:16<00:03,  1.59s/it]Processed 11 / 12 examples:  83%|########3 | 10/12 [00:21<00:03,  1.59s/it]Processed 11 / 12 examples:  92%|#########1| 11/12 [00:21<00:02,  2.36s/it]Processed 12 / 12 examples:  92%|#########1| 11/12 [00:23<00:02,  2.36s/it]Processed 12 / 12 examples: 100%|##########| 12/12 [00:23<00:00,  2.26s/it]Processed 12 / 12 examples: 100%|##########| 12/12 [00:23<00:00,  1.93s/it]
-2026/07/14 01:43:05 INFO dspy.teleprompt.simba: Batch 1: Baseline mini-batch score: 0.5
-
-2026/07/14 01:43:05 INFO dspy.teleprompt.simba: Batch 1: Processing bucket #1, with max score 1.0, max-to-min gap 1.0, and max-to-avg gap 0.5.
-2026/07/14 01:43:05 INFO dspy.teleprompt.simba: Batch 1: Invoking strategy: append_a_rule
-2026/07/14 01:43:05 WARNING dspy.predict.predict: Type mismatch for field 'worse_reward_value': expected float based on given Signature, but the provided value is incompatible: 0.0.
-2026/07/14 01:43:05 WARNING dspy.predict.predict: Type mismatch for field 'better_reward_value': expected float based on given Signature, but the provided value is incompatible: 1.0.
-2026/07/14 01:43:05 WARNING dspy.predict.predict: Type mismatch for field 'module_names': expected list[str] based on given Signature, but the provided value is incompatible: [
-  "detect.predict"
-].
-2026/07/14 01:43:09 INFO dspy.teleprompt.simba_utils: Advice for detect.predict: When a technical passage is polished, generalized, and paraphrase-like, do not classify it as human merely because it names real libraries, papers, or projects. Treat factual specificity as compatible with AI generation and focus on linguistic signals such as smoothly reworded claims, generic explanatory framing, broad assurances, and uniformly polished sentence structure. For passages resembling rewritten software documentation, prefer `is_ai=True` when these paraphrasing signals are present, even without repetition or obvious synthetic artifacts.
-2026/07/14 01:43:09 INFO dspy.teleprompt.simba: 
-
-2026/07/14 01:43:09 INFO dspy.teleprompt.simba: Batch 1: Processing bucket #2, with max score 1.0, max-to-min gap 1.0, and max-to-avg gap 0.5.
-2026/07/14 01:43:09 INFO dspy.teleprompt.simba: Batch 1: Invoking strategy: append_a_rule
-2026/07/14 01:43:09 WARNING dspy.predict.predict: Type mismatch for field 'worse_reward_value': expected float based on given Signature, but the provided value is incompatible: 0.0.
-2026/07/14 01:43:09 WARNING dspy.predict.predict: Type mismatch for field 'better_reward_value': expected float based on given Signature, but the provided value is incompatible: 1.0.
-2026/07/14 01:43:09 WARNING dspy.predict.predict: Type mismatch for field 'module_names': expected list[str] based on given Signature, but the provided value is incompatible: [
-  "detect.predict"
-].
-2026/07/14 01:43:14 INFO dspy.teleprompt.simba_utils: Advice for detect.predict: When a passage resembles software documentation—especially when it uses precise domain terminology, code-style identifiers, product-specific capitalization, and dense operational conditions—do not infer AI generation merely from polished, concise, or slightly awkward prose. Treat these features as normal for human-authored documentation. Return `is_ai=False` unless there are stronger AI-specific signals such as generic filler, repetitive restatement, excessive symmetry, or unsupported elaboration; in the reasoning, identify the documentation genre and distinguish its conventions from actual evidence of generation.
-2026/07/14 01:43:14 INFO dspy.teleprompt.simba: 
-
-2026/07/14 01:43:14 INFO dspy.teleprompt.simba: Batch 1: Processing bucket #3, with max score 1.0, max-to-min gap 0.0, and max-to-avg gap 0.0.
-2026/07/14 01:43:14 INFO dspy.teleprompt.simba: Batch 1: Invoking strategy: append_a_demo_
-2026/07/14 01:43:14 INFO dspy.teleprompt.simba_utils: Added 1 demos (one each) across all predictors.
-2026/07/14 01:43:14 INFO dspy.teleprompt.simba: 
-
-2026/07/14 01:43:14 INFO dspy.teleprompt.simba: Batch 1: Evaluating 3 programs on 6 examples.
-  0%|          | 0/18 [00:00<?, ?it/s]Processed 1 / 18 examples:   0%|          | 0/18 [00:01<?, ?it/s]Processed 1 / 18 examples:   6%|5         | 1/18 [00:01<00:26,  1.54s/it]Processed 2 / 18 examples:   6%|5         | 1/18 [00:03<00:26,  1.54s/it]Processed 2 / 18 examples:  11%|#1        | 2/18 [00:03<00:25,  1.58s/it]Processed 3 / 18 examples:  11%|#1        | 2/18 [00:05<00:25,  1.58s/it]Processed 3 / 18 examples:  17%|#6        | 3/18 [00:05<00:26,  1.74s/it]Processed 4 / 18 examples:  17%|#6        | 3/18 [00:06<00:26,  1.74s/it]Processed 4 / 18 examples:  22%|##2       | 4/18 [00:06<00:22,  1.58s/it]Processed 5 / 18 examples:  22%|##2       | 4/18 [00:07<00:22,  1.58s/it]Processed 5 / 18 examples:  28%|##7       | 5/18 [00:07<00:19,  1.49s/it]Processed 6 / 18 examples:  28%|##7       | 5/18 [00:09<00:19,  1.49s/it]Processed 6 / 18 examples:  33%|###3      | 6/18 [00:09<00:18,  1.51s/it]Processed 7 / 18 examples:  33%|###3      | 6/18 [00:11<00:18,  1.51s/it]Processed 7 / 18 examples:  39%|###8      | 7/18 [00:11<00:17,  1.59s/it]Processed 8 / 18 examples:  39%|###8      | 7/18 [00:12<00:17,  1.59s/it]Processed 8 / 18 examples:  44%|####4     | 8/18 [00:12<00:16,  1.62s/it]Processed 9 / 18 examples:  44%|####4     | 8/18 [00:15<00:16,  1.62s/it]Processed 9 / 18 examples:  50%|#####     | 9/18 [00:15<00:16,  1.85s/it]Processed 10 / 18 examples:  50%|#####     | 9/18 [00:16<00:16,  1.85s/it]Processed 10 / 18 examples:  56%|#####5    | 10/18 [00:16<00:14,  1.76s/it]Processed 11 / 18 examples:  56%|#####5    | 10/18 [00:18<00:14,  1.76s/it]Processed 11 / 18 examples:  61%|######1   | 11/18 [00:18<00:11,  1.69s/it]Processed 12 / 18 examples:  61%|######1   | 11/18 [00:20<00:11,  1.69s/it]Processed 12 / 18 examples:  67%|######6   | 12/18 [00:20<00:10,  1.80s/it]Processed 13 / 18 examples:  67%|######6   | 12/18 [00:22<00:10,  1.80s/it]Processed 13 / 18 examples:  72%|#######2  | 13/18 [00:22<00:09,  1.88s/it]Processed 14 / 18 examples:  72%|#######2  | 13/18 [00:25<00:09,  1.88s/it]Processed 14 / 18 examples:  78%|#######7  | 14/18 [00:25<00:08,  2.22s/it]Processed 15 / 18 examples:  78%|#######7  | 14/18 [00:27<00:08,  2.22s/it]Processed 15 / 18 examples:  83%|########3 | 15/18 [00:27<00:06,  2.06s/it]Processed 16 / 18 examples:  83%|########3 | 15/18 [00:28<00:06,  2.06s/it]Processed 16 / 18 examples:  89%|########8 | 16/18 [00:28<00:03,  1.94s/it]Processed 17 / 18 examples:  89%|########8 | 16/18 [00:31<00:03,  1.94s/it]Processed 17 / 18 examples:  94%|#########4| 17/18 [00:31<00:02,  2.12s/it]Processed 18 / 18 examples:  94%|#########4| 17/18 [00:32<00:02,  2.12s/it]Processed 18 / 18 examples: 100%|##########| 18/18 [00:32<00:00,  1.90s/it]Processed 18 / 18 examples: 100%|##########| 18/18 [00:32<00:00,  1.81s/it]
-2026/07/14 01:43:46 INFO dspy.teleprompt.simba: Scores after 1 batches: [0.5, 0.3333333333333333, 0.6666666666666666], Best: 0.6666666666666666
-
-2026/07/14 01:43:46 INFO dspy.teleprompt.simba: VALIDATION: Evaluating 2 programs on the full trainset.
-  0%|          | 0/12 [00:00<?, ?it/s]Processed 1 / 12 examples:   0%|          | 0/12 [00:03<?, ?it/s]Processed 1 / 12 examples:   8%|8         | 1/12 [00:03<00:43,  3.96s/it]Processed 2 / 12 examples:   8%|8         | 1/12 [00:05<00:43,  3.96s/it]Processed 2 / 12 examples:  17%|#6        | 2/12 [00:05<00:24,  2.50s/it]Processed 3 / 12 examples:  17%|#6        | 2/12 [00:07<00:24,  2.50s/it]Processed 3 / 12 examples:  25%|##5       | 3/12 [00:07<00:20,  2.32s/it]Processed 4 / 12 examples:  25%|##5       | 3/12 [00:09<00:20,  2.32s/it]Processed 4 / 12 examples:  33%|###3      | 4/12 [00:09<00:17,  2.21s/it]Processed 5 / 12 examples:  33%|###3      | 4/12 [00:12<00:17,  2.21s/it]Processed 5 / 12 examples:  42%|####1     | 5/12 [00:12<00:16,  2.30s/it]Processed 6 / 12 examples:  42%|####1     | 5/12 [00:13<00:16,  2.30s/it]Processed 6 / 12 examples:  50%|#####     | 6/12 [00:13<00:12,  2.14s/it]Processed 7 / 12 examples:  50%|#####     | 6/12 [00:16<00:12,  2.14s/it]Processed 7 / 12 examples:  58%|#####8    | 7/12 [00:16<00:11,  2.38s/it]Processed 8 / 12 examples:  58%|#####8    | 7/12 [00:20<00:11,  2.38s/it]Processed 8 / 12 examples:  67%|######6   | 8/12 [00:20<00:10,  2.75s/it]Processed 9 / 12 examples:  67%|######6   | 8/12 [00:22<00:10,  2.75s/it]Processed 9 / 12 examples:  75%|#######5  | 9/12 [00:22<00:07,  2.44s/it]Processed 10 / 12 examples:  75%|#######5  | 9/12 [00:24<00:07,  2.44s/it]Processed 10 / 12 examples:  83%|########3 | 10/12 [00:24<00:04,  2.30s/it]Processed 11 / 12 examples:  83%|########3 | 10/12 [00:25<00:04,  2.30s/it]Processed 11 / 12 examples:  92%|#########1| 11/12 [00:25<00:02,  2.00s/it]Processed 12 / 12 examples:  92%|#########1| 11/12 [00:26<00:02,  2.00s/it]Processed 12 / 12 examples: 100%|##########| 12/12 [00:26<00:00,  1.87s/it]Processed 12 / 12 examples: 100%|##########| 12/12 [00:26<00:00,  2.24s/it]
-2026/07/14 01:44:13 INFO dspy.teleprompt.simba: Final trainset scores: [0.5, 0.5], Best: 0.5 (at index 0)
-
-
-
-Optimized score: 50.00%
-Uplift: +0.00 points
-Optimization time: 91.39s
-{
-  "status": "completed",
-  "optimizer": "simba",
-  "profile": "smoke",
-  "baseline_score": 50.0,
-  "optimized_score": 50.0,
-  "uplift_points": 0.0,
-  "optimization_seconds": 91.39272420799898,
-  "baseline_latency": {
-    "count": 4,
-    "mean_seconds": 1.5355179790003604,
-    "median_seconds": 1.5502549579996412,
-    "p50_seconds": 1.5502549579996412,
-    "p95_seconds": 1.6922180999012197,
-    "min_seconds": 1.330103500000405,
-    "max_seconds": 1.7114585000017541
-  },
-  "optimized_latency": {
-    "count": 4,
-    "mean_seconds": 1.936822740000025,
-    "median_seconds": 1.931070083999657,
-    "p50_seconds": 1.931070083999657,
-    "p95_seconds": 2.1032306608003637,
-    "min_seconds": 1.754659250000259,
-    "max_seconds": 2.1304915420005273
-  },
-  "baseline_usage": {
-    "request_count": 4,
-    "cache_hits": 0,
-    "prompt_tokens": 1005,
-    "completion_tokens": 395,
-    "reasoning_tokens": 115,
-    "total_tokens": 1400,
-    "cost_usd": 0.003375,
-    "models": {
-      "openai/gpt-5.6-luna": {
-        "request_count": 4,
-        "cache_hits": 0,
-        "prompt_tokens": 1005,
-        "completion_tokens": 395,
-        "reasoning_tokens": 115,
-        "total_tokens": 1400,
-        "cost_usd": 0.003375
-      }
-    }
-  },
-  "optimization_usage": {
-    "request_count": 45,
-    "cache_hits": 0,
-    "prompt_tokens": 17091,
-    "completion_tokens": 6431,
-    "reasoning_tokens": 2761,
-    "total_tokens": 23522,
-    "cost_usd": 0.078573,
-    "models": {
-      "openai/gpt-5.6-luna": {
-        "request_count": 43,
-        "cache_hits": 0,
-        "prompt_tokens": 13749,
-        "completion_tokens": 6034,
-        "reasoning_tokens": 2761,
-        "total_tokens": 19783,
-        "cost_usd": 0.049953
-      },
-      "openai/gpt-5.6-sol": {
-        "request_count": 2,
-        "cache_hits": 0,
-        "prompt_tokens": 3342,
-        "completion_tokens": 397,
-        "reasoning_tokens": 0,
-        "total_tokens": 3739,
-        "cost_usd": 0.02862
-      }
-    }
-  },
-  "optimized_evaluation_usage": {
-    "request_count": 4,
-    "cache_hits": 0,
-    "prompt_tokens": 1005,
-    "completion_tokens": 528,
-    "reasoning_tokens": 220,
-    "total_tokens": 1533,
-    "cost_usd": 0.004173,
-    "models": {
-      "openai/gpt-5.6-luna": {
-        "request_count": 4,
-        "cache_hits": 0,
-        "prompt_tokens": 1005,
-        "completion_tokens": 528,
-        "reasoning_tokens": 220,
-        "total_tokens": 1533,
-        "cost_usd": 0.004173
-      }
-    }
-  },
-  "reload_prompt_parity": true
-}

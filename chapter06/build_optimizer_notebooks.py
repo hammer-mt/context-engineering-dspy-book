@@ -1,4 +1,4 @@
-"""Generate concise, executed-artifact-first Chapter 6 optimizer notebooks."""
+"""Generate the concise, publication-ready Chapter 6 optimizer notebooks."""
 
 from __future__ import annotations
 
@@ -235,7 +235,6 @@ def make_notebook(spec: dict[str, Any]) -> dict[str, Any]:
                 ),
                 _code(
                     f"""
-                import os
                 import sys
                 from pathlib import Path
 
@@ -254,9 +253,8 @@ def make_notebook(spec: dict[str, Any]) -> dict[str, Any]:
                 )
 
                 OPTIMIZER = {spec["optimizer"]!r}
-                RUN_MODE = os.getenv("CHAPTER06_RUN", "inspect").lower()
-                print(f"mode={{RUN_MODE!r}}; optimizer={{OPTIMIZER!r}}")
-                print("safe default: inspect checked-in full-run artifacts; no API calls")
+                print(f"optimizer={{OPTIMIZER!r}}")
+                print("reading the checked-in chapter result; no API calls")
                 """
                 ),
                 _markdown(
@@ -287,7 +285,7 @@ def make_notebook(spec: dict[str, Any]) -> dict[str, Any]:
                 {spec["reading"]}
 
                 The next cell shows a bounded readable preview. The complete, lossless prompt and
-                serialized program remain at the paths printed above.
+                saved program snapshot remain at the paths printed above.
                 """
                 ),
                 _code(
@@ -299,33 +297,16 @@ def make_notebook(spec: dict[str, Any]) -> dict[str, Any]:
                 ),
                 _markdown(
                     """
-                ## Run it yourself (explicit opt-in)
+                ## Apply the pattern
 
-                The default `inspect` mode is offline and free. For a live run, first install from
-                the repository root with `python -m pip install -r requirements.txt`, configure
-                `OPENAI_API_KEY`, and restart the kernel.
+                Adapt the compile shape above to your own DSPy program, metric, and frozen
+                train/validation split. Evaluate the returned program on a test set that was not
+                used during compilation, and compare accuracy, compile cost, and inference latency
+                rather than treating a single score as the whole result.
 
-                - Bounded code-path check: launch Jupyter with `CHAPTER06_RUN=smoke`.
-                - Complete frozen-split rerun: launch Jupyter with `CHAPTER06_RUN=full`.
-
-                A full run is intentionally not triggered by opening or choosing “Run All”: it can
-                take minutes or incur model charges. The weight optimizers download and train a
-                small Qwen model locally through MPS/CPU and require the optional training stack. Live
-                artifacts are written to `chapter06/results/runs/<profile>/<optimizer>/<run-id>/`.
-                Rebuild the comparison afterward with `python -m chapter06.summarize_optimizer_results`.
-                """
-                ),
-                _code(
-                    """
-                if RUN_MODE == "inspect":
-                    print("Live run skipped. Set CHAPTER06_RUN=smoke or CHAPTER06_RUN=full explicitly.")
-                elif RUN_MODE in {"smoke", "full"}:
-                    from chapter06.optimizer_experiment import run_experiment
-
-                    live_result = run_experiment(OPTIMIZER, profile_name=RUN_MODE)
-                    print(live_result)
-                else:
-                    raise ValueError("CHAPTER06_RUN must be inspect, smoke, or full")
+                The complete Chapter 6 rerun is summarized in `CHAPTER_RESULTS.md`. Raw provider
+                transcripts and temporary training outputs are intentionally excluded from the
+                student download.
                 """
                 ),
             ],

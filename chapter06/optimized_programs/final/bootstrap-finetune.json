@@ -21,7 +21,7 @@
       ]
     },
     "lm": {
-      "model": "hf-mps:Qwen/Qwen2.5-0.5B-Instruct::adapter=chapter06/results/runs/full/bootstrap-finetune/20260715T034040.794581Z/training/job-1784086925191418000/adapter",
+      "model": "hf-mps:Qwen/Qwen2.5-0.5B-Instruct::adapter=[excluded from student download]",
       "model_type": "chat",
       "cache": false,
       "num_retries": 0,

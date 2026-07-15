@@ -1,120 +1,0 @@
-{
-  "run_id": "20260715T012250.593613Z",
-  "optimizer": "better-together",
-  "profile": "full",
-  "train": 36,
-  "validation": 18,
-  "test": 20,
-  "student_model": "hf-mps:Qwen/Qwen2.5-0.5B-Instruct",
-  "teacher_mode": "local",
-  "local_capabilities": {
-    "torch_version": "2.13.0",
-    "mps_built": true,
-    "mps_available": true,
-    "selected_device": "mps"
-  }
-}
-`torch_dtype` is deprecated! Use `dtype` instead!
-The following generation flags are not valid and may be ignored: ['temperature', 'top_p', 'top_k']. Set `TRANSFORMERS_VERBOSITY=info` for more details.
-Baseline score: 50.00%
-Going to sample between 1 and 2 traces per predictor.
-Will attempt to bootstrap 4 candidate sets.
-2026/07/14 21:23:21 INFO dspy.teleprompt.bettertogether:
-[1m==> BETTERTOGETHER COMPILATION STARTED <==[0m
-2026/07/14 21:23:21 INFO dspy.teleprompt.bettertogether: [94mStrategy:[0m p -> w
-2026/07/14 21:23:21 INFO dspy.teleprompt.bettertogether: [94mTrainset size:[0m 36
-2026/07/14 21:23:21 INFO dspy.teleprompt.bettertogether: [94mValidation ratio:[0m using provided valset
-2026/07/14 21:23:21 INFO dspy.teleprompt.bettertogether: [94mUsing provided validation set (18 examples). Ignoring valset_ratio.[0m
-2026/07/14 21:23:21 INFO dspy.teleprompt.bettertogether: [94mValidating optimizer compile arguments...[0m
-2026/07/14 21:23:21 INFO dspy.teleprompt.bettertogether:
-[1m==> BASELINE EVALUATION <==[0m
-2026/07/14 21:23:21 INFO dspy.teleprompt.bettertogether: Evaluating original program (no optimization applied)
-2026/07/14 21:23:21 INFO dspy.teleprompt.bettertogether: [94mEvaluating on 18 validation examples...[0m
-  0%|          | 0/18 [00:00<?, ?it/s]Average Metric: 1.00 / 1 (100.0%):   0%|          | 0/18 [00:01<?, ?it/s]Average Metric: 1.00 / 1 (100.0%):   6%|5         | 1/18 [00:01<00:22,  1.29s/it]Average Metric: 1.00 / 2 (50.0%):   6%|5         | 1/18 [00:02<00:22,  1.29s/it] Average Metric: 1.00 / 2 (50.0%):  11%|#1        | 2/18 [00:02<00:23,  1.45s/it]Average Metric: 2.00 / 3 (66.7%):  11%|#1        | 2/18 [00:03<00:23,  1.45s/it]Average Metric: 2.00 / 3 (66.7%):  17%|#6        | 3/18 [00:03<00:19,  1.29s/it]Average Metric: 2.00 / 4 (50.0%):  17%|#6        | 3/18 [00:04<00:19,  1.29s/it]Average Metric: 2.00 / 4 (50.0%):  22%|##2       | 4/18 [00:04<00:16,  1.17s/it]Average Metric: 3.00 / 5 (60.0%):  22%|##2       | 4/18 [00:05<00:16,  1.17s/it]Average Metric: 3.00 / 5 (60.0%):  28%|##7       | 5/18 [00:05<00:14,  1.11s/it]Average Metric: 3.00 / 6 (50.0%):  28%|##7       | 5/18 [00:07<00:14,  1.11s/it]Average Metric: 3.00 / 6 (50.0%):  33%|###3      | 6/18 [00:07<00:15,  1.29s/it]Average Metric: 4.00 / 7 (57.1%):  33%|###3      | 6/18 [00:09<00:15,  1.29s/it]Average Metric: 4.00 / 7 (57.1%):  39%|###8      | 7/18 [00:09<00:15,  1.37s/it]Average Metric: 4.00 / 8 (50.0%):  39%|###8      | 7/18 [00:11<00:15,  1.37s/it]Average Metric: 4.00 / 8 (50.0%):  44%|####4     | 8/18 [00:11<00:15,  1.57s/it]2026/07/14 21:23:34 ERROR dspy.utils.parallelizer: Error for Example({'pair_id': 'docs-flask-quickstart-2.0.2-012', 'example_id': 'docs-flask-quickstart-2.0.2-012-human', 'text': 'In case the python -m flask fails or flask does not exist, there are multiple reasons this might be the case. First of all you need to look at the error message.', 'is_ai': False}) (input_keys={'text'}): Adapter JSONAdapter failed to parse the LM response.
-
-LM Response: ```json
-{
-  "reasoning": "The provided code snippet appears to be a string containing a Python script that attempts to run Flask. However, the script itself does not contain any logic or functionality related to running Flask. Therefore, it cannot be classified as either 'generated' by an AI or 'AI-generated'. The presence of a script without its intended purpose suggests that the question may be asking about a scenario where a user would attempt to run a script but encounter issues
-
-Expected to find output fields in the LM response: [reasoning, is_ai]
-
-Actual output fields parsed from the LM response: [reasoning]
-
-. Set `provide_traceback=True` for traceback.
-Average Metric: 4.00 / 8 (50.0%):  44%|####4     | 8/18 [00:13<00:15,  1.57s/it]Average Metric: 4.00 / 8 (50.0%):  50%|#####     | 9/18 [00:13<00:16,  1.79s/it]Average Metric: 4.00 / 8 (50.0%):  50%|#####     | 9/18 [00:13<00:13,  1.49s/it]
-2026/07/14 21:23:34 WARNING dspy.utils.parallelizer: Execution cancelled due to errors or interruption.
-2026/07/14 21:23:34 ERROR dspy.teleprompt.utils: An exception occurred during evaluation
-Traceback (most recent call last):
-  File "/Users/hammermt/.codex/worktrees/1d45/context-engineering-dspy-book/.venv/lib/python3.12/site-packages/dspy/teleprompt/utils.py", line 53, in eval_candidate_program
-    return evaluate(candidate_program, devset=trainset, callback_metadata={"metric_key": "eval_full"})
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/Users/hammermt/.codex/worktrees/1d45/context-engineering-dspy-book/.venv/lib/python3.12/site-packages/dspy/utils/callback.py", line 343, in sync_wrapper
-    raise exception
-  File "/Users/hammermt/.codex/worktrees/1d45/context-engineering-dspy-book/.venv/lib/python3.12/site-packages/dspy/utils/callback.py", line 339, in sync_wrapper
-    results = fn(instance, *args, **kwargs)
-              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/Users/hammermt/.codex/worktrees/1d45/context-engineering-dspy-book/.venv/lib/python3.12/site-packages/dspy/evaluate/evaluate.py", line 175, in __call__
-    results = executor.execute(process_item, devset)
-              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/Users/hammermt/.codex/worktrees/1d45/context-engineering-dspy-book/.venv/lib/python3.12/site-packages/dspy/utils/parallelizer.py", line 51, in execute
-    return self._execute_sequential(wrapped, data)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/Users/hammermt/.codex/worktrees/1d45/context-engineering-dspy-book/.venv/lib/python3.12/site-packages/dspy/utils/parallelizer.py", line 101, in _execute_sequential
-    raise Exception("Execution cancelled due to errors or interruption.")
-Exception: Execution cancelled due to errors or interruption.
-2026/07/14 21:23:34 INFO dspy.teleprompt.bettertogether: [93mBaseline score:[0m 0.0
-2026/07/14 21:23:34 INFO dspy.teleprompt.bettertogether:
-[1m==> STEP 1/2: BOOTSTRAPFEWSHOTWITHRANDOMSEARCH <==[0m
-2026/07/14 21:23:34 INFO dspy.teleprompt.bettertogether: [94mCurrent strategy:[0m 'p'
-2026/07/14 21:23:34 INFO dspy.teleprompt.bettertogether: [94mOptimizer:[0m BootstrapFewShotWithRandomSearch
-2026/07/14 21:23:34 INFO dspy.teleprompt.bettertogether: [94mShuffling trainset...[0m
-2026/07/14 21:23:34 INFO dspy.teleprompt.bettertogether: [94mRunning BootstrapFewShotWithRandomSearch with 36 training examples...[0m
-  0%|          | 0/18 [00:00<?, ?it/s]Average Metric: 1.00 / 1 (100.0%):   0%|          | 0/18 [00:01<?, ?it/s]Average Metric: 1.00 / 1 (100.0%):   6%|5         | 1/18 [00:01<00:21,  1.24s/it]Average Metric: 1.00 / 2 (50.0%):   6%|5         | 1/18 [00:02<00:21,  1.24s/it] Average Metric: 1.00 / 2 (50.0%):  11%|#1        | 2/18 [00:02<00:23,  1.44s/it]Average Metric: 2.00 / 3 (66.7%):  11%|#1        | 2/18 [00:03<00:23,  1.44s/it]Average Metric: 2.00 / 3 (66.7%):  17%|#6        | 3/18 [00:03<00:19,  1.29s/it]Average Metric: 2.00 / 4 (50.0%):  17%|#6        | 3/18 [00:04<00:19,  1.29s/it]Average Metric: 2.00 / 4 (50.0%):  22%|##2       | 4/18 [00:04<00:16,  1.17s/it]Average Metric: 3.00 / 5 (60.0%):  22%|##2       | 4/18 [00:05<00:16,  1.17s/it]Average Metric: 3.00 / 5 (60.0%):  28%|##7       | 5/18 [00:05<00:14,  1.12s/it]Average Metric: 3.00 / 6 (50.0%):  28%|##7       | 5/18 [00:07<00:14,  1.12s/it]Average Metric: 3.00 / 6 (50.0%):  33%|###3      | 6/18 [00:07<00:15,  1.30s/it]Average Metric: 4.00 / 7 (57.1%):  33%|###3      | 6/18 [00:09<00:15,  1.30s/it]Average Metric: 4.00 / 7 (57.1%):  39%|###8      | 7/18 [00:09<00:15,  1.38s/it]Average Metric: 4.00 / 8 (50.0%):  39%|###8      | 7/18 [00:11<00:15,  1.38s/it]Average Metric: 4.00 / 8 (50.0%):  44%|####4     | 8/18 [00:11<00:15,  1.57s/it]2026/07/14 21:23:48 ERROR dspy.utils.parallelizer: Error for Example({'pair_id': 'docs-flask-quickstart-2.0.2-012', 'example_id': 'docs-flask-quickstart-2.0.2-012-human', 'text': 'In case the python -m flask fails or flask does not exist, there are multiple reasons this might be the case. First of all you need to look at the error message.', 'is_ai': False}) (input_keys={'text'}): Adapter JSONAdapter failed to parse the LM response.
-
-LM Response: ```json
-{
-  "reasoning": "The provided code snippet appears to be a string containing a Python script that attempts to run Flask. However, the script itself does not contain any logic or functionality related to running Flask. Therefore, it cannot be classified as either 'generated' by an AI or 'AI-generated'. The presence of a script without its intended purpose suggests that the question may be asking about a scenario where a user would attempt to run a script but encounter issues
-
-Expected to find output fields in the LM response: [reasoning, is_ai]
-
-Actual output fields parsed from the LM response: [reasoning]
-
-. Set `provide_traceback=True` for traceback.
-Average Metric: 4.00 / 8 (50.0%):  44%|####4     | 8/18 [00:13<00:15,  1.57s/it]Average Metric: 4.00 / 8 (50.0%):  50%|#####     | 9/18 [00:13<00:16,  1.78s/it]Average Metric: 4.00 / 8 (50.0%):  50%|#####     | 9/18 [00:13<00:13,  1.48s/it]
-2026/07/14 21:23:48 WARNING dspy.utils.parallelizer: Execution cancelled due to errors or interruption.
-2026/07/14 21:23:48 ERROR dspy.teleprompt.bettertogether: [93mStep 1/2 failed with error: Exception: Execution cancelled due to errors or interruption.[0m
-2026/07/14 21:23:48 ERROR dspy.teleprompt.bettertogether: [93mStopping optimization early. Returning best program found so far from 1 candidate(s).[0m
-2026/07/14 21:23:48 ERROR dspy.teleprompt.bettertogether: [93mTraceback:[0m
-Traceback (most recent call last):
-  File "/Users/hammermt/.codex/worktrees/1d45/context-engineering-dspy-book/.venv/lib/python3.12/site-packages/dspy/teleprompt/bettertogether.py", line 455, in _run_strategies
-    student, score, is_new_best, lms_relaunched = self._run_and_evaluate_step(
-                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/Users/hammermt/.codex/worktrees/1d45/context-engineering-dspy-book/.venv/lib/python3.12/site-packages/dspy/teleprompt/bettertogether.py", line 550, in _run_and_evaluate_step
-    student = optimizer.compile(student, **filtered_compile_args)
-              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/Users/hammermt/.codex/worktrees/1d45/context-engineering-dspy-book/.venv/lib/python3.12/site-packages/dspy/teleprompt/random_search.py", line 122, in compile
-    result = evaluate(program)
-             ^^^^^^^^^^^^^^^^^
-  File "/Users/hammermt/.codex/worktrees/1d45/context-engineering-dspy-book/.venv/lib/python3.12/site-packages/dspy/utils/callback.py", line 343, in sync_wrapper
-    raise exception
-  File "/Users/hammermt/.codex/worktrees/1d45/context-engineering-dspy-book/.venv/lib/python3.12/site-packages/dspy/utils/callback.py", line 339, in sync_wrapper
-    results = fn(instance, *args, **kwargs)
-              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/Users/hammermt/.codex/worktrees/1d45/context-engineering-dspy-book/.venv/lib/python3.12/site-packages/dspy/evaluate/evaluate.py", line 175, in __call__
-    results = executor.execute(process_item, devset)
-              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/Users/hammermt/.codex/worktrees/1d45/context-engineering-dspy-book/.venv/lib/python3.12/site-packages/dspy/utils/parallelizer.py", line 51, in execute
-    return self._execute_sequential(wrapped, data)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/Users/hammermt/.codex/worktrees/1d45/context-engineering-dspy-book/.venv/lib/python3.12/site-packages/dspy/utils/parallelizer.py", line 101, in _execute_sequential
-    raise Exception("Execution cancelled due to errors or interruption.")
-Exception: Execution cancelled due to errors or interruption.
-2026/07/14 21:23:48 INFO dspy.teleprompt.bettertogether:
-[1m==> OPTIMIZATION SUMMARY <==[0m
-2026/07/14 21:23:48 INFO dspy.teleprompt.bettertogether: [92mBest score:[0m 0.0
-2026/07/14 21:23:48 INFO dspy.teleprompt.bettertogether: [92mBest strategy:[0m original (no optimization)
-2026/07/14 21:23:48 INFO dspy.teleprompt.bettertogether: [94mTotal candidates evaluated:[0m 1
-2026/07/14 21:23:48 INFO dspy.teleprompt.bettertogether:
-[1m[92m==> BETTERTOGETHER COMPILATION COMPLETE <==[0m
-2026/07/14 21:23:48 INFO dspy.teleprompt.bettertogether: [92mBest score achieved:[0m 0.0
-2026/07/14 21:23:48 INFO dspy.teleprompt.bettertogether: [92mBest strategy:[0m original (no optimization)

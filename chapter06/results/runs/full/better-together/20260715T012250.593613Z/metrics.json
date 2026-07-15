@@ -1,4 +1,0 @@
-{
-  "status": "failed",
-  "error": "RuntimeError: BetterTogether stopped early because an optimizer step failed"
-}
