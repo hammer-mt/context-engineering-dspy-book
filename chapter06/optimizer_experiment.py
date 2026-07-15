@@ -352,6 +352,68 @@ def _evaluate(
     }
 
 
+def _verify_reload_prediction_parity(
+    program: dspy.Module,
+    examples: Sequence[dspy.Example],
+    recorded_predictions: Sequence[dict[str, Any]],
+    *,
+    limit: int,
+    ledger: BudgetLedger,
+    tracker: LMHistoryTracker,
+) -> tuple[dict[str, Any], list[dict[str, Any]]]:
+    """Compare a reloaded program with recorded labels on a bounded test subset."""
+
+    expected_by_id = {
+        item["example_id"]: item.get("predicted_is_ai")
+        for item in recorded_predictions
+        if item.get("status") == "completed"
+    }
+    checks: list[dict[str, Any]] = []
+    for example in list(examples)[: max(0, limit)]:
+        ledger.assert_can_spend(summarize_history(tracker.since(0))["cost_usd"] + 0.10)
+        try:
+            observed = as_bool(program(**example.inputs()).is_ai)
+            expected = expected_by_id[example.example_id]
+            checks.append(
+                {
+                    "phase": "reload_verification",
+                    "pair_id": example.pair_id,
+                    "example_id": example.example_id,
+                    "expected_is_ai": bool(example.is_ai),
+                    "recorded_predicted_is_ai": expected,
+                    "predicted_is_ai": observed,
+                    "prediction_parity": observed == expected,
+                    "status": "completed",
+                }
+            )
+        except Exception as exc:
+            status = classify_api_error(exc)
+            if is_global_stop_status(status):
+                raise
+            checks.append(
+                {
+                    "phase": "reload_verification",
+                    "pair_id": example.pair_id,
+                    "example_id": example.example_id,
+                    "expected_is_ai": bool(example.is_ai),
+                    "status": status,
+                    "error": f"{type(exc).__name__}: {exc}",
+                }
+            )
+    completed = [item for item in checks if item["status"] == "completed"]
+    matching = sum(bool(item["prediction_parity"]) for item in completed)
+    return (
+        {
+            "checked": len(checks),
+            "completed": len(completed),
+            "matching": matching,
+            "all_equal": bool(checks) and matching == len(checks),
+            "example_ids": [item["example_id"] for item in checks],
+        },
+        checks,
+    )
+
+
 def _build_optimizer(
     name: str,
     *,
@@ -575,6 +637,7 @@ def run_experiment(
     ) or "openai/gpt-5.6-sol"
     request_timeout_seconds = float(os.getenv("CHAPTER06_REQUEST_TIMEOUT_SECONDS", "120"))
     num_retries = int(os.getenv("CHAPTER06_NUM_RETRIES", "1"))
+    parity_limit = int(os.getenv("CHAPTER06_PARITY_LIMIT", "3"))
     run_id = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S.%fZ")
     run_dir = RESULTS_ROOT / profile.name / optimizer_name / run_id
     run_dir.mkdir(parents=True, exist_ok=False)
@@ -587,6 +650,7 @@ def run_experiment(
         "reflection_model": reflection_model,
         "request_timeout_seconds": request_timeout_seconds,
         "num_retries": num_retries,
+        "reload_prediction_parity_limit": parity_limit,
         "started_at": datetime.now(timezone.utc).isoformat(),
         "git_sha": _git_sha(),
         "packages": _package_versions(),
@@ -754,6 +818,17 @@ def run_experiment(
             reload_prompt_parity = extract_program_prompts(reloaded_detector) == final_prompts
             if not reload_prompt_parity:
                 raise RuntimeError("serialized program did not preserve the final prompts on reload")
+            reload_history_start = tracker.snapshot()
+            reload_prediction_parity, reload_predictions = _verify_reload_prediction_parity(
+                reloaded_detector,
+                testset,
+                optimized["predictions"],
+                limit=parity_limit,
+                ledger=ledger,
+                tracker=tracker,
+            )
+            reload_history = tracker.since(reload_history_start)
+            all_predictions.extend(reload_predictions)
             atomic_write_json(run_dir / "prompts.json", final_prompts)
             metrics = {
                 "status": "completed",
@@ -768,7 +843,9 @@ def run_experiment(
                 "baseline_usage": summarize_history(baseline_history),
                 "optimization_usage": summarize_history(optimization_history),
                 "optimized_evaluation_usage": summarize_history(optimized_history),
+                "reload_verification_usage": summarize_history(reload_history),
                 "reload_prompt_parity": reload_prompt_parity,
+                "reload_prediction_parity": reload_prediction_parity,
             }
             print(f"Optimized score: {optimized['score']:.2f}%")
             print(f"Uplift: {metrics['uplift_points']:+.2f} points")

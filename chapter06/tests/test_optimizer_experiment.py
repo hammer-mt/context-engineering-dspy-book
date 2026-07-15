@@ -6,6 +6,7 @@ import os
 import tempfile
 import unittest
 from pathlib import Path
+from types import SimpleNamespace
 from unittest.mock import patch
 
 import chapter06.optimizer_experiment as optimizer_experiment
@@ -20,6 +21,7 @@ from chapter06.optimizer_experiment import (
     hashed_ngram_embeddings,
     load_frozen_examples,
     profile_for,
+    _verify_reload_prediction_parity,
 )
 
 
@@ -127,6 +129,45 @@ class OptimizerExperimentTest(unittest.TestCase):
         self.assertEqual([example.pair_id for example in loaded["train"]], ["p1", "p1"])
         self.assertEqual([example.pair_id for example in loaded["test"]], ["p3", "p3"])
         self.assertIs(loaded["test"][1].is_ai, True)
+
+    def test_reload_prediction_parity_checks_a_bounded_subset(self) -> None:
+        import dspy
+
+        examples = [
+            dspy.Example(pair_id="p1", example_id="e1", text="human", is_ai=False).with_inputs("text"),
+            dspy.Example(pair_id="p2", example_id="e2", text="ai", is_ai=True).with_inputs("text"),
+            dspy.Example(pair_id="p3", example_id="e3", text="extra", is_ai=True).with_inputs("text"),
+        ]
+
+        class Program:
+            def __call__(self, *, text):
+                return SimpleNamespace(is_ai=text != "human")
+
+        class Ledger:
+            def assert_can_spend(self, _value):
+                return None
+
+        class Tracker:
+            def since(self, _start):
+                return []
+
+        summary, checks = _verify_reload_prediction_parity(
+            Program(),
+            examples,
+            [
+                {"example_id": "e1", "predicted_is_ai": False, "status": "completed"},
+                {"example_id": "e2", "predicted_is_ai": True, "status": "completed"},
+                {"example_id": "e3", "predicted_is_ai": False, "status": "completed"},
+            ],
+            limit=2,
+            ledger=Ledger(),
+            tracker=Tracker(),
+        )
+
+        self.assertEqual(summary["checked"], 2)
+        self.assertEqual(summary["matching"], 2)
+        self.assertTrue(summary["all_equal"])
+        self.assertEqual([item["example_id"] for item in checks], ["e1", "e2"])
 
     def test_missing_api_key_leaves_a_terminal_artifact_complete_manifest(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
