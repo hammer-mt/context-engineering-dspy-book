@@ -34,16 +34,19 @@ DISPLAY_NAMES = {
     "bootstrap-finetune": "BootstrapFinetune",
     "better-together": "BetterTogether",
 }
+WEIGHT_OPTIMIZERS = {"bootstrap-finetune", "better-together"}
 
 
-def _latest_matching_run(optimizer: str, dataset_manifest: dict[str, Any]) -> Path | None:
+def _latest_matching_run(
+    optimizer: str, dataset_manifest: dict[str, Any]
+) -> Path | None:
     root = RESULTS_ROOT / "full" / optimizer
     for manifest_path in sorted(root.glob("*/manifest.json"), reverse=True):
         manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
-        if manifest.get("dataset_manifest") == dataset_manifest and manifest.get("status") in {
-            "completed",
-            "hardware_blocked",
-        }:
+        if (
+            manifest.get("dataset_manifest") == dataset_manifest
+            and manifest.get("status") == "completed"
+        ):
             return manifest_path.parent
     return None
 
@@ -66,7 +69,9 @@ def build_summary() -> dict[str, Any]:
     baseline_dir = _latest_matching_run("quickstart", dataset_manifest)
     if baseline_dir is None:
         raise RuntimeError("no completed full baseline matches the frozen split")
-    baseline_metrics = json.loads((baseline_dir / "metrics.json").read_text(encoding="utf-8"))
+    baseline_metrics = json.loads(
+        (baseline_dir / "metrics.json").read_text(encoding="utf-8")
+    )
     reference_baseline = float(baseline_metrics["baseline_score"])
 
     FROZEN_PROGRAMS_DIR.mkdir(parents=True, exist_ok=True)
@@ -84,25 +89,45 @@ def build_summary() -> dict[str, Any]:
             )
             continue
         manifest = json.loads((run_dir / "manifest.json").read_text(encoding="utf-8"))
+        is_weight_optimizer = optimizer in WEIGHT_OPTIMIZERS
+        effective_task_model = (
+            manifest.get("local_student_model")
+            if is_weight_optimizer
+            else manifest.get("task_model")
+        )
+        teacher_model = None
+        if is_weight_optimizer:
+            teacher_model = (
+                effective_task_model
+                if manifest.get("finetune_teacher_mode") == "local"
+                else manifest.get("task_model")
+            )
         row: dict[str, Any] = {
             "optimizer": optimizer,
             "display_name": DISPLAY_NAMES[optimizer],
             "status": manifest["status"],
             "run_id": manifest["run_id"],
             "run_dir": str(run_dir.relative_to(REPO_ROOT)),
+            "task_model": effective_task_model,
+            "teacher_model": teacher_model,
+            "finetune_teacher_mode": manifest.get("finetune_teacher_mode"),
         }
         metrics_path = run_dir / "metrics.json"
         metrics = json.loads(metrics_path.read_text(encoding="utf-8"))
         if manifest["status"] == "completed":
             score = float(metrics["optimized_score"])
+            is_reference_comparable = optimizer not in WEIGHT_OPTIMIZERS
             row.update(
                 {
                     "run_baseline_accuracy": float(metrics["baseline_score"]),
                     "accuracy": score,
-                    "uplift_vs_reference_points": score - reference_baseline,
+                    "reference_comparable": is_reference_comparable,
+                    "uplift_vs_reference_points": (
+                        score - reference_baseline if is_reference_comparable else None
+                    ),
                     "relative_uplift_vs_reference_percent": (
                         100 * (score - reference_baseline) / reference_baseline
-                        if reference_baseline
+                        if reference_baseline and is_reference_comparable
                         else None
                     ),
                     "run_uplift_points": float(metrics["uplift_points"]),
@@ -130,8 +155,12 @@ def build_summary() -> dict[str, Any]:
                     },
                 }
             )
-            shutil.copyfile(run_dir / "program.json", FROZEN_PROGRAMS_DIR / f"{optimizer}.json")
-            shutil.copyfile(run_dir / "prompts.json", FROZEN_PROMPTS_DIR / f"{optimizer}.json")
+            shutil.copyfile(
+                run_dir / "program.json", FROZEN_PROGRAMS_DIR / f"{optimizer}.json"
+            )
+            shutil.copyfile(
+                run_dir / "prompts.json", FROZEN_PROMPTS_DIR / f"{optimizer}.json"
+            )
         else:
             row["reason"] = manifest.get("reason", "")
         rows.append(row)
@@ -155,6 +184,10 @@ def build_summary() -> dict[str, Any]:
         "optimizer",
         "display_name",
         "status",
+        "task_model",
+        "teacher_model",
+        "finetune_teacher_mode",
+        "reference_comparable",
         "accuracy",
         "uplift_vs_reference_points",
         "relative_uplift_vs_reference_percent",
@@ -192,30 +225,44 @@ def build_summary() -> dict[str, Any]:
         ),
         "",
         (
-            "| Optimizer | Accuracy | "
-            f"Uplift vs. {reference_baseline:.1f}% reference | Relative uplift | Optimize cost | "
+            "| Optimizer | Task model | Accuracy | "
+            f"Uplift vs. {reference_baseline:.1f}% Luna reference | Run uplift | Optimize cost | "
             "Optimize time | Mean latency | P95 latency |"
         ),
-        "|---|---:|---:|---:|---:|---:|---:|---:|",
+        "|---|---|---:|---:|---:|---:|---:|---:|---:|",
     ]
     for row in rows:
         if row["status"] == "completed":
+            reference_uplift = (
+                f"{row['uplift_vs_reference_points']:+.1f} pts"
+                if row["reference_comparable"]
+                else "—"
+            )
             markdown.append(
-                "| {display_name} | {accuracy:.1f}% | {uplift_vs_reference_points:+.1f} pts | "
-                "{relative_uplift_vs_reference_percent:+.1f}% | ${optimization_cost_usd:.4f} | "
+                "| {display_name} | {task_model} | {accuracy:.1f}% | {reference_uplift} | "
+                "{run_uplift_points:+.1f} pts | "
+                "${optimization_cost_usd:.4f} | "
                 "{time} | {mean_inference_latency_seconds:.2f}s | "
                 "{p95_inference_latency_seconds:.2f}s |".format(
-                    **row, time=_seconds(row["optimization_seconds"])
+                    **row,
+                    reference_uplift=reference_uplift,
+                    time=_seconds(row["optimization_seconds"]),
                 )
             )
         else:
             markdown.append(
-                f"| {row['display_name']} | {row['status']} | — | — | — | — | — | — |"
+                f"| {row['display_name']} | — | {row['status']} | — | — | — | — | — | — |"
             )
     markdown.extend(
         [
             "",
             f"> {gate['disclosure']}",
+            "",
+            (
+                "BootstrapFinetune and BetterTogether use the trainable local "
+                "`Qwen/Qwen2.5-0.5B-Instruct` model. Their row-baseline uplift is valid on the "
+                "same frozen split, but their absolute accuracy is not a Luna-vs-Luna comparison."
+            ),
             "",
             "Every completed row links to a run directory in `benchmark_summary.json`. Each directory preserves "
             "the full console output, LM call history, per-example predictions, serialized program, extracted "

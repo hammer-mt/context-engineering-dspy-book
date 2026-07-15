@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "ceiling_usd": 95.0,
-  "total_cost_usd": 7.533706400000002,
+  "total_cost_usd": 7.5337064,
   "remaining_usd": 87.4662936,
   "entries": [
     {
@@ -841,6 +841,56 @@
       "cost_usd": 0.41354,
       "metadata": {
         "optimizer": "ensemble",
+        "profile": "full",
+        "status": "completed"
+      }
+    },
+    {
+      "stage": "optimizer_smoke",
+      "run_id": "bootstrap-finetune-smoke-20260715T011714.494591Z",
+      "cost_usd": 0.0,
+      "metadata": {
+        "optimizer": "bootstrap-finetune",
+        "profile": "smoke",
+        "status": "completed"
+      }
+    },
+    {
+      "stage": "optimizer_smoke",
+      "run_id": "better-together-smoke-20260715T011812.511232Z",
+      "cost_usd": 0.0,
+      "metadata": {
+        "optimizer": "better-together",
+        "profile": "smoke",
+        "status": "completed"
+      }
+    },
+    {
+      "stage": "optimizer_full",
+      "run_id": "bootstrap-finetune-full-20260715T012015.458162Z",
+      "cost_usd": 0.0,
+      "metadata": {
+        "optimizer": "bootstrap-finetune",
+        "profile": "full",
+        "status": "completed"
+      }
+    },
+    {
+      "stage": "optimizer_full",
+      "run_id": "better-together-full-20260715T012250.593613Z",
+      "cost_usd": 0.0,
+      "metadata": {
+        "optimizer": "better-together",
+        "profile": "full",
+        "status": "failed"
+      }
+    },
+    {
+      "stage": "optimizer_full",
+      "run_id": "better-together-full-20260715T012442.371551Z",
+      "cost_usd": 0.0,
+      "metadata": {
+        "optimizer": "better-together",
         "profile": "full",
         "status": "completed"
       }

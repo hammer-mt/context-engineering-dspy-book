@@ -62,13 +62,13 @@ NOTEBOOKS = {
         "ensemble",
     ),
     "bootstrap-finetune.ipynb": (
-        "BootstrapFinetune (CUDA)",
-        "Weight optimization requires an NVIDIA CUDA host; unsupported hosts emit a hardware-blocked artifact.",
+        "BootstrapFinetune (Apple Silicon / MPS)",
+        "Runs DSPy's weight optimizer locally through the Chapter 6 Transformers/TRL/PEFT provider.",
         "bootstrap-finetune",
     ),
     "better-together.ipynb": (
-        "BetterTogether (CUDA)",
-        "Alternating prompt and weight optimization requires the same NVIDIA CUDA training stack.",
+        "BetterTogether (Apple Silicon / MPS)",
+        "Runs DSPy's prompt-to-weight strategy with the same local fine-tuning provider.",
         "better-together",
     ),
 }

@@ -1,0 +1,259 @@
+{
+  "run_id": "20260715T011812.511232Z",
+  "optimizer": "better-together",
+  "profile": "smoke",
+  "train": 6,
+  "validation": 4,
+  "test": 4,
+  "student_model": "hf-mps:Qwen/Qwen2.5-0.5B-Instruct",
+  "teacher_mode": "local",
+  "local_capabilities": {
+    "torch_version": "2.13.0",
+    "mps_built": true,
+    "mps_available": true,
+    "selected_device": "mps"
+  }
+}
+`torch_dtype` is deprecated! Use `dtype` instead!
+The following generation flags are not valid and may be ignored: ['temperature', 'top_p', 'top_k']. Set `TRANSFORMERS_VERBOSITY=info` for more details.
+Baseline score: 50.00%
+Going to sample between 1 and 2 traces per predictor.
+Will attempt to bootstrap 1 candidate sets.
+2026/07/14 21:18:19 INFO dspy.teleprompt.bettertogether:
+[1m==> BETTERTOGETHER COMPILATION STARTED <==[0m
+2026/07/14 21:18:19 INFO dspy.teleprompt.bettertogether: [94mStrategy:[0m p -> w
+2026/07/14 21:18:19 INFO dspy.teleprompt.bettertogether: [94mTrainset size:[0m 6
+2026/07/14 21:18:19 INFO dspy.teleprompt.bettertogether: [94mValidation ratio:[0m using provided valset
+2026/07/14 21:18:19 INFO dspy.teleprompt.bettertogether: [94mUsing provided validation set (4 examples). Ignoring valset_ratio.[0m
+2026/07/14 21:18:19 INFO dspy.teleprompt.bettertogether: [94mValidating optimizer compile arguments...[0m
+2026/07/14 21:18:19 INFO dspy.teleprompt.bettertogether:
+[1m==> BASELINE EVALUATION <==[0m
+2026/07/14 21:18:19 INFO dspy.teleprompt.bettertogether: Evaluating original program (no optimization applied)
+2026/07/14 21:18:19 INFO dspy.teleprompt.bettertogether: [94mEvaluating on 4 validation examples...[0m
+  0%|          | 0/4 [00:00<?, ?it/s]Average Metric: 1.00 / 1 (100.0%):   0%|          | 0/4 [00:01<?, ?it/s]Average Metric: 1.00 / 1 (100.0%):  25%|##5       | 1/4 [00:01<00:04,  1.35s/it]Average Metric: 1.00 / 2 (50.0%):  25%|##5       | 1/4 [00:02<00:04,  1.35s/it] Average Metric: 1.00 / 2 (50.0%):  50%|#####     | 2/4 [00:02<00:02,  1.46s/it]Average Metric: 2.00 / 3 (66.7%):  50%|#####     | 2/4 [00:03<00:02,  1.46s/it]Average Metric: 2.00 / 3 (66.7%):  75%|#######5  | 3/4 [00:03<00:01,  1.30s/it]Average Metric: 2.00 / 4 (50.0%):  75%|#######5  | 3/4 [00:04<00:01,  1.30s/it]Average Metric: 2.00 / 4 (50.0%): 100%|##########| 4/4 [00:04<00:00,  1.18s/it]Average Metric: 2.00 / 4 (50.0%): 100%|##########| 4/4 [00:04<00:00,  1.25s/it]
+2026/07/14 21:18:24 INFO dspy.evaluate.evaluate: Average Metric: 2.0 / 4 (50.0%)
+2026/07/14 21:18:24 INFO dspy.teleprompt.bettertogether: [93mBaseline score:[0m 50.0
+2026/07/14 21:18:24 INFO dspy.teleprompt.bettertogether:
+[1m==> STEP 1/2: BOOTSTRAPFEWSHOTWITHRANDOMSEARCH <==[0m
+2026/07/14 21:18:24 INFO dspy.teleprompt.bettertogether: [94mCurrent strategy:[0m 'p'
+2026/07/14 21:18:24 INFO dspy.teleprompt.bettertogether: [94mOptimizer:[0m BootstrapFewShotWithRandomSearch
+2026/07/14 21:18:24 INFO dspy.teleprompt.bettertogether: [94mShuffling trainset...[0m
+2026/07/14 21:18:24 INFO dspy.teleprompt.bettertogether: [94mRunning BootstrapFewShotWithRandomSearch with 6 training examples...[0m
+  0%|          | 0/4 [00:00<?, ?it/s]Average Metric: 1.00 / 1 (100.0%):   0%|          | 0/4 [00:01<?, ?it/s]Average Metric: 1.00 / 1 (100.0%):  25%|##5       | 1/4 [00:01<00:03,  1.25s/it]Average Metric: 1.00 / 2 (50.0%):  25%|##5       | 1/4 [00:02<00:03,  1.25s/it] Average Metric: 1.00 / 2 (50.0%):  50%|#####     | 2/4 [00:02<00:02,  1.44s/it]Average Metric: 2.00 / 3 (66.7%):  50%|#####     | 2/4 [00:03<00:02,  1.44s/it]Average Metric: 2.00 / 3 (66.7%):  75%|#######5  | 3/4 [00:03<00:01,  1.28s/it]Average Metric: 2.00 / 4 (50.0%):  75%|#######5  | 3/4 [00:04<00:01,  1.28s/it]Average Metric: 2.00 / 4 (50.0%): 100%|##########| 4/4 [00:04<00:00,  1.16s/it]Average Metric: 2.00 / 4 (50.0%): 100%|##########| 4/4 [00:04<00:00,  1.22s/it]
+2026/07/14 21:18:29 INFO dspy.evaluate.evaluate: Average Metric: 2.0 / 4 (50.0%)
+New best score: 50.0 for seed -3
+Scores so far: [50.0]
+Best score so far: 50.0
+  0%|          | 0/4 [00:00<?, ?it/s]Average Metric: 1.00 / 1 (100.0%):   0%|          | 0/4 [00:02<?, ?it/s]Average Metric: 1.00 / 1 (100.0%):  25%|##5       | 1/4 [00:02<00:06,  2.31s/it]Average Metric: 1.00 / 2 (50.0%):  25%|##5       | 1/4 [00:03<00:06,  2.31s/it] Average Metric: 1.00 / 2 (50.0%):  50%|#####     | 2/4 [00:03<00:02,  1.38s/it]Average Metric: 2.00 / 3 (66.7%):  50%|#####     | 2/4 [00:03<00:02,  1.38s/it]Average Metric: 2.00 / 3 (66.7%):  75%|#######5  | 3/4 [00:03<00:00,  1.02it/s]Average Metric: 2.00 / 4 (50.0%):  75%|#######5  | 3/4 [00:04<00:00,  1.02it/s]Average Metric: 2.00 / 4 (50.0%): 100%|##########| 4/4 [00:04<00:00,  1.25it/s]Average Metric: 2.00 / 4 (50.0%): 100%|##########| 4/4 [00:04<00:00,  1.01s/it]
+2026/07/14 21:18:33 INFO dspy.evaluate.evaluate: Average Metric: 2.0 / 4 (50.0%)
+Scores so far: [50.0, 50.0]
+Best score so far: 50.0
+  0%|          | 0/6 [00:00<?, ?it/s] 17%|#6        | 1/6 [00:00<00:02,  1.97it/s] 33%|###3      | 2/6 [00:01<00:02,  1.95it/s] 50%|#####     | 3/6 [00:01<00:01,  1.93it/s] 67%|######6   | 4/6 [00:02<00:01,  1.28it/s] 67%|######6   | 4/6 [00:02<00:01,  1.47it/s]
+Bootstrapped 2 full traces after 4 examples for up to 1 rounds, amounting to 4 attempts.
+  0%|          | 0/4 [00:00<?, ?it/s]Average Metric: 1.00 / 1 (100.0%):   0%|          | 0/4 [00:00<?, ?it/s]Average Metric: 1.00 / 1 (100.0%):  25%|##5       | 1/4 [00:00<00:02,  1.13it/s]Average Metric: 1.00 / 2 (50.0%):  25%|##5       | 1/4 [00:01<00:02,  1.13it/s] Average Metric: 1.00 / 2 (50.0%):  50%|#####     | 2/4 [00:01<00:01,  1.13it/s]Average Metric: 2.00 / 3 (66.7%):  50%|#####     | 2/4 [00:02<00:01,  1.13it/s]Average Metric: 2.00 / 3 (66.7%):  75%|#######5  | 3/4 [00:02<00:00,  1.12it/s]Average Metric: 2.00 / 4 (50.0%):  75%|#######5  | 3/4 [00:03<00:00,  1.12it/s]Average Metric: 2.00 / 4 (50.0%): 100%|##########| 4/4 [00:03<00:00,  1.16it/s]Average Metric: 2.00 / 4 (50.0%): 100%|##########| 4/4 [00:03<00:00,  1.15it/s]
+2026/07/14 21:18:39 INFO dspy.evaluate.evaluate: Average Metric: 2.0 / 4 (50.0%)
+Scores so far: [50.0, 50.0, 50.0]
+Best score so far: 50.0
+  0%|          | 0/6 [00:00<?, ?it/s] 17%|#6        | 1/6 [00:00<00:02,  1.91it/s] 33%|###3      | 2/6 [00:01<00:02,  1.93it/s] 33%|###3      | 2/6 [00:01<00:02,  1.92it/s]
+Bootstrapped 2 full traces after 2 examples for up to 1 rounds, amounting to 2 attempts.
+  0%|          | 0/4 [00:00<?, ?it/s]Average Metric: 1.00 / 1 (100.0%):   0%|          | 0/4 [00:00<?, ?it/s]Average Metric: 1.00 / 1 (100.0%):  25%|##5       | 1/4 [00:00<00:02,  1.44it/s]Average Metric: 1.00 / 2 (50.0%):  25%|##5       | 1/4 [00:01<00:02,  1.44it/s] Average Metric: 1.00 / 2 (50.0%):  50%|#####     | 2/4 [00:01<00:01,  1.48it/s]Average Metric: 2.00 / 3 (66.7%):  50%|#####     | 2/4 [00:02<00:01,  1.48it/s]Average Metric: 2.00 / 3 (66.7%):  75%|#######5  | 3/4 [00:02<00:00,  1.14it/s]Average Metric: 2.00 / 4 (50.0%):  75%|#######5  | 3/4 [00:03<00:00,  1.14it/s]Average Metric: 2.00 / 4 (50.0%): 100%|##########| 4/4 [00:03<00:00,  1.17it/s]Average Metric: 2.00 / 4 (50.0%): 100%|##########| 4/4 [00:03<00:00,  1.22it/s]
+2026/07/14 21:18:44 INFO dspy.evaluate.evaluate: Average Metric: 2.0 / 4 (50.0%)
+Scores so far: [50.0, 50.0, 50.0, 50.0]
+Best score so far: 50.0
+4 candidate programs found.
+2026/07/14 21:18:44 WARNING dspy.teleprompt.bettertogether: [93mWarning: BootstrapFewShotWithRandomSearch incorrectly reset predictor LMs. Restoring to original LMs.[0m
+2026/07/14 21:18:44 INFO dspy.teleprompt.bettertogether: [94mEvaluating on 4 validation examples...[0m
+  0%|          | 0/4 [00:00<?, ?it/s]Average Metric: 1.00 / 1 (100.0%):   0%|          | 0/4 [00:01<?, ?it/s]Average Metric: 1.00 / 1 (100.0%):  25%|##5       | 1/4 [00:01<00:03,  1.27s/it]Average Metric: 1.00 / 2 (50.0%):  25%|##5       | 1/4 [00:02<00:03,  1.27s/it] Average Metric: 1.00 / 2 (50.0%):  50%|#####     | 2/4 [00:02<00:02,  1.45s/it]Average Metric: 2.00 / 3 (66.7%):  50%|#####     | 2/4 [00:03<00:02,  1.45s/it]Average Metric: 2.00 / 3 (66.7%):  75%|#######5  | 3/4 [00:03<00:01,  1.29s/it]Average Metric: 2.00 / 4 (50.0%):  75%|#######5  | 3/4 [00:04<00:01,  1.29s/it]Average Metric: 2.00 / 4 (50.0%): 100%|##########| 4/4 [00:04<00:00,  1.17s/it]Average Metric: 2.00 / 4 (50.0%): 100%|##########| 4/4 [00:04<00:00,  1.23s/it]
+2026/07/14 21:18:49 INFO dspy.evaluate.evaluate: Average Metric: 2.0 / 4 (50.0%)
+2026/07/14 21:18:49 INFO dspy.teleprompt.bettertogether: [92mNew best score![0m 50.0 (strategy: 'p')
+2026/07/14 21:18:49 INFO dspy.teleprompt.bettertogether:
+[1m==> STEP 2/2: BOOTSTRAPFINETUNE <==[0m
+2026/07/14 21:18:49 INFO dspy.teleprompt.bettertogether: [94mCurrent strategy:[0m 'p -> w'
+2026/07/14 21:18:49 INFO dspy.teleprompt.bettertogether: [94mOptimizer:[0m BootstrapFinetune
+2026/07/14 21:18:49 INFO dspy.teleprompt.bettertogether: [94mShuffling trainset...[0m
+2026/07/14 21:18:49 INFO dspy.teleprompt.bettertogether: [94mRunning BootstrapFinetune with 6 training examples...[0m
+2026/07/14 21:18:49 INFO dspy.teleprompt.bootstrap_finetune: Preparing the student and teacher programs...
+2026/07/14 21:18:49 INFO dspy.teleprompt.bootstrap_finetune: Bootstrapping data...
+  0%|          | 0/6 [00:00<?, ?it/s]Average Metric: 1.00 / 1 (100.0%):   0%|          | 0/6 [00:01<?, ?it/s]Average Metric: 1.00 / 1 (100.0%):  17%|#6        | 1/6 [00:01<00:06,  1.25s/it]Average Metric: 1.00 / 2 (50.0%):  17%|#6        | 1/6 [00:02<00:06,  1.25s/it] Average Metric: 1.00 / 2 (50.0%):  33%|###3      | 2/6 [00:02<00:04,  1.13s/it]Average Metric: 2.00 / 3 (66.7%):  33%|###3      | 2/6 [00:03<00:04,  1.13s/it]Average Metric: 2.00 / 3 (66.7%):  50%|#####     | 3/6 [00:03<00:03,  1.16s/it]Average Metric: 3.00 / 4 (75.0%):  50%|#####     | 3/6 [00:05<00:03,  1.16s/it]Average Metric: 3.00 / 4 (75.0%):  67%|######6   | 4/6 [00:05<00:03,  1.65s/it]Average Metric: 3.00 / 5 (60.0%):  67%|######6   | 4/6 [00:07<00:03,  1.65s/it]Average Metric: 3.00 / 5 (60.0%):  83%|########3 | 5/6 [00:07<00:01,  1.56s/it]Average Metric: 3.00 / 6 (50.0%):  83%|########3 | 5/6 [00:09<00:01,  1.56s/it]Average Metric: 3.00 / 6 (50.0%): 100%|##########| 6/6 [00:09<00:00,  1.79s/it]Average Metric: 3.00 / 6 (50.0%): 100%|##########| 6/6 [00:09<00:00,  1.59s/it]
+2026/07/14 21:18:58 INFO dspy.evaluate.evaluate: Average Metric: 3.0 / 6 (50.0%)
+2026/07/14 21:18:58 INFO dspy.teleprompt.bootstrap_finetune: Preparing the train data...
+2026/07/14 21:18:58 INFO dspy.teleprompt.bootstrap_finetune: Collected data for 6 examples
+2026/07/14 21:18:58 INFO dspy.teleprompt.bootstrap_finetune: After filtering with the metric, 3 examples remain
+2026/07/14 21:18:58 INFO dspy.teleprompt.bootstrap_finetune: Using 3 data points for fine-tuning the model: hf-mps:Qwen/Qwen2.5-0.5B-Instruct
+2026/07/14 21:18:58 INFO dspy.teleprompt.bootstrap_finetune: Starting LM fine-tuning...
+2026/07/14 21:18:58 INFO dspy.teleprompt.bootstrap_finetune: 1 fine-tuning job(s) to start
+2026/07/14 21:18:58 INFO dspy.teleprompt.bootstrap_finetune: Starting 1 fine-tuning job(s)...
+2026/07/14 21:18:58 INFO dspy.teleprompt.bootstrap_finetune: Calling lm.kill() on the LM to be fine-tuned to free up resources. This won't have any effect if the LM is not running.
+Tokenizing train dataset:   0%|          | 0/3 [00:00<?, ? examples/s]Tokenizing train dataset: 100%|##########| 3/3 [00:00<00:00, 835.02 examples/s]
+Truncating train dataset:   0%|          | 0/3 [00:00<?, ? examples/s]Truncating train dataset: 100%|##########| 3/3 [00:00<00:00, 3175.10 examples/s]
+The tokenizer has new PAD/BOS/EOS tokens that differ from the model config and generation config. The model config and generation config were aligned accordingly, being updated with the tokenizer's values. Updated tokens: {'bos_token_id': None, 'pad_token_id': 151643}.
+  0%|          | 0/1 [00:00<?, ?it/s]100%|##########| 1/1 [00:00<00:00,  1.03it/s]                                             {'loss': 3.0536, 'grad_norm': 16.068340301513672, 'learning_rate': 0.0002, 'entropy': 1.6983023881912231, 'num_tokens': 303.0, 'mean_token_accuracy': 0.5198675394058228, 'epoch': 0.33}
+100%|##########| 1/1 [00:00<00:00,  1.03it/s]                                             {'train_runtime': 0.9724, 'train_samples_per_second': 1.028, 'train_steps_per_second': 1.028, 'train_loss': 3.0536274909973145, 'epoch': 0.33}
+100%|##########| 1/1 [00:00<00:00,  1.03it/s]100%|##########| 1/1 [00:00<00:00,  1.03it/s]
+2026/07/14 21:19:01 INFO dspy.teleprompt.bootstrap_finetune: Job 1/1 is done
+2026/07/14 21:19:01 INFO dspy.teleprompt.bootstrap_finetune: Updating the student program with the fine-tuned LMs...
+2026/07/14 21:19:01 INFO dspy.teleprompt.bootstrap_finetune: BootstrapFinetune has finished compiling the student program
+2026/07/14 21:19:02 INFO dspy.teleprompt.bettertogether: [94mEvaluating on 4 validation examples...[0m
+  0%|          | 0/4 [00:00<?, ?it/s]Average Metric: 1.00 / 1 (100.0%):   0%|          | 0/4 [00:02<?, ?it/s]Average Metric: 1.00 / 1 (100.0%):  25%|##5       | 1/4 [00:02<00:08,  2.80s/it]Average Metric: 1.00 / 2 (50.0%):  25%|##5       | 1/4 [00:05<00:08,  2.80s/it] Average Metric: 1.00 / 2 (50.0%):  50%|#####     | 2/4 [00:05<00:05,  2.62s/it]Average Metric: 2.00 / 3 (66.7%):  50%|#####     | 2/4 [00:07<00:05,  2.62s/it]Average Metric: 2.00 / 3 (66.7%):  75%|#######5  | 3/4 [00:07<00:02,  2.66s/it]Average Metric: 2.00 / 4 (50.0%):  75%|#######5  | 3/4 [00:09<00:02,  2.66s/it]Average Metric: 2.00 / 4 (50.0%): 100%|##########| 4/4 [00:09<00:00,  2.16s/it]Average Metric: 2.00 / 4 (50.0%): 100%|##########| 4/4 [00:09<00:00,  2.35s/it]
+2026/07/14 21:19:11 INFO dspy.evaluate.evaluate: Average Metric: 2.0 / 4 (50.0%)
+2026/07/14 21:19:11 INFO dspy.teleprompt.bettertogether: [92mNew best score![0m 50.0 (strategy: 'p -> w')
+2026/07/14 21:19:11 INFO dspy.teleprompt.bettertogether:
+[1m==> OPTIMIZATION SUMMARY <==[0m
+2026/07/14 21:19:11 INFO dspy.teleprompt.bettertogether: [92mBest score:[0m 50.0
+2026/07/14 21:19:11 INFO dspy.teleprompt.bettertogether: [92mBest strategy:[0m original (no optimization)
+2026/07/14 21:19:11 INFO dspy.teleprompt.bettertogether: [94mTotal candidates evaluated:[0m 3
+2026/07/14 21:19:11 INFO dspy.teleprompt.bettertogether:
+[1m[92m==> BETTERTOGETHER COMPILATION COMPLETE <==[0m
+2026/07/14 21:19:11 INFO dspy.teleprompt.bettertogether: [92mBest score achieved:[0m 50.0
+2026/07/14 21:19:11 INFO dspy.teleprompt.bettertogether: [92mBest strategy:[0m original (no optimization)
+Optimized score: 50.00%
+Uplift: +0.00 points
+Optimization time: 52.27s
+{
+  "status": "completed",
+  "optimizer": "better-together",
+  "profile": "smoke",
+  "baseline_score": 50.0,
+  "optimized_score": 50.0,
+  "uplift_points": 0.0,
+  "optimization_seconds": 52.2738988330093,
+  "baseline_latency": {
+    "count": 4,
+    "mean_seconds": 1.7669537082474562,
+    "median_seconds": 1.1084742500024731,
+    "p50_seconds": 1.1084742500024731,
+    "p95_seconds": 3.438565003597613,
+    "min_seconds": 1.01208079198841,
+    "max_seconds": 3.8387855409964686
+  },
+  "optimized_latency": {
+    "count": 4,
+    "mean_seconds": 1.2375356252450729,
+    "median_seconds": 1.115232666998054,
+    "p50_seconds": 1.115232666998054,
+    "p95_seconds": 1.6198931794911913,
+    "min_seconds": 1.0239967499946943,
+    "max_seconds": 1.6956804169894895
+  },
+  "baseline_usage": {
+    "request_count": 8,
+    "cache_hits": 0,
+    "prompt_tokens": 2108,
+    "completion_tokens": 233,
+    "reasoning_tokens": 0,
+    "total_tokens": 2341,
+    "cost_usd": 0.0,
+    "models": {
+      "hf-mps:Qwen/Qwen2.5-0.5B-Instruct": {
+        "request_count": 8,
+        "cache_hits": 0,
+        "prompt_tokens": 2108,
+        "completion_tokens": 233,
+        "reasoning_tokens": 0,
+        "total_tokens": 2341,
+        "cost_usd": 0.0
+      }
+    }
+  },
+  "optimization_usage": {
+    "request_count": 64,
+    "cache_hits": 0,
+    "prompt_tokens": 20305,
+    "completion_tokens": 2586,
+    "reasoning_tokens": 0,
+    "total_tokens": 22891,
+    "cost_usd": 0.0,
+    "models": {
+      "hf-mps:Qwen/Qwen2.5-0.5B-Instruct": {
+        "request_count": 56,
+        "cache_hits": 0,
+        "prompt_tokens": 18295,
+        "completion_tokens": 2197,
+        "reasoning_tokens": 0,
+        "total_tokens": 20492,
+        "cost_usd": 0.0
+      },
+      "hf-mps:Qwen/Qwen2.5-0.5B-Instruct::adapter=chapter06/results/runs/smoke/better-together/20260715T011812.511232Z/training/job-1784078338942576000/adapter": {
+        "request_count": 8,
+        "cache_hits": 0,
+        "prompt_tokens": 2010,
+        "completion_tokens": 389,
+        "reasoning_tokens": 0,
+        "total_tokens": 2399,
+        "cost_usd": 0.0
+      }
+    }
+  },
+  "optimized_evaluation_usage": {
+    "request_count": 8,
+    "cache_hits": 0,
+    "prompt_tokens": 2108,
+    "completion_tokens": 233,
+    "reasoning_tokens": 0,
+    "total_tokens": 2341,
+    "cost_usd": 0.0,
+    "models": {
+      "hf-mps:Qwen/Qwen2.5-0.5B-Instruct": {
+        "request_count": 8,
+        "cache_hits": 0,
+        "prompt_tokens": 2108,
+        "completion_tokens": 233,
+        "reasoning_tokens": 0,
+        "total_tokens": 2341,
+        "cost_usd": 0.0
+      }
+    }
+  },
+  "reload_usage": {
+    "request_count": 2,
+    "cache_hits": 0,
+    "prompt_tokens": 488,
+    "completion_tokens": 51,
+    "reasoning_tokens": 0,
+    "total_tokens": 539,
+    "cost_usd": 0.0,
+    "models": {
+      "hf-mps:Qwen/Qwen2.5-0.5B-Instruct": {
+        "request_count": 2,
+        "cache_hits": 0,
+        "prompt_tokens": 488,
+        "completion_tokens": 51,
+        "reasoning_tokens": 0,
+        "total_tokens": 539,
+        "cost_usd": 0.0
+      }
+    }
+  },
+  "reload_prompt_parity": true,
+  "reload_model_parity": true,
+  "reload_prediction_parity": true,
+  "optimizer_state": {
+    "predictor_models": [
+      "hf-mps:Qwen/Qwen2.5-0.5B-Instruct"
+    ],
+    "candidate_programs": [
+      {
+        "score": 50.0,
+        "strategy": "",
+        "predictor_models": [
+          "hf-mps:Qwen/Qwen2.5-0.5B-Instruct"
+        ]
+      },
+      {
+        "score": 50.0,
+        "strategy": "p",
+        "predictor_models": [
+          "hf-mps:Qwen/Qwen2.5-0.5B-Instruct"
+        ]
+      },
+      {
+        "score": 50.0,
+        "strategy": "p -> w",
+        "predictor_models": [
+          "hf-mps:Qwen/Qwen2.5-0.5B-Instruct::adapter=chapter06/results/runs/smoke/better-together/20260715T011812.511232Z/training/job-1784078338942576000/adapter"
+        ]
+      }
+    ],
+    "flag_compilation_error_occurred": false
+  }
+}

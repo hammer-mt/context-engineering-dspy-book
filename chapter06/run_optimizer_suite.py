@@ -6,7 +6,12 @@ import argparse
 import json
 from typing import Sequence
 
-from chapter06.optimizer_experiment import OPTIMIZER_NAMES, RESULTS_ROOT, SPLIT_PATH, run_experiment
+from chapter06.optimizer_experiment import (
+    OPTIMIZER_NAMES,
+    RESULTS_ROOT,
+    SPLIT_PATH,
+    run_experiment,
+)
 
 
 def _has_completed_run(profile: str, optimizer: str) -> bool:
@@ -15,14 +20,16 @@ def _has_completed_run(profile: str, optimizer: str) -> bool:
     for manifest_path in sorted(root.glob("*/manifest.json"), reverse=True):
         manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
         if (
-            manifest.get("status") in {"completed", "hardware_blocked"}
+            manifest.get("status") == "completed"
             and manifest.get("dataset_manifest") == current_dataset_manifest
         ):
             return True
     return False
 
 
-def run_suite(*, profile: str, optimizers: Sequence[str], skip_existing: bool) -> list[dict]:
+def run_suite(
+    *, profile: str, optimizers: Sequence[str], skip_existing: bool
+) -> list[dict]:
     results: list[dict] = []
     for optimizer in optimizers:
         if skip_existing and _has_completed_run(profile, optimizer):
