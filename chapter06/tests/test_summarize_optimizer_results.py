@@ -77,6 +77,33 @@ class FrozenSummaryTest(unittest.TestCase):
 
         self.assertTrue(completed)
         self.assertEqual(summary["schema_version"], 2)
+        for optimizer in ("bootstrap-finetune", "better-together"):
+            row = next(item for item in completed if item["optimizer"] == optimizer)
+            self.assertEqual(row["task_model"], "Qwen/Qwen2.5-0.5B-Instruct")
+            self.assertEqual(row["finetune_teacher_mode"], "local")
+            self.assertFalse(row["reference_comparable"])
+            self.assertIsNone(row["uplift_vs_reference_points"])
+            run_dir = REPO_ROOT / row["run_dir"]
+            metrics = json.loads((run_dir / "metrics.json").read_text(encoding="utf-8"))
+            self.assertTrue(metrics["reload_prompt_parity"])
+            self.assertTrue(metrics["reload_model_parity"])
+            training_summary_path = next(
+                (run_dir / "training").glob("*/training_summary.json")
+            )
+            training_summary = json.loads(
+                training_summary_path.read_text(encoding="utf-8")
+            )
+            self.assertEqual(training_summary["requested_device"], "mps")
+            self.assertEqual(training_summary["trainer_device"], "mps")
+            if optimizer == "better-together":
+                strategies = {
+                    candidate["strategy"]
+                    for candidate in metrics["optimizer_state"]["candidate_programs"]
+                }
+                self.assertIn("p -> w", strategies)
+                self.assertFalse(
+                    metrics["optimizer_state"]["flag_compilation_error_occurred"]
+                )
         self.assertTrue(SUMMARY_MARKDOWN.exists())
         self.assertTrue(SUMMARY_CSV.exists())
         with SUMMARY_CSV.open(encoding="utf-8", newline="") as handle:

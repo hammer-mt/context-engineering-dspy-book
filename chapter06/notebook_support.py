@@ -54,19 +54,32 @@ def benchmark_snapshot(optimizer: str) -> str:
             if parity
             else "not recorded by this run"
         )
+        uplift = (
+            f"{row['uplift_vs_reference_points']:+.1f} points vs Luna reference"
+            if row.get("reference_comparable", True)
+            else f"{row['run_uplift_points']:+.1f} points vs its Qwen run baseline"
+        )
         lines.extend(
             [
+                f"task model: {row.get('task_model', '—')}",
                 f"test accuracy: {row['accuracy']:.1f}%",
-                f"uplift vs frozen baseline: {row['uplift_vs_reference_points']:+.1f} points",
+                f"uplift: {uplift}",
                 f"optimization: ${row['optimization_cost_usd']:.4f} and {_seconds(row['optimization_seconds'])}",
                 (
                     "inference latency: "
                     f"mean {row['mean_inference_latency_seconds']:.2f}s; "
                     f"p95 {row['p95_inference_latency_seconds']:.2f}s"
                 ),
-                f"reload checks: prompt={row['reload_prompt_parity']}; predictions={parity_text}",
+                (
+                    f"reload checks: prompt={row['reload_prompt_parity']}; "
+                    f"model={row.get('reload_model_parity', 'n/a')}; predictions={parity_text}"
+                ),
             ]
         )
+        if not row.get("reference_comparable", True):
+            lines.append(
+                "comparison boundary: same frozen split, separate Qwen/MPS experiment; not Luna-comparable"
+            )
     else:
         lines.append(
             f"reason: {row.get('reason', 'No runnable artifact is available.')}"
@@ -95,7 +108,7 @@ def learned_program_preview(optimizer: str, *, instruction_chars: int = 1_800) -
 
     prompt_path = CHAPTER_DIR / "results" / "final_prompts" / f"{optimizer}.json"
     if not prompt_path.exists():
-        return "No learned prompt exists: this optimizer is hardware-blocked on the recorded host."
+        return "No learned prompt artifact exists for this optimizer."
     prompts = json.loads(prompt_path.read_text(encoding="utf-8"))
     lines: list[str] = []
     for predictor_name, state in prompts.items():
@@ -135,7 +148,7 @@ def verify_prompt_artifact(optimizer: str) -> dict[str, Any]:
     if not prompt_path.exists() or not program_path.exists():
         return {
             "checked": False,
-            "reason": "hardware-blocked run has no serialized program",
+            "reason": "serialized program or extracted prompt is missing",
         }
     prompts = json.loads(prompt_path.read_text(encoding="utf-8"))
     program = json.loads(program_path.read_text(encoding="utf-8"))

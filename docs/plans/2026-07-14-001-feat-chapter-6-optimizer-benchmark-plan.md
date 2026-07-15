@@ -8,6 +8,12 @@ deepened: 2026-07-14
 
 # feat: Rebuild the Chapter 6 optimizer benchmark
 
+> **2026-07-15 acceptance amendment:** The original CUDA-only assumption below
+> was superseded after current API research. DSPy 3.2.1 delegates fine-tuning to
+> an LM provider and does not itself require CUDA. Chapter 6 now supplies a
+> minimal DSPy provider backed by Transformers/TRL/PEFT, and both weight
+> optimizers were smoke-tested and fully executed on this Mac's MPS device.
+
 ## Overview
 
 Rebuild Chapter 6 as a reproducible adversarial benchmark in which the unoptimized GPT-5.6 Luna detector scores below 50% on a frozen holdout and increasingly sophisticated DSPy optimizers have room to separate themselves. Preserve the complete final output, optimized program, learned prompt, predictions, timing, latency, token usage, and cost for every runnable optimizer while keeping aggregate OpenAI spend below the user's $100 ceiling.

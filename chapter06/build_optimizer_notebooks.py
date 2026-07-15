@@ -153,32 +153,34 @@ NOTEBOOKS: dict[str, dict[str, Any]] = {
         "reading": "Accuracy is only half the result: compare mean and p95 inference latency with single-program optimizers because every prediction fans out to three calls.",
     },
     "bootstrap-finetune.ipynb": {
-        "title": "BootstrapFinetune (CUDA)",
+        "title": "BootstrapFinetune (Apple Silicon / MPS)",
         "optimizer": "bootstrap-finetune",
         "idea": "Bootstrap successful traces into training data, then update model weights rather than only prompt state.",
-        "use_when": "You control a trainable local model and have an NVIDIA CUDA host plus enough examples to justify weight optimization.",
-        "changes": "Model weights; prompts and demos are not a substitute for the missing fine-tuned checkpoint.",
+        "use_when": "You control a trainable model and want to distill accepted DSPy traces into a reusable local adapter.",
+        "changes": "A PEFT LoRA adapter for Qwen2.5-0.5B-Instruct; the prompt remains separately inspectable.",
         "config": [
-            "trainable local LM assigned to every predictor",
-            "CUDA training stack and explicit training arguments",
-            "same frozen Chapter 6 splits when hardware is available",
+            "stock DSPy BootstrapFinetune with a Transformers/TRL provider boundary",
+            "MPS selected on Apple Silicon; CPU remains an explicit fallback",
+            "18 full-profile training steps, batch size 1, LoRA rank 8, seed 42",
+            "local self-teaching by default, so this row makes no OpenAI calls",
         ],
-        "compile": "optimizer = dspy.BootstrapFinetune(\n    metric=exact_match, train_kwargs=training_config, num_threads=1,\n)\noptimized_detector = optimizer.compile(detector, trainset=trainset)",
-        "reading": "The recorded Darwin/arm64 host cannot legitimately run this optimizer. The hardware-blocked manifest is the result; no synthetic score or prompt is shown.",
+        "compile": "optimizer = dspy.BootstrapFinetune(\n    metric=exact_match, train_kwargs=training_config,\n    exclude_demos=True, num_threads=1,\n)\noptimized_detector = optimizer.compile(\n    detector, trainset=trainset, teacher=local_teacher,\n)",
+        "reading": "Read score and adapter evidence together. This Qwen/MPS result uses the same frozen split but is not an absolute Luna-to-Luna comparison; follow the training path for device, loss, and adapter metadata.",
     },
     "better-together.ipynb": {
-        "title": "BetterTogether (CUDA)",
+        "title": "BetterTogether (Apple Silicon / MPS)",
         "optimizer": "better-together",
         "idea": "Alternate prompt optimization and weight optimization, evaluate intermediate programs, and retain the best strategy stage.",
         "use_when": "You have both a useful prompt optimizer and a trainable local model, and want them to improve each other rather than run in isolation.",
-        "changes": "Prompt state and model weights in a configured sequence such as `p -> w -> p`.",
+        "changes": "Prompt demonstrations first, then a Qwen LoRA adapter in the explicit `p -> w` candidate.",
         "config": [
-            "GEPA (prompt) plus BootstrapFinetune (weight)",
-            "explicit `p -> w -> p` strategy",
-            "CUDA-capable trainable LM and validation set",
+            "BootstrapFewShotWithRandomSearch (`p`) plus BootstrapFinetune (`w`)",
+            "stock DSPy BetterTogether with explicit `p -> w` strategy",
+            "MPS-backed Qwen2.5-0.5B-Instruct, 18 weight steps, seed 42",
+            "preserve original, `p`, and `p -> w` candidates even when validation ties",
         ],
-        "compile": "optimizer = dspy.BetterTogether(\n    metric=exact_match,\n    p=dspy.GEPA(metric=feedback_metric),\n    w=dspy.BootstrapFinetune(metric=exact_match, train_kwargs=training_config),\n)\noptimized_detector = optimizer.compile(\n    detector, trainset=trainset, valset=valset, strategy='p -> w -> p',\n)",
-        "reading": "This host cannot supply the weight-optimization stage, so the suite records a hardware-blocked artifact instead of silently reducing BetterTogether to prompt-only optimization.",
+        "compile": "optimizer = dspy.BetterTogether(\n    metric=exact_match, p=prompt_optimizer, w=weight_optimizer,\n)\noptimized_detector = optimizer.compile(\n    detector, trainset=trainset, teacher=local_teacher, valset=valset,\n    strategy='p -> w', seed=42,\n)",
+        "reading": "DSPy retained the original program when all validation candidates tied. That is not a failed run: inspect `candidate_programs/` to see the completed prompt-only and trained `p -> w` alternatives and the adapter that was deliberately preserved.",
     },
 }
 
@@ -307,7 +309,8 @@ def make_notebook(spec: dict[str, Any]) -> dict[str, Any]:
                 - Complete frozen-split rerun: launch Jupyter with `CHAPTER06_RUN=full`.
 
                 A full run is intentionally not triggered by opening or choosing “Run All”: it can
-                take minutes, incur model charges, and (for weight optimizers) require CUDA. Live
+                take minutes or incur model charges. The weight optimizers download and train a
+                small Qwen model locally through MPS/CPU and require the optional training stack. Live
                 artifacts are written to `chapter06/results/runs/<profile>/<optimizer>/<run-id>/`.
                 Rebuild the comparison afterward with `python -m chapter06.summarize_optimizer_results`.
                 """

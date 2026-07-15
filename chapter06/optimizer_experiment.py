@@ -26,6 +26,13 @@ import numpy as np
 from dotenv import load_dotenv
 from dspy.utils.callback import BaseCallback
 
+from chapter06.apple_finetune import (
+    DEFAULT_LOCAL_MODEL,
+    TransformersLocalLM,
+    local_capabilities,
+    make_model_spec,
+    rehydrate_local_lms,
+)
 from chapter06.experiment_runtime import (
     BudgetLedger,
     atomic_write_json,
@@ -43,7 +50,7 @@ CHAPTER_DIR = REPO_ROOT / "chapter06"
 DATA_PATH = REPO_ROOT / "data" / "ai_vs_human_chapter06.csv"
 SPLIT_PATH = REPO_ROOT / "data" / "ai_vs_human_chapter06_splits.json"
 RESULTS_ROOT = CHAPTER_DIR / "results" / "runs"
-GPU_OPTIMIZERS = {"bootstrap-finetune", "better-together"}
+WEIGHT_OPTIMIZERS = {"bootstrap-finetune", "better-together"}
 OPTIMIZER_NAMES = (
     "quickstart",
     "labeled-few-shot",
@@ -72,13 +79,16 @@ class RunProfile:
     gepa_max_full_evals: int
     simba_candidates: int
     simba_steps: int
+    better_together_candidates: int
+    finetune_max_steps: int
+    finetune_gradient_accumulation_steps: int
     projected_stage_cost_usd: float
 
 
 def profile_for(name: str) -> RunProfile:
     profiles = {
-        "smoke": RunProfile("smoke", 6, 4, 4, 2, 2, 1, 1, 2, 1, 1.0),
-        "full": RunProfile("full", 0, 0, 0, 8, 4, 2, 6, 4, 6, 20.0),
+        "smoke": RunProfile("smoke", 6, 4, 4, 2, 2, 1, 1, 2, 1, 1, 1, 1, 1.0),
+        "full": RunProfile("full", 0, 0, 0, 8, 4, 2, 6, 4, 6, 4, 18, 4, 20.0),
     }
     try:
         return profiles[name]
@@ -423,6 +433,49 @@ def _verify_reload_prediction_parity(
     )
 
 
+def _finetune_train_kwargs(profile: RunProfile, run_dir: Path) -> dict[str, Any]:
+    return {
+        "output_dir": str(run_dir / "training"),
+        "device": os.getenv("CHAPTER06_FINETUNE_DEVICE", "auto"),
+        "max_steps": int(
+            os.getenv("CHAPTER06_FINETUNE_MAX_STEPS", profile.finetune_max_steps)
+        ),
+        "num_train_epochs": float(os.getenv("CHAPTER06_FINETUNE_EPOCHS", "1")),
+        "per_device_train_batch_size": 1,
+        "gradient_accumulation_steps": profile.finetune_gradient_accumulation_steps,
+        "learning_rate": float(os.getenv("CHAPTER06_FINETUNE_LEARNING_RATE", "0.0002")),
+        "max_length": int(os.getenv("CHAPTER06_FINETUNE_MAX_LENGTH", "768")),
+        "lora_rank": int(os.getenv("CHAPTER06_FINETUNE_LORA_RANK", "8")),
+        "lora_alpha": int(os.getenv("CHAPTER06_FINETUNE_LORA_ALPHA", "16")),
+        "seed": 42,
+    }
+
+
+def extract_optimizer_state(program: dspy.Module) -> dict[str, Any]:
+    state: dict[str, Any] = {
+        "predictor_models": [
+            getattr(predictor.lm, "model", None) for predictor in program.predictors()
+        ]
+    }
+    candidates = getattr(program, "candidate_programs", None)
+    if candidates is not None:
+        state["candidate_programs"] = [
+            {
+                "score": candidate.get("score"),
+                "strategy": candidate.get("strategy"),
+                "predictor_models": [
+                    getattr(predictor.lm, "model", None)
+                    for predictor in candidate["program"].predictors()
+                ],
+            }
+            for candidate in candidates
+        ]
+        state["flag_compilation_error_occurred"] = bool(
+            getattr(program, "flag_compilation_error_occurred", False)
+        )
+    return state
+
+
 def _build_optimizer(
     name: str,
     *,
@@ -431,6 +484,7 @@ def _build_optimizer(
     valset: list[dspy.Example],
     task_lm: dspy.LM,
     reflection_lm: dspy.LM,
+    teacher: dspy.Module | list[dspy.Module] | None,
     profile: RunProfile,
     run_dir: Path,
 ) -> dspy.Module:
@@ -557,6 +611,57 @@ def _build_optimizer(
         return dspy.Ensemble(reduce_fn=boolean_majority).compile(
             [labeled, bootstrapped, searched]
         )
+    if name == "bootstrap-finetune":
+        return dspy.BootstrapFinetune(
+            metric=exact_match,
+            train_kwargs=_finetune_train_kwargs(profile, run_dir),
+            exclude_demos=True,
+            num_threads=1,
+        ).compile(detector, trainset=trainset, teacher=teacher)
+    if name == "better-together":
+        local_max_errors = max(4, len(trainset) + len(valset))
+        prompt_optimizer = dspy.BootstrapFewShotWithRandomSearch(
+            metric=exact_match,
+            max_bootstrapped_demos=2,
+            max_labeled_demos=2,
+            max_rounds=1,
+            num_candidate_programs=profile.better_together_candidates,
+            num_threads=1,
+            max_errors=local_max_errors,
+        )
+        weight_optimizer = dspy.BootstrapFinetune(
+            metric=exact_match,
+            train_kwargs=_finetune_train_kwargs(profile, run_dir),
+            exclude_demos=False,
+            num_threads=1,
+        )
+        optimized = dspy.BetterTogether(
+            metric=exact_match,
+            p=prompt_optimizer,
+            w=weight_optimizer,
+        ).compile(
+            detector,
+            trainset=trainset,
+            teacher=teacher,
+            valset=valset,
+            num_threads=1,
+            max_errors=local_max_errors,
+            seed=42,
+            strategy="p -> w",
+        )
+        if getattr(optimized, "flag_compilation_error_occurred", False):
+            raise RuntimeError(
+                "BetterTogether stopped early because an optimizer step failed"
+            )
+        completed_strategies = {
+            candidate.get("strategy")
+            for candidate in getattr(optimized, "candidate_programs", [])
+        }
+        if "p -> w" not in completed_strategies:
+            raise RuntimeError(
+                "BetterTogether did not complete its prompt-to-weight strategy"
+            )
+        return optimized
     raise ValueError(f"optimizer {name!r} is not runnable on this host")
 
 
@@ -587,7 +692,20 @@ def _git_sha() -> str:
 
 
 def _package_versions() -> dict[str, str]:
-    packages = ("dspy", "gepa", "openai", "litellm", "pandas", "scikit-learn")
+    packages = (
+        "dspy",
+        "gepa",
+        "openai",
+        "litellm",
+        "pandas",
+        "scikit-learn",
+        "torch",
+        "transformers",
+        "trl",
+        "peft",
+        "accelerate",
+        "datasets",
+    )
     versions: dict[str, str] = {}
     for package in packages:
         try:
@@ -604,7 +722,10 @@ def _artifact_index(run_dir: Path) -> dict[str, str]:
         "predictions": "predictions.jsonl",
         "program": "program.json",
         "prompts": "prompts.json",
+        "optimizer_state": "optimizer_state.json",
         "metrics": "metrics.json",
+        "training": "training",
+        "candidate_programs": "candidate_programs",
     }
     return {
         name: filename
@@ -649,6 +770,7 @@ def run_experiment(
     profile_name: str | None = None,
     task_model: str | None = None,
     reflection_model: str | None = None,
+    local_student_model: str | None = None,
 ) -> dict[str, Any]:
     if optimizer_name not in OPTIMIZER_NAMES:
         raise ValueError(f"unknown optimizer {optimizer_name!r}")
@@ -658,6 +780,15 @@ def run_experiment(
     reflection_model = (
         reflection_model or os.getenv("REFLECTION_MODEL") or "openai/gpt-5.6-sol"
     )
+    local_student_model = (
+        local_student_model
+        or os.getenv("CHAPTER06_FINETUNE_MODEL")
+        or DEFAULT_LOCAL_MODEL
+    )
+    finetune_teacher_mode = os.getenv("CHAPTER06_FINETUNE_TEACHER", "local")
+    if finetune_teacher_mode not in {"local", "remote"}:
+        raise ValueError("CHAPTER06_FINETUNE_TEACHER must be 'local' or 'remote'")
+    is_weight_optimizer = optimizer_name in WEIGHT_OPTIMIZERS
     request_timeout_seconds = float(
         os.getenv("CHAPTER06_REQUEST_TIMEOUT_SECONDS", "120")
     )
@@ -673,6 +804,8 @@ def run_experiment(
         "profile": asdict(profile),
         "task_model": task_model,
         "reflection_model": reflection_model,
+        "local_student_model": local_student_model if is_weight_optimizer else None,
+        "finetune_teacher_mode": finetune_teacher_mode if is_weight_optimizer else None,
         "request_timeout_seconds": request_timeout_seconds,
         "num_retries": num_retries,
         "reload_prediction_parity_limit": parity_limit,
@@ -682,6 +815,8 @@ def run_experiment(
         "platform": {"system": platform.system(), "machine": platform.machine()},
         "status": "running",
     }
+    if is_weight_optimizer:
+        manifest["local_training_capabilities"] = local_capabilities()
     atomic_write_json(run_dir / "manifest.json", manifest)
 
     try:
@@ -698,48 +833,59 @@ def run_experiment(
         _finalize_preflight_failure(run_dir=run_dir, manifest=manifest, error=exc)
         raise
 
-    if optimizer_name in GPU_OPTIMIZERS:
-        manifest.update(
-            {
-                "status": "hardware_blocked",
-                "reason": (
-                    "Requires an NVIDIA CUDA GPU and local trainable model; "
-                    f"this host is {platform.system()} {platform.machine()}."
-                ),
-                "completed_at": datetime.now(timezone.utc).isoformat(),
-            }
-        )
-        atomic_write_json(run_dir / "metrics.json", {"status": "hardware_blocked"})
-        manifest["artifacts"] = _artifact_index(run_dir)
-        atomic_write_json(run_dir / "manifest.json", manifest)
-        return manifest
-
     ledger: BudgetLedger | None = None
     try:
         ledger = BudgetLedger()
-        if not os.getenv("OPENAI_API_KEY"):
+        needs_openai = not is_weight_optimizer or finetune_teacher_mode == "remote"
+        if needs_openai and not os.getenv("OPENAI_API_KEY"):
             raise EnvironmentError("Set OPENAI_API_KEY in the repository .env file")
         ledger.assert_can_spend(profile.projected_stage_cost_usd)
         datasets = load_frozen_examples()
         trainset = _limit(datasets["train"], profile.train_limit)
         valset = _limit(datasets["validation"], profile.validation_limit)
         testset = _limit(datasets["test"], profile.test_limit)
-        task_lm = dspy.LM(
-            task_model,
-            num_retries=num_retries,
-            cache=False,
-            timeout=request_timeout_seconds,
-        )
-        reflection_lm = dspy.LM(
-            reflection_model,
-            num_retries=num_retries,
-            cache=False,
-            timeout=request_timeout_seconds,
-        )
         tracker = LMHistoryTracker(reflection_model=reflection_model, ledger=ledger)
-        dspy.configure(lm=task_lm, callbacks=[tracker])
-        detector = AIDetector()
-        detector.set_lm(task_lm)
+        teacher: dspy.Module | list[dspy.Module] | None = None
+        if is_weight_optimizer:
+            task_lm = TransformersLocalLM(
+                model=make_model_spec(local_student_model),
+                device=os.getenv("CHAPTER06_FINETUNE_DEVICE", "auto"),
+                max_context_tokens=int(
+                    os.getenv("CHAPTER06_LOCAL_CONTEXT_TOKENS", "1024")
+                ),
+                max_tokens=int(os.getenv("CHAPTER06_LOCAL_MAX_TOKENS", "96")),
+                cache=False,
+            )
+            reflection_lm = task_lm
+            detector = AIDetector()
+            detector.set_lm(task_lm)
+            if finetune_teacher_mode == "remote":
+                teacher_lm = dspy.LM(
+                    task_model,
+                    num_retries=num_retries,
+                    cache=False,
+                    timeout=request_timeout_seconds,
+                )
+                teacher_detector = AIDetector()
+                teacher_detector.set_lm(teacher_lm)
+                teacher = teacher_detector
+            dspy.configure(lm=task_lm, callbacks=[tracker])
+        else:
+            task_lm = dspy.LM(
+                task_model,
+                num_retries=num_retries,
+                cache=False,
+                timeout=request_timeout_seconds,
+            )
+            reflection_lm = dspy.LM(
+                reflection_model,
+                num_retries=num_retries,
+                cache=False,
+                timeout=request_timeout_seconds,
+            )
+            dspy.configure(lm=task_lm, callbacks=[tracker])
+            detector = AIDetector()
+            detector.set_lm(task_lm)
         run_history_start = tracker.snapshot()
     except BaseException as exc:
         status, _ = _finalize_preflight_failure(
@@ -785,6 +931,13 @@ def run_experiment(
                         "train": len(trainset),
                         "validation": len(valset),
                         "test": len(testset),
+                        "student_model": getattr(detector.get_lm(), "model", None),
+                        "teacher_mode": finetune_teacher_mode
+                        if is_weight_optimizer
+                        else None,
+                        "local_capabilities": local_capabilities()
+                        if is_weight_optimizer
+                        else None,
                     },
                     indent=2,
                 )
@@ -823,6 +976,7 @@ def run_experiment(
                     valset=valset,
                     task_lm=task_lm,
                     reflection_lm=reflection_lm,
+                    teacher=teacher,
                     profile=profile,
                     run_dir=run_dir,
                 )
@@ -845,17 +999,50 @@ def run_experiment(
                         if item["status"] != "completed"
                     )
                     raise RuntimeError(f"optimized evaluation failed: {first_error}")
+            optimizer_state = extract_optimizer_state(optimized_detector)
+            candidates = getattr(optimized_detector, "candidate_programs", None)
+            if candidates:
+                candidate_dir = run_dir / "candidate_programs"
+                candidate_dir.mkdir(parents=True, exist_ok=False)
+                for index, candidate in enumerate(candidates):
+                    strategy = candidate.get("strategy") or "baseline"
+                    slug = re.sub(r"[^a-z0-9]+", "-", strategy.lower()).strip("-")
+                    candidate["program"].save(
+                        candidate_dir / f"{index:02d}-{slug}.json", save_program=False
+                    )
+                    atomic_write_json(
+                        candidate_dir / f"{index:02d}-{slug}-prompts.json",
+                        extract_program_prompts(candidate["program"]),
+                    )
+            atomic_write_json(run_dir / "optimizer_state.json", optimizer_state)
             program_path = run_dir / "program.json"
             optimized_detector.save(program_path, save_program=False)
             final_prompts = extract_program_prompts(optimized_detector)
-            reloaded_detector = optimized_detector.deepcopy()
+            reloaded_detector = (
+                AIDetector() if is_weight_optimizer else optimized_detector.deepcopy()
+            )
             reloaded_detector.load(program_path)
+            if is_weight_optimizer:
+                rehydrate_local_lms(reloaded_detector)
             reload_prompt_parity = (
                 extract_program_prompts(reloaded_detector) == final_prompts
             )
             if not reload_prompt_parity:
                 raise RuntimeError(
                     "serialized program did not preserve the final prompts on reload"
+                )
+            original_models = [
+                getattr(predictor.lm, "model", None)
+                for predictor in optimized_detector.predictors()
+            ]
+            reloaded_models = [
+                getattr(predictor.lm, "model", None)
+                for predictor in reloaded_detector.predictors()
+            ]
+            reload_model_parity = original_models == reloaded_models
+            if not reload_model_parity:
+                raise RuntimeError(
+                    "serialized program did not preserve the final model references on reload"
                 )
             reload_history_start = tracker.snapshot()
             reload_prediction_parity, reload_predictions = (
@@ -886,7 +1073,9 @@ def run_experiment(
                 "optimized_evaluation_usage": summarize_history(optimized_history),
                 "reload_verification_usage": summarize_history(reload_history),
                 "reload_prompt_parity": reload_prompt_parity,
+                "reload_model_parity": reload_model_parity,
                 "reload_prediction_parity": reload_prediction_parity,
+                "optimizer_state": optimizer_state,
             }
             print(f"Optimized score: {optimized['score']:.2f}%")
             print(f"Uplift: {metrics['uplift_points']:+.2f} points")

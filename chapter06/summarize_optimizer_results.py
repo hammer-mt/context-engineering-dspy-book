@@ -36,6 +36,7 @@ DISPLAY_NAMES = {
     "better-together": "BetterTogether",
 }
 MIN_RELOAD_PARITY_EXAMPLES = 3
+WEIGHT_OPTIMIZERS = {"bootstrap-finetune", "better-together"}
 
 
 def _has_publishable_reload_checks(run_dir: Path) -> bool:
@@ -65,8 +66,6 @@ def _latest_matching_run(
         manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
         if manifest.get("dataset_manifest") != dataset_manifest:
             continue
-        if manifest.get("status") == "hardware_blocked":
-            return manifest_path.parent
         if manifest.get("status") == "completed" and _has_publishable_reload_checks(
             manifest_path.parent
         ):
@@ -89,26 +88,33 @@ def _seconds(value: float | None) -> str:
 def _result_table(rows: list[dict[str, Any]], reference_baseline: float) -> list[str]:
     lines = [
         (
-            "| Optimizer | Accuracy | "
-            f"Uplift vs. {reference_baseline:.1f}% reference | Optimize cost | "
-            "Optimize time | Mean latency | P95 latency | Reload parity |"
+            "| Optimizer | Task model | Accuracy | "
+            f"Uplift vs. {reference_baseline:.1f}% Luna reference | Run uplift | "
+            "Optimize cost | Optimize time | Mean latency | P95 latency | Reload parity |"
         ),
-        "|---|---:|---:|---:|---:|---:|---:|---:|",
+        "|---|---|---:|---:|---:|---:|---:|---:|---:|---:|",
     ]
     for row in rows:
         if row["status"] == "completed":
+            reference_uplift = (
+                f"{row['uplift_vs_reference_points']:+.1f} pts"
+                if row["reference_comparable"]
+                else "—"
+            )
             lines.append(
-                "| {display_name} | {accuracy:.1f}% | {uplift_vs_reference_points:+.1f} pts | "
-                "${optimization_cost_usd:.4f} | {time} | {mean_inference_latency_seconds:.2f}s | "
-                "{p95_inference_latency_seconds:.2f}s | {parity[matching]}/{parity[checked]} |".format(
+                "| {display_name} | {task_model} | {accuracy:.1f}% | {reference_uplift} | "
+                "{run_uplift_points:+.1f} pts | ${optimization_cost_usd:.4f} | {time} | "
+                "{mean_inference_latency_seconds:.2f}s | {p95_inference_latency_seconds:.2f}s | "
+                "{parity[matching]}/{parity[checked]} |".format(
                     **row,
+                    reference_uplift=reference_uplift,
                     time=_seconds(row["optimization_seconds"]),
                     parity=row["reload_prediction_parity"],
                 )
             )
         else:
             lines.append(
-                f"| {row['display_name']} | {row['status']} | — | — | — | — | — | — |"
+                f"| {row['display_name']} | — | {row['status']} | — | — | — | — | — | — | — |"
             )
     return lines
 
@@ -120,7 +126,9 @@ def _chapter_results_markdown(summary: dict[str, Any]) -> str:
     reference = float(summary["reference_baseline_accuracy"])
     dataset = summary["dataset_manifest"]
     completed = [row for row in rows if row["status"] == "completed"]
-    optimized = [row for row in completed if row["optimizer"] != "quickstart"]
+    luna_completed = [row for row in completed if row["reference_comparable"]]
+    optimized = [row for row in luna_completed if row["optimizer"] != "quickstart"]
+    weight_rows = [row for row in completed if not row["reference_comparable"]]
     best_score = max(row["accuracy"] for row in optimized)
     leaders = [row for row in optimized if row["accuracy"] == best_score]
     leader_names = " and ".join(row["display_name"] for row in leaders)
@@ -132,7 +140,7 @@ def _chapter_results_markdown(summary: dict[str, Any]) -> str:
     ]
     best_free = max(free_compile, key=lambda row: row["accuracy"], default=None)
     slowest_inference = max(
-        completed, key=lambda row: row["mean_inference_latency_seconds"]
+        luna_completed, key=lambda row: row["mean_inference_latency_seconds"]
     )
     total_measured_cost = sum(row["total_measured_cost_usd"] for row in completed)
     parity_matching = sum(
@@ -141,7 +149,6 @@ def _chapter_results_markdown(summary: dict[str, Any]) -> str:
     parity_checked = sum(
         row["reload_prediction_parity"]["checked"] for row in completed
     )
-    blocked = [row for row in rows if row["status"] == "hardware_blocked"]
     gate = summary["baseline_gate"]
     selection_scores = ", ".join(
         f"{item['accuracy']:.0f}%" for item in gate["selection_replicates"]
@@ -228,16 +235,23 @@ def _chapter_results_markdown(summary: dict[str, Any]) -> str:
             ),
         ]
     )
-    if blocked:
-        names = " and ".join(row["display_name"] for row in blocked)
+    if weight_rows:
+        weight_results = "; ".join(
+            f"{row['display_name']} {row['run_baseline_accuracy']:.0f}% → "
+            f"{row['accuracy']:.0f}% in {_seconds(row['optimization_seconds'])}"
+            for row in weight_rows
+        )
         lines.extend(
             [
                 "",
                 (
-                    f"{names} remain hardware-blocked on the recorded Darwin/arm64 host because their "
-                    "weight-optimization paths require an NVIDIA CUDA training stack. Their notebooks "
-                    "execute safely, explain the missing result, and show the explicit full-run command; "
-                    "no score is imputed for unsupported hardware."
+                    "The two weight optimizers are reported as a separate local-model experiment: "
+                    f"{weight_results}. They use `Qwen/Qwen2.5-0.5B-Instruct` through DSPy's "
+                    "Transformers/TRL/PEFT provider boundary on MPS, while the prompt-optimizer rows use "
+                    "GPT-5.6 Luna. Their within-run uplift and training evidence are valid on the same "
+                    "frozen split, but their absolute accuracy is deliberately not compared with the Luna "
+                    "reference. BetterTogether preserves its trained `p -> w` candidate even when DSPy "
+                    "retains the original program after a validation tie."
                 ),
             ]
         )
@@ -280,25 +294,45 @@ def build_summary() -> dict[str, Any]:
             )
             continue
         manifest = json.loads((run_dir / "manifest.json").read_text(encoding="utf-8"))
+        is_weight_optimizer = optimizer in WEIGHT_OPTIMIZERS
+        effective_task_model = (
+            manifest.get("local_student_model")
+            if is_weight_optimizer
+            else manifest.get("task_model")
+        )
+        teacher_model = None
+        if is_weight_optimizer:
+            teacher_model = (
+                effective_task_model
+                if manifest.get("finetune_teacher_mode") == "local"
+                else manifest.get("task_model")
+            )
         row: dict[str, Any] = {
             "optimizer": optimizer,
             "display_name": DISPLAY_NAMES[optimizer],
             "status": manifest["status"],
             "run_id": manifest["run_id"],
             "run_dir": str(run_dir.relative_to(REPO_ROOT)),
+            "task_model": effective_task_model,
+            "teacher_model": teacher_model,
+            "finetune_teacher_mode": manifest.get("finetune_teacher_mode"),
         }
         metrics_path = run_dir / "metrics.json"
         metrics = json.loads(metrics_path.read_text(encoding="utf-8"))
         if manifest["status"] == "completed":
             score = float(metrics["optimized_score"])
+            is_reference_comparable = optimizer not in WEIGHT_OPTIMIZERS
             row.update(
                 {
                     "run_baseline_accuracy": float(metrics["baseline_score"]),
                     "accuracy": score,
-                    "uplift_vs_reference_points": score - reference_baseline,
+                    "reference_comparable": is_reference_comparable,
+                    "uplift_vs_reference_points": (
+                        score - reference_baseline if is_reference_comparable else None
+                    ),
                     "relative_uplift_vs_reference_percent": (
                         100 * (score - reference_baseline) / reference_baseline
-                        if reference_baseline
+                        if reference_baseline and is_reference_comparable
                         else None
                     ),
                     "run_uplift_points": float(metrics["uplift_points"]),
@@ -321,6 +355,7 @@ def build_summary() -> dict[str, Any]:
                         metrics["optimized_latency"]["p95_seconds"]
                     ),
                     "reload_prompt_parity": bool(metrics["reload_prompt_parity"]),
+                    "reload_model_parity": metrics.get("reload_model_parity"),
                     "reload_prediction_parity": metrics.get("reload_prediction_parity"),
                     "artifacts": {
                         name: str((run_dir / filename).relative_to(REPO_ROOT))
@@ -357,6 +392,10 @@ def build_summary() -> dict[str, Any]:
         "optimizer",
         "display_name",
         "status",
+        "task_model",
+        "teacher_model",
+        "finetune_teacher_mode",
+        "reference_comparable",
         "accuracy",
         "uplift_vs_reference_points",
         "relative_uplift_vs_reference_percent",
@@ -369,6 +408,7 @@ def build_summary() -> dict[str, Any]:
         "mean_inference_latency_seconds",
         "p95_inference_latency_seconds",
         "reload_prompt_parity",
+        "reload_model_parity",
         "reload_prediction_parity",
         "run_dir",
         "reason",
@@ -395,30 +435,44 @@ def build_summary() -> dict[str, Any]:
         ),
         "",
         (
-            "| Optimizer | Accuracy | "
-            f"Uplift vs. {reference_baseline:.1f}% reference | Relative uplift | Optimize cost | "
+            "| Optimizer | Task model | Accuracy | "
+            f"Uplift vs. {reference_baseline:.1f}% Luna reference | Run uplift | Optimize cost | "
             "Optimize time | Mean latency | P95 latency |"
         ),
-        "|---|---:|---:|---:|---:|---:|---:|---:|",
+        "|---|---|---:|---:|---:|---:|---:|---:|---:|",
     ]
     for row in rows:
         if row["status"] == "completed":
+            reference_uplift = (
+                f"{row['uplift_vs_reference_points']:+.1f} pts"
+                if row["reference_comparable"]
+                else "—"
+            )
             markdown.append(
-                "| {display_name} | {accuracy:.1f}% | {uplift_vs_reference_points:+.1f} pts | "
-                "{relative_uplift_vs_reference_percent:+.1f}% | ${optimization_cost_usd:.4f} | "
+                "| {display_name} | {task_model} | {accuracy:.1f}% | {reference_uplift} | "
+                "{run_uplift_points:+.1f} pts | "
+                "${optimization_cost_usd:.4f} | "
                 "{time} | {mean_inference_latency_seconds:.2f}s | "
                 "{p95_inference_latency_seconds:.2f}s |".format(
-                    **row, time=_seconds(row["optimization_seconds"])
+                    **row,
+                    reference_uplift=reference_uplift,
+                    time=_seconds(row["optimization_seconds"]),
                 )
             )
         else:
             markdown.append(
-                f"| {row['display_name']} | {row['status']} | — | — | — | — | — | — |"
+                f"| {row['display_name']} | — | {row['status']} | — | — | — | — | — | — |"
             )
     markdown.extend(
         [
             "",
             f"> {gate['disclosure']}",
+            "",
+            (
+                "BootstrapFinetune and BetterTogether use the trainable local "
+                "`Qwen/Qwen2.5-0.5B-Instruct` model. Their row-baseline uplift is valid on the "
+                "same frozen split, but their absolute accuracy is not a Luna-vs-Luna comparison."
+            ),
             "",
             "Every completed row links to a run directory in `benchmark_summary.json`. Each directory preserves "
             "the full console output, LM call history, per-example predictions, serialized program, extracted "

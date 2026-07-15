@@ -1,0 +1,327 @@
+{
+  "run_id": "20260715T012442.371551Z",
+  "optimizer": "better-together",
+  "profile": "full",
+  "train": 36,
+  "validation": 18,
+  "test": 20,
+  "student_model": "hf-mps:Qwen/Qwen2.5-0.5B-Instruct",
+  "teacher_mode": "local",
+  "local_capabilities": {
+    "torch_version": "2.13.0",
+    "mps_built": true,
+    "mps_available": true,
+    "selected_device": "mps"
+  }
+}
+`torch_dtype` is deprecated! Use `dtype` instead!
+The following generation flags are not valid and may be ignored: ['temperature', 'top_p', 'top_k']. Set `TRANSFORMERS_VERBOSITY=info` for more details.
+Baseline score: 50.00%
+Going to sample between 1 and 2 traces per predictor.
+Will attempt to bootstrap 4 candidate sets.
+2026/07/14 21:25:13 INFO dspy.teleprompt.bettertogether:
+[1m==> BETTERTOGETHER COMPILATION STARTED <==[0m
+2026/07/14 21:25:13 INFO dspy.teleprompt.bettertogether: [94mStrategy:[0m p -> w
+2026/07/14 21:25:13 INFO dspy.teleprompt.bettertogether: [94mTrainset size:[0m 36
+2026/07/14 21:25:13 INFO dspy.teleprompt.bettertogether: [94mValidation ratio:[0m using provided valset
+2026/07/14 21:25:13 INFO dspy.teleprompt.bettertogether: [94mUsing provided validation set (18 examples). Ignoring valset_ratio.[0m
+2026/07/14 21:25:13 INFO dspy.teleprompt.bettertogether: [94mValidating optimizer compile arguments...[0m
+2026/07/14 21:25:13 INFO dspy.teleprompt.bettertogether:
+[1m==> BASELINE EVALUATION <==[0m
+2026/07/14 21:25:13 INFO dspy.teleprompt.bettertogether: Evaluating original program (no optimization applied)
+2026/07/14 21:25:13 INFO dspy.teleprompt.bettertogether: [94mEvaluating on 18 validation examples...[0m
+  0%|          | 0/18 [00:00<?, ?it/s]Average Metric: 1.00 / 1 (100.0%):   0%|          | 0/18 [00:01<?, ?it/s]Average Metric: 1.00 / 1 (100.0%):   6%|5         | 1/18 [00:01<00:21,  1.28s/it]Average Metric: 1.00 / 2 (50.0%):   6%|5         | 1/18 [00:02<00:21,  1.28s/it] Average Metric: 1.00 / 2 (50.0%):  11%|#1        | 2/18 [00:02<00:22,  1.44s/it]Average Metric: 2.00 / 3 (66.7%):  11%|#1        | 2/18 [00:03<00:22,  1.44s/it]Average Metric: 2.00 / 3 (66.7%):  17%|#6        | 3/18 [00:03<00:19,  1.28s/it]Average Metric: 2.00 / 4 (50.0%):  17%|#6        | 3/18 [00:04<00:19,  1.28s/it]Average Metric: 2.00 / 4 (50.0%):  22%|##2       | 4/18 [00:04<00:16,  1.16s/it]Average Metric: 3.00 / 5 (60.0%):  22%|##2       | 4/18 [00:05<00:16,  1.16s/it]Average Metric: 3.00 / 5 (60.0%):  28%|##7       | 5/18 [00:05<00:14,  1.10s/it]Average Metric: 3.00 / 6 (50.0%):  28%|##7       | 5/18 [00:07<00:14,  1.10s/it]Average Metric: 3.00 / 6 (50.0%):  33%|###3      | 6/18 [00:07<00:15,  1.28s/it]Average Metric: 4.00 / 7 (57.1%):  33%|###3      | 6/18 [00:09<00:15,  1.28s/it]Average Metric: 4.00 / 7 (57.1%):  39%|###8      | 7/18 [00:09<00:14,  1.36s/it]Average Metric: 4.00 / 8 (50.0%):  39%|###8      | 7/18 [00:11<00:14,  1.36s/it]Average Metric: 4.00 / 8 (50.0%):  44%|####4     | 8/18 [00:11<00:15,  1.55s/it]2026/07/14 21:25:26 ERROR dspy.utils.parallelizer: Error for Example({'pair_id': 'docs-flask-quickstart-2.0.2-012', 'example_id': 'docs-flask-quickstart-2.0.2-012-human', 'text': 'In case the python -m flask fails or flask does not exist, there are multiple reasons this might be the case. First of all you need to look at the error message.', 'is_ai': False}) (input_keys={'text'}): Adapter JSONAdapter failed to parse the LM response.
+
+LM Response: ```json
+{
+  "reasoning": "The provided code snippet appears to be a string containing a Python script that attempts to run Flask. However, the script itself does not contain any logic or functionality related to running Flask. Therefore, it cannot be classified as either 'generated' by an AI or 'AI-generated'. The presence of a script without its intended purpose suggests that the question may be asking about a scenario where a user would attempt to run a script but encounter issues
+
+Expected to find output fields in the LM response: [reasoning, is_ai]
+
+Actual output fields parsed from the LM response: [reasoning]
+
+. Set `provide_traceback=True` for traceback.
+Average Metric: 4.00 / 8 (50.0%):  44%|####4     | 8/18 [00:13<00:15,  1.55s/it]Average Metric: 4.00 / 8 (50.0%):  50%|#####     | 9/18 [00:13<00:15,  1.76s/it]Average Metric: 4.00 / 9 (44.4%):  50%|#####     | 9/18 [00:14<00:15,  1.76s/it]Average Metric: 4.00 / 9 (44.4%):  56%|#####5    | 10/18 [00:14<00:12,  1.57s/it]Average Metric: 5.00 / 10 (50.0%):  56%|#####5    | 10/18 [00:16<00:12,  1.57s/it]Average Metric: 5.00 / 10 (50.0%):  61%|######1   | 11/18 [00:16<00:12,  1.78s/it]Average Metric: 5.00 / 11 (45.5%):  61%|######1   | 11/18 [00:18<00:12,  1.78s/it]Average Metric: 5.00 / 11 (45.5%):  67%|######6   | 12/18 [00:18<00:11,  1.87s/it]Average Metric: 6.00 / 12 (50.0%):  67%|######6   | 12/18 [00:19<00:11,  1.87s/it]Average Metric: 6.00 / 12 (50.0%):  72%|#######2  | 13/18 [00:19<00:07,  1.59s/it]Average Metric: 7.00 / 13 (53.8%):  72%|#######2  | 13/18 [00:20<00:07,  1.59s/it]Average Metric: 7.00 / 13 (53.8%):  78%|#######7  | 14/18 [00:20<00:05,  1.38s/it]Average Metric: 8.00 / 14 (57.1%):  78%|#######7  | 14/18 [00:21<00:05,  1.38s/it]Average Metric: 8.00 / 14 (57.1%):  83%|########3 | 15/18 [00:21<00:03,  1.30s/it]Average Metric: 8.00 / 15 (53.3%):  83%|########3 | 15/18 [00:22<00:03,  1.30s/it]Average Metric: 8.00 / 15 (53.3%):  89%|########8 | 16/18 [00:22<00:02,  1.28s/it]Average Metric: 9.00 / 16 (56.2%):  89%|########8 | 16/18 [00:24<00:02,  1.28s/it]Average Metric: 9.00 / 16 (56.2%):  94%|#########4| 17/18 [00:24<00:01,  1.36s/it]Average Metric: 9.00 / 17 (52.9%):  94%|#########4| 17/18 [00:26<00:01,  1.36s/it]Average Metric: 9.00 / 17 (52.9%): 100%|##########| 18/18 [00:26<00:00,  1.43s/it]Average Metric: 9.00 / 17 (52.9%): 100%|##########| 18/18 [00:26<00:00,  1.45s/it]
+2026/07/14 21:25:39 INFO dspy.evaluate.evaluate: Average Metric: 9.0 / 18 (50.0%)
+2026/07/14 21:25:39 INFO dspy.teleprompt.bettertogether: [93mBaseline score:[0m 50.0
+2026/07/14 21:25:39 INFO dspy.teleprompt.bettertogether:
+[1m==> STEP 1/2: BOOTSTRAPFEWSHOTWITHRANDOMSEARCH <==[0m
+2026/07/14 21:25:39 INFO dspy.teleprompt.bettertogether: [94mCurrent strategy:[0m 'p'
+2026/07/14 21:25:39 INFO dspy.teleprompt.bettertogether: [94mOptimizer:[0m BootstrapFewShotWithRandomSearch
+2026/07/14 21:25:39 INFO dspy.teleprompt.bettertogether: [94mShuffling trainset...[0m
+2026/07/14 21:25:39 INFO dspy.teleprompt.bettertogether: [94mRunning BootstrapFewShotWithRandomSearch with 36 training examples...[0m
+  0%|          | 0/18 [00:00<?, ?it/s]Average Metric: 1.00 / 1 (100.0%):   0%|          | 0/18 [00:01<?, ?it/s]Average Metric: 1.00 / 1 (100.0%):   6%|5         | 1/18 [00:01<00:21,  1.25s/it]Average Metric: 1.00 / 2 (50.0%):   6%|5         | 1/18 [00:02<00:21,  1.25s/it] Average Metric: 1.00 / 2 (50.0%):  11%|#1        | 2/18 [00:02<00:22,  1.44s/it]Average Metric: 2.00 / 3 (66.7%):  11%|#1        | 2/18 [00:03<00:22,  1.44s/it]Average Metric: 2.00 / 3 (66.7%):  17%|#6        | 3/18 [00:03<00:19,  1.29s/it]Average Metric: 2.00 / 4 (50.0%):  17%|#6        | 3/18 [00:04<00:19,  1.29s/it]Average Metric: 2.00 / 4 (50.0%):  22%|##2       | 4/18 [00:04<00:16,  1.17s/it]Average Metric: 3.00 / 5 (60.0%):  22%|##2       | 4/18 [00:05<00:16,  1.17s/it]Average Metric: 3.00 / 5 (60.0%):  28%|##7       | 5/18 [00:05<00:14,  1.11s/it]Average Metric: 3.00 / 6 (50.0%):  28%|##7       | 5/18 [00:07<00:14,  1.11s/it]Average Metric: 3.00 / 6 (50.0%):  33%|###3      | 6/18 [00:07<00:15,  1.29s/it]Average Metric: 4.00 / 7 (57.1%):  33%|###3      | 6/18 [00:09<00:15,  1.29s/it]Average Metric: 4.00 / 7 (57.1%):  39%|###8      | 7/18 [00:09<00:15,  1.37s/it]Average Metric: 4.00 / 8 (50.0%):  39%|###8      | 7/18 [00:11<00:15,  1.37s/it]Average Metric: 4.00 / 8 (50.0%):  44%|####4     | 8/18 [00:11<00:15,  1.56s/it]2026/07/14 21:25:52 ERROR dspy.utils.parallelizer: Error for Example({'pair_id': 'docs-flask-quickstart-2.0.2-012', 'example_id': 'docs-flask-quickstart-2.0.2-012-human', 'text': 'In case the python -m flask fails or flask does not exist, there are multiple reasons this might be the case. First of all you need to look at the error message.', 'is_ai': False}) (input_keys={'text'}): Adapter JSONAdapter failed to parse the LM response.
+
+LM Response: ```json
+{
+  "reasoning": "The provided code snippet appears to be a string containing a Python script that attempts to run Flask. However, the script itself does not contain any logic or functionality related to running Flask. Therefore, it cannot be classified as either 'generated' by an AI or 'AI-generated'. The presence of a script without its intended purpose suggests that the question may be asking about a scenario where a user would attempt to run a script but encounter issues
+
+Expected to find output fields in the LM response: [reasoning, is_ai]
+
+Actual output fields parsed from the LM response: [reasoning]
+
+. Set `provide_traceback=True` for traceback.
+Average Metric: 4.00 / 8 (50.0%):  44%|####4     | 8/18 [00:13<00:15,  1.56s/it]Average Metric: 4.00 / 8 (50.0%):  50%|#####     | 9/18 [00:13<00:15,  1.77s/it]Average Metric: 4.00 / 9 (44.4%):  50%|#####     | 9/18 [00:14<00:15,  1.77s/it]Average Metric: 4.00 / 9 (44.4%):  56%|#####5    | 10/18 [00:14<00:12,  1.58s/it]Average Metric: 5.00 / 10 (50.0%):  56%|#####5    | 10/18 [00:16<00:12,  1.58s/it]Average Metric: 5.00 / 10 (50.0%):  61%|######1   | 11/18 [00:16<00:12,  1.76s/it]Average Metric: 5.00 / 11 (45.5%):  61%|######1   | 11/18 [00:18<00:12,  1.76s/it]Average Metric: 5.00 / 11 (45.5%):  67%|######6   | 12/18 [00:18<00:11,  1.86s/it]Average Metric: 6.00 / 12 (50.0%):  67%|######6   | 12/18 [00:19<00:11,  1.86s/it]Average Metric: 6.00 / 12 (50.0%):  72%|#######2  | 13/18 [00:19<00:07,  1.58s/it]Average Metric: 7.00 / 13 (53.8%):  72%|#######2  | 13/18 [00:20<00:07,  1.58s/it]Average Metric: 7.00 / 13 (53.8%):  78%|#######7  | 14/18 [00:20<00:05,  1.37s/it]Average Metric: 8.00 / 14 (57.1%):  78%|#######7  | 14/18 [00:21<00:05,  1.37s/it]Average Metric: 8.00 / 14 (57.1%):  83%|########3 | 15/18 [00:21<00:03,  1.29s/it]Average Metric: 8.00 / 15 (53.3%):  83%|########3 | 15/18 [00:22<00:03,  1.29s/it]Average Metric: 8.00 / 15 (53.3%):  89%|########8 | 16/18 [00:22<00:02,  1.28s/it]Average Metric: 9.00 / 16 (56.2%):  89%|########8 | 16/18 [00:24<00:02,  1.28s/it]Average Metric: 9.00 / 16 (56.2%):  94%|#########4| 17/18 [00:24<00:01,  1.35s/it]Average Metric: 9.00 / 17 (52.9%):  94%|#########4| 17/18 [00:26<00:01,  1.35s/it]Average Metric: 9.00 / 17 (52.9%): 100%|##########| 18/18 [00:26<00:00,  1.44s/it]Average Metric: 9.00 / 17 (52.9%): 100%|##########| 18/18 [00:26<00:00,  1.45s/it]
+2026/07/14 21:26:05 INFO dspy.evaluate.evaluate: Average Metric: 9.0 / 18 (50.0%)
+New best score: 50.0 for seed -3
+Scores so far: [50.0]
+Best score so far: 50.0
+  0%|          | 0/18 [00:00<?, ?it/s]Average Metric: 0.00 / 1 (0.0%):   0%|          | 0/18 [00:00<?, ?it/s]Average Metric: 0.00 / 1 (0.0%):   6%|5         | 1/18 [00:00<00:09,  1.80it/s]Average Metric: 0.00 / 2 (0.0%):   6%|5         | 1/18 [00:01<00:09,  1.80it/s]Average Metric: 0.00 / 2 (0.0%):  11%|#1        | 2/18 [00:01<00:16,  1.00s/it]Average Metric: 1.00 / 3 (33.3%):  11%|#1        | 2/18 [00:02<00:16,  1.00s/it]Average Metric: 1.00 / 3 (33.3%):  17%|#6        | 3/18 [00:02<00:11,  1.28it/s]Average Metric: 1.00 / 4 (25.0%):  17%|#6        | 3/18 [00:02<00:11,  1.28it/s]Average Metric: 1.00 / 4 (25.0%):  22%|##2       | 4/18 [00:02<00:09,  1.48it/s]Average Metric: 2.00 / 5 (40.0%):  22%|##2       | 4/18 [00:03<00:09,  1.48it/s]Average Metric: 2.00 / 5 (40.0%):  28%|##7       | 5/18 [00:03<00:09,  1.34it/s]Average Metric: 2.00 / 6 (33.3%):  28%|##7       | 5/18 [00:04<00:09,  1.34it/s]Average Metric: 2.00 / 6 (33.3%):  33%|###3      | 6/18 [00:04<00:09,  1.26it/s]Average Metric: 3.00 / 7 (42.9%):  33%|###3      | 6/18 [00:05<00:09,  1.26it/s]Average Metric: 3.00 / 7 (42.9%):  39%|###8      | 7/18 [00:05<00:07,  1.43it/s]Average Metric: 3.00 / 8 (37.5%):  39%|###8      | 7/18 [00:05<00:07,  1.43it/s]Average Metric: 3.00 / 8 (37.5%):  44%|####4     | 8/18 [00:05<00:07,  1.36it/s]Average Metric: 4.00 / 9 (44.4%):  44%|####4     | 8/18 [00:06<00:07,  1.36it/s]Average Metric: 4.00 / 9 (44.4%):  50%|#####     | 9/18 [00:06<00:05,  1.51it/s]Average Metric: 4.00 / 10 (40.0%):  50%|#####     | 9/18 [00:07<00:05,  1.51it/s]Average Metric: 4.00 / 10 (40.0%):  56%|#####5    | 10/18 [00:07<00:06,  1.20it/s]Average Metric: 5.00 / 11 (45.5%):  56%|#####5    | 10/18 [00:08<00:06,  1.20it/s]Average Metric: 5.00 / 11 (45.5%):  61%|######1   | 11/18 [00:08<00:05,  1.36it/s]Average Metric: 5.00 / 12 (41.7%):  61%|######1   | 11/18 [00:08<00:05,  1.36it/s]Average Metric: 5.00 / 12 (41.7%):  67%|######6   | 12/18 [00:08<00:04,  1.50it/s]Average Metric: 6.00 / 13 (46.2%):  67%|######6   | 12/18 [00:09<00:04,  1.50it/s]Average Metric: 6.00 / 13 (46.2%):  72%|#######2  | 13/18 [00:09<00:03,  1.61it/s]Average Metric: 6.00 / 14 (42.9%):  72%|#######2  | 13/18 [00:09<00:03,  1.61it/s]Average Metric: 6.00 / 14 (42.9%):  78%|#######7  | 14/18 [00:09<00:02,  1.69it/s]Average Metric: 7.00 / 15 (46.7%):  78%|#######7  | 14/18 [00:10<00:02,  1.69it/s]Average Metric: 7.00 / 15 (46.7%):  83%|########3 | 15/18 [00:10<00:01,  1.77it/s]Average Metric: 7.00 / 16 (43.8%):  83%|########3 | 15/18 [00:11<00:01,  1.77it/s]Average Metric: 7.00 / 16 (43.8%):  89%|########8 | 16/18 [00:11<00:01,  1.56it/s]Average Metric: 8.00 / 17 (47.1%):  89%|########8 | 16/18 [00:12<00:01,  1.56it/s]Average Metric: 8.00 / 17 (47.1%):  94%|#########4| 17/18 [00:12<00:00,  1.38it/s]Average Metric: 8.00 / 18 (44.4%):  94%|#########4| 17/18 [00:12<00:00,  1.38it/s]Average Metric: 8.00 / 18 (44.4%): 100%|##########| 18/18 [00:12<00:00,  1.38it/s]Average Metric: 8.00 / 18 (44.4%): 100%|##########| 18/18 [00:12<00:00,  1.41it/s]
+2026/07/14 21:26:17 INFO dspy.evaluate.evaluate: Average Metric: 8.0 / 18 (44.4%)
+Scores so far: [50.0, 44.44]
+Best score so far: 50.0
+  0%|          | 0/36 [00:00<?, ?it/s]  3%|2         | 1/36 [00:00<00:18,  1.90it/s]  6%|5         | 2/36 [00:01<00:24,  1.40it/s]  8%|8         | 3/36 [00:01<00:20,  1.60it/s] 11%|#1        | 4/36 [00:02<00:23,  1.36it/s] 14%|#3        | 5/36 [00:03<00:20,  1.53it/s] 17%|#6        | 6/36 [00:03<00:18,  1.65it/s] 19%|#9        | 7/36 [00:04<00:20,  1.42it/s] 19%|#9        | 7/36 [00:04<00:19,  1.48it/s]
+Bootstrapped 2 full traces after 7 examples for up to 1 rounds, amounting to 7 attempts.
+  0%|          | 0/18 [00:00<?, ?it/s]Average Metric: 0.00 / 1 (0.0%):   0%|          | 0/18 [00:01<?, ?it/s]Average Metric: 0.00 / 1 (0.0%):   6%|5         | 1/18 [00:01<00:23,  1.38s/it]Average Metric: 0.00 / 2 (0.0%):   6%|5         | 1/18 [00:03<00:23,  1.38s/it]Average Metric: 0.00 / 2 (0.0%):  11%|#1        | 2/18 [00:03<00:33,  2.10s/it]Average Metric: 0.00 / 3 (0.0%):  11%|#1        | 2/18 [00:04<00:33,  2.10s/it]Average Metric: 0.00 / 3 (0.0%):  17%|#6        | 3/18 [00:04<00:24,  1.60s/it]Average Metric: 0.00 / 4 (0.0%):  17%|#6        | 3/18 [00:06<00:24,  1.60s/it]Average Metric: 0.00 / 4 (0.0%):  22%|##2       | 4/18 [00:06<00:19,  1.42s/it]Average Metric: 1.00 / 5 (20.0%):  22%|##2       | 4/18 [00:07<00:19,  1.42s/it]Average Metric: 1.00 / 5 (20.0%):  28%|##7       | 5/18 [00:07<00:16,  1.30s/it]Average Metric: 1.00 / 6 (16.7%):  28%|##7       | 5/18 [00:08<00:16,  1.30s/it]Average Metric: 1.00 / 6 (16.7%):  33%|###3      | 6/18 [00:08<00:15,  1.28s/it]Average Metric: 1.00 / 7 (14.3%):  33%|###3      | 6/18 [00:09<00:15,  1.28s/it]Average Metric: 1.00 / 7 (14.3%):  39%|###8      | 7/18 [00:09<00:13,  1.25s/it]Average Metric: 2.00 / 8 (25.0%):  39%|###8      | 7/18 [00:10<00:13,  1.25s/it]Average Metric: 2.00 / 8 (25.0%):  44%|####4     | 8/18 [00:10<00:11,  1.12s/it]Average Metric: 3.00 / 9 (33.3%):  44%|####4     | 8/18 [00:11<00:11,  1.12s/it]Average Metric: 3.00 / 9 (33.3%):  50%|#####     | 9/18 [00:11<00:08,  1.01it/s]Average Metric: 3.00 / 10 (30.0%):  50%|#####     | 9/18 [00:12<00:08,  1.01it/s]Average Metric: 3.00 / 10 (30.0%):  56%|#####5    | 10/18 [00:12<00:09,  1.14s/it]Average Metric: 4.00 / 11 (36.4%):  56%|#####5    | 10/18 [00:13<00:09,  1.14s/it]Average Metric: 4.00 / 11 (36.4%):  61%|######1   | 11/18 [00:13<00:08,  1.19s/it]Average Metric: 4.00 / 12 (33.3%):  61%|######1   | 11/18 [00:15<00:08,  1.19s/it]Average Metric: 4.00 / 12 (33.3%):  67%|######6   | 12/18 [00:15<00:07,  1.22s/it]Average Metric: 4.00 / 13 (30.8%):  67%|######6   | 12/18 [00:16<00:07,  1.22s/it]Average Metric: 4.00 / 13 (30.8%):  72%|#######2  | 13/18 [00:16<00:06,  1.33s/it]Average Metric: 5.00 / 14 (35.7%):  72%|#######2  | 13/18 [00:18<00:06,  1.33s/it]Average Metric: 5.00 / 14 (35.7%):  78%|#######7  | 14/18 [00:18<00:05,  1.34s/it]Average Metric: 6.00 / 15 (40.0%):  78%|#######7  | 14/18 [00:19<00:05,  1.34s/it]Average Metric: 6.00 / 15 (40.0%):  83%|########3 | 15/18 [00:19<00:03,  1.27s/it]Average Metric: 7.00 / 16 (43.8%):  83%|########3 | 15/18 [00:21<00:03,  1.27s/it]Average Metric: 7.00 / 16 (43.8%):  89%|########8 | 16/18 [00:21<00:03,  1.62s/it]Average Metric: 7.00 / 17 (41.2%):  89%|########8 | 16/18 [00:22<00:03,  1.62s/it]Average Metric: 7.00 / 17 (41.2%):  94%|#########4| 17/18 [00:22<00:01,  1.49s/it]Average Metric: 8.00 / 18 (44.4%):  94%|#########4| 17/18 [00:23<00:01,  1.49s/it]Average Metric: 8.00 / 18 (44.4%): 100%|##########| 18/18 [00:23<00:00,  1.33s/it]Average Metric: 8.00 / 18 (44.4%): 100%|##########| 18/18 [00:23<00:00,  1.33s/it]
+2026/07/14 21:26:46 INFO dspy.evaluate.evaluate: Average Metric: 8.0 / 18 (44.4%)
+Scores so far: [50.0, 44.44, 44.44]
+Best score so far: 50.0
+  0%|          | 0/36 [00:00<?, ?it/s]  3%|2         | 1/36 [00:00<00:33,  1.04it/s]  6%|5         | 2/36 [00:02<00:34,  1.03s/it]  8%|8         | 3/36 [00:02<00:32,  1.01it/s]  8%|8         | 3/36 [00:02<00:32,  1.01it/s]
+Bootstrapped 2 full traces after 3 examples for up to 1 rounds, amounting to 3 attempts.
+  0%|          | 0/18 [00:00<?, ?it/s]Average Metric: 0.00 / 1 (0.0%):   0%|          | 0/18 [00:01<?, ?it/s]Average Metric: 0.00 / 1 (0.0%):   6%|5         | 1/18 [00:01<00:20,  1.18s/it]Average Metric: 0.00 / 2 (0.0%):   6%|5         | 1/18 [00:04<00:20,  1.18s/it]Average Metric: 0.00 / 2 (0.0%):  11%|#1        | 2/18 [00:04<00:35,  2.21s/it]Average Metric: 1.00 / 3 (33.3%):  11%|#1        | 2/18 [00:05<00:35,  2.21s/it]Average Metric: 1.00 / 3 (33.3%):  17%|#6        | 3/18 [00:05<00:25,  1.71s/it]Average Metric: 1.00 / 4 (25.0%):  17%|#6        | 3/18 [00:06<00:25,  1.71s/it]Average Metric: 1.00 / 4 (25.0%):  22%|##2       | 4/18 [00:06<00:21,  1.52s/it]Average Metric: 2.00 / 5 (40.0%):  22%|##2       | 4/18 [00:07<00:21,  1.52s/it]Average Metric: 2.00 / 5 (40.0%):  28%|##7       | 5/18 [00:07<00:17,  1.38s/it]Average Metric: 3.00 / 6 (50.0%):  28%|##7       | 5/18 [00:08<00:17,  1.38s/it]Average Metric: 3.00 / 6 (50.0%):  33%|###3      | 6/18 [00:08<00:14,  1.25s/it]Average Metric: 3.00 / 7 (42.9%):  33%|###3      | 6/18 [00:09<00:14,  1.25s/it]Average Metric: 3.00 / 7 (42.9%):  39%|###8      | 7/18 [00:09<00:12,  1.18s/it]Average Metric: 4.00 / 8 (50.0%):  39%|###8      | 7/18 [00:10<00:12,  1.18s/it]Average Metric: 4.00 / 8 (50.0%):  44%|####4     | 8/18 [00:10<00:11,  1.15s/it]Average Metric: 5.00 / 9 (55.6%):  44%|####4     | 8/18 [00:11<00:11,  1.15s/it]Average Metric: 5.00 / 9 (55.6%):  50%|#####     | 9/18 [00:11<00:09,  1.10s/it]Average Metric: 5.00 / 10 (50.0%):  50%|#####     | 9/18 [00:12<00:09,  1.10s/it]Average Metric: 5.00 / 10 (50.0%):  56%|#####5    | 10/18 [00:12<00:07,  1.03it/s]Average Metric: 5.00 / 11 (45.5%):  56%|#####5    | 10/18 [00:13<00:07,  1.03it/s]Average Metric: 5.00 / 11 (45.5%):  61%|######1   | 11/18 [00:13<00:08,  1.17s/it]Average Metric: 6.00 / 12 (50.0%):  61%|######1   | 11/18 [00:15<00:08,  1.17s/it]Average Metric: 6.00 / 12 (50.0%):  67%|######6   | 12/18 [00:15<00:07,  1.29s/it]Average Metric: 6.00 / 13 (46.2%):  67%|######6   | 12/18 [00:16<00:07,  1.29s/it]Average Metric: 6.00 / 13 (46.2%):  72%|#######2  | 13/18 [00:16<00:06,  1.30s/it]Average Metric: 7.00 / 14 (50.0%):  72%|#######2  | 13/18 [00:18<00:06,  1.30s/it]Average Metric: 7.00 / 14 (50.0%):  78%|#######7  | 14/18 [00:18<00:05,  1.30s/it]Average Metric: 7.00 / 15 (46.7%):  78%|#######7  | 14/18 [00:19<00:05,  1.30s/it]Average Metric: 7.00 / 15 (46.7%):  83%|########3 | 15/18 [00:19<00:03,  1.27s/it]Average Metric: 8.00 / 16 (50.0%):  83%|########3 | 15/18 [00:20<00:03,  1.27s/it]Average Metric: 8.00 / 16 (50.0%):  89%|########8 | 16/18 [00:20<00:02,  1.24s/it]Average Metric: 8.00 / 17 (47.1%):  89%|########8 | 16/18 [00:21<00:02,  1.24s/it]Average Metric: 8.00 / 17 (47.1%):  94%|#########4| 17/18 [00:21<00:01,  1.20s/it]Average Metric: 9.00 / 18 (50.0%):  94%|#########4| 17/18 [00:22<00:01,  1.20s/it]Average Metric: 9.00 / 18 (50.0%): 100%|##########| 18/18 [00:22<00:00,  1.19s/it]Average Metric: 9.00 / 18 (50.0%): 100%|##########| 18/18 [00:22<00:00,  1.27s/it]
+2026/07/14 21:27:12 INFO dspy.evaluate.evaluate: Average Metric: 9.0 / 18 (50.0%)
+Scores so far: [50.0, 44.44, 44.44, 50.0]
+Best score so far: 50.0
+  0%|          | 0/36 [00:00<?, ?it/s]  3%|2         | 1/36 [00:00<00:18,  1.89it/s]  6%|5         | 2/36 [00:02<00:38,  1.12s/it]  8%|8         | 3/36 [00:02<00:27,  1.19it/s] 11%|#1        | 4/36 [00:03<00:22,  1.41it/s] 11%|#1        | 4/36 [00:03<00:24,  1.30it/s]
+Bootstrapped 1 full traces after 4 examples for up to 1 rounds, amounting to 4 attempts.
+  0%|          | 0/18 [00:00<?, ?it/s]Average Metric: 1.00 / 1 (100.0%):   0%|          | 0/18 [00:01<?, ?it/s]Average Metric: 1.00 / 1 (100.0%):   6%|5         | 1/18 [00:01<00:27,  1.62s/it]Average Metric: 1.00 / 2 (50.0%):   6%|5         | 1/18 [00:02<00:27,  1.62s/it] Average Metric: 1.00 / 2 (50.0%):  11%|#1        | 2/18 [00:02<00:16,  1.02s/it]Average Metric: 2.00 / 3 (66.7%):  11%|#1        | 2/18 [00:03<00:16,  1.02s/it]Average Metric: 2.00 / 3 (66.7%):  17%|#6        | 3/18 [00:03<00:16,  1.07s/it]Average Metric: 2.00 / 4 (50.0%):  17%|#6        | 3/18 [00:03<00:16,  1.07s/it]Average Metric: 2.00 / 4 (50.0%):  22%|##2       | 4/18 [00:03<00:11,  1.18it/s]Average Metric: 3.00 / 5 (60.0%):  22%|##2       | 4/18 [00:04<00:11,  1.18it/s]Average Metric: 3.00 / 5 (60.0%):  28%|##7       | 5/18 [00:04<00:09,  1.39it/s]Average Metric: 3.00 / 6 (50.0%):  28%|##7       | 5/18 [00:04<00:09,  1.39it/s]Average Metric: 3.00 / 6 (50.0%):  33%|###3      | 6/18 [00:04<00:07,  1.56it/s]Average Metric: 4.00 / 7 (57.1%):  33%|###3      | 6/18 [00:05<00:07,  1.56it/s]Average Metric: 4.00 / 7 (57.1%):  39%|###8      | 7/18 [00:05<00:06,  1.68it/s]Average Metric: 4.00 / 8 (50.0%):  39%|###8      | 7/18 [00:05<00:06,  1.68it/s]Average Metric: 4.00 / 8 (50.0%):  44%|####4     | 8/18 [00:05<00:05,  1.77it/s]Average Metric: 5.00 / 9 (55.6%):  44%|####4     | 8/18 [00:07<00:05,  1.77it/s]Average Metric: 5.00 / 9 (55.6%):  50%|#####     | 9/18 [00:07<00:07,  1.23it/s]Average Metric: 5.00 / 10 (50.0%):  50%|#####     | 9/18 [00:07<00:07,  1.23it/s]Average Metric: 5.00 / 10 (50.0%):  56%|#####5    | 10/18 [00:07<00:05,  1.42it/s]Average Metric: 6.00 / 11 (54.5%):  56%|#####5    | 10/18 [00:08<00:05,  1.42it/s]Average Metric: 6.00 / 11 (54.5%):  61%|######1   | 11/18 [00:08<00:04,  1.56it/s]Average Metric: 6.00 / 12 (50.0%):  61%|######1   | 11/18 [00:08<00:04,  1.56it/s]Average Metric: 6.00 / 12 (50.0%):  67%|######6   | 12/18 [00:08<00:03,  1.67it/s]Average Metric: 7.00 / 13 (53.8%):  67%|######6   | 12/18 [00:09<00:03,  1.67it/s]Average Metric: 7.00 / 13 (53.8%):  72%|#######2  | 13/18 [00:09<00:02,  1.76it/s]Average Metric: 7.00 / 14 (50.0%):  72%|#######2  | 13/18 [00:09<00:02,  1.76it/s]Average Metric: 7.00 / 14 (50.0%):  78%|#######7  | 14/18 [00:09<00:02,  1.83it/s]Average Metric: 8.00 / 15 (53.3%):  78%|#######7  | 14/18 [00:10<00:02,  1.83it/s]Average Metric: 8.00 / 15 (53.3%):  83%|########3 | 15/18 [00:10<00:01,  1.88it/s]Average Metric: 8.00 / 16 (50.0%):  83%|########3 | 15/18 [00:10<00:01,  1.88it/s]Average Metric: 8.00 / 16 (50.0%):  89%|########8 | 16/18 [00:10<00:01,  1.81it/s]Average Metric: 9.00 / 17 (52.9%):  89%|########8 | 16/18 [00:11<00:01,  1.81it/s]Average Metric: 9.00 / 17 (52.9%):  94%|#########4| 17/18 [00:11<00:00,  1.70it/s]Average Metric: 9.00 / 18 (50.0%):  94%|#########4| 17/18 [00:12<00:00,  1.70it/s]Average Metric: 9.00 / 18 (50.0%): 100%|##########| 18/18 [00:12<00:00,  1.51it/s]Average Metric: 9.00 / 18 (50.0%): 100%|##########| 18/18 [00:12<00:00,  1.47it/s]
+2026/07/14 21:27:27 INFO dspy.evaluate.evaluate: Average Metric: 9.0 / 18 (50.0%)
+Scores so far: [50.0, 44.44, 44.44, 50.0, 50.0]
+Best score so far: 50.0
+  0%|          | 0/36 [00:00<?, ?it/s]  3%|2         | 1/36 [00:00<00:27,  1.27it/s]  6%|5         | 2/36 [00:03<00:56,  1.66s/it]  8%|8         | 3/36 [00:03<00:37,  1.13s/it]  8%|8         | 3/36 [00:03<00:39,  1.19s/it]
+Bootstrapped 1 full traces after 3 examples for up to 1 rounds, amounting to 3 attempts.
+  0%|          | 0/18 [00:00<?, ?it/s]Average Metric: 1.00 / 1 (100.0%):   0%|          | 0/18 [00:00<?, ?it/s]Average Metric: 1.00 / 1 (100.0%):   6%|5         | 1/18 [00:00<00:08,  2.02it/s]Average Metric: 1.00 / 2 (50.0%):   6%|5         | 1/18 [00:00<00:08,  2.02it/s] Average Metric: 1.00 / 2 (50.0%):  11%|#1        | 2/18 [00:00<00:07,  2.01it/s]Average Metric: 2.00 / 3 (66.7%):  11%|#1        | 2/18 [00:01<00:07,  2.01it/s]Average Metric: 2.00 / 3 (66.7%):  17%|#6        | 3/18 [00:01<00:07,  2.02it/s]Average Metric: 2.00 / 4 (50.0%):  17%|#6        | 3/18 [00:01<00:07,  2.02it/s]Average Metric: 2.00 / 4 (50.0%):  22%|##2       | 4/18 [00:01<00:06,  2.01it/s]Average Metric: 3.00 / 5 (60.0%):  22%|##2       | 4/18 [00:02<00:06,  2.01it/s]Average Metric: 3.00 / 5 (60.0%):  28%|##7       | 5/18 [00:02<00:06,  2.01it/s]Average Metric: 3.00 / 6 (50.0%):  28%|##7       | 5/18 [00:02<00:06,  2.01it/s]Average Metric: 3.00 / 6 (50.0%):  33%|###3      | 6/18 [00:02<00:05,  2.00it/s]Average Metric: 4.00 / 7 (57.1%):  33%|###3      | 6/18 [00:03<00:05,  2.00it/s]Average Metric: 4.00 / 7 (57.1%):  39%|###8      | 7/18 [00:03<00:05,  2.02it/s]Average Metric: 4.00 / 8 (50.0%):  39%|###8      | 7/18 [00:03<00:05,  2.02it/s]Average Metric: 4.00 / 8 (50.0%):  44%|####4     | 8/18 [00:03<00:04,  2.03it/s]Average Metric: 5.00 / 9 (55.6%):  44%|####4     | 8/18 [00:04<00:04,  2.03it/s]Average Metric: 5.00 / 9 (55.6%):  50%|#####     | 9/18 [00:04<00:05,  1.63it/s]Average Metric: 5.00 / 10 (50.0%):  50%|#####     | 9/18 [00:05<00:05,  1.63it/s]Average Metric: 5.00 / 10 (50.0%):  56%|#####5    | 10/18 [00:05<00:04,  1.75it/s]Average Metric: 6.00 / 11 (54.5%):  56%|#####5    | 10/18 [00:05<00:04,  1.75it/s]Average Metric: 6.00 / 11 (54.5%):  61%|######1   | 11/18 [00:05<00:03,  1.82it/s]Average Metric: 6.00 / 12 (50.0%):  61%|######1   | 11/18 [00:06<00:03,  1.82it/s]Average Metric: 6.00 / 12 (50.0%):  67%|######6   | 12/18 [00:06<00:03,  1.86it/s]Average Metric: 7.00 / 13 (53.8%):  67%|######6   | 12/18 [00:07<00:03,  1.86it/s]Average Metric: 7.00 / 13 (53.8%):  72%|#######2  | 13/18 [00:07<00:03,  1.29it/s]Average Metric: 7.00 / 14 (50.0%):  72%|#######2  | 13/18 [00:08<00:03,  1.29it/s]Average Metric: 7.00 / 14 (50.0%):  78%|#######7  | 14/18 [00:08<00:02,  1.44it/s]Average Metric: 8.00 / 15 (53.3%):  78%|#######7  | 14/18 [00:08<00:02,  1.44it/s]Average Metric: 8.00 / 15 (53.3%):  83%|########3 | 15/18 [00:08<00:01,  1.57it/s]Average Metric: 8.00 / 16 (50.0%):  83%|########3 | 15/18 [00:09<00:01,  1.57it/s]Average Metric: 8.00 / 16 (50.0%):  89%|########8 | 16/18 [00:09<00:01,  1.68it/s]Average Metric: 9.00 / 17 (52.9%):  89%|########8 | 16/18 [00:09<00:01,  1.68it/s]Average Metric: 9.00 / 17 (52.9%):  94%|#########4| 17/18 [00:09<00:00,  1.77it/s]Average Metric: 9.00 / 18 (50.0%):  94%|#########4| 17/18 [00:10<00:00,  1.77it/s]Average Metric: 9.00 / 18 (50.0%): 100%|##########| 18/18 [00:10<00:00,  1.84it/s]Average Metric: 9.00 / 18 (50.0%): 100%|##########| 18/18 [00:10<00:00,  1.77it/s]
+2026/07/14 21:27:41 INFO dspy.evaluate.evaluate: Average Metric: 9.0 / 18 (50.0%)
+Scores so far: [50.0, 44.44, 44.44, 50.0, 50.0, 50.0]
+Best score so far: 50.0
+  0%|          | 0/36 [00:00<?, ?it/s]  3%|2         | 1/36 [00:01<00:38,  1.10s/it]  3%|2         | 1/36 [00:01<00:38,  1.10s/it]
+Bootstrapped 1 full traces after 1 examples for up to 1 rounds, amounting to 1 attempts.
+  0%|          | 0/18 [00:00<?, ?it/s]Average Metric: 1.00 / 1 (100.0%):   0%|          | 0/18 [00:01<?, ?it/s]Average Metric: 1.00 / 1 (100.0%):   6%|5         | 1/18 [00:01<00:18,  1.08s/it]Average Metric: 1.00 / 2 (50.0%):   6%|5         | 1/18 [00:02<00:18,  1.08s/it] Average Metric: 1.00 / 2 (50.0%):  11%|#1        | 2/18 [00:02<00:22,  1.42s/it]Average Metric: 2.00 / 3 (66.7%):  11%|#1        | 2/18 [00:03<00:22,  1.42s/it]Average Metric: 2.00 / 3 (66.7%):  17%|#6        | 3/18 [00:03<00:19,  1.28s/it]Average Metric: 2.00 / 4 (50.0%):  17%|#6        | 3/18 [00:04<00:19,  1.28s/it]Average Metric: 2.00 / 4 (50.0%):  22%|##2       | 4/18 [00:04<00:15,  1.13s/it]Average Metric: 2.00 / 5 (40.0%):  22%|##2       | 4/18 [00:05<00:15,  1.13s/it]Average Metric: 2.00 / 5 (40.0%):  28%|##7       | 5/18 [00:05<00:13,  1.04s/it]Average Metric: 2.00 / 6 (33.3%):  28%|##7       | 5/18 [00:06<00:13,  1.04s/it]Average Metric: 2.00 / 6 (33.3%):  33%|###3      | 6/18 [00:06<00:11,  1.01it/s]Average Metric: 2.00 / 7 (28.6%):  33%|###3      | 6/18 [00:07<00:11,  1.01it/s]Average Metric: 2.00 / 7 (28.6%):  39%|###8      | 7/18 [00:07<00:11,  1.00s/it]Average Metric: 2.00 / 8 (25.0%):  39%|###8      | 7/18 [00:08<00:11,  1.00s/it]Average Metric: 2.00 / 8 (25.0%):  44%|####4     | 8/18 [00:08<00:10,  1.03s/it]Average Metric: 3.00 / 9 (33.3%):  44%|####4     | 8/18 [00:09<00:10,  1.03s/it]Average Metric: 3.00 / 9 (33.3%):  50%|#####     | 9/18 [00:09<00:08,  1.02it/s]Average Metric: 3.00 / 10 (30.0%):  50%|#####     | 9/18 [00:10<00:08,  1.02it/s]Average Metric: 3.00 / 10 (30.0%):  56%|#####5    | 10/18 [00:10<00:06,  1.15it/s]Average Metric: 4.00 / 11 (36.4%):  56%|#####5    | 10/18 [00:11<00:06,  1.15it/s]Average Metric: 4.00 / 11 (36.4%):  61%|######1   | 11/18 [00:11<00:07,  1.08s/it]Average Metric: 4.00 / 12 (33.3%):  61%|######1   | 11/18 [00:13<00:07,  1.08s/it]Average Metric: 4.00 / 12 (33.3%):  67%|######6   | 12/18 [00:13<00:07,  1.23s/it]Average Metric: 5.00 / 13 (38.5%):  67%|######6   | 12/18 [00:14<00:07,  1.23s/it]Average Metric: 5.00 / 13 (38.5%):  72%|#######2  | 13/18 [00:14<00:05,  1.17s/it]Average Metric: 5.00 / 14 (35.7%):  72%|#######2  | 13/18 [00:15<00:05,  1.17s/it]Average Metric: 5.00 / 14 (35.7%):  78%|#######7  | 14/18 [00:15<00:04,  1.13s/it]Average Metric: 5.00 / 15 (33.3%):  78%|#######7  | 14/18 [00:16<00:04,  1.13s/it]Average Metric: 5.00 / 15 (33.3%):  83%|########3 | 15/18 [00:16<00:03,  1.25s/it]Average Metric: 5.00 / 16 (31.2%):  83%|########3 | 15/18 [00:17<00:03,  1.25s/it]Average Metric: 5.00 / 16 (31.2%):  89%|########8 | 16/18 [00:17<00:02,  1.16s/it]Average Metric: 6.00 / 17 (35.3%):  89%|########8 | 16/18 [00:18<00:02,  1.16s/it]Average Metric: 6.00 / 17 (35.3%):  94%|#########4| 17/18 [00:18<00:01,  1.14s/it]Average Metric: 6.00 / 18 (33.3%):  94%|#########4| 17/18 [00:19<00:01,  1.14s/it]Average Metric: 6.00 / 18 (33.3%): 100%|##########| 18/18 [00:19<00:00,  1.11s/it]Average Metric: 6.00 / 18 (33.3%): 100%|##########| 18/18 [00:19<00:00,  1.11s/it]
+2026/07/14 21:28:02 INFO dspy.evaluate.evaluate: Average Metric: 6.0 / 18 (33.3%)
+Scores so far: [50.0, 44.44, 44.44, 50.0, 50.0, 50.0, 33.33]
+Best score so far: 50.0
+7 candidate programs found.
+2026/07/14 21:28:02 WARNING dspy.teleprompt.bettertogether: [93mWarning: BootstrapFewShotWithRandomSearch incorrectly reset predictor LMs. Restoring to original LMs.[0m
+2026/07/14 21:28:02 INFO dspy.teleprompt.bettertogether: [94mEvaluating on 18 validation examples...[0m
+  0%|          | 0/18 [00:00<?, ?it/s]Average Metric: 1.00 / 1 (100.0%):   0%|          | 0/18 [00:01<?, ?it/s]Average Metric: 1.00 / 1 (100.0%):   6%|5         | 1/18 [00:01<00:21,  1.25s/it]Average Metric: 1.00 / 2 (50.0%):   6%|5         | 1/18 [00:02<00:21,  1.25s/it] Average Metric: 1.00 / 2 (50.0%):  11%|#1        | 2/18 [00:02<00:22,  1.43s/it]Average Metric: 2.00 / 3 (66.7%):  11%|#1        | 2/18 [00:03<00:22,  1.43s/it]Average Metric: 2.00 / 3 (66.7%):  17%|#6        | 3/18 [00:03<00:19,  1.28s/it]Average Metric: 2.00 / 4 (50.0%):  17%|#6        | 3/18 [00:04<00:19,  1.28s/it]Average Metric: 2.00 / 4 (50.0%):  22%|##2       | 4/18 [00:04<00:16,  1.16s/it]Average Metric: 3.00 / 5 (60.0%):  22%|##2       | 4/18 [00:05<00:16,  1.16s/it]Average Metric: 3.00 / 5 (60.0%):  28%|##7       | 5/18 [00:05<00:14,  1.10s/it]Average Metric: 3.00 / 6 (50.0%):  28%|##7       | 5/18 [00:07<00:14,  1.10s/it]Average Metric: 3.00 / 6 (50.0%):  33%|###3      | 6/18 [00:07<00:15,  1.30s/it]Average Metric: 4.00 / 7 (57.1%):  33%|###3      | 6/18 [00:09<00:15,  1.30s/it]Average Metric: 4.00 / 7 (57.1%):  39%|###8      | 7/18 [00:09<00:15,  1.37s/it]Average Metric: 4.00 / 8 (50.0%):  39%|###8      | 7/18 [00:11<00:15,  1.37s/it]Average Metric: 4.00 / 8 (50.0%):  44%|####4     | 8/18 [00:11<00:15,  1.56s/it]2026/07/14 21:28:15 ERROR dspy.utils.parallelizer: Error for Example({'pair_id': 'docs-flask-quickstart-2.0.2-012', 'example_id': 'docs-flask-quickstart-2.0.2-012-human', 'text': 'In case the python -m flask fails or flask does not exist, there are multiple reasons this might be the case. First of all you need to look at the error message.', 'is_ai': False}) (input_keys={'text'}): Adapter JSONAdapter failed to parse the LM response.
+
+LM Response: ```json
+{
+  "reasoning": "The provided code snippet appears to be a string containing a Python script that attempts to run Flask. However, the script itself does not contain any logic or functionality related to running Flask. Therefore, it cannot be classified as either 'generated' by an AI or 'AI-generated'. The presence of a script without its intended purpose suggests that the question may be asking about a scenario where a user would attempt to run a script but encounter issues
+
+Expected to find output fields in the LM response: [reasoning, is_ai]
+
+Actual output fields parsed from the LM response: [reasoning]
+
+. Set `provide_traceback=True` for traceback.
+Average Metric: 4.00 / 8 (50.0%):  44%|####4     | 8/18 [00:13<00:15,  1.56s/it]Average Metric: 4.00 / 8 (50.0%):  50%|#####     | 9/18 [00:13<00:16,  1.78s/it]Average Metric: 4.00 / 9 (44.4%):  50%|#####     | 9/18 [00:14<00:16,  1.78s/it]Average Metric: 4.00 / 9 (44.4%):  56%|#####5    | 10/18 [00:14<00:12,  1.59s/it]Average Metric: 5.00 / 10 (50.0%):  56%|#####5    | 10/18 [00:16<00:12,  1.59s/it]Average Metric: 5.00 / 10 (50.0%):  61%|######1   | 11/18 [00:16<00:12,  1.77s/it]Average Metric: 5.00 / 11 (45.5%):  61%|######1   | 11/18 [00:18<00:12,  1.77s/it]Average Metric: 5.00 / 11 (45.5%):  67%|######6   | 12/18 [00:18<00:11,  1.87s/it]Average Metric: 6.00 / 12 (50.0%):  67%|######6   | 12/18 [00:19<00:11,  1.87s/it]Average Metric: 6.00 / 12 (50.0%):  72%|#######2  | 13/18 [00:19<00:07,  1.59s/it]Average Metric: 7.00 / 13 (53.8%):  72%|#######2  | 13/18 [00:20<00:07,  1.59s/it]Average Metric: 7.00 / 13 (53.8%):  78%|#######7  | 14/18 [00:20<00:05,  1.38s/it]Average Metric: 8.00 / 14 (57.1%):  78%|#######7  | 14/18 [00:21<00:05,  1.38s/it]Average Metric: 8.00 / 14 (57.1%):  83%|########3 | 15/18 [00:21<00:03,  1.30s/it]Average Metric: 8.00 / 15 (53.3%):  83%|########3 | 15/18 [00:22<00:03,  1.30s/it]Average Metric: 8.00 / 15 (53.3%):  89%|########8 | 16/18 [00:22<00:02,  1.28s/it]Average Metric: 9.00 / 16 (56.2%):  89%|########8 | 16/18 [00:24<00:02,  1.28s/it]Average Metric: 9.00 / 16 (56.2%):  94%|#########4| 17/18 [00:24<00:01,  1.35s/it]Average Metric: 9.00 / 17 (52.9%):  94%|#########4| 17/18 [00:26<00:01,  1.35s/it]Average Metric: 9.00 / 17 (52.9%): 100%|##########| 18/18 [00:26<00:00,  1.43s/it]Average Metric: 9.00 / 17 (52.9%): 100%|##########| 18/18 [00:26<00:00,  1.45s/it]
+2026/07/14 21:28:28 INFO dspy.evaluate.evaluate: Average Metric: 9.0 / 18 (50.0%)
+2026/07/14 21:28:28 INFO dspy.teleprompt.bettertogether: [92mNew best score![0m 50.0 (strategy: 'p')
+2026/07/14 21:28:28 INFO dspy.teleprompt.bettertogether:
+[1m==> STEP 2/2: BOOTSTRAPFINETUNE <==[0m
+2026/07/14 21:28:28 INFO dspy.teleprompt.bettertogether: [94mCurrent strategy:[0m 'p -> w'
+2026/07/14 21:28:28 INFO dspy.teleprompt.bettertogether: [94mOptimizer:[0m BootstrapFinetune
+2026/07/14 21:28:28 INFO dspy.teleprompt.bettertogether: [94mShuffling trainset...[0m
+2026/07/14 21:28:28 INFO dspy.teleprompt.bettertogether: [94mRunning BootstrapFinetune with 36 training examples...[0m
+2026/07/14 21:28:28 INFO dspy.teleprompt.bootstrap_finetune: Preparing the student and teacher programs...
+2026/07/14 21:28:28 INFO dspy.teleprompt.bootstrap_finetune: Bootstrapping data...
+  0%|          | 0/36 [00:00<?, ?it/s]Average Metric: 1.00 / 1 (100.0%):   0%|          | 0/36 [00:01<?, ?it/s]Average Metric: 1.00 / 1 (100.0%):   3%|2         | 1/36 [00:01<01:02,  1.78s/it]Average Metric: 2.00 / 2 (100.0%):   3%|2         | 1/36 [00:04<01:02,  1.78s/it]Average Metric: 2.00 / 2 (100.0%):   6%|5         | 2/36 [00:04<01:11,  2.12s/it]Average Metric: 2.00 / 3 (66.7%):   6%|5         | 2/36 [00:06<01:11,  2.12s/it] Average Metric: 2.00 / 3 (66.7%):   8%|8         | 3/36 [00:06<01:11,  2.18s/it]Average Metric: 3.00 / 4 (75.0%):   8%|8         | 3/36 [00:08<01:11,  2.18s/it]Average Metric: 3.00 / 4 (75.0%):  11%|#1        | 4/36 [00:08<01:08,  2.16s/it]Average Metric: 3.00 / 5 (60.0%):  11%|#1        | 4/36 [00:09<01:08,  2.16s/it]Average Metric: 3.00 / 5 (60.0%):  14%|#3        | 5/36 [00:09<00:55,  1.78s/it]Average Metric: 3.00 / 6 (50.0%):  14%|#3        | 5/36 [00:10<00:55,  1.78s/it]Average Metric: 3.00 / 6 (50.0%):  17%|#6        | 6/36 [00:10<00:45,  1.53s/it]Average Metric: 3.00 / 7 (42.9%):  17%|#6        | 6/36 [00:12<00:45,  1.53s/it]Average Metric: 3.00 / 7 (42.9%):  19%|#9        | 7/36 [00:12<00:45,  1.55s/it]Average Metric: 4.00 / 8 (50.0%):  19%|#9        | 7/36 [00:15<00:45,  1.55s/it]Average Metric: 4.00 / 8 (50.0%):  22%|##2       | 8/36 [00:15<00:56,  2.03s/it]Average Metric: 5.00 / 9 (55.6%):  22%|##2       | 8/36 [00:17<00:56,  2.03s/it]Average Metric: 5.00 / 9 (55.6%):  25%|##5       | 9/36 [00:17<00:54,  2.01s/it]Average Metric: 5.00 / 10 (50.0%):  25%|##5       | 9/36 [00:19<00:54,  2.01s/it]Average Metric: 5.00 / 10 (50.0%):  28%|##7       | 10/36 [00:19<00:53,  2.04s/it]Average Metric: 5.00 / 11 (45.5%):  28%|##7       | 10/36 [00:19<00:53,  2.04s/it]Average Metric: 5.00 / 11 (45.5%):  31%|###       | 11/36 [00:19<00:38,  1.55s/it]Average Metric: 5.00 / 12 (41.7%):  31%|###       | 11/36 [00:20<00:38,  1.55s/it]Average Metric: 5.00 / 12 (41.7%):  33%|###3      | 12/36 [00:20<00:32,  1.36s/it]Average Metric: 6.00 / 13 (46.2%):  33%|###3      | 12/36 [00:22<00:32,  1.36s/it]Average Metric: 6.00 / 13 (46.2%):  36%|###6      | 13/36 [00:22<00:34,  1.51s/it]Average Metric: 7.00 / 14 (50.0%):  36%|###6      | 13/36 [00:23<00:34,  1.51s/it]Average Metric: 7.00 / 14 (50.0%):  39%|###8      | 14/36 [00:23<00:31,  1.42s/it]Average Metric: 8.00 / 15 (53.3%):  39%|###8      | 14/36 [00:25<00:31,  1.42s/it]Average Metric: 8.00 / 15 (53.3%):  42%|####1     | 15/36 [00:25<00:32,  1.56s/it]Average Metric: 8.00 / 16 (50.0%):  42%|####1     | 15/36 [00:26<00:32,  1.56s/it]Average Metric: 8.00 / 16 (50.0%):  44%|####4     | 16/36 [00:26<00:27,  1.37s/it]Average Metric: 8.00 / 17 (47.1%):  44%|####4     | 16/36 [00:27<00:27,  1.37s/it]Average Metric: 8.00 / 17 (47.1%):  47%|####7     | 17/36 [00:27<00:23,  1.26s/it]Average Metric: 8.00 / 18 (44.4%):  47%|####7     | 17/36 [00:28<00:23,  1.26s/it]Average Metric: 8.00 / 18 (44.4%):  50%|#####     | 18/36 [00:28<00:20,  1.17s/it]Average Metric: 8.00 / 19 (42.1%):  50%|#####     | 18/36 [00:29<00:20,  1.17s/it]Average Metric: 8.00 / 19 (42.1%):  53%|#####2    | 19/36 [00:29<00:19,  1.13s/it]Average Metric: 8.00 / 20 (40.0%):  53%|#####2    | 19/36 [00:30<00:19,  1.13s/it]Average Metric: 8.00 / 20 (40.0%):  56%|#####5    | 20/36 [00:30<00:17,  1.11s/it]Average Metric: 8.00 / 21 (38.1%):  56%|#####5    | 20/36 [00:32<00:17,  1.11s/it]Average Metric: 8.00 / 21 (38.1%):  58%|#####8    | 21/36 [00:32<00:21,  1.44s/it]Average Metric: 9.00 / 22 (40.9%):  58%|#####8    | 21/36 [00:34<00:21,  1.44s/it]Average Metric: 9.00 / 22 (40.9%):  61%|######1   | 22/36 [00:34<00:22,  1.62s/it]Average Metric: 10.00 / 23 (43.5%):  61%|######1   | 22/36 [00:35<00:22,  1.62s/it]Average Metric: 10.00 / 23 (43.5%):  64%|######3   | 23/36 [00:35<00:17,  1.37s/it]Average Metric: 11.00 / 24 (45.8%):  64%|######3   | 23/36 [00:37<00:17,  1.37s/it]Average Metric: 11.00 / 24 (45.8%):  67%|######6   | 24/36 [00:37<00:16,  1.37s/it]Average Metric: 12.00 / 25 (48.0%):  67%|######6   | 24/36 [00:37<00:16,  1.37s/it]Average Metric: 12.00 / 25 (48.0%):  69%|######9   | 25/36 [00:37<00:13,  1.22s/it]Average Metric: 12.00 / 26 (46.2%):  69%|######9   | 25/36 [00:40<00:13,  1.22s/it]Average Metric: 12.00 / 26 (46.2%):  72%|#######2  | 26/36 [00:40<00:15,  1.51s/it]Average Metric: 13.00 / 27 (48.1%):  72%|#######2  | 26/36 [00:41<00:15,  1.51s/it]Average Metric: 13.00 / 27 (48.1%):  75%|#######5  | 27/36 [00:41<00:13,  1.54s/it]Average Metric: 14.00 / 28 (50.0%):  75%|#######5  | 27/36 [00:43<00:13,  1.54s/it]Average Metric: 14.00 / 28 (50.0%):  78%|#######7  | 28/36 [00:43<00:11,  1.45s/it]Average Metric: 14.00 / 29 (48.3%):  78%|#######7  | 28/36 [00:44<00:11,  1.45s/it]Average Metric: 14.00 / 29 (48.3%):  81%|########  | 29/36 [00:44<00:09,  1.37s/it]Average Metric: 14.00 / 30 (46.7%):  81%|########  | 29/36 [00:45<00:09,  1.37s/it]Average Metric: 14.00 / 30 (46.7%):  83%|########3 | 30/36 [00:45<00:08,  1.38s/it]Average Metric: 14.00 / 31 (45.2%):  83%|########3 | 30/36 [00:47<00:08,  1.38s/it]Average Metric: 14.00 / 31 (45.2%):  86%|########6 | 31/36 [00:47<00:07,  1.42s/it]Average Metric: 14.00 / 32 (43.8%):  86%|########6 | 31/36 [00:48<00:07,  1.42s/it]Average Metric: 14.00 / 32 (43.8%):  89%|########8 | 32/36 [00:48<00:05,  1.40s/it]Average Metric: 15.00 / 33 (45.5%):  89%|########8 | 32/36 [00:51<00:05,  1.40s/it]Average Metric: 15.00 / 33 (45.5%):  92%|#########1| 33/36 [00:51<00:05,  1.75s/it]Average Metric: 16.00 / 34 (47.1%):  92%|#########1| 33/36 [00:52<00:05,  1.75s/it]Average Metric: 16.00 / 34 (47.1%):  94%|#########4| 34/36 [00:52<00:03,  1.65s/it]Average Metric: 16.00 / 35 (45.7%):  94%|#########4| 34/36 [00:54<00:03,  1.65s/it]Average Metric: 16.00 / 35 (45.7%):  97%|#########7| 35/36 [00:54<00:01,  1.82s/it]Average Metric: 17.00 / 36 (47.2%):  97%|#########7| 35/36 [00:55<00:01,  1.82s/it]Average Metric: 17.00 / 36 (47.2%): 100%|##########| 36/36 [00:55<00:00,  1.64s/it]Average Metric: 17.00 / 36 (47.2%): 100%|##########| 36/36 [00:55<00:00,  1.55s/it]
+2026/07/14 21:29:24 INFO dspy.evaluate.evaluate: Average Metric: 17.0 / 36 (47.2%)
+2026/07/14 21:29:24 INFO dspy.teleprompt.bootstrap_finetune: Preparing the train data...
+2026/07/14 21:29:24 INFO dspy.teleprompt.bootstrap_finetune: Collected data for 36 examples
+2026/07/14 21:29:24 INFO dspy.teleprompt.bootstrap_finetune: After filtering with the metric, 17 examples remain
+2026/07/14 21:29:24 INFO dspy.teleprompt.bootstrap_finetune: Using 17 data points for fine-tuning the model: hf-mps:Qwen/Qwen2.5-0.5B-Instruct
+2026/07/14 21:29:24 INFO dspy.teleprompt.bootstrap_finetune: Starting LM fine-tuning...
+2026/07/14 21:29:24 INFO dspy.teleprompt.bootstrap_finetune: 1 fine-tuning job(s) to start
+2026/07/14 21:29:24 INFO dspy.teleprompt.bootstrap_finetune: Starting 1 fine-tuning job(s)...
+2026/07/14 21:29:24 INFO dspy.teleprompt.bootstrap_finetune: Calling lm.kill() on the LM to be fine-tuned to free up resources. This won't have any effect if the LM is not running.
+Tokenizing train dataset:   0%|          | 0/17 [00:00<?, ? examples/s]Tokenizing train dataset: 100%|##########| 17/17 [00:00<00:00, 1586.24 examples/s]
+Truncating train dataset:   0%|          | 0/17 [00:00<?, ? examples/s]Truncating train dataset: 100%|##########| 17/17 [00:00<00:00, 18700.02 examples/s]
+The tokenizer has new PAD/BOS/EOS tokens that differ from the model config and generation config. The model config and generation config were aligned accordingly, being updated with the tokenizer's values. Updated tokens: {'bos_token_id': None, 'pad_token_id': 151643}.
+  0%|          | 0/18 [00:00<?, ?it/s]  6%|5         | 1/18 [00:01<00:20,  1.18s/it]                                              {'loss': 3.0583, 'grad_norm': 16.228900909423828, 'learning_rate': 0.0002, 'entropy': 1.7204101085662842, 'num_tokens': 1279.0, 'mean_token_accuracy': 0.5143596082925797, 'epoch': 0.24}
+  6%|5         | 1/18 [00:01<00:20,  1.18s/it] 11%|#1        | 2/18 [00:02<00:17,  1.11s/it]                                              {'loss': 2.6722, 'grad_norm': 2.7495672702789307, 'learning_rate': 0.00018888888888888888, 'entropy': 2.102155327796936, 'num_tokens': 2542.0, 'mean_token_accuracy': 0.5265730023384094, 'epoch': 0.47}
+ 11%|#1        | 2/18 [00:02<00:17,  1.11s/it] 17%|#6        | 3/18 [00:03<00:16,  1.12s/it]                                              {'loss': 2.2947, 'grad_norm': 2.3656439781188965, 'learning_rate': 0.00017777777777777779, 'entropy': 2.0576130151748657, 'num_tokens': 3835.0, 'mean_token_accuracy': 0.5722629129886627, 'epoch': 0.71}
+ 17%|#6        | 3/18 [00:03<00:16,  1.12s/it] 22%|##2       | 4/18 [00:04<00:15,  1.12s/it]                                              {'loss': 2.1629, 'grad_norm': 2.1006879806518555, 'learning_rate': 0.0001666666666666667, 'entropy': 2.102610766887665, 'num_tokens': 5136.0, 'mean_token_accuracy': 0.58696348965168, 'epoch': 0.94}
+ 22%|##2       | 4/18 [00:04<00:15,  1.12s/it] 28%|##7       | 5/18 [00:04<00:10,  1.22it/s]                                              {'loss': 1.9173, 'grad_norm': 1.8983200788497925, 'learning_rate': 0.00015555555555555556, 'entropy': 2.152688503265381, 'num_tokens': 5474.0, 'mean_token_accuracy': 0.6023738980293274, 'epoch': 1.0}
+ 28%|##7       | 5/18 [00:04<00:10,  1.22it/s] 33%|###3      | 6/18 [00:05<00:10,  1.15it/s]                                              {'loss': 1.8871, 'grad_norm': 1.8155043125152588, 'learning_rate': 0.00014444444444444444, 'entropy': 2.087549537420273, 'num_tokens': 6706.0, 'mean_token_accuracy': 0.6180321425199509, 'epoch': 1.24}
+ 33%|###3      | 6/18 [00:05<00:10,  1.15it/s] 39%|###8      | 7/18 [00:06<00:10,  1.07it/s]                                              {'loss': 1.6825, 'grad_norm': 1.7927358150482178, 'learning_rate': 0.00013333333333333334, 'entropy': 2.005959540605545, 'num_tokens': 8024.0, 'mean_token_accuracy': 0.6464589387178421, 'epoch': 1.47}
+ 39%|###8      | 7/18 [00:06<00:10,  1.07it/s] 44%|####4     | 8/18 [00:07<00:09,  1.04it/s]                                              {'loss': 1.6297, 'grad_norm': 1.7472081184387207, 'learning_rate': 0.00012222222222222224, 'entropy': 1.9525239169597626, 'num_tokens': 9355.0, 'mean_token_accuracy': 0.6546944230794907, 'epoch': 1.71}
+ 44%|####4     | 8/18 [00:07<00:09,  1.04it/s] 50%|#####     | 9/18 [00:08<00:08,  1.01it/s]                                              {'loss': 1.6086, 'grad_norm': 1.7511476278305054, 'learning_rate': 0.00011111111111111112, 'entropy': 1.9091085493564606, 'num_tokens': 10656.0, 'mean_token_accuracy': 0.6644721925258636, 'epoch': 1.94}
+ 50%|#####     | 9/18 [00:08<00:08,  1.01it/s] 56%|#####5    | 10/18 [00:09<00:06,  1.32it/s]                                               {'loss': 1.369, 'grad_norm': 2.1293928623199463, 'learning_rate': 0.0001, 'entropy': 1.7642477750778198, 'num_tokens': 10948.0, 'mean_token_accuracy': 0.7079038023948669, 'epoch': 2.0}
+ 56%|#####5    | 10/18 [00:09<00:06,  1.32it/s] 61%|######1   | 11/18 [00:10<00:05,  1.20it/s]                                               {'loss': 1.3856, 'grad_norm': 1.8755249977111816, 'learning_rate': 8.888888888888889e-05, 'entropy': 1.7233491837978363, 'num_tokens': 12200.0, 'mean_token_accuracy': 0.7143412232398987, 'epoch': 2.24}
+ 61%|######1   | 11/18 [00:10<00:05,  1.20it/s] 67%|######6   | 12/18 [00:11<00:05,  1.11it/s]                                               {'loss': 1.1489, 'grad_norm': 1.8233698606491089, 'learning_rate': 7.777777777777778e-05, 'entropy': 1.511664867401123, 'num_tokens': 13520.0, 'mean_token_accuracy': 0.7384895086288452, 'epoch': 2.47}
+ 67%|######6   | 12/18 [00:11<00:05,  1.11it/s] 72%|#######2  | 13/18 [00:12<00:04,  1.07it/s]                                               {'loss': 1.1303, 'grad_norm': 1.8792320489883423, 'learning_rate': 6.666666666666667e-05, 'entropy': 1.4505992829799652, 'num_tokens': 14792.0, 'mean_token_accuracy': 0.7442499399185181, 'epoch': 2.71}
+ 72%|#######2  | 13/18 [00:12<00:04,  1.07it/s] 78%|#######7  | 14/18 [00:13<00:03,  1.03it/s]                                               {'loss': 1.1367, 'grad_norm': 1.7984384298324585, 'learning_rate': 5.555555555555556e-05, 'entropy': 1.5095955729484558, 'num_tokens': 16130.0, 'mean_token_accuracy': 0.743676170706749, 'epoch': 2.94}
+ 78%|#######7  | 14/18 [00:13<00:03,  1.03it/s] 83%|########3 | 15/18 [00:13<00:02,  1.31it/s]                                               {'loss': 0.9351, 'grad_norm': 2.330977201461792, 'learning_rate': 4.4444444444444447e-05, 'entropy': 1.3474395275115967, 'num_tokens': 16422.0, 'mean_token_accuracy': 0.800687313079834, 'epoch': 3.0}
+ 83%|########3 | 15/18 [00:13<00:02,  1.31it/s] 89%|########8 | 16/18 [00:14<00:01,  1.18it/s]                                               {'loss': 0.9491, 'grad_norm': 1.8978322744369507, 'learning_rate': 3.3333333333333335e-05, 'entropy': 1.308277577161789, 'num_tokens': 17709.0, 'mean_token_accuracy': 0.8051901906728745, 'epoch': 3.24}
+ 89%|########8 | 16/18 [00:14<00:01,  1.18it/s] 94%|#########4| 17/18 [00:15<00:00,  1.10it/s]                                               {'loss': 1.0202, 'grad_norm': 1.8827404975891113, 'learning_rate': 2.2222222222222223e-05, 'entropy': 1.330227643251419, 'num_tokens': 19023.0, 'mean_token_accuracy': 0.7978581339120865, 'epoch': 3.47}
+ 94%|#########4| 17/18 [00:15<00:00,  1.10it/s]100%|##########| 18/18 [00:16<00:00,  1.06it/s]                                               {'loss': 0.8764, 'grad_norm': 1.8979244232177734, 'learning_rate': 1.1111111111111112e-05, 'entropy': 1.248919129371643, 'num_tokens': 20264.0, 'mean_token_accuracy': 0.8159672617912292, 'epoch': 3.71}
+100%|##########| 18/18 [00:16<00:00,  1.06it/s]                                               {'train_runtime': 16.6718, 'train_samples_per_second': 4.319, 'train_steps_per_second': 1.08, 'train_loss': 1.6035919189453125, 'epoch': 3.71}
+100%|##########| 18/18 [00:16<00:00,  1.06it/s]100%|##########| 18/18 [00:16<00:00,  1.08it/s]
+2026/07/14 21:29:43 INFO dspy.teleprompt.bootstrap_finetune: Job 1/1 is done
+2026/07/14 21:29:43 INFO dspy.teleprompt.bootstrap_finetune: Updating the student program with the fine-tuned LMs...
+2026/07/14 21:29:43 INFO dspy.teleprompt.bootstrap_finetune: BootstrapFinetune has finished compiling the student program
+2026/07/14 21:29:44 INFO dspy.teleprompt.bettertogether: [94mEvaluating on 18 validation examples...[0m
+  0%|          | 0/18 [00:00<?, ?it/s]Average Metric: 1.00 / 1 (100.0%):   0%|          | 0/18 [00:01<?, ?it/s]Average Metric: 1.00 / 1 (100.0%):   6%|5         | 1/18 [00:01<00:19,  1.12s/it]Average Metric: 1.00 / 2 (50.0%):   6%|5         | 1/18 [00:02<00:19,  1.12s/it] Average Metric: 1.00 / 2 (50.0%):  11%|#1        | 2/18 [00:02<00:16,  1.04s/it]Average Metric: 2.00 / 3 (66.7%):  11%|#1        | 2/18 [00:03<00:16,  1.04s/it]Average Metric: 2.00 / 3 (66.7%):  17%|#6        | 3/18 [00:03<00:19,  1.31s/it]Average Metric: 2.00 / 4 (50.0%):  17%|#6        | 3/18 [00:04<00:19,  1.31s/it]Average Metric: 2.00 / 4 (50.0%):  22%|##2       | 4/18 [00:04<00:16,  1.18s/it]Average Metric: 3.00 / 5 (60.0%):  22%|##2       | 4/18 [00:05<00:16,  1.18s/it]Average Metric: 3.00 / 5 (60.0%):  28%|##7       | 5/18 [00:05<00:13,  1.08s/it]Average Metric: 3.00 / 6 (50.0%):  28%|##7       | 5/18 [00:06<00:13,  1.08s/it]Average Metric: 3.00 / 6 (50.0%):  33%|###3      | 6/18 [00:06<00:12,  1.02s/it]Average Metric: 4.00 / 7 (57.1%):  33%|###3      | 6/18 [00:07<00:12,  1.02s/it]Average Metric: 4.00 / 7 (57.1%):  39%|###8      | 7/18 [00:07<00:12,  1.10s/it]Average Metric: 4.00 / 8 (50.0%):  39%|###8      | 7/18 [00:09<00:12,  1.10s/it]Average Metric: 4.00 / 8 (50.0%):  44%|####4     | 8/18 [00:09<00:12,  1.25s/it]Average Metric: 5.00 / 9 (55.6%):  44%|####4     | 8/18 [00:10<00:12,  1.25s/it]Average Metric: 5.00 / 9 (55.6%):  50%|#####     | 9/18 [00:10<00:10,  1.18s/it]Average Metric: 5.00 / 10 (50.0%):  50%|#####     | 9/18 [00:11<00:10,  1.18s/it]Average Metric: 5.00 / 10 (50.0%):  56%|#####5    | 10/18 [00:11<00:09,  1.14s/it]Average Metric: 6.00 / 11 (54.5%):  56%|#####5    | 10/18 [00:12<00:09,  1.14s/it]Average Metric: 6.00 / 11 (54.5%):  61%|######1   | 11/18 [00:12<00:07,  1.06s/it]Average Metric: 6.00 / 12 (50.0%):  61%|######1   | 11/18 [00:13<00:07,  1.06s/it]Average Metric: 6.00 / 12 (50.0%):  67%|######6   | 12/18 [00:13<00:06,  1.01s/it]Average Metric: 7.00 / 13 (53.8%):  67%|######6   | 12/18 [00:14<00:06,  1.01s/it]Average Metric: 7.00 / 13 (53.8%):  72%|#######2  | 13/18 [00:14<00:05,  1.06s/it]Average Metric: 7.00 / 14 (50.0%):  72%|#######2  | 13/18 [00:15<00:05,  1.06s/it]Average Metric: 7.00 / 14 (50.0%):  78%|#######7  | 14/18 [00:15<00:04,  1.12s/it]Average Metric: 8.00 / 15 (53.3%):  78%|#######7  | 14/18 [00:16<00:04,  1.12s/it]Average Metric: 8.00 / 15 (53.3%):  83%|########3 | 15/18 [00:16<00:03,  1.09s/it]Average Metric: 8.00 / 16 (50.0%):  83%|########3 | 15/18 [00:17<00:03,  1.09s/it]Average Metric: 8.00 / 16 (50.0%):  89%|########8 | 16/18 [00:17<00:02,  1.05s/it]Average Metric: 9.00 / 17 (52.9%):  89%|########8 | 16/18 [00:18<00:02,  1.05s/it]Average Metric: 9.00 / 17 (52.9%):  94%|#########4| 17/18 [00:18<00:01,  1.01s/it]Average Metric: 9.00 / 18 (50.0%):  94%|#########4| 17/18 [00:19<00:01,  1.01s/it]Average Metric: 9.00 / 18 (50.0%): 100%|##########| 18/18 [00:19<00:00,  1.02it/s]Average Metric: 9.00 / 18 (50.0%): 100%|##########| 18/18 [00:19<00:00,  1.08s/it]
+2026/07/14 21:30:03 INFO dspy.evaluate.evaluate: Average Metric: 9.0 / 18 (50.0%)
+2026/07/14 21:30:03 INFO dspy.teleprompt.bettertogether: [92mNew best score![0m 50.0 (strategy: 'p -> w')
+2026/07/14 21:30:03 INFO dspy.teleprompt.bettertogether:
+[1m==> OPTIMIZATION SUMMARY <==[0m
+2026/07/14 21:30:03 INFO dspy.teleprompt.bettertogether: [92mBest score:[0m 50.0
+2026/07/14 21:30:03 INFO dspy.teleprompt.bettertogether: [92mBest strategy:[0m original (no optimization)
+2026/07/14 21:30:03 INFO dspy.teleprompt.bettertogether: [94mTotal candidates evaluated:[0m 3
+2026/07/14 21:30:03 INFO dspy.teleprompt.bettertogether:
+[1m[92m==> BETTERTOGETHER COMPILATION COMPLETE <==[0m
+2026/07/14 21:30:03 INFO dspy.teleprompt.bettertogether: [92mBest score achieved:[0m 50.0
+2026/07/14 21:30:03 INFO dspy.teleprompt.bettertogether: [92mBest strategy:[0m original (no optimization)
+Optimized score: 50.00%
+Uplift: +0.00 points
+Optimization time: 290.87s
+{
+  "status": "completed",
+  "optimizer": "better-together",
+  "profile": "full",
+  "baseline_score": 50.0,
+  "optimized_score": 50.0,
+  "uplift_points": 0.0,
+  "optimization_seconds": 290.86684433299524,
+  "baseline_latency": {
+    "count": 20,
+    "mean_seconds": 1.532961645750038,
+    "median_seconds": 1.3770530829933705,
+    "p50_seconds": 1.3770530829933705,
+    "p95_seconds": 2.3351094142955855,
+    "min_seconds": 0.8679269580024993,
+    "max_seconds": 3.790917083999375
+  },
+  "optimized_latency": {
+    "count": 20,
+    "mean_seconds": 1.5818172312530805,
+    "median_seconds": 1.5183613125045667,
+    "p50_seconds": 1.5183613125045667,
+    "p95_seconds": 2.2210800694047066,
+    "min_seconds": 1.0254457500122953,
+    "max_seconds": 2.47835641700658
+  },
+  "baseline_usage": {
+    "request_count": 40,
+    "cache_hits": 0,
+    "prompt_tokens": 10466,
+    "completion_tokens": 1629,
+    "reasoning_tokens": 0,
+    "total_tokens": 12095,
+    "cost_usd": 0.0,
+    "models": {
+      "hf-mps:Qwen/Qwen2.5-0.5B-Instruct": {
+        "request_count": 40,
+        "cache_hits": 0,
+        "prompt_tokens": 10466,
+        "completion_tokens": 1629,
+        "reasoning_tokens": 0,
+        "total_tokens": 12095,
+        "cost_usd": 0.0
+      }
+    }
+  },
+  "optimization_usage": {
+    "request_count": 331,
+    "cache_hits": 0,
+    "prompt_tokens": 117091,
+    "completion_tokens": 15270,
+    "reasoning_tokens": 0,
+    "total_tokens": 132361,
+    "cost_usd": 0.0,
+    "models": {
+      "hf-mps:Qwen/Qwen2.5-0.5B-Instruct": {
+        "request_count": 313,
+        "cache_hits": 0,
+        "prompt_tokens": 112521,
+        "completion_tokens": 14487,
+        "reasoning_tokens": 0,
+        "total_tokens": 127008,
+        "cost_usd": 0.0
+      },
+      "hf-mps:Qwen/Qwen2.5-0.5B-Instruct::adapter=chapter06/results/runs/full/better-together/20260715T012442.371551Z/training/job-1784078964844242000/adapter": {
+        "request_count": 18,
+        "cache_hits": 0,
+        "prompt_tokens": 4570,
+        "completion_tokens": 783,
+        "reasoning_tokens": 0,
+        "total_tokens": 5353,
+        "cost_usd": 0.0
+      }
+    }
+  },
+  "optimized_evaluation_usage": {
+    "request_count": 40,
+    "cache_hits": 0,
+    "prompt_tokens": 10466,
+    "completion_tokens": 1629,
+    "reasoning_tokens": 0,
+    "total_tokens": 12095,
+    "cost_usd": 0.0,
+    "models": {
+      "hf-mps:Qwen/Qwen2.5-0.5B-Instruct": {
+        "request_count": 40,
+        "cache_hits": 0,
+        "prompt_tokens": 10466,
+        "completion_tokens": 1629,
+        "reasoning_tokens": 0,
+        "total_tokens": 12095,
+        "cost_usd": 0.0
+      }
+    }
+  },
+  "reload_usage": {
+    "request_count": 2,
+    "cache_hits": 0,
+    "prompt_tokens": 488,
+    "completion_tokens": 51,
+    "reasoning_tokens": 0,
+    "total_tokens": 539,
+    "cost_usd": 0.0,
+    "models": {
+      "hf-mps:Qwen/Qwen2.5-0.5B-Instruct": {
+        "request_count": 2,
+        "cache_hits": 0,
+        "prompt_tokens": 488,
+        "completion_tokens": 51,
+        "reasoning_tokens": 0,
+        "total_tokens": 539,
+        "cost_usd": 0.0
+      }
+    }
+  },
+  "reload_prompt_parity": true,
+  "reload_model_parity": true,
+  "reload_prediction_parity": true,
+  "optimizer_state": {
+    "predictor_models": [
+      "hf-mps:Qwen/Qwen2.5-0.5B-Instruct"
+    ],
+    "candidate_programs": [
+      {
+        "score": 50.0,
+        "strategy": "",
+        "predictor_models": [
+          "hf-mps:Qwen/Qwen2.5-0.5B-Instruct"
+        ]
+      },
+      {
+        "score": 50.0,
+        "strategy": "p",
+        "predictor_models": [
+          "hf-mps:Qwen/Qwen2.5-0.5B-Instruct"
+        ]
+      },
+      {
+        "score": 50.0,
+        "strategy": "p -> w",
+        "predictor_models": [
+          "hf-mps:Qwen/Qwen2.5-0.5B-Instruct::adapter=chapter06/results/runs/full/better-together/20260715T012442.371551Z/training/job-1784078964844242000/adapter"
+        ]
+      }
+    ],
+    "flag_compilation_error_occurred": false
+  }
+}

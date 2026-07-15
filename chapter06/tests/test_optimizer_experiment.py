@@ -59,7 +59,9 @@ class OptimizerExperimentTest(unittest.TestCase):
 
         self.assertIsInstance(smoke, RunProfile)
         self.assertLess(smoke.train_limit, 10)
+        self.assertEqual(smoke.finetune_max_steps, 1)
         self.assertEqual(full.train_limit, 0)
+        self.assertGreater(full.finetune_max_steps, smoke.finetune_max_steps)
         self.assertGreater(full.gepa_max_full_evals, smoke.gepa_max_full_evals)
 
     def test_hashed_ngram_embeddings_are_deterministic_and_normalized(self) -> None:

@@ -20,6 +20,12 @@ The default configuration targets stable DSPy 3.2.1 and uses:
 - `openai/gpt-5.6-luna` for task execution
 - `openai/gpt-5.6-sol` for reflection, judging, and prompt proposal
 
+BootstrapFinetune and BetterTogether are the exception: they use the trainable
+`Qwen/Qwen2.5-0.5B-Instruct` model locally through Transformers, TRL, and PEFT.
+On Apple Silicon, PyTorch selects MPS; CPU is also a supported fallback. These
+rows use the same frozen train/validation/test membership, but their accuracy is
+not directly comparable to the Luna rows because the base model differs.
+
 Override those defaults with `TASK_MODEL` and `REFLECTION_MODEL`. Default dataset
 and optimizer budgets are intentionally small. Set `TRAIN_LIMIT=0`, `VAL_LIMIT=0`,
 and `EVAL_LIMIT=0` to use the complete frozen split.
@@ -51,6 +57,17 @@ python -m chapter06.run_optimizer_suite --profile smoke
 python -m chapter06.run_optimizer_suite --profile full --skip-existing
 python -m chapter06.summarize_optimizer_results
 ```
+
+For local weight optimization, these optional controls keep the workflow explicit:
+
+```bash
+CHAPTER06_FINETUNE_DEVICE=mps          # auto (default), mps, or cpu
+CHAPTER06_FINETUNE_MODEL=Qwen/Qwen2.5-0.5B-Instruct
+CHAPTER06_FINETUNE_TEACHER=local       # self-teacher; remote is opt-in
+```
+
+No OpenAI key is needed when `CHAPTER06_FINETUNE_TEACHER=local`. The smoke
+profile performs one bounded LoRA step before the full profile's 18-step run.
 
 Every completed run preserves the console transcript, sanitized LM history,
 per-example predictions, metrics, manifest, serialized program, and extracted
@@ -88,8 +105,8 @@ unexecuted cells or missing saved output.
 | `gepa.ipynb` | GEPA and the chapter's custom WordLimitProposer |
 | `simba.ipynb` | SIMBA |
 | `ensemble.ipynb` | Ensemble |
-| `bootstrap-finetune.ipynb` | BootstrapFinetune (CUDA) |
-| `better-together.ipynb` | BetterTogether (CUDA) |
+| `bootstrap-finetune.ipynb` | BootstrapFinetune (local Apple Silicon MPS or CPU) |
+| `better-together.ipynb` | BetterTogether `p -> w` (local Apple Silicon MPS or CPU) |
 
 ## KNNFewShot on DSPy 3.x
 
