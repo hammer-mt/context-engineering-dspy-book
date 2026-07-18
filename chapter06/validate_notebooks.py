@@ -36,7 +36,11 @@ def validate_notebook(
         "Compile shape",
         "Read the result",
         "Apply the pattern",
-        "benchmark_snapshot",
+        "load_frozen_examples",
+        "split_summary",
+        "run_optimizer",
+        "CHAPTER06_RUN_LIVE",
+        "final test accuracy",
         "learned_program_preview",
         "verify_prompt_artifact",
     )
@@ -52,7 +56,7 @@ def validate_notebook(
     code_cells = [cell for cell in cells if cell.get("cell_type") == "code"]
     if len(code_cells) < 3:
         errors.append(
-            f"{path.name}: expected setup, benchmark, and learned-program cells"
+            f"{path.name}: expected setup, executable result, and learned-program cells"
         )
     for index, cell in enumerate(cells):
         if cell.get("cell_type") != "code":

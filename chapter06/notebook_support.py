@@ -1,8 +1,4 @@
-"""Dependency-free helpers for the published Chapter 6 notebooks.
-
-The notebooks inspect compact, checked-in results and make no network calls. This
-lets readers run the educational material without credentials or a DSPy install.
-"""
+"""Helpers for previews of the checked-in Chapter 6 program artifacts."""
 
 from __future__ import annotations
 
@@ -39,7 +35,7 @@ def _seconds(value: float | None) -> str:
 
 
 def benchmark_snapshot(optimizer: str) -> str:
-    """Return a compact, stable text summary suitable for saved notebook output."""
+    """Return the one comparable publication number: final test accuracy."""
 
     row = optimizer_row(optimizer)
     lines = [
@@ -47,37 +43,18 @@ def benchmark_snapshot(optimizer: str) -> str:
         f"status: {row['status']}",
     ]
     if row["status"] == "completed":
-        parity = row.get("reload_prediction_parity") or {}
-        parity_text = (
-            f"{parity.get('matching', '—')}/{parity.get('checked', '—')} labels"
-            if parity
-            else "not recorded by this run"
-        )
-        uplift = (
-            f"{row['uplift_vs_reference_points']:+.1f} points vs Luna reference"
-            if row.get("reference_comparable", True)
-            else f"{row['run_uplift_points']:+.1f} points vs its Qwen run baseline"
-        )
+        accuracy = row.get("final_accuracy", row["accuracy"])
         lines.extend(
             [
                 f"task model: {row.get('task_model', '—')}",
-                f"test accuracy: {row['accuracy']:.1f}%",
-                f"uplift: {uplift}",
-                f"optimization: ${row['optimization_cost_usd']:.4f} and {_seconds(row['optimization_seconds'])}",
-                (
-                    "inference latency: "
-                    f"mean {row['mean_inference_latency_seconds']:.2f}s; "
-                    f"p95 {row['p95_inference_latency_seconds']:.2f}s"
-                ),
-                (
-                    f"reload checks: prompt={row['reload_prompt_parity']}; "
-                    f"model={row.get('reload_model_parity', 'n/a')}; predictions={parity_text}"
-                ),
+                f"final test accuracy: {accuracy:.1f}% ({round(accuracy * 20 / 100)}/20)",
+                f"optimization time: {_seconds(row['optimization_seconds'])}",
             ]
         )
-        if not row.get("reference_comparable", True):
+        counts = row.get("accepted_trace_labels")
+        if counts:
             lines.append(
-                "comparison boundary: same frozen split, separate Qwen/MPS experiment; not Luna-comparable"
+                f"accepted traces: human={counts['human']}, AI={counts['ai']}"
             )
     else:
         lines.append(

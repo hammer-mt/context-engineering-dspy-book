@@ -1,4 +1,4 @@
-"""Execute all Chapter 6 notebooks in safe inspect mode and save their outputs."""
+"""Execute notebooks in checked-result mode and save their teaching outputs."""
 
 from __future__ import annotations
 
@@ -18,7 +18,7 @@ REPO_ROOT = CHAPTER_DIR.parent
 
 def execute_notebook(path: Path, *, timeout: int = 120) -> None:
     notebook = nbformat.read(path, as_version=4)
-    previous_mode = os.environ.pop("CHAPTER06_RUN", None)
+    previous_mode = os.environ.pop("CHAPTER06_RUN_LIVE", None)
     try:
         client = NotebookClient(
             notebook,
@@ -29,7 +29,7 @@ def execute_notebook(path: Path, *, timeout: int = 120) -> None:
         client.execute(cwd=str(REPO_ROOT))
     finally:
         if previous_mode is not None:
-            os.environ["CHAPTER06_RUN"] = previous_mode
+            os.environ["CHAPTER06_RUN_LIVE"] = previous_mode
     nbformat.write(notebook, path)
 
 
@@ -46,7 +46,7 @@ def main(argv: Sequence[str] | None = None) -> None:
     for filename in filenames:
         path = CHAPTER_DIR / filename
         execute_notebook(path, timeout=args.timeout)
-        print(f"Executed {path.relative_to(REPO_ROOT)} in safe inspect mode")
+        print(f"Executed {path.relative_to(REPO_ROOT)} in checked-result mode")
 
 
 if __name__ == "__main__":

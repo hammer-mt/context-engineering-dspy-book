@@ -3,7 +3,7 @@
   "seed": 42,
   "split_strategy": "baseline_adversarial_worst_case_repeated",
   "dataset_path": "data/ai_vs_human_chapter06.csv",
-  "dataset_sha256": "b244dbd980c08add4ceccfa1257dcf107e1a1a4dd208a53069a0431b7c5f1f1e",
+  "dataset_sha256": "08e32f2198fb1b4366764500c4a03e4408955e576f5bbb3aff1c4ecbd2115bf3",
   "row_count": 74,
   "pair_count": 37,
   "splits": {

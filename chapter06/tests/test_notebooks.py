@@ -30,6 +30,14 @@ class PublishedNotebookTest(unittest.TestCase):
                 self.assertTrue(check["checked"])
                 self.assertTrue(check["prompt_state_equal"])
 
+    def test_every_notebook_loads_the_shared_split_and_can_run_live(self) -> None:
+        for filename in NOTEBOOKS:
+            source = (CHAPTER_DIR / filename).read_text(encoding="utf-8")
+            with self.subTest(filename=filename):
+                self.assertIn("load_frozen_examples", source)
+                self.assertIn("run_optimizer", source)
+                self.assertIn("CHAPTER06_RUN_LIVE", source)
+
 
 if __name__ == "__main__":
     unittest.main()

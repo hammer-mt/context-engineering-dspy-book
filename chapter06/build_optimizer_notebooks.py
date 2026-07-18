@@ -159,13 +159,13 @@ NOTEBOOKS: dict[str, dict[str, Any]] = {
         "use_when": "You control a trainable model and want to distill accepted DSPy traces into a reusable local adapter.",
         "changes": "A PEFT LoRA adapter for Qwen2.5-0.5B-Instruct; the prompt remains separately inspectable.",
         "config": [
-            "stock DSPy BootstrapFinetune with a Transformers/TRL provider boundary",
+            "DSPy BootstrapFinetune with a balanced-trace validation guard",
             "MPS selected on Apple Silicon; CPU remains an explicit fallback",
             "18 full-profile training steps, batch size 1, LoRA rank 8, seed 42",
-            "local self-teaching by default, so this row makes no OpenAI calls",
+            "GPT-5.6 Sol teacher; Qwen2.5-0.5B student trained locally",
         ],
-        "compile": "optimizer = dspy.BootstrapFinetune(\n    metric=exact_match, train_kwargs=training_config,\n    exclude_demos=True, num_threads=1,\n)\noptimized_detector = optimizer.compile(\n    detector, trainset=trainset, teacher=local_teacher,\n)",
-        "reading": "Read score and adapter evidence together. This Qwen/MPS result uses the same frozen split but is not an absolute Luna-to-Luna comparison; follow the training path for device, loss, and adapter metadata.",
+        "compile": "optimizer = BalancedBootstrapFinetune(\n    metric=exact_match, train_kwargs=training_config,\n    exclude_demos=True, num_threads=1, min_examples_per_class=2,\n)\noptimized_detector = optimizer.compile(\n    detector, trainset=trainset, teacher=sol_teacher,\n)",
+        "reading": "The corrected run accepted 17 human and 16 AI traces, then trained Qwen through DSPy on MPS. Its 35% final accuracy is a valid negative result, not the earlier one-class trace failure.",
     },
     "better-together.ipynb": {
         "title": "BetterTogether (Apple Silicon / MPS)",
@@ -175,11 +175,11 @@ NOTEBOOKS: dict[str, dict[str, Any]] = {
         "changes": "Prompt demonstrations first, then a Qwen LoRA adapter in the explicit `p -> w` candidate.",
         "config": [
             "BootstrapFewShotWithRandomSearch (`p`) plus BootstrapFinetune (`w`)",
-            "stock DSPy BetterTogether with explicit `p -> w` strategy",
+            "DSPy BetterTogether with explicit `p -> w` strategy",
             "MPS-backed Qwen2.5-0.5B-Instruct, 18 weight steps, seed 42",
             "preserve original, `p`, and `p -> w` candidates even when validation ties",
         ],
-        "compile": "optimizer = dspy.BetterTogether(\n    metric=exact_match, p=prompt_optimizer, w=weight_optimizer,\n)\noptimized_detector = optimizer.compile(\n    detector, trainset=trainset, teacher=local_teacher, valset=valset,\n    strategy='p -> w', seed=42,\n)",
+        "compile": "optimizer = dspy.BetterTogether(\n    metric=exact_match, p=prompt_optimizer, w=weight_optimizer,\n)\noptimized_detector = optimizer.compile(\n    detector, trainset=trainset, teacher=sol_teacher, valset=valset,\n    strategy='p -> w', seed=42,\n)",
         "reading": "DSPy retained the original program when all validation candidates tied. That is not a failed run: inspect `candidate_programs/` to see the completed prompt-only and trained `p -> w` alternatives and the adapter that was deliberately preserved.",
     },
 }
@@ -228,13 +228,15 @@ def make_notebook(spec: dict[str, Any]) -> dict[str, Any]:
 
                 {config}
 
-                The 74-row dataset and pair-grouped train/validation/test membership are frozen.
+                Every notebook loads the same 74-row dataset and frozen, pair-grouped
+                train/validation/test membership before it can compile anything.
                 The test partition is deliberately baseline-adversarial, so these scores teach
                 optimizer tradeoffs; they are not a general-purpose AI-detector leaderboard.
                 """
                 ),
                 _code(
                     f"""
+                import os
                 import sys
                 from pathlib import Path
 
@@ -245,35 +247,49 @@ def make_notebook(spec: dict[str, Any]) -> dict[str, Any]:
                 if str(REPO_ROOT) not in sys.path:
                     sys.path.insert(0, str(REPO_ROOT))
 
-                from chapter06.notebook_support import (
-                    artifact_paths,
-                    benchmark_snapshot,
-                    learned_program_preview,
-                    verify_prompt_artifact,
+                from chapter06.notebook_support import artifact_paths, learned_program_preview, verify_prompt_artifact
+                from chapter06.optimizer_runtime import (
+                    format_result,
+                    load_frozen_examples,
+                    published_result,
+                    run_optimizer,
+                    split_summary,
                 )
 
                 OPTIMIZER = {spec["optimizer"]!r}
-                print(f"optimizer={{OPTIMIZER!r}}")
-                print("reading the checked-in chapter result; no API calls")
+                splits = load_frozen_examples()
+                RUN_LIVE = os.getenv("CHAPTER06_RUN_LIVE", "0") == "1"
+                print(f"optimizer={{OPTIMIZER!r}}; live={{RUN_LIVE}}")
+                print(split_summary(splits))
                 """
                 ),
                 _markdown(
                     f"""
                 ## Compile shape
 
-                This is the essential DSPy call used by the shared runner (setup variables omitted):
+                This is the essential DSPy call used by the shared executable runner:
 
                 ```python
                 {spec["compile"]}
                 ```
 
-                `compile` returns a program. Calling that program on the untouched test examples is
-                a separate phase; the notebook reports optimization cost/time separately from inference latency.
+                `compile` returns a program. The shared runner then evaluates that program on the
+                untouched 20-example test split. The baseline has its own notebook; all other
+                notebooks report the optimized program's final test accuracy directly.
                 """
                 ),
                 _code(
                     """
-                print(benchmark_snapshot(OPTIMIZER))
+                if RUN_LIVE:
+                    live_run = run_optimizer(
+                        OPTIMIZER,
+                        splits=splits,
+                    )
+                    result = live_run.summary()
+                else:
+                    result = published_result(OPTIMIZER)
+
+                print(format_result(result))
                 print()
                 print(artifact_paths(OPTIMIZER))
                 """
@@ -284,8 +300,11 @@ def make_notebook(spec: dict[str, Any]) -> dict[str, Any]:
 
                 {spec["reading"]}
 
-                The next cell shows a bounded readable preview. The complete, lossless prompt and
-                saved program snapshot remain at the paths printed above.
+                The saved output above uses the checked-in result so opening or running the notebook
+                is cheap. Set `CHAPTER06_RUN_LIVE=1` before launching Jupyter to execute the real
+                optimizer; prompt optimizers require an OpenAI key, while weight optimizers also
+                require the local PyTorch/Transformers stack. The next cell previews the published
+                program artifact.
                 """
                 ),
                 _code(
@@ -300,9 +319,9 @@ def make_notebook(spec: dict[str, Any]) -> dict[str, Any]:
                 ## Apply the pattern
 
                 Adapt the compile shape above to your own DSPy program, metric, and frozen
-                train/validation split. Evaluate the returned program on a test set that was not
-                used during compilation, and compare accuracy, compile cost, and inference latency
-                rather than treating a single score as the whole result.
+                train/validation split. Keep the test set untouched until the optimizer returns,
+                then report final accuracy as `correct / test examples` so every optimizer is easy
+                to compare. Use the separate baseline notebook when you also need uplift.
 
                 The complete Chapter 6 rerun is summarized in `CHAPTER_RESULTS.md`. Raw provider
                 transcripts and temporary training outputs are intentionally excluded from the

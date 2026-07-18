@@ -1,10 +1,15 @@
 # Chapter 6: optimizer notebooks
 
-This download contains one concise, executed notebook per optimizer. Each notebook
-explains when to use the optimizer, shows the essential DSPy compile call, reports
-the frozen Chapter 6 result, and previews the learned instruction and demonstrations.
-Choose **Run All** to inspect the checked-in artifacts locally; the notebooks make
-no network calls and require no API key.
+This download contains one concise, executable notebook per optimizer. Every
+notebook loads and validates the same frozen dataset and split, explains the
+optimizer, contains its real DSPy execution path, reports final test accuracy,
+and previews the published program artifact.
+
+Choose **Run All** for the fast teaching path: it validates the data and displays
+the checked-in result without making API calls. To actually compile and evaluate
+an optimizer again, set `CHAPTER06_RUN_LIVE=1` before starting Jupyter. Live prompt
+runs require `OPENAI_API_KEY`; live weight runs also require the local
+PyTorch/Transformers/TRL/PEFT stack and can take several minutes.
 
 The full comparison and its limitations are in [`CHAPTER_RESULTS.md`](CHAPTER_RESULTS.md).
 Canonical program snapshots and prompts are under `optimized_programs/final/`
@@ -23,10 +28,16 @@ source and license information is in `data_sources.yaml`.
 The test partition is deliberately baseline-adversarial. It is useful for teaching
 optimizer behavior, not for estimating general-purpose AI-detector accuracy.
 
-BootstrapFinetune and BetterTogether were run through DSPy with
+BootstrapFinetune and BetterTogether run through DSPy with
 `Qwen/Qwen2.5-0.5B-Instruct`, Transformers, TRL, and PEFT on Apple Silicon MPS.
-Those two rows share the frozen split but are reported separately from the Luna
-prompt-optimizer comparison because the base model differs.
+A stronger Sol teacher produces candidate traces, and a validation guard rejects
+one-class trace sets before local training starts. Those two rows share the frozen
+split but use a different task model from the Luna prompt optimizers.
+
+The corrected BootstrapFinetune rerun accepted 17 human and 16 AI traces. It
+trained successfully on MPS but reached 35% final test accuracy versus the 50%
+Qwen baseline. The trace imbalance is fixed; the negative accuracy result is kept
+as evidence rather than tuned away on the test set.
 
 ## Notebook map
 

@@ -1,0 +1,182 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-07-18T20:28:13Z",
+  "dataset": {
+    "path": "data/ai_vs_human_chapter06.csv",
+    "sha256": "08e32f2198fb1b4366764500c4a03e4408955e576f5bbb3aff1c4ecbd2115bf3",
+    "train_examples": 36,
+    "validation_examples": 18,
+    "test_examples": 20
+  },
+  "optimizer": "bootstrap-finetune",
+  "task_model": "Qwen/Qwen2.5-0.5B-Instruct",
+  "teacher_model": "openai/gpt-5.6-sol",
+  "teacher_train_accuracy": 91.7,
+  "accepted_trace_labels": {
+    "human": 17,
+    "ai": 16,
+    "total": 33
+  },
+  "training": {
+    "backend": "transformers-trl-peft",
+    "device": "mps",
+    "max_steps": 18,
+    "gradient_accumulation_steps": 4,
+    "lora_rank": 8,
+    "train_loss": 2.0071879824002585
+  },
+  "baseline": {
+    "accuracy": 50.0,
+    "correct": 10,
+    "count": 20
+  },
+  "final": {
+    "accuracy": 35.0,
+    "correct": 7,
+    "count": 20
+  },
+  "uplift_points": -15.0,
+  "optimization_seconds": 159.38421070900222,
+  "final_predictions": [
+    {
+      "pair_id": "docs-python-tutorial-v3.10.0-005",
+      "example_id": "docs-python-tutorial-v3.10.0-005-human",
+      "expected_is_ai": false,
+      "predicted_is_ai": false,
+      "correct": true
+    },
+    {
+      "pair_id": "docs-python-tutorial-v3.10.0-005",
+      "example_id": "docs-python-tutorial-v3.10.0-005-ai",
+      "expected_is_ai": true,
+      "predicted_is_ai": false,
+      "correct": false
+    },
+    {
+      "pair_id": "docs-numpy-quickstart-v1.21.0-001",
+      "example_id": "docs-numpy-quickstart-v1.21.0-001-human",
+      "expected_is_ai": false,
+      "predicted_is_ai": true,
+      "correct": false
+    },
+    {
+      "pair_id": "docs-numpy-quickstart-v1.21.0-001",
+      "example_id": "docs-numpy-quickstart-v1.21.0-001-ai",
+      "expected_is_ai": true,
+      "predicted_is_ai": false,
+      "correct": false
+    },
+    {
+      "pair_id": "docs-pytorch-readme-v1.10.0-011",
+      "example_id": "docs-pytorch-readme-v1.10.0-011-human",
+      "expected_is_ai": false,
+      "predicted_is_ai": true,
+      "correct": false
+    },
+    {
+      "pair_id": "docs-pytorch-readme-v1.10.0-011",
+      "example_id": "docs-pytorch-readme-v1.10.0-011-ai",
+      "expected_is_ai": true,
+      "predicted_is_ai": false,
+      "correct": false
+    },
+    {
+      "pair_id": "docs-airflow-dags-2.2.0-009",
+      "example_id": "docs-airflow-dags-2.2.0-009-human",
+      "expected_is_ai": false,
+      "predicted_is_ai": false,
+      "correct": true
+    },
+    {
+      "pair_id": "docs-airflow-dags-2.2.0-009",
+      "example_id": "docs-airflow-dags-2.2.0-009-ai",
+      "expected_is_ai": true,
+      "predicted_is_ai": false,
+      "correct": false
+    },
+    {
+      "pair_id": "docs-airflow-dags-2.2.0-010",
+      "example_id": "docs-airflow-dags-2.2.0-010-human",
+      "expected_is_ai": false,
+      "predicted_is_ai": false,
+      "correct": true
+    },
+    {
+      "pair_id": "docs-airflow-dags-2.2.0-010",
+      "example_id": "docs-airflow-dags-2.2.0-010-ai",
+      "expected_is_ai": true,
+      "predicted_is_ai": false,
+      "correct": false
+    },
+    {
+      "pair_id": "docs-django-queries-4.0-020",
+      "example_id": "docs-django-queries-4.0-020-human",
+      "expected_is_ai": false,
+      "predicted_is_ai": false,
+      "correct": true
+    },
+    {
+      "pair_id": "docs-django-queries-4.0-020",
+      "example_id": "docs-django-queries-4.0-020-ai",
+      "expected_is_ai": true,
+      "predicted_is_ai": false,
+      "correct": false
+    },
+    {
+      "pair_id": "docs-flask-quickstart-2.0.2-004",
+      "example_id": "docs-flask-quickstart-2.0.2-004-human",
+      "expected_is_ai": false,
+      "predicted_is_ai": false,
+      "correct": true
+    },
+    {
+      "pair_id": "docs-flask-quickstart-2.0.2-004",
+      "example_id": "docs-flask-quickstart-2.0.2-004-ai",
+      "expected_is_ai": true,
+      "predicted_is_ai": false,
+      "correct": false
+    },
+    {
+      "pair_id": "docs-flask-quickstart-2.0.2-008",
+      "example_id": "docs-flask-quickstart-2.0.2-008-human",
+      "expected_is_ai": false,
+      "predicted_is_ai": true,
+      "correct": false
+    },
+    {
+      "pair_id": "docs-flask-quickstart-2.0.2-008",
+      "example_id": "docs-flask-quickstart-2.0.2-008-ai",
+      "expected_is_ai": true,
+      "predicted_is_ai": false,
+      "correct": false
+    },
+    {
+      "pair_id": "docs-kubernetes-objects-release-1.22-003",
+      "example_id": "docs-kubernetes-objects-release-1.22-003-human",
+      "expected_is_ai": false,
+      "predicted_is_ai": true,
+      "correct": false
+    },
+    {
+      "pair_id": "docs-kubernetes-objects-release-1.22-003",
+      "example_id": "docs-kubernetes-objects-release-1.22-003-ai",
+      "expected_is_ai": true,
+      "predicted_is_ai": false,
+      "correct": false
+    },
+    {
+      "pair_id": "docs-pandas-ten-minutes-v1.3.0-006",
+      "example_id": "docs-pandas-ten-minutes-v1.3.0-006-human",
+      "expected_is_ai": false,
+      "predicted_is_ai": false,
+      "correct": true
+    },
+    {
+      "pair_id": "docs-pandas-ten-minutes-v1.3.0-006",
+      "example_id": "docs-pandas-ten-minutes-v1.3.0-006-ai",
+      "expected_is_ai": true,
+      "predicted_is_ai": true,
+      "correct": true
+    }
+  ]
+}

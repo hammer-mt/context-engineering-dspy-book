@@ -5,7 +5,7 @@
     "seed": 42,
     "split_strategy": "baseline_adversarial_worst_case_repeated",
     "dataset_path": "data/ai_vs_human_chapter06.csv",
-    "dataset_sha256": "b244dbd980c08add4ceccfa1257dcf107e1a1a4dd208a53069a0431b7c5f1f1e",
+    "dataset_sha256": "08e32f2198fb1b4366764500c4a03e4408955e576f5bbb3aff1c4ecbd2115bf3",
     "row_count": 74,
     "pair_count": 37,
     "splits": {
@@ -342,27 +342,25 @@
       "status": "completed",
       "task_model": "Qwen/Qwen2.5-0.5B-Instruct",
       "reference_comparable": false,
-      "accuracy": 50.0,
+      "accuracy": 35.0,
       "run_baseline_accuracy": 50.0,
       "uplift_vs_reference_points": null,
-      "run_uplift_points": 0.0,
+      "run_uplift_points": -15.0,
       "optimization_cost_usd": 0.0,
-      "optimization_seconds": 67.52741745799722,
-      "mean_inference_latency_seconds": 1.1567233666013634,
-      "p95_inference_latency_seconds": 1.8751152023971378,
+      "optimization_seconds": 159.38421070900222,
+      "mean_inference_latency_seconds": 1.256248441700882,
+      "p95_inference_latency_seconds": 2.4311535000015283,
+      "teacher_model": "openai/gpt-5.6-sol",
+      "teacher_train_accuracy": 91.7,
+      "accepted_trace_labels": {
+        "human": 17,
+        "ai": 16,
+        "total": 33
+      },
+      "rerun_artifact": "chapter06/results/bootstrap_finetune_balanced_rerun.json",
       "reload_prompt_parity": true,
-      "reload_model_parity": true,
-      "reload_prediction_parity": {
-        "checked": 3,
-        "completed": 3,
-        "matching": 3,
-        "all_equal": true,
-        "example_ids": [
-          "docs-python-tutorial-v3.10.0-005-human",
-          "docs-python-tutorial-v3.10.0-005-ai",
-          "docs-numpy-quickstart-v1.21.0-001-human"
-        ]
-      }
+      "reload_model_parity": null,
+      "reload_prediction_parity": null
     },
     {
       "optimizer": "better-together",

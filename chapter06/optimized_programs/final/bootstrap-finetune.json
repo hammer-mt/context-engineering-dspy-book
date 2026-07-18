@@ -21,7 +21,7 @@
       ]
     },
     "lm": {
-      "model": "hf-mps:Qwen/Qwen2.5-0.5B-Instruct::adapter=[excluded from student download]",
+      "model": "hf-mps:Qwen/Qwen2.5-0.5B-Instruct::adapter=[balanced MPS rerun adapter excluded from student download]",
       "model_type": "chat",
       "cache": false,
       "num_retries": 0,
@@ -35,6 +35,12 @@
     }
   },
   "metadata": {
+    "rerun": {
+      "teacher_model": "openai/gpt-5.6-sol",
+      "accepted_trace_labels": {"human": 17, "ai": 16, "total": 33},
+      "final_accuracy": 35.0,
+      "result_path": "chapter06/results/bootstrap_finetune_balanced_rerun.json"
+    },
     "dependency_versions": {
       "python": "3.12",
       "dspy": "3.2.1",
