@@ -1,11 +1,19 @@
 from __future__ import annotations
 
 import unittest
+from pathlib import Path
 
 import dspy
+from dspy.clients.lm_local import LocalProvider
 
+from chapter06.apple_finetune import (
+    MacLocalProvider,
+    make_model_spec,
+    parse_model_spec,
+)
 from chapter06.optimizer_runtime import (
     BalancedBootstrapFinetune,
+    _finetune_kwargs,
     accepted_trace_label_counts,
     load_frozen_examples,
     published_result,
@@ -37,11 +45,11 @@ class FrozenDatasetTest(unittest.TestCase):
 class BalancedBootstrapFinetuneTest(unittest.TestCase):
     def test_published_rerun_keeps_balanced_trace_evidence(self) -> None:
         result = published_result("bootstrap-finetune")
-        self.assertEqual(result["final_accuracy"], 35.0)
-        self.assertEqual(result["correct"], 7)
+        self.assertEqual(result["final_accuracy"], 55.0)
+        self.assertEqual(result["correct"], 11)
         self.assertEqual(
             result["accepted_trace_labels"],
-            {"human": 17, "ai": 16, "total": 33},
+            {"human": 16, "ai": 14, "total": 30},
         )
 
     def test_counts_only_metric_accepted_traces(self) -> None:
@@ -68,6 +76,27 @@ class BalancedBootstrapFinetuneTest(unittest.TestCase):
             finetuner.accepted_label_counts,
             {"human": 17, "ai": 0, "total": 17},
         )
+
+
+class NativeLocalProviderTest(unittest.TestCase):
+    def test_mac_provider_is_a_thin_dspy_local_provider_subclass(self) -> None:
+        self.assertIs(MacLocalProvider.__mro__[1], LocalProvider)
+        model = make_model_spec("Qwen/Qwen2.5-0.5B-Instruct")
+        self.assertEqual(model, "openai/local:Qwen/Qwen2.5-0.5B-Instruct")
+        self.assertEqual(
+            parse_model_spec(model), ("Qwen/Qwen2.5-0.5B-Instruct", None)
+        )
+
+    def test_training_kwargs_match_dspy_local_provider(self) -> None:
+        kwargs = _finetune_kwargs(Path("/tmp/chapter06-test"))
+        self.assertTrue(kwargs["use_peft"])
+        self.assertFalse(kwargs["bf16"])
+        self.assertEqual(kwargs["num_train_epochs"], 10)
+        self.assertEqual(kwargs["gradient_accumulation_steps"], 4)
+        self.assertEqual(kwargs["learning_rate"], 2e-4)
+        self.assertEqual(kwargs["max_seq_length"], 768)
+        self.assertNotIn("max_steps", kwargs)
+        self.assertNotIn("lora_rank", kwargs)
 
 
 if __name__ == "__main__":

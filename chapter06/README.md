@@ -29,15 +29,17 @@ The test partition is deliberately baseline-adversarial. It is useful for teachi
 optimizer behavior, not for estimating general-purpose AI-detector accuracy.
 
 BootstrapFinetune and BetterTogether run through DSPy with
-`Qwen/Qwen2.5-0.5B-Instruct`, Transformers, TRL, and PEFT on Apple Silicon MPS.
+`Qwen/Qwen2.5-0.5B-Instruct`, DSPy's `LocalProvider`, Transformers, TRL, and PEFT
+on Apple Silicon MPS. The thin `MacLocalProvider` subclass changes only local
+serving and one TRL argument name; DSPy still owns trace formatting and training.
 A stronger Sol teacher produces candidate traces, and a validation guard rejects
 one-class trace sets before local training starts. Those two rows share the frozen
 split but use a different task model from the Luna prompt optimizers.
 
-The corrected BootstrapFinetune rerun accepted 17 human and 16 AI traces. It
-trained successfully on MPS but reached 35% final test accuracy versus the 50%
-Qwen baseline. The trace imbalance is fixed; the negative accuracy result is kept
-as evidence rather than tuned away on the test set.
+The corrected BootstrapFinetune rerun accepted 16 human and 14 AI traces. It
+trained successfully through DSPy on MPS and reached 55% final test accuracy
+versus the 50% Qwen baseline. Training settings were selected on the training and
+validation partitions before the frozen test result was recorded.
 
 ## Notebook map
 

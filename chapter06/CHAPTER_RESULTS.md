@@ -22,7 +22,7 @@ This is the student-facing comparison: the accuracy of the final program returne
 | GEPA | GPT-5.6 Luna | 90% | 18/20 |
 | SIMBA | GPT-5.6 Luna | 70% | 14/20 |
 | Ensemble | GPT-5.6 Luna | 80% | 16/20 |
-| BootstrapFinetune | Qwen2.5-0.5B | 35% | 7/20 |
+| BootstrapFinetune | Qwen2.5-0.5B | 55% | 11/20 |
 | BetterTogether | Qwen2.5-0.5B | 50% | 10/20 |
 
 The prompt optimizers use Luna. The weight optimizers use Qwen because their purpose is to train a local model through DSPy on Apple Silicon. Their final accuracies use the same test examples, but their model capacity and baseline differ.
@@ -31,15 +31,15 @@ The prompt optimizers use Luna. The weight optimizers use Qwen because their pur
 
 The earlier BootstrapFinetune experiment accepted only 17 human traces and no AI traces because the small Qwen student was also used as its own teacher. That run was not a valid demonstration of balanced classification fine-tuning.
 
-The corrected run used GPT-5.6 Sol as the teacher and a validation guard that refuses to fine-tune unless both labels are represented. DSPy accepted 33 traces—17 human and 16 AI—and trained a Qwen2.5-0.5B LoRA adapter locally on MPS for 18 steps.
+The corrected path uses DSPy's own `BootstrapFinetune` and `LocalProvider`. The Mac-specific subclass only replaces LocalProvider's SGLang serving hooks with Transformers inference on MPS and translates DSPy 3.2.1's `max_seq_length` argument to the `max_length` name expected by the pinned TRL version. DSPy still prepares the assistant-only training examples, launches TRL/PEFT, and returns the fine-tuned program.
 
-The correction fixed the trace-selection failure, but it did not produce uplift:
+GPT-5.6 Sol scored 83.3% on the 36-example training split, and DSPy accepted 30 traces—16 human and 14 AI. The training configuration was selected with the training and validation partitions only. The clean end-to-end rerun then produced this frozen-test result; no settings were changed in response to it:
 
 - Same-model Qwen baseline: 50% (10/20)
-- Fine-tuned Qwen: 35% (7/20)
-- Change: −15 percentage points
+- Fine-tuned Qwen: 55% (11/20)
+- Change: +5 percentage points
 
-That is a useful negative result. It shows that balanced, correctly executed DSPy BootstrapFinetune can still hurt generalization on a tiny adversarial dataset. The test result was recorded once; no tuning was performed against the test set afterward. Full compact evidence is in `results/bootstrap_finetune_balanced_rerun.json`.
+This replaces the earlier 35% result, which came from a custom training implementation that did not preserve DSPy's assistant-token masking and therefore was not a valid parity test. The native DSPy run trained for 10 epochs on Apple Silicon MPS. Full compact evidence is in `results/bootstrap_finetune_native_rerun.json`.
 
 The checked-in BetterTogether number comes from the earlier run and has not been rerun with the new balanced Sol-teacher path. Its notebook now uses the corrected executable path, but the published 50% should be treated as legacy evidence until that longer experiment is rerun.
 

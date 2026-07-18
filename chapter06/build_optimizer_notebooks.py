@@ -159,13 +159,13 @@ NOTEBOOKS: dict[str, dict[str, Any]] = {
         "use_when": "You control a trainable model and want to distill accepted DSPy traces into a reusable local adapter.",
         "changes": "A PEFT LoRA adapter for Qwen2.5-0.5B-Instruct; the prompt remains separately inspectable.",
         "config": [
-            "DSPy BootstrapFinetune with a balanced-trace validation guard",
-            "MPS selected on Apple Silicon; CPU remains an explicit fallback",
-            "18 full-profile training steps, batch size 1, LoRA rank 8, seed 42",
+            "DSPy BootstrapFinetune and native LocalProvider with a balanced-trace validation guard",
+            "thin MacLocalProvider subclass selects Transformers/MPS serving and adapts the pinned TRL argument name",
+            "10 epochs, batch size 1, gradient accumulation 4, PEFT LoRA, learning rate 2e-4",
             "GPT-5.6 Sol teacher; Qwen2.5-0.5B student trained locally",
         ],
         "compile": "optimizer = BalancedBootstrapFinetune(\n    metric=exact_match, train_kwargs=training_config,\n    exclude_demos=True, num_threads=1, min_examples_per_class=2,\n)\noptimized_detector = optimizer.compile(\n    detector, trainset=trainset, teacher=sol_teacher,\n)",
-        "reading": "The corrected run accepted 17 human and 16 AI traces, then trained Qwen through DSPy on MPS. Its 35% final accuracy is a valid negative result, not the earlier one-class trace failure.",
+        "reading": "The native DSPy run accepted 16 human and 14 AI traces, then trained Qwen through LocalProvider on MPS. Final accuracy was 55%, up five points from the same-model Qwen baseline.",
     },
     "better-together.ipynb": {
         "title": "BetterTogether (Apple Silicon / MPS)",
@@ -176,7 +176,7 @@ NOTEBOOKS: dict[str, dict[str, Any]] = {
         "config": [
             "BootstrapFewShotWithRandomSearch (`p`) plus BootstrapFinetune (`w`)",
             "DSPy BetterTogether with explicit `p -> w` strategy",
-            "MPS-backed Qwen2.5-0.5B-Instruct, 18 weight steps, seed 42",
+            "DSPy LocalProvider with MPS-backed Qwen2.5-0.5B-Instruct, 10 weight-training epochs",
             "preserve original, `p`, and `p -> w` candidates even when validation ties",
         ],
         "compile": "optimizer = dspy.BetterTogether(\n    metric=exact_match, p=prompt_optimizer, w=weight_optimizer,\n)\noptimized_detector = optimizer.compile(\n    detector, trainset=trainset, teacher=sol_teacher, valset=valset,\n    strategy='p -> w', seed=42,\n)",

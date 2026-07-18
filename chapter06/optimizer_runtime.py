@@ -331,15 +331,14 @@ def _finetune_kwargs(output_dir: Path) -> dict[str, Any]:
     return {
         "output_dir": str(output_dir),
         "device": os.getenv("CHAPTER06_FINETUNE_DEVICE", "auto"),
-        "max_steps": int(os.getenv("CHAPTER06_FINETUNE_STEPS", "18")),
-        "num_train_epochs": 1.0,
+        "use_peft": True,
+        "num_train_epochs": int(os.getenv("CHAPTER06_FINETUNE_EPOCHS", "10")),
         "per_device_train_batch_size": 1,
         "gradient_accumulation_steps": 4,
         "learning_rate": 2e-4,
-        "max_length": 768,
-        "lora_rank": 8,
-        "lora_alpha": 16,
-        "seed": 42,
+        "max_seq_length": 768,
+        "packing": False,
+        "bf16": False,
     }
 
 

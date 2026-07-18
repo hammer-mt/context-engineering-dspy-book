@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-07-18T21:25:31Z",
+  "dataset": {
+    "path": "data/ai_vs_human_chapter06.csv",
+    "sha256": "08e32f2198fb1b4366764500c4a03e4408955e576f5bbb3aff1c4ecbd2115bf3",
+    "train_examples": 36,
+    "validation_examples": 18,
+    "test_examples": 20
+  },
+  "optimizer": "bootstrap-finetune",
+  "implementation": {
+    "optimizer_class": "BalancedBootstrapFinetune (DSPy BootstrapFinetune subclass; label-balance guard only)",
+    "provider_class": "MacLocalProvider (DSPy LocalProvider subclass)",
+    "native_provider": "dspy.clients.lm_local.LocalProvider",
+    "compatibility_changes": [
+      "Use Transformers inference on MPS instead of LocalProvider's SGLang server",
+      "Translate DSPy 3.2.1's max_seq_length to TRL 0.24.0's max_length"
+    ]
+  },
+  "task_model": "Qwen/Qwen2.5-0.5B-Instruct",
+  "teacher_model": "openai/gpt-5.6-sol",
+  "teacher_train_accuracy": 83.3,
+  "accepted_trace_labels": {
+    "human": 16,
+    "ai": 14,
+    "total": 30
+  },
+  "training": {
+    "backend": "dspy.clients.lm_local.LocalProvider",
+    "device": "mps",
+    "use_peft": true,
+    "num_train_epochs": 10,
+    "per_device_train_batch_size": 1,
+    "gradient_accumulation_steps": 4,
+    "learning_rate": 0.0002,
+    "max_seq_length": 768,
+    "packing": false,
+    "train_loss": 0.45057913213968276
+  },
+  "baseline": {
+    "accuracy": 50.0,
+    "correct": 10,
+    "count": 20
+  },
+  "final": {
+    "accuracy": 55.0,
+    "correct": 11,
+    "count": 20,
+    "mean_latency_seconds": 1.5467607248006972,
+    "p95_latency_seconds": 2.1124815000075614
+  },
+  "uplift_points": 5.0,
+  "optimization_seconds": 217.55105995800113,
+  "correct_final_example_ids": [
+    "docs-python-tutorial-v3.10.0-005-human",
+    "docs-numpy-quickstart-v1.21.0-001-human",
+    "docs-pytorch-readme-v1.10.0-011-human",
+    "docs-airflow-dags-2.2.0-009-human",
+    "docs-airflow-dags-2.2.0-009-ai",
+    "docs-airflow-dags-2.2.0-010-human",
+    "docs-flask-quickstart-2.0.2-004-human",
+    "docs-flask-quickstart-2.0.2-004-ai",
+    "docs-flask-quickstart-2.0.2-008-human",
+    "docs-kubernetes-objects-release-1.22-003-human",
+    "docs-pandas-ten-minutes-v1.3.0-006-human"
+  ]
+}
