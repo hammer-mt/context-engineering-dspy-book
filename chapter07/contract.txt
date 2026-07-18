@@ -1,0 +1,13 @@
+SERVICE AGREEMENT
+
+Term. This agreement begins on January 1, 2026 and continues for twelve months. It renews for additional twelve-month periods unless either party gives at least 30 days' written notice before the current term ends.
+
+Termination for cause. Either party may terminate immediately if the other party materially breaches this agreement and does not cure the breach within 15 days after written notice. Either party may also terminate immediately if the other party becomes insolvent, enters bankruptcy, or ceases operations.
+
+Termination for convenience. The customer may terminate for convenience with 60 days' written notice. If the customer terminates for convenience before the end of the current term, the customer must pay an early-termination charge equal to 25 percent of the fees remaining in that term.
+
+Provider termination. The provider may terminate with 10 days' written notice for invoices that remain unpaid more than 30 days after their due date. The customer remains responsible for all accrued unpaid fees and a late charge of 1.5 percent per month, or the maximum lawful rate if lower.
+
+Security incident. The customer may terminate immediately after a confirmed data breach caused by the provider's gross negligence. No early-termination charge applies in that circumstance, and the provider must refund prepaid fees covering the period after termination.
+
+Effect of termination. Each party must return or destroy the other party's confidential information within 30 days. Sections concerning confidentiality, intellectual property, payment obligations, limitations of liability, and dispute resolution survive termination.
