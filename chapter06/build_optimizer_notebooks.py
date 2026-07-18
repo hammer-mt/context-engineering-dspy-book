@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
-from textwrap import dedent
+from textwrap import dedent, indent
 from typing import Any
 
 
@@ -165,6 +165,37 @@ NOTEBOOKS: dict[str, dict[str, Any]] = {
             "GPT-5.6 Sol teacher; Qwen2.5-0.5B student trained locally",
         ],
         "compile": "optimizer = BalancedBootstrapFinetune(\n    metric=exact_match, train_kwargs=training_config,\n    exclude_demos=True, num_threads=1, min_examples_per_class=2,\n)\noptimized_detector = optimizer.compile(\n    detector, trainset=trainset, teacher=sol_teacher,\n)",
+        "platform_note": """
+        ## LocalProvider on Apple Silicon and with standard SGLang
+
+        DSPy 3.2.1's `LocalProvider` has two separate jobs. Its **training** path
+        already uses Transformers and TRL and selects CUDA, then MPS, then CPU.
+        We keep that path: DSPy formats the accepted traces, masks non-assistant
+        tokens, constructs the PEFT trainer, trains, and saves the merged model.
+
+        Its standard **serving** path starts `python -m sglang.launch_server`.
+        That is the path to use on an SGLang-compatible CUDA system:
+
+        ```python
+        from dspy.clients.lm_local import LocalProvider
+
+        student_lm = dspy.LM(
+            "openai/local:Qwen/Qwen2.5-0.5B-Instruct",
+            provider=LocalProvider(),
+            cache=False,
+            max_tokens=96,
+        )
+        ```
+
+        Apple Silicon needs a different serving backend. This chapter's
+        `MacLocalProvider(LocalProvider)` overrides only `launch` and `kill` so
+        the model is loaded by Transformers on MPS. Its `finetune` method calls
+        `LocalProvider.finetune` unchanged except for translating DSPy 3.2.1's
+        `max_seq_length` keyword to the `max_length` name used by the pinned TRL
+        0.24.0. There is no replacement training loop. The complete small shim is
+        in `chapter06/apple_finetune.py`; the optimizer call below is identical on
+        both platforms.
+        """,
         "reading": "The native DSPy run accepted 16 human and 14 AI traces, then trained Qwen through LocalProvider on MPS. Final accuracy was 55%, up five points from the same-model Qwen baseline.",
     },
     "better-together.ipynb": {
@@ -210,7 +241,14 @@ def _with_cell_ids(notebook: dict[str, Any]) -> dict[str, Any]:
 
 
 def make_notebook(spec: dict[str, Any]) -> dict[str, Any]:
-    config = "\n".join(f"- {item}" for item in spec["config"])
+    config = indent(
+        "\n".join(f"- {item}" for item in spec["config"]),
+        " " * 16,
+    )
+    platform_note = spec.get("platform_note", "")
+    if platform_note:
+        platform_note = indent(dedent(platform_note).strip(), " " * 16)
+    compile_shape = indent(spec["compile"], " " * 16)
     return _with_cell_ids(
         {
             "cells": [
@@ -226,7 +264,7 @@ def make_notebook(spec: dict[str, Any]) -> dict[str, Any]:
 
                 Important configuration in this benchmark:
 
-                {config}
+{config}
 
                 Every notebook loads the same 74-row dataset and frozen, pair-grouped
                 train/validation/test membership before it can compile anything.
@@ -265,12 +303,14 @@ def make_notebook(spec: dict[str, Any]) -> dict[str, Any]:
                 ),
                 _markdown(
                     f"""
+{platform_note}
+
                 ## Compile shape
 
                 This is the essential DSPy call used by the shared executable runner:
 
                 ```python
-                {spec["compile"]}
+{compile_shape}
                 ```
 
                 `compile` returns a program. The shared runner then evaluates that program on the
