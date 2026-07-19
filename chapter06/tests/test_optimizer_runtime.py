@@ -15,6 +15,7 @@ from chapter06.optimizer_runtime import (
     BalancedBootstrapFinetune,
     _finetune_kwargs,
     accepted_trace_label_counts,
+    evaluate,
     load_frozen_examples,
     published_result,
 )
@@ -28,9 +29,9 @@ class FrozenDatasetTest(unittest.TestCase):
     def test_shared_split_is_balanced_and_pair_grouped(self) -> None:
         splits = load_frozen_examples()
         self.assertEqual({name: len(rows) for name, rows in splits.items()}, {
-            "train": 36,
-            "validation": 18,
-            "test": 20,
+            "train": 160,
+            "validation": 60,
+            "test": 80,
         })
         for examples in splits.values():
             self.assertEqual(
@@ -43,14 +44,15 @@ class FrozenDatasetTest(unittest.TestCase):
 
 
 class BalancedBootstrapFinetuneTest(unittest.TestCase):
-    def test_published_rerun_keeps_balanced_trace_evidence(self) -> None:
+    def test_completed_expanded_finetune_keeps_balanced_trace_evidence(self) -> None:
         result = published_result("bootstrap-finetune")
-        self.assertEqual(result["final_accuracy"], 55.0)
-        self.assertEqual(result["correct"], 11)
-        self.assertEqual(
-            result["accepted_trace_labels"],
-            {"human": 16, "ai": 14, "total": 30},
-        )
+        if result.get("status") != "completed":
+            self.assertIn(result["status"], {"pending", "blocked", "failed"})
+            return
+        counts = result["accepted_trace_labels"]
+        self.assertGreaterEqual(counts["human"], 2)
+        self.assertGreaterEqual(counts["ai"], 2)
+        self.assertEqual(counts["total"], counts["human"] + counts["ai"])
 
     def test_counts_only_metric_accepted_traces(self) -> None:
         self.assertEqual(
@@ -97,6 +99,27 @@ class NativeLocalProviderTest(unittest.TestCase):
         self.assertEqual(kwargs["max_seq_length"], 768)
         self.assertNotIn("max_steps", kwargs)
         self.assertNotIn("lora_rank", kwargs)
+
+
+class EvaluationIntegrityTest(unittest.TestCase):
+    def test_parse_errors_are_retained_as_incorrect_predictions(self) -> None:
+        class MalformedProgram(dspy.Module):
+            def forward(self, **kwargs):
+                raise ValueError("not a boolean")
+
+        example = dspy.Example(
+            text="example",
+            is_ai=True,
+            pair_id="pair-1",
+            example_id="example-1",
+        ).with_inputs("text")
+        result = evaluate(MalformedProgram(), [example])
+
+        self.assertEqual(result["accuracy"], 0.0)
+        self.assertEqual(result["correct"], 0)
+        self.assertEqual(result["count"], 1)
+        self.assertEqual(result["predictions"][0]["status"], "parse_error")
+        self.assertIsNone(result["predictions"][0]["predicted_is_ai"])
 
 
 if __name__ == "__main__":

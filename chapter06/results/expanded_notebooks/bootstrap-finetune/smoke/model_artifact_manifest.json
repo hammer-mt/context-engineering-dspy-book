@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "model_directory": "chapter06/results/expanded_notebooks/bootstrap-finetune/smoke/model",
+  "storage_policy": "generated model payload is local and Git-ignored; hashes, configuration, program, prompt, predictions, and scores are versioned",
+  "files": [
+    {
+      "path": "adapter_model.safetensors",
+      "size_bytes": 70430032,
+      "sha256": "191f69d7df6f4974f77aedee892ebacadec34f2c161fb79ea36c3a1c9aea41cb"
+    },
+    {
+      "path": "model.safetensors",
+      "size_bytes": 988097536,
+      "sha256": "ed020ec22a11070710fe2070d57421b66146128570ed5249f1ac64005602cff7"
+    },
+    {
+      "path": "config.json",
+      "size_bytes": 1226,
+      "sha256": "d614736fa695c7dee2214f5062b9dae7ab523b0a9309aa91d6991c506f424ce1"
+    }
+  ]
+}

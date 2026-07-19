@@ -1,0 +1,56 @@
+{
+  "detect.predict": {
+    "traces": [],
+    "train": [],
+    "demos": [
+      {
+        "augmented": true,
+        "text": "Ravasi and Schultz (2006) describe organizational culture as shared assumptions that shape behavior, along with the recurring pattern of collective actions and beliefs passed to newcomers as the expected way to perceive, think, and even feel (an awkwardly broad reach). It influences how individuals and groups deal with one another, with clients, and with stakeholders. It may also determine how strongly you and other employees identify with the organization, shaping both outward interaction and inward affiliation.",
+        "reasoning": "The passage has a polished, textbook-like structure and smoothly synthesizes a cited definition with explanatory implications. Its generalized phrasing, parallel sentence construction, and inserted evaluative aside suggest AI-assisted or AI-generated prose rather than spontaneous human writing.",
+        "is_ai": true
+      },
+      {
+        "pair_id": "docs-rails-started-v7.0.0-001",
+        "example_id": "docs-rails-started-v7.0.0-001-ai",
+        "text": "Rails is a web application framework built in Ruby. It simplifies development by assuming the common pieces you need at the outset (rather than making you choose every detail), so you can produce more functionality with less code than many other languages and frameworks require. Experienced Rails developers also say it makes building web applications more enjoyable: fewer decisions, fewer lines, better momentum.",
+        "is_ai": true
+      }
+    ],
+    "signature": {
+      "instructions": "Classify the passage as AI-generated or human-authored, focusing on stylistic rather than subject-matter cues. AI paraphrases often sound unusually polished, formulaic, explanatory, transition-heavy, rhetorically balanced, or redundant; human documentation is often more direct, concise, informal, or editorially imperfect. Treat length, formatting, technical terminology, and any single cue as weak evidence, and judge the overall pattern. Return a brief justification and `is_ai: True` for AI-generated text or `is_ai: False` for human-authored text.",
+      "fields": [
+        {
+          "prefix": "Text:",
+          "description": "Passage to classify"
+        },
+        {
+          "prefix": "Reasoning:",
+          "description": "${reasoning}"
+        },
+        {
+          "prefix": "Is Ai:",
+          "description": "True for AI-generated text; otherwise False"
+        }
+      ]
+    },
+    "lm": {
+      "model": "openai/gpt-5.6-luna",
+      "model_type": "chat",
+      "cache": false,
+      "num_retries": 1,
+      "finetuning_model": null,
+      "launch_kwargs": {},
+      "train_kwargs": {},
+      "temperature": null,
+      "max_tokens": null,
+      "timeout": 120
+    }
+  },
+  "metadata": {
+    "dependency_versions": {
+      "python": "3.11",
+      "dspy": "3.2.1",
+      "cloudpickle": "3.1"
+    }
+  }
+}

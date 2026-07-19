@@ -1,0 +1,43 @@
+{
+  "detect.predict": {
+    "traces": [],
+    "train": [],
+    "demos": [],
+    "signature": {
+      "instructions": "Classify the supplied Apache Airflow passage as AI-generated or human-written. Because both classes discuss nearly identical technical concepts, focus primarily on writing style rather than factual content.\n\nLook for these tendencies:\n\n- **AI-generated (`is_ai = True`)**: unusually polished or formal prose; extended explanations of obvious points; repeated or restated ideas; explicit transitions; highly structured, comprehensive wording; excessive qualifiers; longer phrasing than necessary; consistently smooth and impersonal tone.\n- **Human-written (`is_ai = False`)**: direct, concise, or conversational wording; practical shorthand; uneven sentence structure; abrupt transitions; informal phrasing; minor roughness; assumes background knowledge instead of explaining every implication.\n\nEvaluate the passage holistically. Do not classify it as AI merely because it is grammatical, technical, or long, and do not treat minor errors as definitive proof of human authorship. Compare the density of concrete information with the amount of elaboration: polished redundancy and unnecessary explanatory expansion are especially useful signals in this dataset.\n\nReturn:\n- `reasoning`: a brief, evidence-based explanation citing the most diagnostic stylistic features.\n- `is_ai`: exactly `True` if AI-generated, otherwise `False`.",
+      "fields": [
+        {
+          "prefix": "Text:",
+          "description": "Passage to classify"
+        },
+        {
+          "prefix": "Reasoning:",
+          "description": "${reasoning}"
+        },
+        {
+          "prefix": "Is Ai:",
+          "description": "True for AI-generated text; otherwise False"
+        }
+      ]
+    },
+    "lm": {
+      "model": "openai/gpt-5.6-luna",
+      "model_type": "chat",
+      "cache": false,
+      "num_retries": 1,
+      "finetuning_model": null,
+      "launch_kwargs": {},
+      "train_kwargs": {},
+      "temperature": null,
+      "max_tokens": null,
+      "timeout": 120
+    }
+  },
+  "metadata": {
+    "dependency_versions": {
+      "python": "3.11",
+      "dspy": "3.2.1",
+      "cloudpickle": "3.1"
+    }
+  }
+}

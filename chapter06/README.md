@@ -12,18 +12,20 @@ runs require `OPENAI_API_KEY`; live weight runs also require the local
 PyTorch/Transformers/TRL/PEFT stack and can take several minutes.
 
 The full comparison and its limitations are in [`CHAPTER_RESULTS.md`](CHAPTER_RESULTS.md).
-Canonical program snapshots and prompts are under `optimized_programs/final/`
-and `results/final_prompts/`. Large provider transcripts, smoke-run duplicates,
-caches, model adapters, and temporary training files are intentionally not part of the student
-download.
+Canonical programs, prompts, predictions, hashes, cost/timing ledgers, and bounded
+smoke-run evidence are under `results/expanded_notebooks/`. Fine-tuned model
+payloads remain local and Git-ignored; checked-in manifests preserve their file
+hashes, sizes, and storage policy. Credentials, provider request bodies, caches,
+and temporary training files are intentionally excluded.
 
 ## Benchmark data
 
-The frozen benchmark in `data/ai_vs_human_chapter06.csv` contains 74 passages in
-37 human/AI semantic pairs. Pair IDs—not rows—define the split, preventing a source
-passage and its rewrite from leaking across train, validation, and test. Exact split
-membership and the dataset hash are in `data/ai_vs_human_chapter06_splits.json`;
-source and license information is in `data_sources.yaml`.
+The frozen benchmark in `data/ai_vs_human_chapter06_expanded.csv` contains 300
+passages in 150 human/AI semantic pairs. Pair IDs—not rows—define the 160-row
+train, 60-row validation, and 80-row locked-test split, preventing a source passage
+and its rewrite from leaking across partitions. Exact membership and the dataset
+hash are in `data/ai_vs_human_chapter06_expanded_splits.json`; source and license
+information is in `data_sources_expanded.yaml`.
 
 The test partition is deliberately baseline-adversarial. It is useful for teaching
 optimizer behavior, not for estimating general-purpose AI-detector accuracy.
@@ -36,10 +38,12 @@ A stronger Sol teacher produces candidate traces, and a validation guard rejects
 one-class trace sets before local training starts. Those two rows share the frozen
 split but use a different task model from the Luna prompt optimizers.
 
-The corrected BootstrapFinetune rerun accepted 16 human and 14 AI traces. It
-trained successfully through DSPy on MPS and reached 55% final test accuracy
-versus the 50% Qwen baseline. Training settings were selected on the training and
-validation partitions before the frozen test result was recorded.
+The full BootstrapFinetune rerun accepted 77 human and 63 AI traces, trained
+successfully through DSPy on MPS, and reached 70% locked-test accuracy versus the
+51.25% same-model baseline. BetterTogether combines a validation-selected prompt
+stage with the same native weight-training path. In both cases, training and
+selection use only the training and validation partitions before the locked test
+is released once.
 
 ## Notebook map
 

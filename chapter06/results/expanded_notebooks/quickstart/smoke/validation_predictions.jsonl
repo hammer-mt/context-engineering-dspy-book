@@ -1,0 +1,4 @@
+{"pair_id": "docs-airflow-dags-2.2.0-015", "example_id": "docs-airflow-dags-2.2.0-015-human", "expected_is_ai": false, "predicted_is_ai": true, "correct": false, "latency_seconds": 4.4896757079986855}
+{"pair_id": "docs-airflow-dags-2.2.0-015", "example_id": "docs-airflow-dags-2.2.0-015-ai", "expected_is_ai": true, "predicted_is_ai": true, "correct": true, "latency_seconds": 1.6922674590023234}
+{"pair_id": "docs-airflow-dags-2.2.0-018", "example_id": "docs-airflow-dags-2.2.0-018-human", "expected_is_ai": false, "predicted_is_ai": true, "correct": false, "latency_seconds": 1.810103750001872}
+{"pair_id": "docs-airflow-dags-2.2.0-018", "example_id": "docs-airflow-dags-2.2.0-018-ai", "expected_is_ai": true, "predicted_is_ai": false, "correct": false, "latency_seconds": 1.7148302079876885}

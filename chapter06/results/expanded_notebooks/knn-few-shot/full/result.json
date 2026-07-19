@@ -1,0 +1,1184 @@
+{
+  "optimizer": "knn-few-shot",
+  "status": "completed",
+  "mode": "full",
+  "task_model": "openai/gpt-5.6-luna",
+  "final_accuracy": 72.5,
+  "correct": 58,
+  "test_examples": 80,
+  "validation_accuracy": 71.66666666666667,
+  "validation_correct": 43,
+  "validation_examples": 60,
+  "optimization_seconds": 0.01752733299508691,
+  "optimization_cost_usd": 0.0,
+  "evaluation_cost_usd": 0.237997,
+  "mean_latency_seconds": 1.829866907311589,
+  "p95_latency_seconds": 2.8365726250049192,
+  "accepted_trace_labels": null,
+  "output_dir": null,
+  "baseline": null,
+  "final": {
+    "accuracy": 72.5,
+    "correct": 58,
+    "count": 80,
+    "mean_latency_seconds": 1.829866907311589,
+    "p95_latency_seconds": 2.8365726250049192,
+    "predictions": [
+      {
+        "pair_id": "docs-airflow-dags-2.2.0-003",
+        "example_id": "docs-airflow-dags-2.2.0-003-human",
+        "expected_is_ai": false,
+        "predicted_is_ai": false,
+        "correct": true,
+        "latency_seconds": 1.5841147920000367
+      },
+      {
+        "pair_id": "docs-airflow-dags-2.2.0-003",
+        "example_id": "docs-airflow-dags-2.2.0-003-ai",
+        "expected_is_ai": true,
+        "predicted_is_ai": false,
+        "correct": false,
+        "latency_seconds": 1.5516389590047766
+      },
+      {
+        "pair_id": "docs-airflow-dags-2.2.0-006",
+        "example_id": "docs-airflow-dags-2.2.0-006-human",
+        "expected_is_ai": false,
+        "predicted_is_ai": false,
+        "correct": true,
+        "latency_seconds": 1.8097985830099788
+      },
+      {
+        "pair_id": "docs-airflow-dags-2.2.0-006",
+        "example_id": "docs-airflow-dags-2.2.0-006-ai",
+        "expected_is_ai": true,
+        "predicted_is_ai": false,
+        "correct": false,
+        "latency_seconds": 2.3148832079896238
+      },
+      {
+        "pair_id": "docs-airflow-dags-2.2.0-009",
+        "example_id": "docs-airflow-dags-2.2.0-009-human",
+        "expected_is_ai": false,
+        "predicted_is_ai": false,
+        "correct": true,
+        "latency_seconds": 2.2188161670055706
+      },
+      {
+        "pair_id": "docs-airflow-dags-2.2.0-009",
+        "example_id": "docs-airflow-dags-2.2.0-009-ai",
+        "expected_is_ai": true,
+        "predicted_is_ai": true,
+        "correct": true,
+        "latency_seconds": 1.9482793330098502
+      },
+      {
+        "pair_id": "docs-airflow-dags-2.2.0-010",
+        "example_id": "docs-airflow-dags-2.2.0-010-human",
+        "expected_is_ai": false,
+        "predicted_is_ai": false,
+        "correct": true,
+        "latency_seconds": 2.6633132499991916
+      },
+      {
+        "pair_id": "docs-airflow-dags-2.2.0-010",
+        "example_id": "docs-airflow-dags-2.2.0-010-ai",
+        "expected_is_ai": true,
+        "predicted_is_ai": true,
+        "correct": true,
+        "latency_seconds": 1.5696334590029437
+      },
+      {
+        "pair_id": "docs-airflow-dags-2.2.0-013",
+        "example_id": "docs-airflow-dags-2.2.0-013-human",
+        "expected_is_ai": false,
+        "predicted_is_ai": false,
+        "correct": true,
+        "latency_seconds": 1.510114208998857
+      },
+      {
+        "pair_id": "docs-airflow-dags-2.2.0-013",
+        "example_id": "docs-airflow-dags-2.2.0-013-ai",
+        "expected_is_ai": true,
+        "predicted_is_ai": true,
+        "correct": true,
+        "latency_seconds": 1.459510709013557
+      },
+      {
+        "pair_id": "docs-dask-ten-minutes-2021.11.0-004",
+        "example_id": "docs-dask-ten-minutes-2021.11.0-004-human",
+        "expected_is_ai": false,
+        "predicted_is_ai": false,
+        "correct": true,
+        "latency_seconds": 1.7070382499950938
+      },
+      {
+        "pair_id": "docs-dask-ten-minutes-2021.11.0-004",
+        "example_id": "docs-dask-ten-minutes-2021.11.0-004-ai",
+        "expected_is_ai": true,
+        "predicted_is_ai": true,
+        "correct": true,
+        "latency_seconds": 1.8810519170074258
+      },
+      {
+        "pair_id": "docs-dask-ten-minutes-2021.11.0-005",
+        "example_id": "docs-dask-ten-minutes-2021.11.0-005-human",
+        "expected_is_ai": false,
+        "predicted_is_ai": false,
+        "correct": true,
+        "latency_seconds": 1.5763413330132607
+      },
+      {
+        "pair_id": "docs-dask-ten-minutes-2021.11.0-005",
+        "example_id": "docs-dask-ten-minutes-2021.11.0-005-ai",
+        "expected_is_ai": true,
+        "predicted_is_ai": true,
+        "correct": true,
+        "latency_seconds": 1.7711601249757223
+      },
+      {
+        "pair_id": "docs-django-queries-4.0-003",
+        "example_id": "docs-django-queries-4.0-003-human",
+        "expected_is_ai": false,
+        "predicted_is_ai": false,
+        "correct": true,
+        "latency_seconds": 2.457062458997825
+      },
+      {
+        "pair_id": "docs-django-queries-4.0-003",
+        "example_id": "docs-django-queries-4.0-003-ai",
+        "expected_is_ai": true,
+        "predicted_is_ai": false,
+        "correct": false,
+        "latency_seconds": 1.7127169590094127
+      },
+      {
+        "pair_id": "docs-django-queries-4.0-007",
+        "example_id": "docs-django-queries-4.0-007-human",
+        "expected_is_ai": false,
+        "predicted_is_ai": false,
+        "correct": true,
+        "latency_seconds": 1.2507740830187686
+      },
+      {
+        "pair_id": "docs-django-queries-4.0-007",
+        "example_id": "docs-django-queries-4.0-007-ai",
+        "expected_is_ai": true,
+        "predicted_is_ai": false,
+        "correct": false,
+        "latency_seconds": 2.8365726250049192
+      },
+      {
+        "pair_id": "docs-django-queries-4.0-008",
+        "example_id": "docs-django-queries-4.0-008-human",
+        "expected_is_ai": false,
+        "predicted_is_ai": false,
+        "correct": true,
+        "latency_seconds": 1.934357624995755
+      },
+      {
+        "pair_id": "docs-django-queries-4.0-008",
+        "example_id": "docs-django-queries-4.0-008-ai",
+        "expected_is_ai": true,
+        "predicted_is_ai": true,
+        "correct": true,
+        "latency_seconds": 2.2974694579897914
+      },
+      {
+        "pair_id": "docs-django-queries-4.0-014",
+        "example_id": "docs-django-queries-4.0-014-human",
+        "expected_is_ai": false,
+        "predicted_is_ai": false,
+        "correct": true,
+        "latency_seconds": 1.800382208020892
+      },
+      {
+        "pair_id": "docs-django-queries-4.0-014",
+        "example_id": "docs-django-queries-4.0-014-ai",
+        "expected_is_ai": true,
+        "predicted_is_ai": false,
+        "correct": false,
+        "latency_seconds": 1.5755717499996535
+      },
+      {
+        "pair_id": "docs-django-queries-4.0-020",
+        "example_id": "docs-django-queries-4.0-020-human",
+        "expected_is_ai": false,
+        "predicted_is_ai": false,
+        "correct": true,
+        "latency_seconds": 1.2301425829937216
+      },
+      {
+        "pair_id": "docs-django-queries-4.0-020",
+        "example_id": "docs-django-queries-4.0-020-ai",
+        "expected_is_ai": true,
+        "predicted_is_ai": true,
+        "correct": true,
+        "latency_seconds": 1.3313377909944393
+      },
+      {
+        "pair_id": "docs-fastapi-body-0.70.0-001",
+        "example_id": "docs-fastapi-body-0.70.0-001-human",
+        "expected_is_ai": false,
+        "predicted_is_ai": false,
+        "correct": true,
+        "latency_seconds": 1.5349183749931399
+      },
+      {
+        "pair_id": "docs-fastapi-body-0.70.0-001",
+        "example_id": "docs-fastapi-body-0.70.0-001-ai",
+        "expected_is_ai": true,
+        "predicted_is_ai": false,
+        "correct": false,
+        "latency_seconds": 1.5665449579828419
+      },
+      {
+        "pair_id": "docs-flask-quickstart-2.0.2-004",
+        "example_id": "docs-flask-quickstart-2.0.2-004-human",
+        "expected_is_ai": false,
+        "predicted_is_ai": false,
+        "correct": true,
+        "latency_seconds": 1.7541155829967465
+      },
+      {
+        "pair_id": "docs-flask-quickstart-2.0.2-004",
+        "example_id": "docs-flask-quickstart-2.0.2-004-ai",
+        "expected_is_ai": true,
+        "predicted_is_ai": true,
+        "correct": true,
+        "latency_seconds": 1.2865386659977958
+      },
+      {
+        "pair_id": "docs-flask-quickstart-2.0.2-008",
+        "example_id": "docs-flask-quickstart-2.0.2-008-human",
+        "expected_is_ai": false,
+        "predicted_is_ai": false,
+        "correct": true,
+        "latency_seconds": 1.5329578749951907
+      },
+      {
+        "pair_id": "docs-flask-quickstart-2.0.2-008",
+        "example_id": "docs-flask-quickstart-2.0.2-008-ai",
+        "expected_is_ai": true,
+        "predicted_is_ai": false,
+        "correct": false,
+        "latency_seconds": 1.0465368750155903
+      },
+      {
+        "pair_id": "docs-flask-quickstart-2.0.2-010",
+        "example_id": "docs-flask-quickstart-2.0.2-010-human",
+        "expected_is_ai": false,
+        "predicted_is_ai": false,
+        "correct": true,
+        "latency_seconds": 1.4158707919996232
+      },
+      {
+        "pair_id": "docs-flask-quickstart-2.0.2-010",
+        "example_id": "docs-flask-quickstart-2.0.2-010-ai",
+        "expected_is_ai": true,
+        "predicted_is_ai": true,
+        "correct": true,
+        "latency_seconds": 1.4297421670053154
+      },
+      {
+        "pair_id": "docs-flask-quickstart-2.0.2-012",
+        "example_id": "docs-flask-quickstart-2.0.2-012-human",
+        "expected_is_ai": false,
+        "predicted_is_ai": false,
+        "correct": true,
+        "latency_seconds": 1.4225387079932261
+      },
+      {
+        "pair_id": "docs-flask-quickstart-2.0.2-012",
+        "example_id": "docs-flask-quickstart-2.0.2-012-ai",
+        "expected_is_ai": true,
+        "predicted_is_ai": true,
+        "correct": true,
+        "latency_seconds": 1.6342189159768168
+      },
+      {
+        "pair_id": "docs-flask-quickstart-2.0.2-013",
+        "example_id": "docs-flask-quickstart-2.0.2-013-human",
+        "expected_is_ai": false,
+        "predicted_is_ai": false,
+        "correct": true,
+        "latency_seconds": 1.219338416995015
+      },
+      {
+        "pair_id": "docs-flask-quickstart-2.0.2-013",
+        "example_id": "docs-flask-quickstart-2.0.2-013-ai",
+        "expected_is_ai": true,
+        "predicted_is_ai": false,
+        "correct": false,
+        "latency_seconds": 1.768660041008843
+      },
+      {
+        "pair_id": "docs-kubernetes-objects-release-1.22-003",
+        "example_id": "docs-kubernetes-objects-release-1.22-003-human",
+        "expected_is_ai": false,
+        "predicted_is_ai": false,
+        "correct": true,
+        "latency_seconds": 2.6643953750026412
+      },
+      {
+        "pair_id": "docs-kubernetes-objects-release-1.22-003",
+        "example_id": "docs-kubernetes-objects-release-1.22-003-ai",
+        "expected_is_ai": true,
+        "predicted_is_ai": false,
+        "correct": false,
+        "latency_seconds": 1.5574597920058295
+      },
+      {
+        "pair_id": "docs-kubernetes-objects-release-1.22-004",
+        "example_id": "docs-kubernetes-objects-release-1.22-004-human",
+        "expected_is_ai": false,
+        "predicted_is_ai": false,
+        "correct": true,
+        "latency_seconds": 1.4087561669875868
+      },
+      {
+        "pair_id": "docs-kubernetes-objects-release-1.22-004",
+        "example_id": "docs-kubernetes-objects-release-1.22-004-ai",
+        "expected_is_ai": true,
+        "predicted_is_ai": true,
+        "correct": true,
+        "latency_seconds": 1.2737120839883573
+      },
+      {
+        "pair_id": "docs-numpy-quickstart-v1.21.0-001",
+        "example_id": "docs-numpy-quickstart-v1.21.0-001-human",
+        "expected_is_ai": false,
+        "predicted_is_ai": false,
+        "correct": true,
+        "latency_seconds": 2.2155990839819424
+      },
+      {
+        "pair_id": "docs-numpy-quickstart-v1.21.0-001",
+        "example_id": "docs-numpy-quickstart-v1.21.0-001-ai",
+        "expected_is_ai": true,
+        "predicted_is_ai": false,
+        "correct": false,
+        "latency_seconds": 2.3479454159969464
+      },
+      {
+        "pair_id": "docs-pandas-ten-minutes-v1.3.0-001",
+        "example_id": "docs-pandas-ten-minutes-v1.3.0-001-human",
+        "expected_is_ai": false,
+        "predicted_is_ai": false,
+        "correct": true,
+        "latency_seconds": 1.882507959002396
+      },
+      {
+        "pair_id": "docs-pandas-ten-minutes-v1.3.0-001",
+        "example_id": "docs-pandas-ten-minutes-v1.3.0-001-ai",
+        "expected_is_ai": true,
+        "predicted_is_ai": false,
+        "correct": false,
+        "latency_seconds": 1.9187039170064963
+      },
+      {
+        "pair_id": "docs-pandas-ten-minutes-v1.3.0-006",
+        "example_id": "docs-pandas-ten-minutes-v1.3.0-006-human",
+        "expected_is_ai": false,
+        "predicted_is_ai": false,
+        "correct": true,
+        "latency_seconds": 1.9340112079808023
+      },
+      {
+        "pair_id": "docs-pandas-ten-minutes-v1.3.0-006",
+        "example_id": "docs-pandas-ten-minutes-v1.3.0-006-ai",
+        "expected_is_ai": true,
+        "predicted_is_ai": true,
+        "correct": true,
+        "latency_seconds": 1.9477103329845704
+      },
+      {
+        "pair_id": "docs-pytest-started-6.2.5-004",
+        "example_id": "docs-pytest-started-6.2.5-004-human",
+        "expected_is_ai": false,
+        "predicted_is_ai": true,
+        "correct": false,
+        "latency_seconds": 1.7362892499950249
+      },
+      {
+        "pair_id": "docs-pytest-started-6.2.5-004",
+        "example_id": "docs-pytest-started-6.2.5-004-ai",
+        "expected_is_ai": true,
+        "predicted_is_ai": true,
+        "correct": true,
+        "latency_seconds": 1.5676424170087557
+      },
+      {
+        "pair_id": "docs-python-tutorial-v3.10.0-003",
+        "example_id": "docs-python-tutorial-v3.10.0-003-human",
+        "expected_is_ai": false,
+        "predicted_is_ai": false,
+        "correct": true,
+        "latency_seconds": 1.4044580420013517
+      },
+      {
+        "pair_id": "docs-python-tutorial-v3.10.0-003",
+        "example_id": "docs-python-tutorial-v3.10.0-003-ai",
+        "expected_is_ai": true,
+        "predicted_is_ai": false,
+        "correct": false,
+        "latency_seconds": 1.2825091250124387
+      },
+      {
+        "pair_id": "docs-python-tutorial-v3.10.0-004",
+        "example_id": "docs-python-tutorial-v3.10.0-004-human",
+        "expected_is_ai": false,
+        "predicted_is_ai": false,
+        "correct": true,
+        "latency_seconds": 1.9922902919934131
+      },
+      {
+        "pair_id": "docs-python-tutorial-v3.10.0-004",
+        "example_id": "docs-python-tutorial-v3.10.0-004-ai",
+        "expected_is_ai": true,
+        "predicted_is_ai": true,
+        "correct": true,
+        "latency_seconds": 1.911232457990991
+      },
+      {
+        "pair_id": "docs-python-tutorial-v3.10.0-005",
+        "example_id": "docs-python-tutorial-v3.10.0-005-human",
+        "expected_is_ai": false,
+        "predicted_is_ai": false,
+        "correct": true,
+        "latency_seconds": 1.673280707997037
+      },
+      {
+        "pair_id": "docs-python-tutorial-v3.10.0-005",
+        "example_id": "docs-python-tutorial-v3.10.0-005-ai",
+        "expected_is_ai": true,
+        "predicted_is_ai": true,
+        "correct": true,
+        "latency_seconds": 1.9488480839936528
+      },
+      {
+        "pair_id": "docs-python-tutorial-v3.10.0-007",
+        "example_id": "docs-python-tutorial-v3.10.0-007-human",
+        "expected_is_ai": false,
+        "predicted_is_ai": false,
+        "correct": true,
+        "latency_seconds": 1.2253916659974493
+      },
+      {
+        "pair_id": "docs-python-tutorial-v3.10.0-007",
+        "example_id": "docs-python-tutorial-v3.10.0-007-ai",
+        "expected_is_ai": true,
+        "predicted_is_ai": false,
+        "correct": false,
+        "latency_seconds": 1.5594587920058984
+      },
+      {
+        "pair_id": "docs-pytorch-readme-v1.10.0-010",
+        "example_id": "docs-pytorch-readme-v1.10.0-010-human",
+        "expected_is_ai": false,
+        "predicted_is_ai": false,
+        "correct": true,
+        "latency_seconds": 2.026691832987126
+      },
+      {
+        "pair_id": "docs-pytorch-readme-v1.10.0-010",
+        "example_id": "docs-pytorch-readme-v1.10.0-010-ai",
+        "expected_is_ai": true,
+        "predicted_is_ai": false,
+        "correct": false,
+        "latency_seconds": 2.3531249999941792
+      },
+      {
+        "pair_id": "docs-pytorch-readme-v1.10.0-011",
+        "example_id": "docs-pytorch-readme-v1.10.0-011-human",
+        "expected_is_ai": false,
+        "predicted_is_ai": true,
+        "correct": false,
+        "latency_seconds": 2.9708884590072557
+      },
+      {
+        "pair_id": "docs-pytorch-readme-v1.10.0-011",
+        "example_id": "docs-pytorch-readme-v1.10.0-011-ai",
+        "expected_is_ai": true,
+        "predicted_is_ai": true,
+        "correct": true,
+        "latency_seconds": 2.2514415410114452
+      },
+      {
+        "pair_id": "docs-rails-started-v7.0.0-011",
+        "example_id": "docs-rails-started-v7.0.0-011-human",
+        "expected_is_ai": false,
+        "predicted_is_ai": false,
+        "correct": true,
+        "latency_seconds": 1.5346427080221474
+      },
+      {
+        "pair_id": "docs-rails-started-v7.0.0-011",
+        "example_id": "docs-rails-started-v7.0.0-011-ai",
+        "expected_is_ai": true,
+        "predicted_is_ai": true,
+        "correct": true,
+        "latency_seconds": 2.589217708009528
+      },
+      {
+        "pair_id": "docs-sklearn-started-1.0-009",
+        "example_id": "docs-sklearn-started-1.0-009-human",
+        "expected_is_ai": false,
+        "predicted_is_ai": false,
+        "correct": true,
+        "latency_seconds": 2.0187816660036333
+      },
+      {
+        "pair_id": "docs-sklearn-started-1.0-009",
+        "example_id": "docs-sklearn-started-1.0-009-ai",
+        "expected_is_ai": true,
+        "predicted_is_ai": false,
+        "correct": false,
+        "latency_seconds": 1.6426339999889024
+      },
+      {
+        "pair_id": "wiki-innovation-930564768-04",
+        "example_id": "wiki-innovation-930564768-04-human",
+        "expected_is_ai": false,
+        "predicted_is_ai": false,
+        "correct": true,
+        "latency_seconds": 1.3075521669816226
+      },
+      {
+        "pair_id": "wiki-innovation-930564768-04",
+        "example_id": "wiki-innovation-930564768-04-ai",
+        "expected_is_ai": true,
+        "predicted_is_ai": false,
+        "correct": false,
+        "latency_seconds": 2.5824158749892376
+      },
+      {
+        "pair_id": "wiki-innovation-930564768-05",
+        "example_id": "wiki-innovation-930564768-05-human",
+        "expected_is_ai": false,
+        "predicted_is_ai": true,
+        "correct": false,
+        "latency_seconds": 2.14898450000328
+      },
+      {
+        "pair_id": "wiki-innovation-930564768-05",
+        "example_id": "wiki-innovation-930564768-05-ai",
+        "expected_is_ai": true,
+        "predicted_is_ai": true,
+        "correct": true,
+        "latency_seconds": 1.5504164999874774
+      },
+      {
+        "pair_id": "wiki-innovation-930564768-10",
+        "example_id": "wiki-innovation-930564768-10-human",
+        "expected_is_ai": false,
+        "predicted_is_ai": false,
+        "correct": true,
+        "latency_seconds": 2.1381775419868063
+      },
+      {
+        "pair_id": "wiki-innovation-930564768-10",
+        "example_id": "wiki-innovation-930564768-10-ai",
+        "expected_is_ai": true,
+        "predicted_is_ai": true,
+        "correct": true,
+        "latency_seconds": 3.2968896249949466
+      },
+      {
+        "pair_id": "wiki-leadership-933182672-02",
+        "example_id": "wiki-leadership-933182672-02-human",
+        "expected_is_ai": false,
+        "predicted_is_ai": false,
+        "correct": true,
+        "latency_seconds": 1.2430577919876669
+      },
+      {
+        "pair_id": "wiki-leadership-933182672-02",
+        "example_id": "wiki-leadership-933182672-02-ai",
+        "expected_is_ai": true,
+        "predicted_is_ai": false,
+        "correct": false,
+        "latency_seconds": 2.404118042002665
+      },
+      {
+        "pair_id": "wiki-leadership-933182672-08",
+        "example_id": "wiki-leadership-933182672-08-human",
+        "expected_is_ai": false,
+        "predicted_is_ai": false,
+        "correct": true,
+        "latency_seconds": 1.449013792007463
+      },
+      {
+        "pair_id": "wiki-leadership-933182672-08",
+        "example_id": "wiki-leadership-933182672-08-ai",
+        "expected_is_ai": true,
+        "predicted_is_ai": false,
+        "correct": false,
+        "latency_seconds": 3.400109749985859
+      },
+      {
+        "pair_id": "wiki-organizational-culture-932792416-05",
+        "example_id": "wiki-organizational-culture-932792416-05-human",
+        "expected_is_ai": false,
+        "predicted_is_ai": false,
+        "correct": true,
+        "latency_seconds": 1.2825702499831095
+      },
+      {
+        "pair_id": "wiki-organizational-culture-932792416-05",
+        "example_id": "wiki-organizational-culture-932792416-05-ai",
+        "expected_is_ai": true,
+        "predicted_is_ai": true,
+        "correct": true,
+        "latency_seconds": 1.5699072499992326
+      },
+      {
+        "pair_id": "wiki-sustainability-932573702-03",
+        "example_id": "wiki-sustainability-932573702-03-human",
+        "expected_is_ai": false,
+        "predicted_is_ai": false,
+        "correct": true,
+        "latency_seconds": 2.2432108750217594
+      },
+      {
+        "pair_id": "wiki-sustainability-932573702-03",
+        "example_id": "wiki-sustainability-932573702-03-ai",
+        "expected_is_ai": true,
+        "predicted_is_ai": true,
+        "correct": true,
+        "latency_seconds": 1.6254781250027008
+      },
+      {
+        "pair_id": "wiki-sustainability-932573702-05",
+        "example_id": "wiki-sustainability-932573702-05-human",
+        "expected_is_ai": false,
+        "predicted_is_ai": false,
+        "correct": true,
+        "latency_seconds": 1.870297333021881
+      },
+      {
+        "pair_id": "wiki-sustainability-932573702-05",
+        "example_id": "wiki-sustainability-932573702-05-ai",
+        "expected_is_ai": true,
+        "predicted_is_ai": false,
+        "correct": false,
+        "latency_seconds": 1.8334648750023916
+      }
+    ]
+  },
+  "validation": {
+    "accuracy": 71.66666666666667,
+    "correct": 43,
+    "count": 60,
+    "mean_latency_seconds": 1.8374922757502645,
+    "p95_latency_seconds": 2.556619957991643,
+    "predictions": [
+      {
+        "pair_id": "docs-airflow-dags-2.2.0-015",
+        "example_id": "docs-airflow-dags-2.2.0-015-human",
+        "expected_is_ai": false,
+        "predicted_is_ai": false,
+        "correct": true,
+        "latency_seconds": 1.8594383749878034
+      },
+      {
+        "pair_id": "docs-airflow-dags-2.2.0-015",
+        "example_id": "docs-airflow-dags-2.2.0-015-ai",
+        "expected_is_ai": true,
+        "predicted_is_ai": false,
+        "correct": false,
+        "latency_seconds": 2.0519135000067763
+      },
+      {
+        "pair_id": "docs-airflow-dags-2.2.0-018",
+        "example_id": "docs-airflow-dags-2.2.0-018-human",
+        "expected_is_ai": false,
+        "predicted_is_ai": false,
+        "correct": true,
+        "latency_seconds": 1.999565917009022
+      },
+      {
+        "pair_id": "docs-airflow-dags-2.2.0-018",
+        "example_id": "docs-airflow-dags-2.2.0-018-ai",
+        "expected_is_ai": true,
+        "predicted_is_ai": true,
+        "correct": true,
+        "latency_seconds": 1.4349982920102775
+      },
+      {
+        "pair_id": "docs-flask-quickstart-2.0.2-014",
+        "example_id": "docs-flask-quickstart-2.0.2-014-human",
+        "expected_is_ai": false,
+        "predicted_is_ai": false,
+        "correct": true,
+        "latency_seconds": 1.4239459999953397
+      },
+      {
+        "pair_id": "docs-flask-quickstart-2.0.2-014",
+        "example_id": "docs-flask-quickstart-2.0.2-014-ai",
+        "expected_is_ai": true,
+        "predicted_is_ai": false,
+        "correct": false,
+        "latency_seconds": 1.1906394999823533
+      },
+      {
+        "pair_id": "docs-pytorch-readme-v1.10.0-002",
+        "example_id": "docs-pytorch-readme-v1.10.0-002-human",
+        "expected_is_ai": false,
+        "predicted_is_ai": false,
+        "correct": true,
+        "latency_seconds": 1.4612629170005675
+      },
+      {
+        "pair_id": "docs-pytorch-readme-v1.10.0-002",
+        "example_id": "docs-pytorch-readme-v1.10.0-002-ai",
+        "expected_is_ai": true,
+        "predicted_is_ai": false,
+        "correct": false,
+        "latency_seconds": 1.4980201660073362
+      },
+      {
+        "pair_id": "docs-pytorch-readme-v1.10.0-004",
+        "example_id": "docs-pytorch-readme-v1.10.0-004-human",
+        "expected_is_ai": false,
+        "predicted_is_ai": false,
+        "correct": true,
+        "latency_seconds": 1.9472136670083273
+      },
+      {
+        "pair_id": "docs-pytorch-readme-v1.10.0-004",
+        "example_id": "docs-pytorch-readme-v1.10.0-004-ai",
+        "expected_is_ai": true,
+        "predicted_is_ai": true,
+        "correct": true,
+        "latency_seconds": 1.6447339580045082
+      },
+      {
+        "pair_id": "docs-pytorch-readme-v1.10.0-007",
+        "example_id": "docs-pytorch-readme-v1.10.0-007-human",
+        "expected_is_ai": false,
+        "predicted_is_ai": false,
+        "correct": true,
+        "latency_seconds": 1.0937621250050142
+      },
+      {
+        "pair_id": "docs-pytorch-readme-v1.10.0-007",
+        "example_id": "docs-pytorch-readme-v1.10.0-007-ai",
+        "expected_is_ai": true,
+        "predicted_is_ai": true,
+        "correct": true,
+        "latency_seconds": 1.878796582983341
+      },
+      {
+        "pair_id": "docs-pytorch-readme-v1.10.0-012",
+        "example_id": "docs-pytorch-readme-v1.10.0-012-human",
+        "expected_is_ai": false,
+        "predicted_is_ai": false,
+        "correct": true,
+        "latency_seconds": 1.634781542001292
+      },
+      {
+        "pair_id": "docs-pytorch-readme-v1.10.0-012",
+        "example_id": "docs-pytorch-readme-v1.10.0-012-ai",
+        "expected_is_ai": true,
+        "predicted_is_ai": true,
+        "correct": true,
+        "latency_seconds": 1.6185134580009617
+      },
+      {
+        "pair_id": "docs-pytorch-readme-v1.10.0-013",
+        "example_id": "docs-pytorch-readme-v1.10.0-013-human",
+        "expected_is_ai": false,
+        "predicted_is_ai": false,
+        "correct": true,
+        "latency_seconds": 2.3168412919912953
+      },
+      {
+        "pair_id": "docs-pytorch-readme-v1.10.0-013",
+        "example_id": "docs-pytorch-readme-v1.10.0-013-ai",
+        "expected_is_ai": true,
+        "predicted_is_ai": false,
+        "correct": false,
+        "latency_seconds": 1.5407411250052974
+      },
+      {
+        "pair_id": "docs-rails-started-v7.0.0-003",
+        "example_id": "docs-rails-started-v7.0.0-003-human",
+        "expected_is_ai": false,
+        "predicted_is_ai": true,
+        "correct": false,
+        "latency_seconds": 1.9011245000001509
+      },
+      {
+        "pair_id": "docs-rails-started-v7.0.0-003",
+        "example_id": "docs-rails-started-v7.0.0-003-ai",
+        "expected_is_ai": true,
+        "predicted_is_ai": true,
+        "correct": true,
+        "latency_seconds": 1.7028168339747936
+      },
+      {
+        "pair_id": "docs-rails-started-v7.0.0-006",
+        "example_id": "docs-rails-started-v7.0.0-006-human",
+        "expected_is_ai": false,
+        "predicted_is_ai": true,
+        "correct": false,
+        "latency_seconds": 1.6215568339976016
+      },
+      {
+        "pair_id": "docs-rails-started-v7.0.0-006",
+        "example_id": "docs-rails-started-v7.0.0-006-ai",
+        "expected_is_ai": true,
+        "predicted_is_ai": true,
+        "correct": true,
+        "latency_seconds": 1.38029174998519
+      },
+      {
+        "pair_id": "docs-rails-started-v7.0.0-012",
+        "example_id": "docs-rails-started-v7.0.0-012-human",
+        "expected_is_ai": false,
+        "predicted_is_ai": false,
+        "correct": true,
+        "latency_seconds": 1.502704915998038
+      },
+      {
+        "pair_id": "docs-rails-started-v7.0.0-012",
+        "example_id": "docs-rails-started-v7.0.0-012-ai",
+        "expected_is_ai": true,
+        "predicted_is_ai": true,
+        "correct": true,
+        "latency_seconds": 1.7914480830077082
+      },
+      {
+        "pair_id": "docs-rails-started-v7.0.0-014",
+        "example_id": "docs-rails-started-v7.0.0-014-human",
+        "expected_is_ai": false,
+        "predicted_is_ai": false,
+        "correct": true,
+        "latency_seconds": 3.675497166987043
+      },
+      {
+        "pair_id": "docs-rails-started-v7.0.0-014",
+        "example_id": "docs-rails-started-v7.0.0-014-ai",
+        "expected_is_ai": true,
+        "predicted_is_ai": true,
+        "correct": true,
+        "latency_seconds": 2.354467917000875
+      },
+      {
+        "pair_id": "docs-rails-started-v7.0.0-017",
+        "example_id": "docs-rails-started-v7.0.0-017-human",
+        "expected_is_ai": false,
+        "predicted_is_ai": true,
+        "correct": false,
+        "latency_seconds": 2.8215904159878846
+      },
+      {
+        "pair_id": "docs-rails-started-v7.0.0-017",
+        "example_id": "docs-rails-started-v7.0.0-017-ai",
+        "expected_is_ai": true,
+        "predicted_is_ai": true,
+        "correct": true,
+        "latency_seconds": 1.6207122500054538
+      },
+      {
+        "pair_id": "docs-requests-quickstart-v2.26.0-005",
+        "example_id": "docs-requests-quickstart-v2.26.0-005-human",
+        "expected_is_ai": false,
+        "predicted_is_ai": false,
+        "correct": true,
+        "latency_seconds": 1.9027309170051012
+      },
+      {
+        "pair_id": "docs-requests-quickstart-v2.26.0-005",
+        "example_id": "docs-requests-quickstart-v2.26.0-005-ai",
+        "expected_is_ai": true,
+        "predicted_is_ai": false,
+        "correct": false,
+        "latency_seconds": 1.857383916998515
+      },
+      {
+        "pair_id": "docs-requests-quickstart-v2.26.0-009",
+        "example_id": "docs-requests-quickstart-v2.26.0-009-human",
+        "expected_is_ai": false,
+        "predicted_is_ai": false,
+        "correct": true,
+        "latency_seconds": 1.4198638329980895
+      },
+      {
+        "pair_id": "docs-requests-quickstart-v2.26.0-009",
+        "example_id": "docs-requests-quickstart-v2.26.0-009-ai",
+        "expected_is_ai": true,
+        "predicted_is_ai": false,
+        "correct": false,
+        "latency_seconds": 2.4939759580011014
+      },
+      {
+        "pair_id": "docs-sklearn-started-1.0-001",
+        "example_id": "docs-sklearn-started-1.0-001-human",
+        "expected_is_ai": false,
+        "predicted_is_ai": false,
+        "correct": true,
+        "latency_seconds": 2.349172666989034
+      },
+      {
+        "pair_id": "docs-sklearn-started-1.0-001",
+        "example_id": "docs-sklearn-started-1.0-001-ai",
+        "expected_is_ai": true,
+        "predicted_is_ai": true,
+        "correct": true,
+        "latency_seconds": 1.4948003750178032
+      },
+      {
+        "pair_id": "docs-sklearn-started-1.0-002",
+        "example_id": "docs-sklearn-started-1.0-002-human",
+        "expected_is_ai": false,
+        "predicted_is_ai": false,
+        "correct": true,
+        "latency_seconds": 1.855043250019662
+      },
+      {
+        "pair_id": "docs-sklearn-started-1.0-002",
+        "example_id": "docs-sklearn-started-1.0-002-ai",
+        "expected_is_ai": true,
+        "predicted_is_ai": false,
+        "correct": false,
+        "latency_seconds": 1.6404309589997865
+      },
+      {
+        "pair_id": "docs-sklearn-started-1.0-006",
+        "example_id": "docs-sklearn-started-1.0-006-human",
+        "expected_is_ai": false,
+        "predicted_is_ai": false,
+        "correct": true,
+        "latency_seconds": 2.3545117499888875
+      },
+      {
+        "pair_id": "docs-sklearn-started-1.0-006",
+        "example_id": "docs-sklearn-started-1.0-006-ai",
+        "expected_is_ai": true,
+        "predicted_is_ai": false,
+        "correct": false,
+        "latency_seconds": 1.2653392920037732
+      },
+      {
+        "pair_id": "docs-sklearn-started-1.0-007",
+        "example_id": "docs-sklearn-started-1.0-007-human",
+        "expected_is_ai": false,
+        "predicted_is_ai": false,
+        "correct": true,
+        "latency_seconds": 1.906978999992134
+      },
+      {
+        "pair_id": "docs-sklearn-started-1.0-007",
+        "example_id": "docs-sklearn-started-1.0-007-ai",
+        "expected_is_ai": true,
+        "predicted_is_ai": true,
+        "correct": true,
+        "latency_seconds": 1.4324435839953367
+      },
+      {
+        "pair_id": "docs-sklearn-started-1.0-008",
+        "example_id": "docs-sklearn-started-1.0-008-human",
+        "expected_is_ai": false,
+        "predicted_is_ai": true,
+        "correct": false,
+        "latency_seconds": 1.2517010000010487
+      },
+      {
+        "pair_id": "docs-sklearn-started-1.0-008",
+        "example_id": "docs-sklearn-started-1.0-008-ai",
+        "expected_is_ai": true,
+        "predicted_is_ai": true,
+        "correct": true,
+        "latency_seconds": 1.551936542004114
+      },
+      {
+        "pair_id": "docs-spark-sql-v3.2.0-008",
+        "example_id": "docs-spark-sql-v3.2.0-008-human",
+        "expected_is_ai": false,
+        "predicted_is_ai": false,
+        "correct": true,
+        "latency_seconds": 1.7026159999950323
+      },
+      {
+        "pair_id": "docs-spark-sql-v3.2.0-008",
+        "example_id": "docs-spark-sql-v3.2.0-008-ai",
+        "expected_is_ai": true,
+        "predicted_is_ai": true,
+        "correct": true,
+        "latency_seconds": 1.8642987910134252
+      },
+      {
+        "pair_id": "docs-spark-sql-v3.2.0-009",
+        "example_id": "docs-spark-sql-v3.2.0-009-human",
+        "expected_is_ai": false,
+        "predicted_is_ai": true,
+        "correct": false,
+        "latency_seconds": 1.7596032500150613
+      },
+      {
+        "pair_id": "docs-spark-sql-v3.2.0-009",
+        "example_id": "docs-spark-sql-v3.2.0-009-ai",
+        "expected_is_ai": true,
+        "predicted_is_ai": false,
+        "correct": false,
+        "latency_seconds": 2.4210619590012357
+      },
+      {
+        "pair_id": "docs-spark-sql-v3.2.0-011",
+        "example_id": "docs-spark-sql-v3.2.0-011-human",
+        "expected_is_ai": false,
+        "predicted_is_ai": false,
+        "correct": true,
+        "latency_seconds": 1.781935542006977
+      },
+      {
+        "pair_id": "docs-spark-sql-v3.2.0-011",
+        "example_id": "docs-spark-sql-v3.2.0-011-ai",
+        "expected_is_ai": true,
+        "predicted_is_ai": false,
+        "correct": false,
+        "latency_seconds": 2.5143934579973575
+      },
+      {
+        "pair_id": "docs-spark-sql-v3.2.0-014",
+        "example_id": "docs-spark-sql-v3.2.0-014-human",
+        "expected_is_ai": false,
+        "predicted_is_ai": true,
+        "correct": false,
+        "latency_seconds": 1.3947522499947809
+      },
+      {
+        "pair_id": "docs-spark-sql-v3.2.0-014",
+        "example_id": "docs-spark-sql-v3.2.0-014-ai",
+        "expected_is_ai": true,
+        "predicted_is_ai": true,
+        "correct": true,
+        "latency_seconds": 1.8766945420065895
+      },
+      {
+        "pair_id": "docs-spark-sql-v3.2.0-015",
+        "example_id": "docs-spark-sql-v3.2.0-015-human",
+        "expected_is_ai": false,
+        "predicted_is_ai": false,
+        "correct": true,
+        "latency_seconds": 1.5442578330112156
+      },
+      {
+        "pair_id": "docs-spark-sql-v3.2.0-015",
+        "example_id": "docs-spark-sql-v3.2.0-015-ai",
+        "expected_is_ai": true,
+        "predicted_is_ai": true,
+        "correct": true,
+        "latency_seconds": 1.6377404579834547
+      },
+      {
+        "pair_id": "wiki-innovation-930564768-01",
+        "example_id": "wiki-innovation-930564768-01-human",
+        "expected_is_ai": false,
+        "predicted_is_ai": false,
+        "correct": true,
+        "latency_seconds": 2.0479451669962145
+      },
+      {
+        "pair_id": "wiki-innovation-930564768-01",
+        "example_id": "wiki-innovation-930564768-01-ai",
+        "expected_is_ai": true,
+        "predicted_is_ai": true,
+        "correct": true,
+        "latency_seconds": 2.3546560000104364
+      },
+      {
+        "pair_id": "wiki-organizational-culture-932792416-09",
+        "example_id": "wiki-organizational-culture-932792416-09-human",
+        "expected_is_ai": false,
+        "predicted_is_ai": false,
+        "correct": true,
+        "latency_seconds": 2.150794958026381
+      },
+      {
+        "pair_id": "wiki-organizational-culture-932792416-09",
+        "example_id": "wiki-organizational-culture-932792416-09-ai",
+        "expected_is_ai": true,
+        "predicted_is_ai": true,
+        "correct": true,
+        "latency_seconds": 1.6101096250058617
+      },
+      {
+        "pair_id": "wiki-strategic-management-933294875-06",
+        "example_id": "wiki-strategic-management-933294875-06-human",
+        "expected_is_ai": false,
+        "predicted_is_ai": false,
+        "correct": true,
+        "latency_seconds": 2.4599622920213733
+      },
+      {
+        "pair_id": "wiki-strategic-management-933294875-06",
+        "example_id": "wiki-strategic-management-933294875-06-ai",
+        "expected_is_ai": true,
+        "predicted_is_ai": true,
+        "correct": true,
+        "latency_seconds": 2.0763967910024803
+      },
+      {
+        "pair_id": "wiki-strategic-management-933294875-07",
+        "example_id": "wiki-strategic-management-933294875-07-human",
+        "expected_is_ai": false,
+        "predicted_is_ai": true,
+        "correct": false,
+        "latency_seconds": 2.556619957991643
+      },
+      {
+        "pair_id": "wiki-strategic-management-933294875-07",
+        "example_id": "wiki-strategic-management-933294875-07-ai",
+        "expected_is_ai": true,
+        "predicted_is_ai": true,
+        "correct": true,
+        "latency_seconds": 1.5243465839885175
+      },
+      {
+        "pair_id": "wiki-sustainability-932573702-04",
+        "example_id": "wiki-sustainability-932573702-04-human",
+        "expected_is_ai": false,
+        "predicted_is_ai": false,
+        "correct": true,
+        "latency_seconds": 1.444334624975454
+      },
+      {
+        "pair_id": "wiki-sustainability-932573702-04",
+        "example_id": "wiki-sustainability-932573702-04-ai",
+        "expected_is_ai": true,
+        "predicted_is_ai": true,
+        "correct": true,
+        "latency_seconds": 1.7833243340137415
+      }
+    ]
+  },
+  "usage": {
+    "request_count": 140,
+    "cache_hits": 0,
+    "prompt_tokens": 117253,
+    "completion_tokens": 20124,
+    "reasoning_tokens": 10010,
+    "total_tokens": 137377,
+    "cost_usd": 0.237997,
+    "models": {
+      "openai/gpt-5.6-luna": {
+        "request_count": 140,
+        "cache_hits": 0,
+        "prompt_tokens": 117253,
+        "completion_tokens": 20124,
+        "reasoning_tokens": 10010,
+        "total_tokens": 137377,
+        "cost_usd": 0.237997
+      }
+    }
+  },
+  "dataset_sha256": "f8f3e33f8785af1dba572b40a04efeff5fe91539d067fbb8ee9d5091afe50293",
+  "split_sha256": "f4bf1e786c750f83f834652179ad043e74ce8184836071477492f2af5b461669",
+  "seed": 42,
+  "dspy_version": "3.2.1",
+  "started_at": "2026-07-19T01:21:42.513877+00:00",
+  "finished_at": "2026-07-19T01:25:59.223553+00:00"
+}

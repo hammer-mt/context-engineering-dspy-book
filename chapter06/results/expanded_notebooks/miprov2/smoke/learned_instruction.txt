@@ -1,0 +1,13 @@
+[detect.predict]
+Classify the supplied Apache Airflow passage as AI-generated or human-written. Because both classes discuss nearly identical technical concepts, focus primarily on writing style rather than factual content.
+
+Look for these tendencies:
+
+- **AI-generated (`is_ai = True`)**: unusually polished or formal prose; extended explanations of obvious points; repeated or restated ideas; explicit transitions; highly structured, comprehensive wording; excessive qualifiers; longer phrasing than necessary; consistently smooth and impersonal tone.
+- **Human-written (`is_ai = False`)**: direct, concise, or conversational wording; practical shorthand; uneven sentence structure; abrupt transitions; informal phrasing; minor roughness; assumes background knowledge instead of explaining every implication.
+
+Evaluate the passage holistically. Do not classify it as AI merely because it is grammatical, technical, or long, and do not treat minor errors as definitive proof of human authorship. Compare the density of concrete information with the amount of elaboration: polished redundancy and unnecessary explanatory expansion are especially useful signals in this dataset.
+
+Return:
+- `reasoning`: a brief, evidence-based explanation citing the most diagnostic stylistic features.
+- `is_ai`: exactly `True` if AI-generated, otherwise `False`.

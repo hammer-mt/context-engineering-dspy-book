@@ -1,0 +1,143 @@
+{
+  "optimizer": "bootstrap-finetune",
+  "status": "completed",
+  "mode": "smoke",
+  "task_model": "Qwen/Qwen2.5-0.5B-Instruct",
+  "final_accuracy": 50.0,
+  "correct": 2,
+  "test_examples": 4,
+  "validation_accuracy": 50.0,
+  "validation_correct": 2,
+  "validation_examples": 4,
+  "optimization_seconds": 45.373592415999155,
+  "optimization_cost_usd": 0.03673,
+  "evaluation_cost_usd": 0.0,
+  "mean_latency_seconds": 1.5996637919961358,
+  "p95_latency_seconds": 2.5762402919935994,
+  "accepted_trace_labels": {
+    "human": 4,
+    "ai": 2,
+    "total": 6
+  },
+  "output_dir": "chapter06/results/expanded_notebooks/bootstrap-finetune/smoke/model",
+  "baseline_accuracy": 50.0,
+  "uplift_points": 0.0,
+  "baseline": {
+    "accuracy": 50.0,
+    "correct": 2,
+    "count": 4,
+    "mean_latency_seconds": 2.076753125009418,
+    "p95_latency_seconds": 4.431580125004984,
+    "predictions": [
+      {
+        "pair_id": "docs-airflow-dags-2.2.0-015",
+        "example_id": "docs-airflow-dags-2.2.0-015-human",
+        "expected_is_ai": false,
+        "predicted_is_ai": false,
+        "correct": true,
+        "latency_seconds": 4.431580125004984
+      },
+      {
+        "pair_id": "docs-airflow-dags-2.2.0-015",
+        "example_id": "docs-airflow-dags-2.2.0-015-ai",
+        "expected_is_ai": true,
+        "predicted_is_ai": false,
+        "correct": false,
+        "latency_seconds": 1.0477984580211341
+      },
+      {
+        "pair_id": "docs-airflow-dags-2.2.0-018",
+        "example_id": "docs-airflow-dags-2.2.0-018-human",
+        "expected_is_ai": false,
+        "predicted_is_ai": false,
+        "correct": true,
+        "latency_seconds": 0.8595127080043312
+      },
+      {
+        "pair_id": "docs-airflow-dags-2.2.0-018",
+        "example_id": "docs-airflow-dags-2.2.0-018-ai",
+        "expected_is_ai": true,
+        "predicted_is_ai": false,
+        "correct": false,
+        "latency_seconds": 1.9681212090072222
+      }
+    ]
+  },
+  "final": null,
+  "validation": {
+    "accuracy": 50.0,
+    "correct": 2,
+    "count": 4,
+    "mean_latency_seconds": 1.5996637919961358,
+    "p95_latency_seconds": 2.5762402919935994,
+    "predictions": [
+      {
+        "pair_id": "docs-airflow-dags-2.2.0-015",
+        "example_id": "docs-airflow-dags-2.2.0-015-human",
+        "expected_is_ai": false,
+        "predicted_is_ai": false,
+        "correct": true,
+        "latency_seconds": 2.5762402919935994
+      },
+      {
+        "pair_id": "docs-airflow-dags-2.2.0-015",
+        "example_id": "docs-airflow-dags-2.2.0-015-ai",
+        "expected_is_ai": true,
+        "predicted_is_ai": false,
+        "correct": false,
+        "latency_seconds": 1.3701883750036359
+      },
+      {
+        "pair_id": "docs-airflow-dags-2.2.0-018",
+        "example_id": "docs-airflow-dags-2.2.0-018-human",
+        "expected_is_ai": false,
+        "predicted_is_ai": false,
+        "correct": true,
+        "latency_seconds": 1.2145654589985497
+      },
+      {
+        "pair_id": "docs-airflow-dags-2.2.0-018",
+        "example_id": "docs-airflow-dags-2.2.0-018-ai",
+        "expected_is_ai": true,
+        "predicted_is_ai": false,
+        "correct": false,
+        "latency_seconds": 1.2376610419887584
+      }
+    ]
+  },
+  "usage": {
+    "request_count": 16,
+    "cache_hits": 0,
+    "prompt_tokens": 3998,
+    "completion_tokens": 1170,
+    "reasoning_tokens": 380,
+    "total_tokens": 5168,
+    "cost_usd": 0.03673,
+    "models": {
+      "openai/local:Qwen/Qwen2.5-0.5B-Instruct": {
+        "request_count": 8,
+        "cache_hits": 0,
+        "prompt_tokens": 2004,
+        "completion_tokens": 278,
+        "reasoning_tokens": 0,
+        "total_tokens": 2282,
+        "cost_usd": 0.0
+      },
+      "openai/gpt-5.6-sol": {
+        "request_count": 8,
+        "cache_hits": 0,
+        "prompt_tokens": 1994,
+        "completion_tokens": 892,
+        "reasoning_tokens": 380,
+        "total_tokens": 2886,
+        "cost_usd": 0.03673
+      }
+    }
+  },
+  "dataset_sha256": "f8f3e33f8785af1dba572b40a04efeff5fe91539d067fbb8ee9d5091afe50293",
+  "split_sha256": "f4bf1e786c750f83f834652179ad043e74ce8184836071477492f2af5b461669",
+  "seed": 42,
+  "dspy_version": "3.2.1",
+  "started_at": "2026-07-19T02:45:45.494002+00:00",
+  "finished_at": "2026-07-19T02:46:45.580660+00:00"
+}

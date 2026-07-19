@@ -12,6 +12,7 @@ from chapter06.build_optimizer_notebooks import NOTEBOOKS
 
 
 CHAPTER_DIR = Path(__file__).resolve().parent
+SUPPORT_NOTEBOOKS = {"gepa-expanded-dataset-experiment.ipynb"}
 
 
 def _python_source(cell: dict) -> str:
@@ -97,7 +98,9 @@ def main(argv: Sequence[str] | None = None) -> None:
             )
         )
     extra = sorted(
-        path.name for path in CHAPTER_DIR.glob("*.ipynb") if path.name not in NOTEBOOKS
+        path.name
+        for path in CHAPTER_DIR.glob("*.ipynb")
+        if path.name not in NOTEBOOKS and path.name not in SUPPORT_NOTEBOOKS
     )
     if extra:
         errors.append(f"unexpected Chapter 6 notebooks: {extra}")

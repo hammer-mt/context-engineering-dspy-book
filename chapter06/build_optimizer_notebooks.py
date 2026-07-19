@@ -85,13 +85,13 @@ NOTEBOOKS: dict[str, dict[str, Any]] = {
         "optimizer": "copro",
         "idea": "Propose instruction variants, evaluate them, and iteratively refine the best candidates.",
         "use_when": "The instruction is likely the bottleneck and you want a direct, interpretable prompt search without demo search.",
-        "changes": "Instruction text only; the selected program has no demonstrations in this benchmark.",
+        "changes": "Instruction text only; inspect the saved expanded-dataset prompt to see the selected wording.",
         "config": [
             "full-profile breadth 4 and depth 2",
             "GPT-5.6 Sol proposes; Luna executes",
             "validation uses the exact-match metric",
         ],
-        "compile": "optimizer = dspy.COPRO(\n    prompt_model=reflection_lm, metric=exact_match,\n    breadth=profile.copro_breadth, depth=profile.copro_depth, track_stats=True,\n)\noptimized_detector = optimizer.compile(detector, trainset=trainset)",
+        "compile": "optimizer = dspy.COPRO(\n    prompt_model=reflection_lm, metric=exact_match,\n    breadth=profile.copro_breadth, depth=profile.copro_depth,\n    init_temperature=1.0, track_stats=True,\n)\noptimized_detector = optimizer.compile(\n    detector, trainset=valset,\n    eval_kwargs={\"num_threads\": 1, \"display_table\": False},\n)",
         "reading": "Read the learned instruction before the score. COPRO's artifact is especially auditable because its gain must come from wording rather than hidden examples.",
     },
     "miprov2.ipynb": {
@@ -113,7 +113,7 @@ NOTEBOOKS: dict[str, dict[str, Any]] = {
         "optimizer": "gepa",
         "idea": "Use textual failure feedback to evolve instructions, preserving reflection logs and best outputs along the way.",
         "use_when": "Your metric can explain errors, not merely score them, and you want a detailed instruction that encodes those lessons.",
-        "changes": "In this rerun GEPA learned a long standalone instruction and no final demonstrations.",
+        "changes": "Instruction text and, depending on the search path, demonstrations; inspect the frozen reference artifact.",
         "config": [
             "six full evaluations in the full profile",
             "reflection minibatches of three",
@@ -128,7 +128,7 @@ NOTEBOOKS: dict[str, dict[str, Any]] = {
         "optimizer": "simba",
         "idea": "Sample trajectories, identify difficult examples, and add reflective rules or demonstrations in a sequence of improvement steps.",
         "use_when": "You want iterative, example-driven improvement and can tolerate a relatively expensive reflective search.",
-        "changes": "The selected program may add rules or demonstrations; this rerun's artifact shows which mechanism won.",
+        "changes": "The selected program may add rules or demonstrations; the saved artifact shows which mechanism won.",
         "config": [
             "six steps and four candidates in the full profile",
             "batch size capped at eight",
@@ -196,7 +196,7 @@ NOTEBOOKS: dict[str, dict[str, Any]] = {
         in `chapter06/apple_finetune.py`; the optimizer call below is identical on
         both platforms.
         """,
-        "reading": "The native DSPy run accepted 16 human and 14 AI traces, then trained Qwen through LocalProvider on MPS. Final accuracy was 55%, up five points from the same-model Qwen baseline.",
+        "reading": "Check the accepted human/AI trace counts before the score. A balanced accepted set is a prerequisite for interpreting this fine-tune as a classification experiment.",
     },
     "better-together.ipynb": {
         "title": "BetterTogether (Apple Silicon / MPS)",
@@ -210,8 +210,8 @@ NOTEBOOKS: dict[str, dict[str, Any]] = {
             "DSPy LocalProvider with MPS-backed Qwen2.5-0.5B-Instruct, 10 weight-training epochs",
             "preserve original, `p`, and `p -> w` candidates even when validation ties",
         ],
-        "compile": "optimizer = dspy.BetterTogether(\n    metric=exact_match, p=prompt_optimizer, w=weight_optimizer,\n)\noptimized_detector = optimizer.compile(\n    detector, trainset=trainset, teacher=sol_teacher, valset=valset,\n    strategy='p -> w', seed=42,\n)",
-        "reading": "DSPy retained the original program when all validation candidates tied. That is not a failed run: inspect `candidate_programs/` to see the completed prompt-only and trained `p -> w` alternatives and the adapter that was deliberately preserved.",
+        "compile": "optimizer = dspy.BetterTogether(\n    metric=exact_match, p=prompt_optimizer, w=weight_optimizer,\n)\noptimized_detector = optimizer.compile(\n    detector, trainset=trainset, teacher=sol_teacher, valset=valset,\n    strategy='p -> w', seed=42,\n    optimizer_compile_args={'p': {'teacher': sol_teacher}},\n)",
+        "reading": "Read the validation-selected stage alongside the same-model baseline. If candidates tie or regress, retaining an earlier stage is an honest optimizer outcome, not a reason to consult the locked test.",
     },
 }
 
@@ -266,10 +266,11 @@ def make_notebook(spec: dict[str, Any]) -> dict[str, Any]:
 
 {config}
 
-                Every notebook loads the same 74-row dataset and frozen, pair-grouped
-                train/validation/test membership before it can compile anything.
-                The test partition is deliberately baseline-adversarial, so these scores teach
-                optimizer tradeoffs; they are not a general-purpose AI-detector leaderboard.
+                Every notebook loads the canonical 300-row expanded dataset and frozen,
+                pair-grouped membership: 160 training, 60 validation, and 80 locked-test rows.
+                A semantic human/AI pair can never cross partitions. Optimizer choices use
+                validation only; the locked test is released once after the program is frozen.
+                These scores teach optimizer tradeoffs, not a general AI-detector leaderboard.
                 """
                 ),
                 _code(
@@ -280,7 +281,7 @@ def make_notebook(spec: dict[str, Any]) -> dict[str, Any]:
 
                 cwd = Path.cwd().resolve()
                 REPO_ROOT = cwd if (cwd / "chapter06").is_dir() else cwd.parent
-                if not (REPO_ROOT / "chapter06" / "results" / "benchmark_summary.json").exists():
+                if not (REPO_ROOT / "chapter06" / "results" / "expanded_notebooks" / "comparison.json").exists():
                     raise RuntimeError("Run this notebook from the repository or chapter06 directory.")
                 if str(REPO_ROOT) not in sys.path:
                     sys.path.insert(0, str(REPO_ROOT))
@@ -314,8 +315,8 @@ def make_notebook(spec: dict[str, Any]) -> dict[str, Any]:
                 ```
 
                 `compile` returns a program. The shared runner then evaluates that program on the
-                untouched 20-example test split. The baseline has its own notebook; all other
-                notebooks report the optimized program's final test accuracy directly.
+                untouched 80-row locked test split. The baseline has its own notebook; all other
+                notebooks report validation and locked-test accuracy separately.
                 """
                 ),
                 _code(
@@ -340,11 +341,12 @@ def make_notebook(spec: dict[str, Any]) -> dict[str, Any]:
 
                 {spec["reading"]}
 
-                The saved output above uses the checked-in result so opening or running the notebook
-                is cheap. Set `CHAPTER06_RUN_LIVE=1` before launching Jupyter to execute the real
-                optimizer; prompt optimizers require an OpenAI key, while weight optimizers also
-                require the local PyTorch/Transformers stack. The next cell previews the published
-                program artifact.
+                The saved output above uses the checked-in expanded-dataset result, so opening or
+                rerunning the notebook is free. The paid run first passed a bounded smoke profile,
+                then froze its full program using training and validation only. Set
+                `CHAPTER06_RUN_LIVE=1` before launching Jupyter to reproduce that full protocol;
+                prompt optimizers require an OpenAI key, while weight optimizers also require the
+                local PyTorch/Transformers stack. The next cell previews the durable program artifact.
                 """
                 ),
                 _code(
@@ -360,12 +362,15 @@ def make_notebook(spec: dict[str, Any]) -> dict[str, Any]:
 
                 Adapt the compile shape above to your own DSPy program, metric, and frozen
                 train/validation split. Keep the test set untouched until the optimizer returns,
-                then report final accuracy as `correct / test examples` so every optimizer is easy
+                then report final test accuracy as `correct / test examples` so every optimizer is easy
                 to compare. Use the separate baseline notebook when you also need uplift.
 
-                The complete Chapter 6 rerun is summarized in `CHAPTER_RESULTS.md`. Raw provider
-                transcripts and temporary training outputs are intentionally excluded from the
-                student download.
+                The complete Chapter 6 rerun is summarized in `CHAPTER_RESULTS.md`; machine-readable
+                scores, prompts, programs, predictions, timing, cost, versions, hashes, failures,
+                and retries live under `results/expanded_notebooks/`. Weight-model payloads are
+                generated locally and Git-ignored; their checked-in manifests retain file hashes,
+                sizes, configuration, prompts, programs, and scores. Credentials and provider
+                request bodies are intentionally excluded.
                 """
                 ),
             ],

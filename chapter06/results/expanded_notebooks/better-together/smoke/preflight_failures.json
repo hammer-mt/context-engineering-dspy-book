@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "optimizer": "better-together",
+  "mode": "smoke",
+  "failures": [
+    {
+      "observed_at": "2026-07-19T03:12:38Z",
+      "classification": "optimizer_api_compatibility_error",
+      "paid_requests_started": false,
+      "locked_test_read": false,
+      "error": "BetterTogether normalized the teacher to a list, while its BootstrapRS prompt step requires a single module. DSPy returned the unoptimized original program with an internal failure flag."
+    }
+  ],
+  "resolution": "The prompt step now receives the original teacher module through optimizer_compile_args, and the runner rejects any BetterTogether result carrying its internal compilation-error flag."
+}
