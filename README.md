@@ -44,13 +44,19 @@ powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | ie
 git clone https://github.com/hammer-mt/context-engineering-dspy-book.git
 cd context-engineering-dspy-book
 
-# 3. Create venv and install
-uv venv .venv
-source .venv/bin/activate    # Windows: .\.venv\Scripts\activate
-uv pip install -r requirements.txt
+# 3. Create the virtual environment and install the locked dependencies
+uv sync
 ```
 
-A few notebooks need additional dependencies (LangGraph, CrewAI, Mem0, Qdrant client, MCP, Redis, Gradio, MLflow MCP extras). Those install at the top of their own notebook so the default install stays small.
+`pyproject.toml` declares the environment and `uv.lock` pins the exact resolved
+versions. The notebooks were tested against DSPy 3.2.1; changing that version
+is an explicit compatibility update, not part of a routine dependency refresh.
+
+`requirements.txt` is a generated, pip-compatible export of `uv.lock` used by
+the existing notebook bootstrap cells. Do not edit it by hand. A few notebooks
+still install specialized dependencies (LangGraph, CrewAI, Mem0, Qdrant client,
+MCP, Redis, Gradio, and MLflow MCP extras) in their own cells so the default
+environment stays manageable.
 
 ### Environment variables
 
@@ -94,13 +100,17 @@ A few chapters need an extra service running locally. All commands below use loo
 
 ## Running the notebooks
 
-Each notebook is self-contained. From the repo root:
+From the repo root, launch Jupyter in the locked environment:
 
 ```bash
-jupyter lab
+uv run jupyter lab
 ```
 
-Open a chapter directory, pick a notebook, run the first install cell (`%pip install -r ../requirements.txt -q`), then run cells top-to-bottom. Heavy optimizer or agent notebooks ship with smoke-test budget caps in their default cells — full reproduction cells are commented as opt-in so you don't accidentally burn through API budget.
+Open a chapter directory, pick a notebook, and run cells top-to-bottom. The
+first bootstrap cell is safe to run: it installs the generated export of the
+same lock snapshot. Heavy optimizer or agent notebooks ship with smoke-test
+budget caps in their default cells — full reproduction cells are commented as
+opt-in so you don't accidentally burn through API budget.
 
 Approximate per-chapter LLM spend if you run every notebook end-to-end with default smoke caps:
 
@@ -135,7 +145,8 @@ The book text will be updated to point at `chapter10/...` in a future printing.
 Bug reports, fixes, and improvements welcome. Before opening a PR:
 
 - Clear notebook outputs (see Security note above).
-- Match the existing notebook conventions (top markdown cell linking to chapter section, `%pip install -r ../requirements.txt -q` first cell, env-var documentation).
+- Match the existing notebook conventions (top markdown cell linking to the chapter section, dependency bootstrap cell, and environment-variable documentation).
+- Change dependencies in `pyproject.toml`, run `uv lock`, then regenerate the compatibility export with `uv export --frozen --no-hashes --no-emit-project --output-file requirements.txt`.
 - Keep model slugs aligned with the book unless a documented compatibility update (such as the Chapter 6 Luna/Sol migration) deliberately changes them.
 - If you change a class or signature that's duplicated across notebooks (see `docs/duplication-registry.yaml`), update every copy.
 

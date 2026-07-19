@@ -216,3 +216,4 @@ optimized_programs/*.pkl
 # Per-chapter local outputs / caches
 chapter*/.ipynb_checkpoints/
 chapter*/__pycache__/
+/.context/
