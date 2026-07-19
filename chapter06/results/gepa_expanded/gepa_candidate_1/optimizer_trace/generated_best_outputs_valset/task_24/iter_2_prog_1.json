@@ -1,0 +1,4 @@
+{
+    "reasoning": "The passage contains locally specific Rails details\u2014`article_params`, `app/views/articles/edit.html.erb`, Turbo, and a 4XX status\u2014and uses somewhat uneven, documentation-like phrasing such as \u201c(re-)fetches,\u201d \u201cElse,\u201d and \u201cfor the app to work fine with Turbo.\u201d Those awkward qualifications and project-specific references suggest human-authored documentation rather than globally smoothed AI prose.",
+    "is_ai": false
+}

@@ -1,0 +1,4 @@
+{
+    "reasoning": "The passage is concise and promotional, but it contains source-specific technical detail about custom GPU memory allocators and an awkward comparison between \u201cPyTorch\u201d and \u201cTorch.\u201d The repetition of \u201cmemory efficient\u201d and the slightly imprecise wording feel more like brief human-written documentation or marketing copy than globally smoothed AI prose.",
+    "is_ai": false
+}

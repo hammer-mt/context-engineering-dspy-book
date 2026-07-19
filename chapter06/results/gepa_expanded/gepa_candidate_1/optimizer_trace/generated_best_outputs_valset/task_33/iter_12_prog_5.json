@@ -1,0 +1,4 @@
+{
+    "reasoning": "The passage is globally smooth and explanatory, with a tidy progression from chaining objects, to using the estimator API, to preventing leakage. Parentheticals such as \u201c(predictors)\u201d and \u201c(an easy mistake)\u201d add clarifications, while \u201cmeaning that information from the test data is not accidentally exposed to the training process\u201d restates the data-leakage point in a polished, self-contained way. The transition \u201cAs discussed later\u201d also provides generic connective framing. These features suggest AI-assisted rewriting more than locally irregular documentation prose.",
+    "is_ai": true
+}

@@ -1,0 +1,4 @@
+{
+    "reasoning": "More likely human-authored documentation. It retains concrete scikit-learn terminology and the identifier `~sklearn.pipeline.Pipeline`, uses a practical forward reference (\u201cAs we will see later\u201d), and includes locally awkward phrasing such as \u201cprevent you from data leakage\u201d and \u201cdisclosing some testing data in your training data.\u201d These irregularities and repetition suggest source texture rather than substantial global AI smoothing.",
+    "is_ai": false
+}

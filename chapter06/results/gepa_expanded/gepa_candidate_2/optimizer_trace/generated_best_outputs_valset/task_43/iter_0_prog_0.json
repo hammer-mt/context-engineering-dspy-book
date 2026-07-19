@@ -1,0 +1,4 @@
+{
+    "reasoning": "The passage is more likely AI-generated or substantially AI-rewritten. Its tightly parallel \u201cFirst... Next... Finally...\u201d structure, elevated wording (\u201cfashion an RDD\u201d), and fully smoothed progression from transformation to schema definition to application create a compact, self-contained explanation with little irregular source texture. Technical identifiers such as `RDD`, `StructType`, and `createDataFrame` are preserved, but the balanced sequencing and explanatory phrasing favor AI smoothing.",
+    "is_ai": true
+}

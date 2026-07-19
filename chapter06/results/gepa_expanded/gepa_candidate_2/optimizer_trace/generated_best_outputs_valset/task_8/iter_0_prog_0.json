@@ -1,0 +1,4 @@
+{
+    "reasoning": "The passage is more likely human-authored technical/marketing documentation. It contains concrete identifiers\u2014\u201cIntel MKL,\u201d \u201ccuDNN,\u201d and \u201cNCCL\u201d\u2014and slightly awkward local phrasing such as \u201cCPU and GPU Tensor and neural network backends,\u201d along with the straightforward first-person statement \u201cWe integrate acceleration libraries.\u201d Although polished and promotional, it lacks the explanatory expansion or strongly balanced concluding arc typical of substantial AI rewriting.",
+    "is_ai": false
+}

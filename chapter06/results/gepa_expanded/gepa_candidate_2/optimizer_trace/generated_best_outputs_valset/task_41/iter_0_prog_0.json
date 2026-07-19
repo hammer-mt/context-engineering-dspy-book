@@ -1,0 +1,4 @@
+{
+    "reasoning": "The passage is more likely AI-generated or substantially rewritten. It preserves specific documentation terminology such as \u201cDatasets,\u201d \u201cschema,\u201d and \u201cRDD,\u201d but presents the explanation in a notably tidy arc: method description, tradeoff, and a compact parallel summary\u2014\u201cmore setup, more flexibility.\u201d The parenthetical \u201csometimes noticeably so\u201d and balanced contrast between verbosity and flexibility suggest global smoothing rather than uneven local documentation texture, though this remains probabilistic.",
+    "is_ai": true
+}

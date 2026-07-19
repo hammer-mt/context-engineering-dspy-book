@@ -1,0 +1,4 @@
+{
+    "reasoning": "The passage is more likely human-authored documentation. It uses concrete Spark identifiers such as `RDD`, `Rows`, `StructType`, `createDataFrame`, and `SparkSession`, while retaining locally composed irregularities: semicolon-separated numbered steps, inconsistent punctuation, the awkward phrase \u201cschema represented by a StructType,\u201d and the repeated \u201cRDD of Rows.\u201d This compressed, procedural texture outweighs the lack of polished explanatory smoothing.",
+    "is_ai": false
+}

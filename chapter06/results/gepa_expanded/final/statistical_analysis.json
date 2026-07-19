@@ -1,0 +1,17 @@
+{
+  "mcnemar": {
+    "baseline_only_correct": 4,
+    "optimized_only_correct": 25,
+    "discordant_count": 29,
+    "p_value": 0.00010371580719947815
+  },
+  "bootstrap": {
+    "unit": "semantic_pair",
+    "pair_count": 40,
+    "samples": 10000,
+    "seed": 42,
+    "observed_uplift_pct_points": 26.25,
+    "ci_low_pct_points": 18.75,
+    "ci_high_pct_points": 35.0
+  }
+}

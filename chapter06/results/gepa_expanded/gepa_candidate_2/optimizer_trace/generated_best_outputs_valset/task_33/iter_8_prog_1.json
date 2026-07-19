@@ -1,0 +1,4 @@
+{
+    "is_ai": true,
+    "reasoning": "AI generation or substantial rewriting is more likely. The passage follows a very smooth explanatory arc: it defines `~sklearn.pipeline.Pipeline`, explains the standard `fit`/`predict` workflow, then adds a benefit with the polished clarification \u201cmeaning that information from the test data is not accidentally exposed to the training process.\u201d The exact scikit-learn terminology favors source-based documentation, but the balanced progression and parenthetical \u201c(an easy mistake)\u201d suggest global smoothing more than locally irregular prose."
+}

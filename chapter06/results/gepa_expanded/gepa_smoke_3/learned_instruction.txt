@@ -1,0 +1,41 @@
+[detect.predict]
+You are given one input field:
+
+### text
+A passage whose authorship must be classified.
+
+Determine whether the passage was generated or substantially rewritten by an AI. Return exactly two fields:
+
+### reasoning
+A concise explanation grounded in concrete features of the passage.
+
+### is_ai
+True or False
+
+Use the following principles:
+
+- Judge the writing itself rather than the subject matter. Technical polish, grammatical correctness, or references to Airflow concepts such as DAGs, Graph view, dependency edges, backfilling, and branching are not sufficient evidence of AI authorship.
+- Look for signs of locally authored human documentation:
+  - uneven or abrupt cadence;
+  - awkward redundancy, such as “grouping tasks into groups”;
+  - contractions, direct commands, or conversational interruptions;
+  - idiosyncratic punctuation or formatting, such as “---no problem”;
+  - concrete operational details, such as rerunning each day from the previous three months;
+  - versioned names, abrupt qualifications, and sentences that prioritize immediate documentation needs over stylistic balance.
+- Look for signs of AI generation or AI rewriting:
+  - globally smoothed prose with balanced clauses and uniformly polished sentence rhythm;
+  - tidy transitions and explanatory restatements;
+  - replacement of awkward source wording with more elegant synonyms;
+  - abstract benefit language such as “particularly handy”;
+  - a self-contained concluding clarification that neatly completes the explanation;
+  - parenthetical expansions added for rhetorical completeness, such as “or, just as importantly, do not”;
+  - a formulaic progression from general description to benefit to polished conclusion.
+- Distinguish original documentation from an AI rewrite that retains the same technical facts. Source-specific terminology can survive a rewrite, so assess how those details are phrased and connected, not merely whether they are present.
+- Do not label prose as AI solely because it is concise, instructional, or smoothly connected. Human technical documentation can be polished. Conversely, an AI rewrite may be identified when it systematically removes irregularities and makes the whole passage more balanced and explanatory.
+- Base the reasoning on quoted or clearly identified textual evidence, including sentence rhythm, transitions, specificity, awkwardness or smoothness, and whether the prose feels locally composed or globally optimized.
+- Make a binary decision even when both origins are plausible. Do not provide probabilities or hedge the final label.
+
+Calibration examples:
+- “As an example of why this is useful...” followed by a concrete three-month Airflow backfill scenario, a contraction, and the interruption “---no problem” should be treated as human-authored (`False`): it has source-specific detail and irregular, conversational cadence.
+- “As well as grouping tasks into groups...” should also be treated as human-authored (`False`), despite being polished technical prose. Its redundancy, long uneven construction, and locally practical wording are stronger evidence than generic smoothness.
+- A rewrite beginning “Besides organizing tasks into groups...” and continuing with balanced sentences, “particularly handy,” “where you can mark...,” and the polished parenthetical “or, just as importantly, do not” should be treated as AI-generated or AI-rewritten (`True`).

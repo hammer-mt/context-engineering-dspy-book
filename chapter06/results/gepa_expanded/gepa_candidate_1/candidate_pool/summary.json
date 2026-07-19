@@ -1,0 +1,54 @@
+{
+  "source_optimizer_results": "chapter06/results/gepa_expanded/gepa_candidate_1/optimizer_results.json",
+  "candidate_count": 5,
+  "candidate_indexes": [
+    9,
+    7,
+    11,
+    15,
+    18
+  ],
+  "test_rows_seen": 0,
+  "candidates": [
+    {
+      "candidate_index": 9,
+      "gepa_internal_validation_accuracy_pct": 80.0,
+      "program_path": "chapter06/results/gepa_expanded/gepa_candidate_1/candidate_pool/candidate-9/optimized_program.json",
+      "learned_prompt_path": "chapter06/results/gepa_expanded/gepa_candidate_1/candidate_pool/candidate-9/learned_prompt.json",
+      "source_optimizer_results": "chapter06/results/gepa_expanded/gepa_candidate_1/optimizer_results.json",
+      "test_rows_seen": 0
+    },
+    {
+      "candidate_index": 7,
+      "gepa_internal_validation_accuracy_pct": 78.33333333333333,
+      "program_path": "chapter06/results/gepa_expanded/gepa_candidate_1/candidate_pool/candidate-7/optimized_program.json",
+      "learned_prompt_path": "chapter06/results/gepa_expanded/gepa_candidate_1/candidate_pool/candidate-7/learned_prompt.json",
+      "source_optimizer_results": "chapter06/results/gepa_expanded/gepa_candidate_1/optimizer_results.json",
+      "test_rows_seen": 0
+    },
+    {
+      "candidate_index": 11,
+      "gepa_internal_validation_accuracy_pct": 78.33333333333333,
+      "program_path": "chapter06/results/gepa_expanded/gepa_candidate_1/candidate_pool/candidate-11/optimized_program.json",
+      "learned_prompt_path": "chapter06/results/gepa_expanded/gepa_candidate_1/candidate_pool/candidate-11/learned_prompt.json",
+      "source_optimizer_results": "chapter06/results/gepa_expanded/gepa_candidate_1/optimizer_results.json",
+      "test_rows_seen": 0
+    },
+    {
+      "candidate_index": 15,
+      "gepa_internal_validation_accuracy_pct": 78.33333333333333,
+      "program_path": "chapter06/results/gepa_expanded/gepa_candidate_1/candidate_pool/candidate-15/optimized_program.json",
+      "learned_prompt_path": "chapter06/results/gepa_expanded/gepa_candidate_1/candidate_pool/candidate-15/learned_prompt.json",
+      "source_optimizer_results": "chapter06/results/gepa_expanded/gepa_candidate_1/optimizer_results.json",
+      "test_rows_seen": 0
+    },
+    {
+      "candidate_index": 18,
+      "gepa_internal_validation_accuracy_pct": 78.33333333333333,
+      "program_path": "chapter06/results/gepa_expanded/gepa_candidate_1/candidate_pool/candidate-18/optimized_program.json",
+      "learned_prompt_path": "chapter06/results/gepa_expanded/gepa_candidate_1/candidate_pool/candidate-18/learned_prompt.json",
+      "source_optimizer_results": "chapter06/results/gepa_expanded/gepa_candidate_1/optimizer_results.json",
+      "test_rows_seen": 0
+    }
+  ]
+}

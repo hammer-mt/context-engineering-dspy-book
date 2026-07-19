@@ -1,0 +1,4 @@
+{
+    "reasoning": "The passage is more likely human-authored documentation. It contains concrete setup details (\u201cPython 3.6.2,\u201d \u201cC++14,\u201d \u201cAnaconda,\u201d \u201cBLAS,\u201d and \u201cMKL\u201d), direct instructional wording, and locally uneven repetition in \u201cYou will get ... and you get,\u201d followed by the practical qualifier \u201cregardless of your Linux distro.\u201d This retains source-specific, utilitarian texture rather than showing broad AI-style smoothing. This is a probabilistic judgment.",
+    "is_ai": false
+}

@@ -1,0 +1,4 @@
+{
+    "reasoning": "The passage is concise technical documentation with locally awkward wording, especially the repeated use of \u201cskip/skipped\u201d and the abrupt construction \u201cjoin is downstream of...\u201d. It states a specific Airflow behavior directly without polished transitions, balanced clauses, or a tidy explanatory conclusion, which is more consistent with human-authored documentation than an AI rewrite.",
+    "is_ai": false
+}

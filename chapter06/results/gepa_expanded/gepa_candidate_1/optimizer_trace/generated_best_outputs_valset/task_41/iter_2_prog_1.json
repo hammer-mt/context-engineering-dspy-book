@@ -1,0 +1,4 @@
+{
+    "reasoning": "The passage has a strongly balanced, explanatory structure: it first describes the programmatic workflow, then contrasts \u201cmore verbose\u201d with \u201cmore flexibility,\u201d and closes with the compressed restatement \u201cmore setup, more flexibility.\u201d The parenthetical \u201csometimes noticeably so\u201d and the neatly staged qualification about runtime columns make it feel globally smoothed and self-contained rather than locally idiosyncratic documentation. Although \u201cDatasets,\u201d \u201cschema,\u201d and \u201cRDD\u201d are source-specific terms, the surrounding prose uses a polished, formulaic contrast typical of AI rewriting.",
+    "is_ai": true
+}

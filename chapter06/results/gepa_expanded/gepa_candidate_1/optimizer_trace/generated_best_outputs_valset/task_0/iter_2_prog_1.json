@@ -1,0 +1,4 @@
+{
+    "reasoning": "The passage is likely human-authored documentation. It uses specific, locally situated Airflow terminology\u2014\u201cfollow_branch_a,\u201d \u201cbranch_false,\u201d \u201ctrigger_rule,\u201d and \u201call_success\u201d\u2014and has an uneven, somewhat repetitive explanation (\u201cskip\u201d and \u201cskipped\u201d) rather than globally smoothed prose. The direct causal wording and project-specific task names suggest a page-specific explanation rather than a generic AI-generated summary.",
+    "is_ai": false
+}

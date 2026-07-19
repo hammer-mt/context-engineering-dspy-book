@@ -1,0 +1,86 @@
+{
+  "row_count": 300,
+  "pair_count": 150,
+  "complete_pair_fraction": 1.0,
+  "source_count": 21,
+  "source_family_count": 2,
+  "provenance_complete_fraction": 1.0,
+  "preserved_original_rows": 74,
+  "splits": {
+    "train": 160,
+    "validation": 60,
+    "test": 80
+  },
+  "baseline_screening_by_split": {
+    "train": {
+      "pair_count": 80,
+      "row_count": 160,
+      "correct": 125.91666666666664,
+      "accuracy_pct": 78.69791666666666
+    },
+    "validation": {
+      "pair_count": 30,
+      "row_count": 60,
+      "correct": 30.416666666666664,
+      "accuracy_pct": 50.69444444444444
+    },
+    "test": {
+      "pair_count": 40,
+      "row_count": 80,
+      "correct": 37.166666666666664,
+      "accuracy_pct": 46.45833333333333
+    }
+  },
+  "dataset_sha256": "f8f3e33f8785af1dba572b40a04efeff5fe91539d067fbb8ee9d5091afe50293",
+  "lock": {
+    "locked_at": "2026-07-18T22:18:09.963057+00:00",
+    "locked_before_gepa": true,
+    "dataset_sha256": "f8f3e33f8785af1dba572b40a04efeff5fe91539d067fbb8ee9d5091afe50293",
+    "split_manifest_sha256": "f4bf1e786c750f83f834652179ad043e74ce8184836071477492f2af5b461669",
+    "test_pair_ids": [
+      "docs-airflow-dags-2.2.0-003",
+      "docs-airflow-dags-2.2.0-006",
+      "docs-airflow-dags-2.2.0-009",
+      "docs-airflow-dags-2.2.0-010",
+      "docs-airflow-dags-2.2.0-013",
+      "docs-dask-ten-minutes-2021.11.0-004",
+      "docs-dask-ten-minutes-2021.11.0-005",
+      "docs-django-queries-4.0-003",
+      "docs-django-queries-4.0-007",
+      "docs-django-queries-4.0-008",
+      "docs-django-queries-4.0-014",
+      "docs-django-queries-4.0-020",
+      "docs-fastapi-body-0.70.0-001",
+      "docs-flask-quickstart-2.0.2-004",
+      "docs-flask-quickstart-2.0.2-008",
+      "docs-flask-quickstart-2.0.2-010",
+      "docs-flask-quickstart-2.0.2-012",
+      "docs-flask-quickstart-2.0.2-013",
+      "docs-kubernetes-objects-release-1.22-003",
+      "docs-kubernetes-objects-release-1.22-004",
+      "docs-numpy-quickstart-v1.21.0-001",
+      "docs-pandas-ten-minutes-v1.3.0-001",
+      "docs-pandas-ten-minutes-v1.3.0-006",
+      "docs-pytest-started-6.2.5-004",
+      "docs-python-tutorial-v3.10.0-003",
+      "docs-python-tutorial-v3.10.0-004",
+      "docs-python-tutorial-v3.10.0-005",
+      "docs-python-tutorial-v3.10.0-007",
+      "docs-pytorch-readme-v1.10.0-010",
+      "docs-pytorch-readme-v1.10.0-011",
+      "docs-rails-started-v7.0.0-011",
+      "docs-sklearn-started-1.0-009",
+      "wiki-innovation-930564768-04",
+      "wiki-innovation-930564768-05",
+      "wiki-innovation-930564768-10",
+      "wiki-leadership-933182672-02",
+      "wiki-leadership-933182672-08",
+      "wiki-organizational-culture-932792416-05",
+      "wiki-sustainability-932573702-03",
+      "wiki-sustainability-932573702-05"
+    ],
+    "test_rows": 80,
+    "gepa_test_leakage_count": 0,
+    "selection_disclosure": "Luna baseline predictions were used to create a pedagogically adversarial holdout. No GEPA output was available or used."
+  }
+}

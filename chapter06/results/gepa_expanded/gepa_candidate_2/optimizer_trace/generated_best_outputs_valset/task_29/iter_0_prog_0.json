@@ -1,0 +1,4 @@
+{
+    "reasoning": "The passage is more likely human-authored documentation. It uses direct instructional wording (\u201cPass a string rather than a dict\u201d) and a practical, narrowly scoped explanation, with the parenthetical \u201cwithout any form conversion\u201d serving as a concise implementation clarification rather than part of a broadly smoothed explanatory arc. Its compactness and abrupt procedural style retain local reference-documentation texture.",
+    "is_ai": false
+}

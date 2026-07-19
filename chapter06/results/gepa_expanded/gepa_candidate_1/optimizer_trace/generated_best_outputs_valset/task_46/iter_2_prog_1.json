@@ -1,0 +1,4 @@
+{
+    "reasoning": "The passage is a terse, locally situated procedural instruction with uneven punctuation and an awkward transition from \u201c1.\u201d to \u201c2.\u201d rather than a smoothly composed explanation. Its exact Spark-specific references\u2014\u201cRDD of Rows,\u201d \u201cStructType,\u201d and the `createDataFrame` method on `SparkSession`\u2014fit documentation source texture. The fragment-like formatting and lack of explanatory restatement favor human-authored technical notes over globally smoothed AI prose.",
+    "is_ai": false
+}

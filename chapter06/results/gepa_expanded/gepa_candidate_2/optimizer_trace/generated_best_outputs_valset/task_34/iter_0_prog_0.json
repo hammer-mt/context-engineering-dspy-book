@@ -1,0 +1,4 @@
+{
+    "reasoning": "The passage is more likely human-authored documentation. It uses canonical scikit-learn terminology (\u201cestimator fitting,\u201d \u201cpre-processing,\u201d \u201cpipelines,\u201d \u201ccross-validation,\u201d and \u201chyper-parameter searches\u201d) and has a practical tutorial-summary cadence. The direct wording \u201cthere is much more to scikit-learn!\u201d and the simple, slightly uneven list feel like locally written guide prose rather than globally smoothed AI rewriting.",
+    "is_ai": false
+}

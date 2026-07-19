@@ -1,0 +1,22 @@
+[
+  {
+    "program": "Unoptimized Luna",
+    "test_accuracy_pct": 50.0,
+    "uplift_pct_points": 0.0,
+    "optimization_cost_usd": 0.0,
+    "evaluation_cost_usd": 0.274326,
+    "optimization_time_seconds": 0.0,
+    "mean_inference_latency_seconds": 1.8094877663207323,
+    "p95_inference_latency_seconds": 3.1125783340103226
+  },
+  {
+    "program": "GEPA-optimized Luna",
+    "test_accuracy_pct": 76.25,
+    "uplift_pct_points": 26.25,
+    "optimization_cost_usd": 10.8411602,
+    "evaluation_cost_usd": 0.6085754999999999,
+    "optimization_time_seconds": 2023.1421918749984,
+    "mean_inference_latency_seconds": 2.0598552883664527,
+    "p95_inference_latency_seconds": 3.1246177919965703
+  }
+]

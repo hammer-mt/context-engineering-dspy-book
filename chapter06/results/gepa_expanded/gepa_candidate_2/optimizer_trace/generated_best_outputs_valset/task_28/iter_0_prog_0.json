@@ -1,0 +1,4 @@
+{
+    "reasoning": "The passage is more likely human-authored documentation. It uses practical, locally phrased wording such as \u201cIf you pass in a string instead of a dict\u201d and \u201cthat data will be posted directly,\u201d with a concise, slightly repetitive explanation and no strong signs of global smoothing or elaborated AI-style framing.",
+    "is_ai": false
+}

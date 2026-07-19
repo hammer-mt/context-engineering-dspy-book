@@ -1,0 +1,68 @@
+2026/07/18 19:01:31 INFO dspy.teleprompt.gepa.gepa: Running GEPA for approx 20 metric calls of the program. This amounts to 1.00 full evals on the train+val set.
+2026/07/18 19:01:31 INFO dspy.teleprompt.gepa.gepa: Using 8 examples for tracking Pareto scores.
+GEPA Optimization:   0%|          | 0/20 [00:00<?, ?rollouts/s]2026/07/18 19:01:34 INFO dspy.evaluate.evaluate: Average Metric: 3.0 / 8 (37.5%)
+2026/07/18 19:01:34 INFO dspy.teleprompt.gepa.gepa: Iteration 0: Base program full valset score: 0.375 over 8 / 8 examples
+GEPA Optimization:  40%|####      | 8/20 [00:03<00:05,  2.23rollouts/s]2026/07/18 19:01:34 INFO dspy.teleprompt.gepa.gepa: Iteration 1: Selected program 0 score: 0.375
+  0%|          | 0/3 [00:00<?, ?it/s]Average Metric: 1.00 / 1 (100.0%):   0%|          | 0/3 [00:01<?, ?it/s]Average Metric: 1.00 / 1 (100.0%):  33%|###3      | 1/3 [00:01<00:02,  1.49s/it]Average Metric: 2.00 / 2 (100.0%):  33%|###3      | 1/3 [00:01<00:02,  1.49s/it]Average Metric: 2.00 / 2 (100.0%):  67%|######6   | 2/3 [00:01<00:00,  1.26it/s]Average Metric: 3.00 / 3 (100.0%):  67%|######6   | 2/3 [00:01<00:00,  1.26it/s]Average Metric: 3.00 / 3 (100.0%): 100%|##########| 3/3 [00:01<00:00,  1.66it/s]
+2026/07/18 19:01:36 INFO dspy.evaluate.evaluate: Average Metric: 3.0 / 3 (100.0%)
+2026/07/18 19:01:36 INFO dspy.teleprompt.gepa.gepa: Iteration 1: All subsample scores perfect. Skipping.
+2026/07/18 19:01:36 INFO dspy.teleprompt.gepa.gepa: Iteration 1: Reflective mutation did not propose a new candidate
+GEPA Optimization:  55%|#####5    | 11/20 [00:05<00:04,  1.99rollouts/s]2026/07/18 19:01:36 INFO dspy.teleprompt.gepa.gepa: Iteration 2: Selected program 0 score: 0.375
+  0%|          | 0/3 [00:00<?, ?it/s]Average Metric: 1.00 / 1 (100.0%):   0%|          | 0/3 [00:01<?, ?it/s]Average Metric: 1.00 / 1 (100.0%):  33%|###3      | 1/3 [00:01<00:03,  1.63s/it]Average Metric: 2.00 / 2 (100.0%):  33%|###3      | 1/3 [00:01<00:03,  1.63s/it]Average Metric: 2.00 / 2 (100.0%):  67%|######6   | 2/3 [00:01<00:00,  1.26it/s]Average Metric: 2.00 / 3 (66.7%):  67%|######6   | 2/3 [00:02<00:00,  1.26it/s] Average Metric: 2.00 / 3 (66.7%): 100%|##########| 3/3 [00:02<00:00,  1.91it/s]Average Metric: 2.00 / 3 (66.7%): 100%|##########| 3/3 [00:02<00:00,  1.47it/s]
+2026/07/18 19:01:38 INFO dspy.evaluate.evaluate: Average Metric: 2.0 / 3 (66.7%)
+2026/07/18 19:01:58 INFO dspy.teleprompt.gepa.gepa: Iteration 2: Proposed new text for detect.predict: You are given one input field:
+
+### text
+A passage whose authorship must be classified.
+
+Determine whether the passage was generated or substantially rewritten by an AI. Return exactly two fields:
+
+### reasoning
+A concise explanation grounded in concrete features of the passage.
+
+### is_ai
+True or False
+
+Use the following principles:
+
+- Judge the writing itself rather than the subject matter. Technical polish, grammatical correctness, or references to Airflow concepts such as DAGs, Graph view, dependency edges, backfilling, and branching are not sufficient evidence of AI authorship.
+- Look for signs of locally authored human documentation:
+  - uneven or abrupt cadence;
+  - awkward redundancy, such as “grouping tasks into groups”;
+  - contractions, direct commands, or conversational interruptions;
+  - idiosyncratic punctuation or formatting, such as “---no problem”;
+  - concrete operational details, such as rerunning each day from the previous three months;
+  - versioned names, abrupt qualifications, and sentences that prioritize immediate documentation needs over stylistic balance.
+- Look for signs of AI generation or AI rewriting:
+  - globally smoothed prose with balanced clauses and uniformly polished sentence rhythm;
+  - tidy transitions and explanatory restatements;
+  - replacement of awkward source wording with more elegant synonyms;
+  - abstract benefit language such as “particularly handy”;
+  - a self-contained concluding clarification that neatly completes the explanation;
+  - parenthetical expansions added for rhetorical completeness, such as “or, just as importantly, do not”;
+  - a formulaic progression from general description to benefit to polished conclusion.
+- Distinguish original documentation from an AI rewrite that retains the same technical facts. Source-specific terminology can survive a rewrite, so assess how those details are phrased and connected, not merely whether they are present.
+- Do not label prose as AI solely because it is concise, instructional, or smoothly connected. Human technical documentation can be polished. Conversely, an AI rewrite may be identified when it systematically removes irregularities and makes the whole passage more balanced and explanatory.
+- Base the reasoning on quoted or clearly identified textual evidence, including sentence rhythm, transitions, specificity, awkwardness or smoothness, and whether the prose feels locally composed or globally optimized.
+- Make a binary decision even when both origins are plausible. Do not provide probabilities or hedge the final label.
+
+Calibration examples:
+- “As an example of why this is useful...” followed by a concrete three-month Airflow backfill scenario, a contraction, and the interruption “---no problem” should be treated as human-authored (`False`): it has source-specific detail and irregular, conversational cadence.
+- “As well as grouping tasks into groups...” should also be treated as human-authored (`False`), despite being polished technical prose. Its redundancy, long uneven construction, and locally practical wording are stronger evidence than generic smoothness.
+- A rewrite beginning “Besides organizing tasks into groups...” and continuing with balanced sentences, “particularly handy,” “where you can mark...,” and the polished parenthetical “or, just as importantly, do not” should be treated as AI-generated or AI-rewritten (`True`).
+2026/07/18 19:02:00 INFO dspy.evaluate.evaluate: Average Metric: 3.0 / 3 (100.0%)
+2026/07/18 19:02:00 INFO dspy.teleprompt.gepa.gepa: Iteration 2: New subsample score 3.0 is better than old score 2.0. Continue to full eval and add to candidate pool.
+2026/07/18 19:02:03 INFO dspy.evaluate.evaluate: Average Metric: 6.0 / 8 (75.0%)
+2026/07/18 19:02:03 INFO dspy.teleprompt.gepa.gepa: Iteration 2: Found a better program on the valset with score 0.75.
+2026/07/18 19:02:03 INFO dspy.teleprompt.gepa.gepa: Iteration 2: Valset score for new program: 0.75 (coverage 8 / 8)
+2026/07/18 19:02:03 INFO dspy.teleprompt.gepa.gepa: Iteration 2: Val aggregate for new program: 0.75
+2026/07/18 19:02:03 INFO dspy.teleprompt.gepa.gepa: Iteration 2: Individual valset scores for new program: {0: 1.0, 1: 1.0, 2: 1.0, 3: 1.0, 4: 1.0, 5: 0.0, 6: 1.0, 7: 0.0}
+2026/07/18 19:02:03 INFO dspy.teleprompt.gepa.gepa: Iteration 2: New valset pareto front scores: {0: 1.0, 1: 1.0, 2: 1.0, 3: 1.0, 4: 1.0, 5: 0.0, 6: 1.0, 7: 0.0}
+2026/07/18 19:02:03 INFO dspy.teleprompt.gepa.gepa: Iteration 2: Valset pareto front aggregate score: 0.75
+2026/07/18 19:02:03 INFO dspy.teleprompt.gepa.gepa: Iteration 2: Updated valset pareto front programs: {0: {1}, 1: {0, 1}, 2: {1}, 3: {1}, 4: {0, 1}, 5: {0, 1}, 6: {0, 1}, 7: {0, 1}}
+2026/07/18 19:02:03 INFO dspy.teleprompt.gepa.gepa: Iteration 2: Best valset aggregate score so far: 0.75
+2026/07/18 19:02:03 INFO dspy.teleprompt.gepa.gepa: Iteration 2: Best program as per aggregate score on valset: 1
+2026/07/18 19:02:03 INFO dspy.teleprompt.gepa.gepa: Iteration 2: Best score on valset: 0.75
+2026/07/18 19:02:03 INFO dspy.teleprompt.gepa.gepa: Iteration 2: Linear pareto front program index: 1
+2026/07/18 19:02:03 INFO dspy.teleprompt.gepa.gepa: Iteration 2: New program candidate index: 1
+GEPA Optimization:  55%|#####5    | 11/20 [00:32<00:26,  2.98s/rollouts]

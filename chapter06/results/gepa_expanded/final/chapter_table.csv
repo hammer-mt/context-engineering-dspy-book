@@ -1,0 +1,3 @@
+program,test_accuracy_pct,uplift_pct_points,optimization_cost_usd,evaluation_cost_usd,optimization_time_seconds,mean_inference_latency_seconds,p95_inference_latency_seconds
+Unoptimized Luna,50.0,0.0,0.0,0.274326,0.0,1.8094877663207323,3.1125783340103226
+GEPA-optimized Luna,76.25,26.25,10.8411602,0.6085754999999999,2023.1421918749984,2.0598552883664527,3.1246177919965703
