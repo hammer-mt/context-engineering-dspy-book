@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "model_directory": "chapter06/results/expanded_notebooks/bootstrap-finetune/full/model",
+  "storage_policy": "generated model payload is local and Git-ignored; hashes, configuration, program, prompt, predictions, and scores are versioned",
+  "files": [
+    {
+      "path": "adapter_model.safetensors",
+      "size_bytes": 70430032,
+      "sha256": "374656b9cb374309082952289d9a7113541da7d1363860a6dfcbbddb8b3bbd18"
+    },
+    {
+      "path": "model.safetensors",
+      "size_bytes": 988097536,
+      "sha256": "29183d9ce0d60a588b3c77f3d885c6b90abd0dd8dfc8c38d3cd958256a2cf52a"
+    },
+    {
+      "path": "config.json",
+      "size_bytes": 1226,
+      "sha256": "d614736fa695c7dee2214f5062b9dae7ab523b0a9309aa91d6991c506f424ce1"
+    }
+  ]
+}

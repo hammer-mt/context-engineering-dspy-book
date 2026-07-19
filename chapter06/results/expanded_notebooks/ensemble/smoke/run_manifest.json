@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "optimizer": "ensemble",
+  "mode": "smoke",
+  "status": "completed",
+  "started_at": "2026-07-19T02:07:49.987839+00:00",
+  "dataset_path": "data/ai_vs_human_chapter06_expanded.csv",
+  "dataset_sha256": "f8f3e33f8785af1dba572b40a04efeff5fe91539d067fbb8ee9d5091afe50293",
+  "split_path": "data/ai_vs_human_chapter06_expanded_splits.json",
+  "split_sha256": "f4bf1e786c750f83f834652179ad043e74ce8184836071477492f2af5b461669",
+  "seed": 42,
+  "dspy_version": "3.2.1",
+  "python_version": "3.11.7",
+  "num_retries": 1,
+  "test_release_policy": "full mode evaluates locked test once after compilation and validation; smoke mode never reads test examples",
+  "finished_at": "2026-07-19T02:09:00.193804+00:00",
+  "optimization_cost_usd": 0.037914,
+  "evaluation_cost_usd": 0.015595999999999999,
+  "result_path": "chapter06/results/expanded_notebooks/ensemble/smoke/result.json"
+}

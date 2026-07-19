@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "model_directory": "chapter06/results/expanded_notebooks/better-together/full/model",
+  "storage_policy": "generated model payload is local and Git-ignored; hashes, configuration, program, prompt, predictions, and scores are versioned",
+  "files": [
+    {
+      "path": "adapter_model.safetensors",
+      "size_bytes": 70430032,
+      "sha256": "caedd39e93fec056a2d8e4697539e1fb2ef5bc06274cb31d2574568e16becef6"
+    },
+    {
+      "path": "model.safetensors",
+      "size_bytes": 988097536,
+      "sha256": "a0e1a36597551a0fc6a91aa84bfe8223bda7f27f3ff26b9bb5dee0657eb4789f"
+    },
+    {
+      "path": "config.json",
+      "size_bytes": 1226,
+      "sha256": "d614736fa695c7dee2214f5062b9dae7ab523b0a9309aa91d6991c506f424ce1"
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "optimizer": "bootstrap-finetune",
+  "mode": "full",
+  "failures": [
+    {
+      "observed_at": "2026-07-19T02:48:00Z",
+      "classification": "local_model_parse_error",
+      "paid_requests_started": false,
+      "locked_test_scoring_completed": false,
+      "error": "The base Qwen model omitted the required is_ai field during same-model baseline evaluation."
+    }
+  ],
+  "resolution": "Evaluation now records malformed model outputs as incorrect parse-error predictions with latency and error metadata."
+}

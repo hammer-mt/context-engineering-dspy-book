@@ -1,0 +1,157 @@
+{
+  "optimizer": "better-together",
+  "status": "completed",
+  "mode": "smoke",
+  "task_model": "Qwen/Qwen2.5-0.5B-Instruct",
+  "final_accuracy": 75.0,
+  "correct": 3,
+  "test_examples": 4,
+  "validation_accuracy": 75.0,
+  "validation_correct": 3,
+  "validation_examples": 4,
+  "optimization_seconds": 89.7840577919851,
+  "optimization_cost_usd": 0.03697,
+  "evaluation_cost_usd": 0.0,
+  "mean_latency_seconds": 1.313155125004414,
+  "p95_latency_seconds": 2.144271541998023,
+  "accepted_trace_labels": {
+    "human": 4,
+    "ai": 3,
+    "total": 7
+  },
+  "output_dir": "chapter06/results/expanded_notebooks/better-together/smoke/model",
+  "baseline_accuracy": 50.0,
+  "uplift_points": 25.0,
+  "local_capabilities": {
+    "torch_version": "2.13.0",
+    "mps_built": true,
+    "mps_available": true,
+    "selected_device": "mps"
+  },
+  "baseline": {
+    "accuracy": 50.0,
+    "correct": 2,
+    "count": 4,
+    "mean_latency_seconds": 2.2058935729946825,
+    "p95_latency_seconds": 4.683762792003108,
+    "predictions": [
+      {
+        "pair_id": "docs-airflow-dags-2.2.0-015",
+        "example_id": "docs-airflow-dags-2.2.0-015-human",
+        "expected_is_ai": false,
+        "predicted_is_ai": false,
+        "correct": true,
+        "latency_seconds": 4.683762792003108,
+        "status": "completed"
+      },
+      {
+        "pair_id": "docs-airflow-dags-2.2.0-015",
+        "example_id": "docs-airflow-dags-2.2.0-015-ai",
+        "expected_is_ai": true,
+        "predicted_is_ai": false,
+        "correct": false,
+        "latency_seconds": 1.1335598329897039,
+        "status": "completed"
+      },
+      {
+        "pair_id": "docs-airflow-dags-2.2.0-018",
+        "example_id": "docs-airflow-dags-2.2.0-018-human",
+        "expected_is_ai": false,
+        "predicted_is_ai": false,
+        "correct": true,
+        "latency_seconds": 0.9366391669900622,
+        "status": "completed"
+      },
+      {
+        "pair_id": "docs-airflow-dags-2.2.0-018",
+        "example_id": "docs-airflow-dags-2.2.0-018-ai",
+        "expected_is_ai": true,
+        "predicted_is_ai": false,
+        "correct": false,
+        "latency_seconds": 2.0696124999958556,
+        "status": "completed"
+      }
+    ]
+  },
+  "final": null,
+  "validation": {
+    "accuracy": 75.0,
+    "correct": 3,
+    "count": 4,
+    "mean_latency_seconds": 1.313155125004414,
+    "p95_latency_seconds": 2.144271541998023,
+    "predictions": [
+      {
+        "pair_id": "docs-airflow-dags-2.2.0-015",
+        "example_id": "docs-airflow-dags-2.2.0-015-human",
+        "expected_is_ai": false,
+        "predicted_is_ai": false,
+        "correct": true,
+        "latency_seconds": 2.144271541998023,
+        "status": "completed"
+      },
+      {
+        "pair_id": "docs-airflow-dags-2.2.0-015",
+        "example_id": "docs-airflow-dags-2.2.0-015-ai",
+        "expected_is_ai": true,
+        "predicted_is_ai": true,
+        "correct": true,
+        "latency_seconds": 1.2053914580028504,
+        "status": "completed"
+      },
+      {
+        "pair_id": "docs-airflow-dags-2.2.0-018",
+        "example_id": "docs-airflow-dags-2.2.0-018-human",
+        "expected_is_ai": false,
+        "predicted_is_ai": true,
+        "correct": false,
+        "latency_seconds": 1.0172251670155674,
+        "status": "completed"
+      },
+      {
+        "pair_id": "docs-airflow-dags-2.2.0-018",
+        "example_id": "docs-airflow-dags-2.2.0-018-ai",
+        "expected_is_ai": true,
+        "predicted_is_ai": true,
+        "correct": true,
+        "latency_seconds": 0.885732333001215,
+        "status": "completed"
+      }
+    ]
+  },
+  "usage": {
+    "request_count": 60,
+    "cache_hits": 0,
+    "prompt_tokens": 20627,
+    "completion_tokens": 3213,
+    "reasoning_tokens": 371,
+    "total_tokens": 23840,
+    "cost_usd": 0.03697,
+    "models": {
+      "openai/local:Qwen/Qwen2.5-0.5B-Instruct": {
+        "request_count": 52,
+        "cache_hits": 0,
+        "prompt_tokens": 18633,
+        "completion_tokens": 2313,
+        "reasoning_tokens": 0,
+        "total_tokens": 20946,
+        "cost_usd": 0.0
+      },
+      "openai/gpt-5.6-sol": {
+        "request_count": 8,
+        "cache_hits": 0,
+        "prompt_tokens": 1994,
+        "completion_tokens": 900,
+        "reasoning_tokens": 371,
+        "total_tokens": 2894,
+        "cost_usd": 0.03697
+      }
+    }
+  },
+  "dataset_sha256": "f8f3e33f8785af1dba572b40a04efeff5fe91539d067fbb8ee9d5091afe50293",
+  "split_sha256": "f4bf1e786c750f83f834652179ad043e74ce8184836071477492f2af5b461669",
+  "seed": 42,
+  "dspy_version": "3.2.1",
+  "started_at": "2026-07-19T03:13:41.432797+00:00",
+  "finished_at": "2026-07-19T03:15:25.764829+00:00"
+}

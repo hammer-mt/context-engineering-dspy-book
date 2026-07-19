@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "optimizer": "bootstrap-finetune",
+  "mode": "smoke",
+  "failures": [
+    {
+      "observed_at": "2026-07-19T02:38:00Z",
+      "classification": "missing_local_dependency",
+      "paid_requests_started": false,
+      "error": "The inherited DSPy environment did not include PyTorch."
+    },
+    {
+      "observed_at": "2026-07-19T02:42:37Z",
+      "classification": "local_device_configuration_error",
+      "paid_requests_started": true,
+      "paid_teacher_requests": 8,
+      "failed_attempt_cost_usd": null,
+      "cost_status": "unavailable_after_exception",
+      "error": "DSPy's LocalProvider passed the literal device value 'auto' to model.to()."
+    },
+    {
+      "observed_at": "2026-07-19T02:44:33Z",
+      "classification": "artifact_serialization_error",
+      "paid_requests_started": true,
+      "paid_teacher_requests": 8,
+      "failed_attempt_cost_usd": null,
+      "cost_status": "unavailable_after_exception",
+      "training_completed": true,
+      "locked_test_read": false,
+      "error": "The smoke summary attempted to compute uplift from a deliberately absent full-test result."
+    }
+  ],
+  "resolution": "The isolated worktree environment was installed from requirements.txt, and the runtime now resolves the configured device before invoking DSPy's native trainer."
+}

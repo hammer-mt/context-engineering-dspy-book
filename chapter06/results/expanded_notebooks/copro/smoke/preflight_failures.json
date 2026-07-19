@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "optimizer": "copro",
+  "mode": "smoke",
+  "failures": [
+    {
+      "observed_at": "2026-07-19T01:27:11Z",
+      "classification": "local_configuration_error",
+      "paid_requests_started": false,
+      "error": "COPRO.compile requires eval_kwargs with the current DSPy API."
+    },
+    {
+      "observed_at": "2026-07-19T01:27:34Z",
+      "classification": "local_configuration_error",
+      "paid_requests_started": false,
+      "error": "The default COPRO proposal temperature exceeded the GPT-5.6 model's supported range; init_temperature=1.0 was set explicitly."
+    }
+  ],
+  "resolution": "Both failures occurred before a paid optimizer request. The corrected smoke run completed before the full run was allowed."
+}

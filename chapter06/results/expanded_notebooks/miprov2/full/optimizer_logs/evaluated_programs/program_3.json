@@ -1,0 +1,43 @@
+{
+  "detect.predict": {
+    "traces": [],
+    "train": [],
+    "demos": [],
+    "signature": {
+      "instructions": "You are a forensic editor specializing in distinguishing human-written software documentation from AI-paraphrased technical prose. Given a passage, decide whether it is likely AI-generated or human-authored.\n\nBase the judgment primarily on stylistic evidence rather than technical subject matter. AI paraphrases often sound unusually polished or generalized and may contain explicit transitions, parenthetical explanations, balanced contrasts, elevated or inconsistent diction, dense punctuation, redundant restatements, or formulaic phrases such as “that is,” “as needed,” and “tend to.” Human documentation is often more direct, compact, project-specific, informal, or editorially imperfect. Treat length, formatting, correct terminology, and grammaticality as weak signals because both classes may preserve these features.\n\nEvaluate the passage holistically and comparatively: ask whether its wording resembles an original documentation sentence or a smoothed, explanatory rewrite. Do not label text as AI merely because it is polished, technical, or lacks examples. Prefer `False` when there is no meaningful AI-style evidence.\n\nReturn:\n- `reasoning`: a brief, concrete explanation citing the most diagnostic stylistic features.\n- `is_ai`: `True` if the passage is likely AI-generated; otherwise `False`.",
+      "fields": [
+        {
+          "prefix": "Text:",
+          "description": "Passage to classify"
+        },
+        {
+          "prefix": "Reasoning:",
+          "description": "${reasoning}"
+        },
+        {
+          "prefix": "Is Ai:",
+          "description": "True for AI-generated text; otherwise False"
+        }
+      ]
+    },
+    "lm": {
+      "model": "openai/gpt-5.6-luna",
+      "model_type": "chat",
+      "cache": false,
+      "num_retries": 1,
+      "finetuning_model": null,
+      "launch_kwargs": {},
+      "train_kwargs": {},
+      "temperature": null,
+      "max_tokens": null,
+      "timeout": 120
+    }
+  },
+  "metadata": {
+    "dependency_versions": {
+      "python": "3.11",
+      "dspy": "3.2.1",
+      "cloudpickle": "3.1"
+    }
+  }
+}

@@ -9,7 +9,7 @@ from typing import Any
 
 CHAPTER_DIR = Path(__file__).resolve().parent
 REPO_ROOT = CHAPTER_DIR.parent
-SUMMARY_PATH = CHAPTER_DIR / "results" / "benchmark_summary.json"
+SUMMARY_PATH = CHAPTER_DIR / "results" / "expanded_notebooks" / "comparison.json"
 
 
 def load_summary(path: Path = SUMMARY_PATH) -> dict[str, Any]:
@@ -43,12 +43,14 @@ def benchmark_snapshot(optimizer: str) -> str:
         f"status: {row['status']}",
     ]
     if row["status"] == "completed":
-        accuracy = row.get("final_accuracy", row["accuracy"])
+        accuracy = row["locked_test_accuracy_pct"]
         lines.extend(
             [
                 f"task model: {row.get('task_model', '—')}",
-                f"final test accuracy: {accuracy:.1f}% ({round(accuracy * 20 / 100)}/20)",
-                f"optimization time: {_seconds(row['optimization_seconds'])}",
+                f"validation accuracy: {row['optimized_validation_accuracy_pct']:.1f}%",
+                f"locked-test accuracy: {accuracy:.1f}% ({row['locked_test_correct']}/{row['locked_test_rows']})",
+                f"optimization cost: ${row['optimization_cost_usd']:.4f}",
+                f"optimization time: {_seconds(row['optimization_time_seconds'])}",
             ]
         )
         counts = row.get("accepted_trace_labels")
@@ -69,8 +71,8 @@ def artifact_paths(optimizer: str) -> str:
     if row["status"] == "completed":
         lines.extend(
             [
-                f"- canonical program snapshot: chapter06/optimized_programs/final/{optimizer}.json",
-                f"- canonical prompt: chapter06/results/final_prompts/{optimizer}.json",
+                f"- program snapshot: {row['program_artifact']}",
+                f"- prompt snapshot: {row['prompt_artifact']}",
                 "- chapter comparison: chapter06/CHAPTER_RESULTS.md",
             ]
         )
@@ -80,10 +82,15 @@ def artifact_paths(optimizer: str) -> str:
 def learned_program_preview(optimizer: str, *, instruction_chars: int = 1_800) -> str:
     """Show learned instructions and demonstrations without dumping large JSON blobs."""
 
-    prompt_path = CHAPTER_DIR / "results" / "final_prompts" / f"{optimizer}.json"
+    row = optimizer_row(optimizer)
+    prompt_path = REPO_ROOT / row.get(
+        "prompt_artifact",
+        f"chapter06/results/expanded_notebooks/{optimizer}/full/learned_prompt.json",
+    )
     if not prompt_path.exists():
         return "No learned prompt artifact exists for this optimizer."
-    prompts = json.loads(prompt_path.read_text(encoding="utf-8"))
+    payload = json.loads(prompt_path.read_text(encoding="utf-8"))
+    prompts = payload.get("predictors", payload)
     lines: list[str] = []
     for predictor_name, state in prompts.items():
         instruction = str(state.get("instructions", "")).strip()
@@ -117,14 +124,22 @@ def learned_program_preview(optimizer: str, *, instruction_chars: int = 1_800) -
 def verify_prompt_artifact(optimizer: str) -> dict[str, Any]:
     """Check that the frozen program state contains the separately extracted prompt."""
 
-    prompt_path = CHAPTER_DIR / "results" / "final_prompts" / f"{optimizer}.json"
-    program_path = CHAPTER_DIR / "optimized_programs" / "final" / f"{optimizer}.json"
+    row = optimizer_row(optimizer)
+    prompt_path = REPO_ROOT / row.get(
+        "prompt_artifact",
+        f"chapter06/results/expanded_notebooks/{optimizer}/full/learned_prompt.json",
+    )
+    program_path = REPO_ROOT / row.get(
+        "program_artifact",
+        f"chapter06/results/expanded_notebooks/{optimizer}/full/optimized_program.json",
+    )
     if not prompt_path.exists() or not program_path.exists():
         return {
             "checked": False,
             "reason": "serialized program or extracted prompt is missing",
         }
-    prompts = json.loads(prompt_path.read_text(encoding="utf-8"))
+    payload = json.loads(prompt_path.read_text(encoding="utf-8"))
+    prompts = payload.get("predictors", payload)
     program = json.loads(program_path.read_text(encoding="utf-8"))
     mismatches: list[str] = []
     for predictor_name, expected in prompts.items():
@@ -133,7 +148,11 @@ def verify_prompt_artifact(optimizer: str) -> dict[str, Any]:
             "instructions": actual.get("signature", {}).get("instructions", ""),
             "demos": actual.get("demos", []),
         }
-        if actual_prompt != expected:
+        expected_prompt = {
+            "instructions": expected.get("instructions", ""),
+            "demos": expected.get("demos", []),
+        }
+        if actual_prompt != expected_prompt:
             mismatches.append(predictor_name)
     return {
         "checked": True,

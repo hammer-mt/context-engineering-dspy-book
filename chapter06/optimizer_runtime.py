@@ -23,12 +23,15 @@ import dspy
 import numpy as np
 from dotenv import load_dotenv
 
+from chapter06.experiments.gepa_expanded.guardrails import summarize_history
+
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 CHAPTER_DIR = REPO_ROOT / "chapter06"
-DATA_PATH = REPO_ROOT / "data" / "ai_vs_human_chapter06.csv"
-SPLIT_PATH = REPO_ROOT / "data" / "ai_vs_human_chapter06_splits.json"
-SUMMARY_PATH = CHAPTER_DIR / "results" / "benchmark_summary.json"
+DATA_PATH = REPO_ROOT / "data" / "ai_vs_human_chapter06_expanded.csv"
+SPLIT_PATH = REPO_ROOT / "data" / "ai_vs_human_chapter06_expanded_splits.json"
+RESULTS_ROOT = CHAPTER_DIR / "results" / "expanded_notebooks"
+SUMMARY_PATH = RESULTS_ROOT / "comparison.json"
 
 PROMPT_OPTIMIZERS = {
     "quickstart",
@@ -219,20 +222,31 @@ def evaluate(program: dspy.Module, examples: Sequence[dspy.Example]) -> dict[str
     latencies: list[float] = []
     for example in examples:
         started = time.monotonic()
-        prediction = program(**example.inputs())
+        try:
+            prediction = program(**example.inputs())
+            predicted = as_bool(prediction.is_ai)
+            status = "completed"
+            error = None
+        except Exception as exc:
+            # A malformed local-model response is a model error and therefore
+            # an incorrect prediction, not grounds to discard the run.
+            predicted = None
+            status = "parse_error"
+            error = f"{type(exc).__name__}: {exc}"[:240]
         elapsed = time.monotonic() - started
-        predicted = as_bool(prediction.is_ai)
         latencies.append(elapsed)
-        predictions.append(
-            {
-                "pair_id": example.pair_id,
-                "example_id": example.example_id,
-                "expected_is_ai": bool(example.is_ai),
-                "predicted_is_ai": predicted,
-                "correct": predicted == bool(example.is_ai),
-                "latency_seconds": elapsed,
-            }
-        )
+        row = {
+            "pair_id": example.pair_id,
+            "example_id": example.example_id,
+            "expected_is_ai": bool(example.is_ai),
+            "predicted_is_ai": predicted,
+            "correct": status == "completed" and predicted == bool(example.is_ai),
+            "latency_seconds": elapsed,
+            "status": status,
+        }
+        if error:
+            row["error"] = error
+        predictions.append(row)
     correct = sum(item["correct"] for item in predictions)
     ordered = sorted(latencies)
     p95_index = min(len(ordered) - 1, int(0.95 * len(ordered)))
@@ -250,43 +264,79 @@ def evaluate(program: dspy.Module, examples: Sequence[dspy.Example]) -> dict[str
 class OptimizerRun:
     optimizer: str
     task_model: str
-    final: dict[str, Any]
+    final: dict[str, Any] | None
+    validation: dict[str, Any]
     program: dspy.Module
     optimization_seconds: float
     baseline: dict[str, Any] | None = None
     accepted_trace_labels: dict[str, int] | None = None
     output_dir: str | None = None
+    mode: str = "full"
+    optimization_cost_usd: float = 0.0
+    evaluation_cost_usd: float = 0.0
+    usage: dict[str, Any] | None = None
 
     def summary(self) -> dict[str, Any]:
+        scored = self.final or self.validation
         result = {
             "optimizer": self.optimizer,
+            "status": "completed",
+            "mode": self.mode,
             "task_model": self.task_model,
-            "final_accuracy": self.final["accuracy"],
-            "correct": self.final["correct"],
-            "test_examples": self.final["count"],
+            "final_accuracy": scored["accuracy"],
+            "correct": scored["correct"],
+            "test_examples": scored["count"],
+            "validation_accuracy": self.validation["accuracy"],
+            "validation_correct": self.validation["correct"],
+            "validation_examples": self.validation["count"],
             "optimization_seconds": self.optimization_seconds,
-            "mean_latency_seconds": self.final["mean_latency_seconds"],
-            "p95_latency_seconds": self.final["p95_latency_seconds"],
+            "optimization_cost_usd": self.optimization_cost_usd,
+            "evaluation_cost_usd": self.evaluation_cost_usd,
+            "mean_latency_seconds": scored["mean_latency_seconds"],
+            "p95_latency_seconds": scored["p95_latency_seconds"],
             "accepted_trace_labels": self.accepted_trace_labels,
             "output_dir": self.output_dir,
         }
         if self.baseline is not None:
             result["baseline_accuracy"] = self.baseline["accuracy"]
-            result["uplift_points"] = self.final["accuracy"] - self.baseline["accuracy"]
+            result["uplift_points"] = scored["accuracy"] - self.baseline["accuracy"]
         return result
+
+
+def _combined_usage(*lms: Any) -> dict[str, Any]:
+    histories: list[dict[str, Any]] = []
+    seen: set[int] = set()
+    for lm in lms:
+        if lm is None or id(lm) in seen:
+            continue
+        seen.add(id(lm))
+        histories.extend(getattr(lm, "history", []))
+    return summarize_history(histories)
 
 
 def published_result(optimizer: str) -> dict[str, Any]:
     summary = json.loads(SUMMARY_PATH.read_text(encoding="utf-8"))
     row = next(row for row in summary["rows"] if row["optimizer"] == optimizer)
-    accuracy = row.get("final_accuracy", row["accuracy"])
+    if row["status"] != "completed":
+        return {
+            "optimizer": optimizer,
+            "status": row["status"],
+            "reason": row.get("reason", "No completed expanded-dataset run is available."),
+        }
+    accuracy = row["locked_test_accuracy_pct"]
+    test_examples = row["locked_test_rows"]
     result = {
         "optimizer": optimizer,
+        "status": "completed",
         "task_model": row["task_model"],
         "final_accuracy": accuracy,
-        "correct": round(accuracy * 20 / 100),
-        "test_examples": 20,
-        "optimization_seconds": row["optimization_seconds"],
+        "correct": row["locked_test_correct"],
+        "test_examples": test_examples,
+        "baseline_accuracy": row.get("baseline_accuracy_pct"),
+        "uplift_points": row.get("absolute_uplift_pct_points"),
+        "validation_accuracy": row.get("optimized_validation_accuracy_pct"),
+        "optimization_cost_usd": row.get("optimization_cost_usd"),
+        "optimization_seconds": row["optimization_time_seconds"],
         "mean_latency_seconds": row["mean_inference_latency_seconds"],
         "p95_latency_seconds": row["p95_inference_latency_seconds"],
     }
@@ -296,6 +346,12 @@ def published_result(optimizer: str) -> dict[str, Any]:
 
 
 def format_result(result: dict[str, Any]) -> str:
+    if result.get("status") and result["status"] != "completed":
+        return (
+            f"optimizer: {result['optimizer']}\n"
+            f"status: {result['status']}\n"
+            f"reason: {result['reason']}"
+        )
     lines = [
         f"optimizer: {result['optimizer']}",
         f"task model: {result['task_model']}",
@@ -304,7 +360,11 @@ def format_result(result: dict[str, Any]) -> str:
             f"({result['correct']}/{result['test_examples']})"
         ),
     ]
-    if "baseline_accuracy" in result:
+    if result.get("validation_accuracy") is not None:
+        lines.append(
+            f"optimized validation accuracy: {result['validation_accuracy']:.1f}%"
+        )
+    if result.get("baseline_accuracy") is not None:
         lines.extend(
             [
                 f"same-model baseline: {result['baseline_accuracy']:.1f}%",
@@ -316,7 +376,15 @@ def format_result(result: dict[str, Any]) -> str:
         lines.append(
             f"accepted traces: human={counts['human']}, AI={counts['ai']}"
         )
-    lines.append(f"optimization time: {result['optimization_seconds']:.1f}s")
+    if result.get("optimization_cost_usd") is not None:
+        lines.append(f"optimization cost: ${result['optimization_cost_usd']:.4f}")
+    lines.extend(
+        [
+            f"optimization time: {result['optimization_seconds']:.1f}s",
+            f"mean inference latency: {result['mean_latency_seconds']:.3f}s",
+            f"p95 inference latency: {result['p95_latency_seconds']:.3f}s",
+        ]
+    )
     return "\n".join(lines)
 
 
@@ -324,13 +392,26 @@ def _openai_lm(model: str) -> dspy.LM:
     load_dotenv(REPO_ROOT / ".env")
     if not os.getenv("OPENAI_API_KEY"):
         raise EnvironmentError("Set OPENAI_API_KEY in the repository .env file")
-    return dspy.LM(model, cache=False, num_retries=1, timeout=120)
+    return SharedHistoryLM(model, cache=False, num_retries=1, timeout=120)
+
+
+class SharedHistoryLM(dspy.LM):
+    """Keep one accounting history when DSPy deep-copies candidate programs."""
+
+    def __deepcopy__(self, memo: dict[int, Any]):
+        del memo
+        return self
 
 
 def _finetune_kwargs(output_dir: Path) -> dict[str, Any]:
+    from chapter06.apple_finetune import resolve_device
+
+    device_preference = os.getenv("CHAPTER06_FINETUNE_DEVICE", "auto")
     return {
         "output_dir": str(output_dir),
-        "device": os.getenv("CHAPTER06_FINETUNE_DEVICE", "auto"),
+        # DSPy's local trainer passes this value directly to ``model.to`` and
+        # therefore cannot accept the inference wrapper's convenient "auto".
+        "device": resolve_device(device_preference),
         "use_peft": True,
         "num_train_epochs": int(os.getenv("CHAPTER06_FINETUNE_EPOCHS", "10")),
         "per_device_train_batch_size": 1,
@@ -349,6 +430,9 @@ def _compile_prompt_optimizer(
     valset: list[dspy.Example],
     task_lm: dspy.LM,
     reflection_lm: dspy.LM,
+    *,
+    smoke: bool = False,
+    artifact_dir: Path | None = None,
 ) -> dspy.Module:
     if name == "quickstart":
         return detector
@@ -367,7 +451,7 @@ def _compile_prompt_optimizer(
             metric=exact_match,
             max_bootstrapped_demos=2,
             max_labeled_demos=2,
-            num_candidate_programs=8,
+            num_candidate_programs=2 if smoke else 8,
             num_threads=1,
             max_errors=1,
         ).compile(detector, trainset=trainset, valset=valset)
@@ -384,43 +468,57 @@ def _compile_prompt_optimizer(
         return dspy.COPRO(
             prompt_model=reflection_lm,
             metric=exact_match,
-            breadth=4,
-            depth=2,
+            breadth=2 if smoke else 4,
+            depth=1 if smoke else 2,
+            init_temperature=1.0,
             track_stats=True,
-        ).compile(detector, trainset=trainset)
+        ).compile(
+            detector,
+            trainset=valset,
+            eval_kwargs={
+                "num_threads": 1,
+                "display_progress": True,
+                "display_table": False,
+            },
+        )
     if name == "miprov2":
         return dspy.MIPROv2(
             metric=exact_match,
             prompt_model=reflection_lm,
             task_model=task_lm,
-            auto="light",
+            auto=None if smoke else "light",
+            num_candidates=2 if smoke else None,
             max_bootstrapped_demos=2,
             max_labeled_demos=2,
             seed=42,
+            log_dir=str(artifact_dir / "optimizer_logs") if artifact_dir else None,
         ).compile(
             detector,
             trainset=trainset,
             valset=valset,
             minibatch=True,
             requires_permission_to_run=False,
+            num_trials=1 if smoke else None,
+            minibatch_size=4 if smoke else 35,
         )
     if name == "gepa":
         return dspy.GEPA(
             metric=feedback_metric,
-            max_full_evals=6,
+            max_full_evals=1 if smoke else 6,
             reflection_minibatch_size=3,
             reflection_lm=reflection_lm,
             num_threads=1,
             use_merge=False,
             track_best_outputs=True,
             seed=42,
+            log_dir=str(artifact_dir / "optimizer_logs") if artifact_dir else None,
         ).compile(detector, trainset=trainset, valset=valset)
     if name == "simba":
         return dspy.SIMBA(
             metric=exact_match,
-            bsize=8,
-            num_candidates=4,
-            max_steps=6,
+            bsize=4 if smoke else 8,
+            num_candidates=2 if smoke else 4,
+            max_steps=1 if smoke else 6,
             max_demos=2,
             prompt_model=reflection_lm,
         ).compile(detector, trainset=trainset, seed=42)
@@ -439,7 +537,7 @@ def _compile_prompt_optimizer(
             metric=exact_match,
             max_bootstrapped_demos=2,
             max_labeled_demos=2,
-            num_candidate_programs=8,
+            num_candidate_programs=2 if smoke else 8,
             num_threads=1,
             max_errors=1,
         ).compile(detector.deepcopy(), trainset=trainset, valset=valset)
@@ -458,15 +556,20 @@ def run_optimizer(
     reflection_model: str = "openai/gpt-5.6-sol",
     local_model: str = "Qwen/Qwen2.5-0.5B-Instruct",
     output_dir: Path | None = None,
+    artifact_dir: Path | None = None,
+    mode: str = "full",
 ) -> OptimizerRun:
     """Compile one optimizer and evaluate it on the shared untouched test split."""
 
     if optimizer not in OPTIMIZERS:
         raise ValueError(f"unknown optimizer {optimizer!r}")
+    if mode not in {"smoke", "full"}:
+        raise ValueError("mode must be 'smoke' or 'full'")
+    smoke = mode == "smoke"
     splits = splits or load_frozen_examples()
-    trainset = splits["train"]
-    valset = splits["validation"]
-    testset = splits["test"]
+    trainset = splits["train"][:8] if smoke else splits["train"]
+    valset = splits["validation"][:4] if smoke else splits["validation"]
+    testset = [] if smoke else splits["test"]
     accepted_counts: dict[str, int] | None = None
     actual_output_dir: Path | None = None
 
@@ -500,11 +603,20 @@ def run_optimizer(
         detector.set_lm(task_lm)
         dspy.configure(lm=task_lm)
 
-    baseline = evaluate(detector, testset) if include_baseline else None
+    baseline_examples = valset if smoke else testset
+    baseline = evaluate(detector, baseline_examples) if include_baseline else None
+    cost_before_compile = float(_combined_usage(task_lm, reflection_lm)["cost_usd"])
     started = time.monotonic()
     if optimizer in PROMPT_OPTIMIZERS:
         program = _compile_prompt_optimizer(
-            optimizer, detector, trainset, valset, task_lm, reflection_lm
+            optimizer,
+            detector,
+            trainset,
+            valset,
+            task_lm,
+            reflection_lm,
+            smoke=smoke,
+            artifact_dir=artifact_dir,
         )
     elif optimizer == "bootstrap-finetune":
         finetuner = BalancedBootstrapFinetune(
@@ -529,7 +641,7 @@ def run_optimizer(
             metric=exact_match,
             max_bootstrapped_demos=2,
             max_labeled_demos=2,
-            num_candidate_programs=4,
+            num_candidate_programs=2 if smoke else 4,
             num_threads=1,
             max_errors=max_errors,
         )
@@ -544,17 +656,37 @@ def run_optimizer(
             max_errors=max_errors,
             seed=42,
             strategy="p -> w",
+            # BetterTogether normalizes its teacher to a list for weight
+            # optimizers, but BootstrapRS expects one module. Override only
+            # the prompt step with the original teacher module.
+            optimizer_compile_args={"p": {"teacher": teacher}},
         )
+        if getattr(program, "flag_compilation_error_occurred", False):
+            raise RuntimeError("BetterTogether stopped before completing p -> w")
         accepted_counts = finetuner.accepted_label_counts or None
     optimization_seconds = time.monotonic() - started
-    final = evaluate(program, testset)
+    cost_after_compile = float(_combined_usage(task_lm, reflection_lm)["cost_usd"])
+    # Prompt optimizers often return a deep-copied program. Reattach the
+    # canonical task LM so standardized validation/test calls land in the same
+    # cost ledger. Weight optimizers must retain the newly fine-tuned LM.
+    if optimizer in PROMPT_OPTIMIZERS:
+        program.set_lm(task_lm)
+    validation = evaluate(program, valset)
+    final = evaluate(program, testset) if testset else None
+    usage = _combined_usage(task_lm, reflection_lm)
+    final_cost = float(usage["cost_usd"])
     return OptimizerRun(
         optimizer=optimizer,
         task_model=local_model if optimizer in WEIGHT_OPTIMIZERS else task_model,
         final=final,
+        validation=validation,
         program=program,
         optimization_seconds=optimization_seconds,
         baseline=baseline,
         accepted_trace_labels=accepted_counts,
         output_dir=str(actual_output_dir) if actual_output_dir else None,
+        mode=mode,
+        optimization_cost_usd=max(0.0, cost_after_compile - cost_before_compile),
+        evaluation_cost_usd=max(0.0, final_cost - cost_after_compile),
+        usage=usage,
     )
