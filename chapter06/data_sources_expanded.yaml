@@ -1,0 +1,157 @@
+schema_version: 1
+dataset: data/ai_vs_human_chapter06_expanded.csv
+selection_note: All human passages are real text harvested previously from pre-2022
+  tagged open-source documentation or December-2019 Wikipedia revisions. The original
+  74 rows are preserved. New AI rows are Sol-generated semantic rewrites selected
+  with baseline-only screening before the final test lock.
+wikipedia_license_url: https://en.wikipedia.org/wiki/Wikipedia:Copyrights
+source_count: 21
+source_family_count: 2
+sources:
+- id: airflow-dags
+  family: technical_documentation
+  title: DAGs
+  author: Apache Airflow documentation contributors
+  source_url: https://github.com/apache/airflow/blob/2.2.0/docs/apache-airflow/concepts/dags.rst
+  license: Apache License 2.0
+  human_passage_count: 16
+- id: dask-ten-minutes
+  family: technical_documentation
+  title: 10 Minutes to Dask
+  author: Dask documentation contributors
+  source_url: https://github.com/dask/dask/blob/2021.11.0/docs/source/10-minutes-to-dask.rst
+  license: BSD 3-Clause
+  human_passage_count: 5
+- id: django-queries
+  family: technical_documentation
+  title: Making queries
+  author: Django documentation contributors
+  source_url: https://github.com/django/django/blob/4.0/docs/topics/db/queries.txt
+  license: BSD 3-Clause
+  human_passage_count: 11
+- id: fastapi-body
+  family: technical_documentation
+  title: Request Body
+  author: FastAPI documentation contributors
+  source_url: https://github.com/fastapi/fastapi/blob/0.70.0/docs/en/docs/tutorial/body.md
+  license: MIT
+  human_passage_count: 5
+- id: flask-quickstart
+  family: technical_documentation
+  title: Flask Quickstart
+  author: Flask documentation contributors
+  source_url: https://github.com/pallets/flask/blob/2.0.2/docs/quickstart.rst
+  license: BSD 3-Clause
+  human_passage_count: 14
+- id: kubernetes-objects
+  family: technical_documentation
+  title: Kubernetes Objects
+  author: Kubernetes documentation contributors
+  source_url: https://github.com/kubernetes/website/blob/release-1.22/content/en/docs/concepts/overview/working-with-objects/kubernetes-objects.md
+  license: Creative Commons Attribution 4.0
+  human_passage_count: 7
+- id: node-documentation
+  family: technical_documentation
+  title: About this documentation
+  author: Node.js documentation contributors
+  source_url: https://github.com/nodejs/node/blob/v16.13.0/doc/api/documentation.md
+  license: MIT
+  human_passage_count: 3
+- id: numpy-quickstart
+  family: technical_documentation
+  title: NumPy quickstart
+  author: NumPy documentation contributors
+  source_url: https://github.com/numpy/numpy/blob/v1.21.0/doc/source/user/quickstart.rst
+  license: BSD 3-Clause
+  human_passage_count: 3
+- id: pandas-ten-minutes
+  family: technical_documentation
+  title: 10 minutes to pandas
+  author: pandas documentation contributors
+  source_url: https://github.com/pandas-dev/pandas/blob/v1.3.0/doc/source/user_guide/10min.rst
+  license: BSD 3-Clause
+  human_passage_count: 2
+- id: pytest-started
+  family: technical_documentation
+  title: Get Started
+  author: pytest documentation contributors
+  source_url: https://github.com/pytest-dev/pytest/blob/6.2.5/doc/en/getting-started.rst
+  license: MIT
+  human_passage_count: 1
+- id: python-tutorial
+  family: technical_documentation
+  title: The Python Tutorial - An Informal Introduction
+  author: Python documentation contributors
+  source_url: https://github.com/python/cpython/blob/v3.10.0/Doc/tutorial/introduction.rst
+  license: Python Software Foundation License Version 2
+  human_passage_count: 5
+- id: pytorch-readme
+  family: technical_documentation
+  title: PyTorch README
+  author: PyTorch contributors
+  source_url: https://github.com/pytorch/pytorch/blob/v1.10.0/README.md
+  license: BSD 3-Clause
+  human_passage_count: 11
+- id: rails-started
+  family: technical_documentation
+  title: Getting Started with Rails
+  author: Ruby on Rails documentation contributors
+  source_url: https://github.com/rails/rails/blob/v7.0.0/guides/source/getting_started.md
+  license: MIT
+  human_passage_count: 11
+- id: requests-quickstart
+  family: technical_documentation
+  title: Requests Quickstart
+  author: Requests documentation contributors
+  source_url: https://github.com/psf/requests/blob/v2.26.0/docs/user/quickstart.rst
+  license: Apache License 2.0
+  human_passage_count: 5
+- id: sklearn-started
+  family: technical_documentation
+  title: Getting Started
+  author: scikit-learn documentation contributors
+  source_url: https://github.com/scikit-learn/scikit-learn/blob/1.0/doc/getting_started.rst
+  license: BSD 3-Clause
+  human_passage_count: 6
+- id: spark-sql
+  family: technical_documentation
+  title: Getting Started with Spark SQL
+  author: Apache Spark documentation contributors
+  source_url: https://github.com/apache/spark/blob/v3.2.0/docs/sql-getting-started.md
+  license: Apache License 2.0
+  human_passage_count: 12
+- id: wikipedia-930564768
+  family: wikipedia
+  title: Innovation
+  author: Wikipedia contributors (see revision history)
+  source_url: https://en.wikipedia.org/w/index.php?oldid=930564768
+  license: CC BY-SA 3.0
+  human_passage_count: 6
+- id: wikipedia-932573702
+  family: wikipedia
+  title: Sustainability
+  author: Wikipedia contributors (see revision history)
+  source_url: https://en.wikipedia.org/w/index.php?oldid=932573702
+  license: CC BY-SA 3.0
+  human_passage_count: 7
+- id: wikipedia-932792416
+  family: wikipedia
+  title: Organizational culture
+  author: Wikipedia contributors (see revision history)
+  source_url: https://en.wikipedia.org/w/index.php?oldid=932792416
+  license: CC BY-SA 3.0
+  human_passage_count: 7
+- id: wikipedia-933182672
+  family: wikipedia
+  title: Leadership
+  author: Wikipedia contributors (see revision history)
+  source_url: https://en.wikipedia.org/w/index.php?oldid=933182672
+  license: CC BY-SA 3.0
+  human_passage_count: 6
+- id: wikipedia-933294875
+  family: wikipedia
+  title: Strategic management
+  author: Wikipedia contributors (see revision history)
+  source_url: https://en.wikipedia.org/w/index.php?oldid=933294875
+  license: CC BY-SA 3.0
+  human_passage_count: 7

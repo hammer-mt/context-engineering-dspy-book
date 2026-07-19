@@ -1,0 +1,4 @@
+{
+    "reasoning": "The passage is concise and technically specific, but it uses smoothly connected explanatory phrasing: \u201cit provides a high-quality BLAS implementation (MKL), and it keeps dependency versions controlled\u201d gives two balanced benefits, followed by the broad qualifier \u201cregardless of which Linux distribution you run.\u201d The parenthetical acronym explanation and polished justification make it feel somewhat globally smoothed rather than locally rough documentation. This favors AI rewriting, though the short, practical installation guidance also remains compatible with human-authored technical prose.",
+    "is_ai": true
+}

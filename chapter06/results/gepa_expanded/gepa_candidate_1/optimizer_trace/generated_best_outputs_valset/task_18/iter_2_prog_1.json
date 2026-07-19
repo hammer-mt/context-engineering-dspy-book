@@ -1,0 +1,4 @@
+{
+    "reasoning": "The passage contains locally specific Rails details\u2014`POST /articles`, `@article`, `app/views/articles/new.html.erb`, validations, and Turbo\u2014rather than a generalized explanation. Its uneven, slightly awkward phrasing (\u201cdoes attempt to save,\u201d \u201cwith error messages with a status code 4XX,\u201d and \u201cfor the app to work fine\u201d) and compressed causal progression feel like human technical documentation or an unedited explanation, not globally smoothed AI prose.",
+    "is_ai": false
+}

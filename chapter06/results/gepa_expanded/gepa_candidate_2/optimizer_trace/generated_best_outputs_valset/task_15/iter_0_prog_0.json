@@ -1,0 +1,4 @@
+{
+    "reasoning": "The passage is more likely human-authored documentation. It contains concrete version and build requirements (\u201cPython 3.6.2,\u201d \u201cC++14,\u201d \u201cMKL\u201d) and a practical, locally focused recommendation. Although the explanation is polished, the concise wording and domain-specific details do not form an unusually elaborate or globally smoothed arc.",
+    "is_ai": false
+}

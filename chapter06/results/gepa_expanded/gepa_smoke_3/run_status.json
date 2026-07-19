@@ -1,0 +1,37 @@
+{
+  "run_id": "gepa-smoke-20260718T230131.147622Z",
+  "mode": "smoke",
+  "status": "completed",
+  "duration_seconds": 32.75272816600045,
+  "stage_cap_usd": 2.0,
+  "cost": {
+    "request_count": 26,
+    "cache_hits": 0,
+    "prompt_tokens": 14539,
+    "completion_tokens": 4235,
+    "reasoning_tokens": 1522,
+    "total_tokens": 18774,
+    "cost_usd": 0.063453,
+    "models": {
+      "openai/gpt-5.6-luna": {
+        "request_count": 25,
+        "cache_hits": 0,
+        "prompt_tokens": 13817,
+        "completion_tokens": 3376,
+        "reasoning_tokens": 1316,
+        "total_tokens": 17193,
+        "cost_usd": 0.034073
+      },
+      "openai/gpt-5.6-sol": {
+        "request_count": 1,
+        "cache_hits": 0,
+        "prompt_tokens": 722,
+        "completion_tokens": 859,
+        "reasoning_tokens": 206,
+        "total_tokens": 1581,
+        "cost_usd": 0.02938
+      }
+    }
+  },
+  "error": null
+}

@@ -1,0 +1,43 @@
+{
+  "baseline_test_accuracy_pct": 50.0,
+  "optimized_test_accuracy_pct": 76.25,
+  "baseline_test_correct": 40,
+  "optimized_test_correct": 61,
+  "absolute_uplift_pct_points": 26.25,
+  "relative_uplift_pct": 52.5,
+  "paired_mcnemar_p_value": 0.00010371580719947815,
+  "paired_mcnemar": {
+    "baseline_only_correct": 4,
+    "optimized_only_correct": 25,
+    "discordant_count": 29,
+    "p_value": 0.00010371580719947815
+  },
+  "paired_bootstrap_ci_low_pct_points": 18.75,
+  "paired_bootstrap_ci_high_pct_points": 35.0,
+  "paired_bootstrap": {
+    "unit": "semantic_pair",
+    "pair_count": 40,
+    "samples": 10000,
+    "seed": 42,
+    "observed_uplift_pct_points": 26.25,
+    "ci_low_pct_points": 18.75,
+    "ci_high_pct_points": 35.0
+  },
+  "optimize_cost_usd": 10.8411602,
+  "optimize_prompt_tokens": 6082516,
+  "optimize_completion_tokens": 465830,
+  "optimize_total_tokens": 6548346,
+  "baseline_evaluation_cost_usd": 0.274326,
+  "optimized_evaluation_cost_usd": 0.6085754999999999,
+  "total_experiment_cost_usd": 32.0278422,
+  "optimize_time_seconds": 2023.1421918749984,
+  "baseline_mean_latency_seconds": 1.8094877663207323,
+  "baseline_p95_latency_seconds": 3.1125783340103226,
+  "optimized_mean_latency_seconds": 2.0598552883664527,
+  "optimized_p95_latency_seconds": 3.1246177919965703,
+  "task_model": "openai/gpt-5.6-luna",
+  "reflection_model": "openai/gpt-5.6-sol",
+  "candidate_dir": "chapter06/results/gepa_expanded/gepa_candidate_2",
+  "test_evaluation_dir": "chapter06/results/gepa_expanded/gepa_candidate_2/test",
+  "reference_strategy": "per-example majority vote across fresh uncached runs"
+}

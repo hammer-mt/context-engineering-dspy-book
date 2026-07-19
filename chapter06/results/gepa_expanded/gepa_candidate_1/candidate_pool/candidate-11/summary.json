@@ -1,0 +1,8 @@
+{
+  "candidate_index": 11,
+  "gepa_internal_validation_accuracy_pct": 78.33333333333333,
+  "program_path": "chapter06/results/gepa_expanded/gepa_candidate_1/candidate_pool/candidate-11/optimized_program.json",
+  "learned_prompt_path": "chapter06/results/gepa_expanded/gepa_candidate_1/candidate_pool/candidate-11/learned_prompt.json",
+  "source_optimizer_results": "chapter06/results/gepa_expanded/gepa_candidate_1/optimizer_results.json",
+  "test_rows_seen": 0
+}

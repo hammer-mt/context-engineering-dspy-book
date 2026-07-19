@@ -1,0 +1,4 @@
+{
+    "reasoning": "The passage is more likely human-authored technical documentation. It uses specific Airflow terminology (`trigger_rule`, `all_success`, branching, downstream) and has locally repetitive wording around \u201cskip\u201d and \u201cskipped.\u201d The sentence is somewhat compressed and awkwardly phrased\u2014especially \u201cthe skip caused by the branching operation cascades down to skip\u201d\u2014rather than globally smoothed into a balanced explanatory arc. This is probabilistic, but the retained documentation texture favors human provenance.",
+    "is_ai": false
+}

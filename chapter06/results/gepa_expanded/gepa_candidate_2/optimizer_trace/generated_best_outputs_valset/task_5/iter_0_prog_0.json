@@ -1,0 +1,4 @@
+{
+    "reasoning": "The passage is more likely human-authored documentation. It contains concrete source texture in the exact reference ``deploying/index`` and the locally practical, slightly informal caveat \u201csuitable for testing (and little else)\u201d and \u201cprobably not the server you should run in production.\u201d Its brevity and direct pointer lack the elaborated, balanced explanatory arc typical of substantial AI rewriting.",
+    "is_ai": false
+}

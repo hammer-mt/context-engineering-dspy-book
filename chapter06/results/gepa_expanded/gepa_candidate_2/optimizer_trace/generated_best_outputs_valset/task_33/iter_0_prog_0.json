@@ -1,0 +1,4 @@
+{
+    "reasoning": "The passage is more likely human-authored documentation. It uses source-specific terminology and identifiers such as \u201ctransformers,\u201d \u201cestimators (predictors),\u201d `~sklearn.pipeline.Pipeline`, `fit`, and `predict`, while following a compact practical sequence. The parenthetical \u201c(an easy mistake)\u201d and forward reference \u201cAs discussed later\u201d retain tutorial/documentation texture rather than forming an unusually elaborate or symmetrically polished explanation. This is probabilistic, but there is insufficient evidence of substantial AI smoothing.",
+    "is_ai": false
+}

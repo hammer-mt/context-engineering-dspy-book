@@ -1,0 +1,4 @@
+{
+    "reasoning": "The passage is more likely human-authored documentation or notes. It uses exact Spark identifiers such as `RDD`, `StructType`, `createDataFrame`, and `SparkSession`, while retaining awkward local phrasing (\u201cthe step 1,\u201d \u201cvia createDataFrame method\u201d) and compressed numbering. The uneven punctuation and lack of explanatory smoothing suggest sentence-by-sentence procedural composition rather than substantial AI rewriting.",
+    "is_ai": false
+}

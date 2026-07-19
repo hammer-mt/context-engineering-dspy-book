@@ -1,0 +1,4 @@
+{
+    "reasoning": "The passage is more likely human-authored documentation. It contains source-specific identifiers and version details\u2014`r.json()`, `simplejson.JSONDecodeError`, `ValueError`, Python 2, and `json.JSONDecodeError`\u2014along with practical examples such as status `204 (No Content)`. The repeated wording \u201craises an exception\u201d / \u201craises\u201d and the compressed version-dependent explanation retain local reference-text texture rather than showing broad stylistic smoothing. This remains a probabilistic judgment.",
+    "is_ai": false
+}

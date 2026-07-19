@@ -1,0 +1,4 @@
+{
+    "reasoning": "The passage is more likely AI-generated or substantially AI-rewritten. It preserves specific workflow identifiers such as `follow_branch_a`, `branch_false`, and `trigger_rule`, but presents them in a tightly polished causal chain: \u201cBy default,\u201d \u201cconsequently,\u201d and \u201cas is customary\u201d smoothly connect the rule, the skipped join, and the downstream effect. The explanatory restatement of skip propagation and uniformly formal cadence suggest global smoothing over locally composed documentation texture, though this remains probabilistic.",
+    "is_ai": true
+}

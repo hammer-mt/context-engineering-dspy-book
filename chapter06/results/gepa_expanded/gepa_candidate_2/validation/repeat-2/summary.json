@@ -1,0 +1,30 @@
+{
+  "repeat": 2,
+  "run_id": "optimized-validation-repeat-2-20260719T001217.077527Z",
+  "row_count": 60,
+  "correct": 53,
+  "accuracy_pct": 88.33333333333333,
+  "mean_latency_seconds": 2.038874751298378,
+  "p95_latency_seconds": 2.9403186249837745,
+  "duration_seconds": 38.63506437500473,
+  "cost": {
+    "request_count": 62,
+    "cache_hits": 0,
+    "prompt_tokens": 184744,
+    "completion_tokens": 12074,
+    "reasoning_tokens": 4523,
+    "total_tokens": 196818,
+    "cost_usd": 0.1046353,
+    "models": {
+      "openai/gpt-5.6-luna": {
+        "request_count": 62,
+        "cache_hits": 0,
+        "prompt_tokens": 184744,
+        "completion_tokens": 12074,
+        "reasoning_tokens": 4523,
+        "total_tokens": 196818,
+        "cost_usd": 0.1046353
+      }
+    }
+  }
+}

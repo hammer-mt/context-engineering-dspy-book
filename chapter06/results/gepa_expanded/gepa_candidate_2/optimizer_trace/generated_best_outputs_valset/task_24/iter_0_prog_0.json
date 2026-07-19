@@ -1,0 +1,4 @@
+{
+    "reasoning": "The passage is more likely human-authored documentation. It retains practical, locally specific wording such as \u201carticle_params,\u201d \u201capp/views/articles/edit.html.erb,\u201d and \u201cstatus code 4XX,\u201d along with uneven phrasing like \u201cElse\u201d and \u201cfor the app to work fine with Turbo.\u201d The compressed control-flow description and awkward \u201cby rendering\u201d construction suggest sentence-by-sentence technical prose rather than globally smoothed AI rewriting.",
+    "is_ai": false
+}

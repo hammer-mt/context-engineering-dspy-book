@@ -1,0 +1,4 @@
+{
+    "reasoning": "More likely human-authored or locally composed. The passage contains technical terms such as \u201cPyTorch,\u201d \u201cTorch,\u201d \u201ccustom memory allocators,\u201d and \u201cGPU,\u201d but the comparison is somewhat awkward (\u201ccompared to Torch or some of the alternatives\u201d), and it repeats \u201cmemory\u201d and \u201cdeep learning models\u201d rather than smoothing the wording. The short, promotional progression is direct and practical, without the balanced clauses, explanatory restatement, or polished concluding synthesis that would strongly suggest AI rewriting.",
+    "is_ai": false
+}

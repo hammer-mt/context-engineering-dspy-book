@@ -1,0 +1,4 @@
+{
+    "reasoning": "The passage uses exact Spark-specific terms such as \u201cRDD,\u201d \u201cStructType,\u201d and \u201ccreateDataFrame,\u201d and presents a terse, locally focused three-step procedure. Its uneven punctuation, compressed wording, and awkward phrase \u201cthe step 1\u201d suggest human-authored technical documentation rather than globally smoothed AI prose.",
+    "is_ai": false
+}

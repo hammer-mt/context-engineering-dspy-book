@@ -1,0 +1,4 @@
+{
+    "reasoning": "The passage is a short, locally situated documentation explanation. Its direct phrasing (\u201ctell the DAG not to run all dependent tasks\u201d) and slightly awkward capitalization (\u201cbranching Operators\u201d) suggest an original technical-writing artifact rather than globally smoothed AI prose. It also assumes context about DAGs and dependent tasks instead of providing a self-contained, balanced explanation. These features support human authorship.",
+    "is_ai": false
+}

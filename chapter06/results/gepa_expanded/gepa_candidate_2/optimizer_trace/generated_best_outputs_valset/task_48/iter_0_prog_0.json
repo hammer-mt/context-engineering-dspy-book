@@ -1,0 +1,4 @@
+{
+    "reasoning": "The passage is more likely human-authored documentation. It uses compact, source-specific terminology (\u201cScalar functions,\u201d \u201caggregation functions,\u201d \u201cSpark SQL\u201d), repeats the classification structure, and has the slightly inconsistent capitalization of \u201cBuilt-in Scalar Functions\u201d and \u201cUser Defined Scalar Functions.\u201d Its brief, reference-like cadence lacks the expanded causal explanation or polished concluding language typical of substantial AI rewriting.",
+    "is_ai": false
+}

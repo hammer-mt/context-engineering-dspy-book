@@ -1,0 +1,4 @@
+{
+    "reasoning": "The passage is more likely human-authored documentation. It uses specific Spark terminology such as \u201cDatasets,\u201d \u201cschema,\u201d and \u201cRDD,\u201d and gives a compact, practical explanation with a straightforward forward condition (\u201cwhen the columns and their types are not known until runtime\u201d). Although the contrast \u201cWhile this method is more verbose\u201d is polished, the passage lacks the unusually elaborated, balanced, or reassuring global smoothing associated with substantial AI rewriting.",
+    "is_ai": false
+}

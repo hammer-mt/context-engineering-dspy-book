@@ -1,0 +1,4 @@
+{
+    "reasoning": "More likely AI-generated or substantially AI-rewritten. Although it preserves concrete Rails identifiers such as `POST /articles`, `create`, `@article`, and `app/views/articles/new.html.erb`, the prose is unusually smoothed: \u201cvalidations are duly run,\u201d the formal inversion \u201cShould any validation fail,\u201d and the tidy causal conclusion about behaving \u201cproperly with Turbo\u201d create a polished explanatory arc. The compressed sequence from submission to failure handling and status code is coherent and complete, with little of the uneven, locally practical texture typical of source documentation.",
+    "is_ai": true
+}
