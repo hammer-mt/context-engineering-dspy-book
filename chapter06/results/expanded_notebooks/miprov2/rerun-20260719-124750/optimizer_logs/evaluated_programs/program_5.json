@@ -1,0 +1,56 @@
+{
+  "detect.predict": {
+    "traces": [],
+    "train": [],
+    "demos": [
+      {
+        "augmented": true,
+        "text": "Ravasi and Schultz (2006) describe organizational culture as shared assumptions that shape behavior, along with the recurring pattern of collective actions and beliefs passed to newcomers as the expected way to perceive, think, and even feel (an awkwardly broad reach). It influences how individuals and groups deal with one another, with clients, and with stakeholders. It may also determine how strongly you and other employees identify with the organization, shaping both outward interaction and inward affiliation.",
+        "reasoning": "The passage is likely AI-generated. It presents a polished, synthesized explanation with a citation, broad paraphrasing, and an editorial aside in parentheses (“an awkwardly broad reach”) that resembles AI-assisted commentary. The consistent structure and generalized phrasing also support this classification.",
+        "is_ai": true
+      },
+      {
+        "pair_id": "docs-rails-started-v7.0.0-001",
+        "example_id": "docs-rails-started-v7.0.0-001-ai",
+        "text": "Rails is a web application framework built in Ruby. It simplifies development by assuming the common pieces you need at the outset (rather than making you choose every detail), so you can produce more functionality with less code than many other languages and frameworks require. Experienced Rails developers also say it makes building web applications more enjoyable: fewer decisions, fewer lines, better momentum.",
+        "is_ai": true
+      }
+    ],
+    "signature": {
+      "instructions": "Classify the passage as AI-generated (`is_ai: True`) or human-authored (`is_ai: False`). Focus on rewrite-style artifacts rather than technical topic: AI rewrites often add editorial polish, explicit causal links, unnecessary clarifications, balanced restatements, elevated wording, or structural over-elaboration, while human documentation is typically more direct, concise, and occasionally awkward. Consider multiple signals rather than length or fluency alone. Provide a brief justification in `reasoning`, then the Boolean label.",
+      "fields": [
+        {
+          "prefix": "Text:",
+          "description": "Passage to classify"
+        },
+        {
+          "prefix": "Reasoning:",
+          "description": "${reasoning}"
+        },
+        {
+          "prefix": "Is Ai:",
+          "description": "True for AI-generated text; otherwise False"
+        }
+      ]
+    },
+    "lm": {
+      "model": "openai/gpt-5.6-luna",
+      "model_type": "chat",
+      "cache": false,
+      "num_retries": 1,
+      "finetuning_model": null,
+      "launch_kwargs": {},
+      "train_kwargs": {},
+      "temperature": null,
+      "max_tokens": null,
+      "timeout": 120
+    }
+  },
+  "metadata": {
+    "dependency_versions": {
+      "python": "3.12",
+      "dspy": "3.2.1",
+      "cloudpickle": "3.1"
+    }
+  }
+}

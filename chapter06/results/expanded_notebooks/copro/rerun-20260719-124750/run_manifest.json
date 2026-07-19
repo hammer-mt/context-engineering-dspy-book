@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "optimizer": "copro",
+  "mode": "full",
+  "status": "completed",
+  "started_at": "2026-07-19T16:48:08.494799+00:00",
+  "dataset_path": "data/ai_vs_human_chapter06_expanded.csv",
+  "dataset_sha256": "f8f3e33f8785af1dba572b40a04efeff5fe91539d067fbb8ee9d5091afe50293",
+  "split_path": "data/ai_vs_human_chapter06_expanded_splits.json",
+  "split_sha256": "f4bf1e786c750f83f834652179ad043e74ce8184836071477492f2af5b461669",
+  "seed": 42,
+  "dspy_version": "3.2.1",
+  "python_version": "3.12.13",
+  "num_retries": 1,
+  "test_release_policy": "full mode evaluates locked test once after compilation and validation; smoke mode never reads test examples",
+  "finished_at": "2026-07-19T17:12:57.296891+00:00",
+  "optimization_cost_usd": 0.81558,
+  "evaluation_cost_usd": 0.21133899999999994,
+  "result_path": "chapter06/results/expanded_notebooks/copro/rerun-20260719-124750/result.json"
+}

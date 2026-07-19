@@ -1,0 +1,56 @@
+{
+  "detect.predict": {
+    "traces": [],
+    "train": [],
+    "demos": [
+      {
+        "augmented": true,
+        "text": "You'll see a bit more complexity here than you did in the controller for articles. That's a side-effect of the nesting that you've set up. Each request for a comment has to keep track of the article to which the comment is attached, thus the initial call to the find method of the Article model to get the article in question.",
+        "reasoning": "The passage has a natural instructional tone, concrete context, and slightly informal phrasing (“You'll see a bit more complexity” and “in question”) characteristic of human-written technical documentation. It does not show strong signs of templated or machine-generated prose.",
+        "is_ai": false
+      },
+      {
+        "pair_id": "docs-airflow-dags-2.2.0-004",
+        "example_id": "docs-airflow-dags-2.2.0-004-human",
+        "text": "Of course, as you develop out your DAGs they are going to get increasingly complex, so we provide a few ways to modify these DAG views to make them easier to understand.",
+        "is_ai": false
+      }
+    ],
+    "signature": {
+      "instructions": "You are a forensic editor specializing in technical documentation and AI-rewrite detection. Decide whether the supplied passage is likely AI-generated (`True`) or human-authored (`False`) by focusing on stylistic rewrite artifacts rather than its topic, terminology, correctness, or technical sophistication.\n\nAI rewrites in this benchmark often preserve the original meaning while making the prose more editorially polished and structurally elaborate. Look for clusters of signals such as:\n- unnecessary clarifications, parenthetical explanations, or interpretive commentary;\n- explicit causal or logical links where concise documentation would leave them implicit;\n- generalized, elevated, formulaic, or overly balanced wording;\n- slogan-like restatements or repetition of the same point in refined language;\n- unusually smooth transitions, symmetrical sentence construction, or elaborate punctuation;\n- expansion of simple guidance into polished explanatory prose.\n\nHuman-authored passages more often use direct, compact, documentation-native phrasing, concrete local context, mild informality, idiosyncratic wording, contractions, or occasional awkwardness. Do not classify based on length alone: concise text can be AI-generated, and polished text can be human-authored. Likewise, do not treat domain-specific vocabulary as evidence of human authorship. Judge whether the wording feels naturally written for the documentation context or unnecessarily rewritten and polished.\n\nProvide a brief, passage-specific explanation citing the most diagnostic stylistic cues. Avoid generic claims that could apply to any technical text. Then return `is_ai` as exactly `True` for likely AI-generated text or `False` for likely human-authored text.\n\nOutput:\nReasoning: <concise justification>\nIs Ai: <True or False>",
+      "fields": [
+        {
+          "prefix": "Text:",
+          "description": "Passage to classify"
+        },
+        {
+          "prefix": "Reasoning:",
+          "description": "${reasoning}"
+        },
+        {
+          "prefix": "Is Ai:",
+          "description": "True for AI-generated text; otherwise False"
+        }
+      ]
+    },
+    "lm": {
+      "model": "openai/gpt-5.6-luna",
+      "model_type": "chat",
+      "cache": false,
+      "num_retries": 1,
+      "finetuning_model": null,
+      "launch_kwargs": {},
+      "train_kwargs": {},
+      "temperature": null,
+      "max_tokens": null,
+      "timeout": 120
+    }
+  },
+  "metadata": {
+    "dependency_versions": {
+      "python": "3.12",
+      "dspy": "3.2.1",
+      "cloudpickle": "3.1"
+    }
+  }
+}

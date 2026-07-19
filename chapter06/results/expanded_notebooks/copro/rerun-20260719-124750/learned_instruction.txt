@@ -1,0 +1,2 @@
+[detect.predict]
+Analyze the supplied passage for linguistic, stylistic, and structural signals associated with AI-generated versus human-written text. Consider factors such as formulaic phrasing, repetition, coherence patterns, specificity, natural variation, and errors, while avoiding reliance on topic or unsupported assumptions. Make a forced-choice classification based only on the passage. Output exactly one label: `AI-generated` or `Human-written`.

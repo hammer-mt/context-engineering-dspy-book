@@ -1,0 +1,56 @@
+{
+  "detect.predict": {
+    "traces": [],
+    "train": [],
+    "demos": [
+      {
+        "augmented": true,
+        "text": "This peculiar Operator bypasses every downstream task unless it belongs to the “latest” DAG run; that is, wall-clock time must fall between its execution_time and the next scheduled execution_time, and the run must not have been triggered externally.",
+        "reasoning": "The passage uses a highly polished, compact explanatory style, with precise technical conditions and a parenthetical clarification. Its wording resembles an AI-generated paraphrase of software documentation rather than spontaneous human prose, so it is likely AI-generated.",
+        "is_ai": true
+      },
+      {
+        "pair_id": "docs-requests-quickstart-v2.26.0-007",
+        "example_id": "docs-requests-quickstart-v2.26.0-007-human",
+        "text": "Requests will also use custom encodings in the event that you need them. If you have created your own encoding and registered it with the codecs module, you can simply use the codec name as the value of r.encoding and Requests will handle the decoding for you.",
+        "is_ai": false
+      }
+    ],
+    "signature": {
+      "instructions": "Classify the passage as AI-generated (`is_ai: True`) or human-authored (`is_ai: False`). Focus on rewrite-style artifacts rather than technical topic: AI rewrites often add editorial polish, explicit causal links, unnecessary clarifications, balanced restatements, elevated wording, or structural over-elaboration, while human documentation is typically more direct, concise, and occasionally awkward. Consider multiple signals rather than length or fluency alone. Provide a brief justification in `reasoning`, then the Boolean label.",
+      "fields": [
+        {
+          "prefix": "Text:",
+          "description": "Passage to classify"
+        },
+        {
+          "prefix": "Reasoning:",
+          "description": "${reasoning}"
+        },
+        {
+          "prefix": "Is Ai:",
+          "description": "True for AI-generated text; otherwise False"
+        }
+      ]
+    },
+    "lm": {
+      "model": "openai/gpt-5.6-luna",
+      "model_type": "chat",
+      "cache": false,
+      "num_retries": 1,
+      "finetuning_model": null,
+      "launch_kwargs": {},
+      "train_kwargs": {},
+      "temperature": null,
+      "max_tokens": null,
+      "timeout": 120
+    }
+  },
+  "metadata": {
+    "dependency_versions": {
+      "python": "3.12",
+      "dspy": "3.2.1",
+      "cloudpickle": "3.1"
+    }
+  }
+}
