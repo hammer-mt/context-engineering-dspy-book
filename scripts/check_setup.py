@@ -15,7 +15,7 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 SUPPORTED_PYTHON = ((3, 12), (3, 15))
 REQUIRED_FILES = ("pyproject.toml", "uv.lock", "requirements.txt", ".env.example")
 REQUIRED_PACKAGES = (
-    ("dspy", "dspy", "3.2.1"),
+    ("dspy", "dspy", "3.3.0"),
     ("jupyterlab", "jupyterlab", None),
     ("ipykernel", "ipykernel", None),
     ("python-dotenv", "dotenv", None),

@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "ceiling_usd": 95.0,
-  "total_cost_usd": 32.0278422,
-  "remaining_usd": 62.9721578,
+  "total_cost_usd": 32.64989688,
+  "remaining_usd": 62.35010312,
   "entries": [
     {
       "stage": "prior_chapter06_experiment",
@@ -1856,6 +1856,126 @@
       "metadata": {
         "status": "conservative_accounting_adjustment",
         "reason": "DSPy deepcopy split the task LM history in failed smoke attempt 2; actual task-call cost was not available, so a $0.10 upper contingency is recorded rather than claiming zero."
+      }
+    },
+    {
+      "stage": "gepa_full",
+      "run_id": "gepa-full-20260810T000425.085790Z",
+      "cost_usd": 0.58243722,
+      "metadata": {
+        "status": "completed",
+        "duration_seconds": 616.673543916957,
+        "auto": "light",
+        "max_full_evals": null,
+        "train_rows": 160,
+        "validation_rows": 60,
+        "test_rows_seen": 0,
+        "seed_program_path": null,
+        "candidate_selection_strategy": "pareto",
+        "use_merge": false,
+        "task_history": {
+          "request_count": 691,
+          "cache_hits": 0,
+          "prompt_tokens": 745564,
+          "completion_tokens": 105927,
+          "reasoning_tokens": 39491,
+          "total_tokens": 851491,
+          "cost_usd": 0.19595222,
+          "models": {
+            "openai/gpt-5.6-luna": {
+              "request_count": 691,
+              "cache_hits": 0,
+              "prompt_tokens": 745564,
+              "completion_tokens": 105927,
+              "reasoning_tokens": 39491,
+              "total_tokens": 851491,
+              "cost_usd": 0.19595222
+            }
+          }
+        },
+        "reflection_history": {
+          "request_count": 10,
+          "cache_hits": 0,
+          "prompt_tokens": 11627,
+          "completion_tokens": 10945,
+          "reasoning_tokens": 2143,
+          "total_tokens": 22572,
+          "cost_usd": 0.386485,
+          "models": {
+            "openai/gpt-5.6-sol": {
+              "request_count": 10,
+              "cache_hits": 0,
+              "prompt_tokens": 11627,
+              "completion_tokens": 10945,
+              "reasoning_tokens": 2143,
+              "total_tokens": 22572,
+              "cost_usd": 0.386485
+            }
+          }
+        },
+        "error": null
+      }
+    },
+    {
+      "stage": "optimized_validation",
+      "run_id": "optimized-validation-repeat-1-20260810T001452.656399Z",
+      "cost_usd": 0.01647598,
+      "metadata": {
+        "status": "completed",
+        "repeat": 1,
+        "duration_seconds": 45.85942212503869,
+        "error": null,
+        "summary": {
+          "request_count": 61,
+          "cache_hits": 0,
+          "prompt_tokens": 120971,
+          "completion_tokens": 11079,
+          "reasoning_tokens": 3839,
+          "total_tokens": 132050,
+          "cost_usd": 0.01647598,
+          "models": {
+            "openai/gpt-5.6-luna": {
+              "request_count": 61,
+              "cache_hits": 0,
+              "prompt_tokens": 120971,
+              "completion_tokens": 11079,
+              "reasoning_tokens": 3839,
+              "total_tokens": 132050,
+              "cost_usd": 0.01647598
+            }
+          }
+        }
+      }
+    },
+    {
+      "stage": "optimized_test",
+      "run_id": "optimized-test-repeat-1-20260810T001546.133860Z",
+      "cost_usd": 0.02314148,
+      "metadata": {
+        "status": "completed",
+        "repeat": 1,
+        "duration_seconds": 60.290139999997336,
+        "error": null,
+        "summary": {
+          "request_count": 80,
+          "cache_hits": 0,
+          "prompt_tokens": 158203,
+          "completion_tokens": 14308,
+          "reasoning_tokens": 4996,
+          "total_tokens": 172511,
+          "cost_usd": 0.02314148,
+          "models": {
+            "openai/gpt-5.6-luna": {
+              "request_count": 80,
+              "cache_hits": 0,
+              "prompt_tokens": 158203,
+              "completion_tokens": 14308,
+              "reasoning_tokens": 4996,
+              "total_tokens": 172511,
+              "cost_usd": 0.02314148
+            }
+          }
+        }
       }
     }
   ]

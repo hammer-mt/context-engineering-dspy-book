@@ -11,13 +11,13 @@ All programs use the canonical 300-row dataset and locked pair-grouped split: 16
 | KNNFewShot | 53.75% | 71.67% | 72.50% (58/80) | +18.75 pp | $0.0000 | $0.2380 | 0.0s | 1.830s / 2.837s |
 | COPRO | 53.75% | 53.33% | 50.00% (40/80) | -3.75 pp | >=$0.0732* | unavailable* | 861.1s | 1.711s / 2.658s |
 | MIPROv2 | 53.75% | 76.67% | 66.25% (53/80) | +12.50 pp | >=$0.3052* | unavailable* | 270.8s | 1.628s / 2.874s |
-| GEPA | 50.00% | 88.33% | 76.25% (61/80) | +26.25 pp | $10.8412 | $0.6086 | 2023.1s | 2.060s / 3.125s |
+| GEPA | 53.75% | 80.00% | 80.00% (64/80) | +26.25 pp | $0.5824 | $0.0396 | 616.7s | 2.423s / 3.452s |
 | SIMBA | 53.75% | 51.67% | 47.50% (38/80) | -6.25 pp | $1.1413 | $0.1589 | 321.3s | 1.711s / 2.408s |
 | Ensemble | 53.75% | 65.00% | 70.00% (56/80) | +16.25 pp | $0.8881 | $0.5875 | 1151.2s | 4.803s / 6.601s |
 | BootstrapFinetune (Apple Silicon / MPS) | 51.25% | 70.00% | 70.00% (56/80) | +18.75 pp | $0.8651 | $0.0000 | 1026.3s | 1.526s / 1.992s |
 | BetterTogether (Apple Silicon / MPS) | 51.25% | 60.00% | 65.00% (52/80) | +13.75 pp | $0.8445 | $0.0000 | 1740.0s | 1.550s / 1.922s |
 
-GEPA is the frozen PR #8 result and uses three fresh uncached evaluation passes with per-example majority vote. Newly executed rows report one uncached pass; that protocol difference is retained explicitly rather than normalized away.
+GEPA uses DSPy's native `auto='light'` budget with Pareto candidate selection and `use_merge=False`. Like the other newly executed rows, it reports one fresh uncached validation pass followed by one locked-test pass.
 
 `*` COPRO and MIPROv2 optimization cost is a recorded lower bound, and their evaluation cost is unavailable: those runs preceded the shared-history fix for deep-copied DSPy language models. Their scores and wall-clock timings remain valid.
 

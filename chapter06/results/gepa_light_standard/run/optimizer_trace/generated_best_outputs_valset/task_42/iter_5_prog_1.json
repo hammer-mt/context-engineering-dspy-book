@@ -1,0 +1,4 @@
+{
+    "reasoning": "The passage is terse and somewhat awkward, with uneven punctuation, \u201cthe step 1,\u201d and specific Spark terminology such as RDD, StructType, and createDataFrame. Its compressed, locally authored instructional style is more consistent with human technical notes than with a smoothly generalized AI rewrite.",
+    "is_ai": false
+}

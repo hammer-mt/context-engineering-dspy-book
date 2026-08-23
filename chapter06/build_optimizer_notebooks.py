@@ -113,15 +113,17 @@ NOTEBOOKS: dict[str, dict[str, Any]] = {
         "optimizer": "gepa",
         "idea": "Use textual failure feedback to evolve instructions, preserving reflection logs and best outputs along the way.",
         "use_when": "Your metric can explain errors, not merely score them, and you want a detailed instruction that encodes those lessons.",
-        "changes": "Instruction text and, depending on the search path, demonstrations; inspect the frozen reference artifact.",
+        "changes": "Instruction text; this run selected a prompt with no demonstrations.",
         "config": [
-            "six full evaluations in the full profile",
+            "`auto='light'` standard search budget",
             "reflection minibatches of three",
+            "Pareto candidate selection",
             "feedback metric returns both score and diagnosis",
-            "seed 42; merge disabled for a bounded run",
+            "seed 42; merge disabled for a quicker single-predictor run",
         ],
-        "compile": "optimizer = dspy.GEPA(\n    metric=feedback_metric, max_full_evals=profile.gepa_max_full_evals,\n    reflection_minibatch_size=3, reflection_lm=reflection_lm,\n    use_merge=False, track_best_outputs=True, seed=42,\n)\noptimized_detector = optimizer.compile(detector, trainset=trainset, valset=valset)",
-        "reading": "The preview is deliberately truncated; follow the prompt path for the complete learned rule set and `optimizer_logs/` for the evolutionary trace.",
+        "compile": "optimizer = dspy.GEPA(\n    metric=feedback_metric, auto='light',\n    reflection_minibatch_size=3, reflection_lm=reflection_lm,\n    num_threads=4, candidate_selection_strategy='pareto',\n    use_merge=False, track_best_outputs=True, track_stats=True, seed=42,\n)\noptimized_detector = optimizer.compile(detector, trainset=trainset, valset=valset)",
+        "reading": "The preview is deliberately truncated; follow the prompt path for the complete learned rule set and `optimizer_trace/` for the evolutionary trace.",
+        "run_note": "The published result is one unseeded `auto='light'` compile followed by one fresh, uncached validation pass and one locked-test pass. There is no preliminary compile or continuation stage in the reported result.",
     },
     "simba.ipynb": {
         "title": "SIMBA",
@@ -249,6 +251,10 @@ def make_notebook(spec: dict[str, Any]) -> dict[str, Any]:
     if platform_note:
         platform_note = indent(dedent(platform_note).strip(), " " * 16)
     compile_shape = indent(spec["compile"], " " * 16)
+    run_note = spec.get(
+        "run_note",
+        "The paid run first passed a bounded smoke profile, then froze its full program using training and validation only.",
+    )
     return _with_cell_ids(
         {
             "cells": [
@@ -342,8 +348,7 @@ def make_notebook(spec: dict[str, Any]) -> dict[str, Any]:
                 {spec["reading"]}
 
                 The saved output above uses the checked-in expanded-dataset result, so opening or
-                rerunning the notebook is free. The paid run first passed a bounded smoke profile,
-                then froze its full program using training and validation only. Set
+                rerunning the notebook is free. {run_note} Set
                 `CHAPTER06_RUN_LIVE=1` before launching Jupyter to reproduce that full protocol;
                 prompt optimizers require an OpenAI key, while weight optimizers also require the
                 local PyTorch/Transformers stack. The next cell previews the durable program artifact.

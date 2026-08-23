@@ -1,0 +1,4 @@
+{
+    "reasoning": "The passage uses specific Spark terminology (`RDD`, `Row`, `StructType`, `SparkSession`, and `createDataFrame`) and has a somewhat awkward, locally authored instructional style, including inconsistent spacing and punctuation in the numbered steps. Its technical specificity and minor roughness suggest human-written documentation rather than a smoothly generalized AI summary.",
+    "is_ai": false
+}

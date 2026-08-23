@@ -286,8 +286,9 @@ def run_gepa(
     *,
     mode: str,
     output_dir: Path,
-    max_full_evals: int,
-    stage_cap_usd: float,
+    max_full_evals: int | None = None,
+    auto: str | None = None,
+    stage_cap_usd: float = 10.0,
     threads: int = 4,
     seed_program_path: Path | None = None,
     candidate_selection_strategy: str = "pareto",
@@ -296,8 +297,12 @@ def run_gepa(
 
     if mode not in {"smoke", "full"}:
         raise ValueError("mode must be smoke or full")
-    if max_full_evals < 1:
+    if (max_full_evals is None) == (auto is None):
+        raise ValueError("provide exactly one of max_full_evals or auto")
+    if max_full_evals is not None and max_full_evals < 1:
         raise ValueError("max_full_evals must be positive")
+    if auto is not None and auto not in {"light", "medium", "heavy"}:
+        raise ValueError("auto must be light, medium, or heavy")
     if (output_dir / "optimized_program.json").exists():
         raise FileExistsError(f"refusing to overwrite completed candidate at {output_dir}")
 
@@ -332,9 +337,10 @@ def run_gepa(
         )
         return feedback_metric(*args, **kwargs)
 
+    budget = {"auto": auto} if auto is not None else {"max_full_evals": max_full_evals}
     optimizer = dspy.GEPA(
         metric=guarded_feedback_metric,
-        max_full_evals=max_full_evals,
+        **budget,
         reflection_minibatch_size=3,
         candidate_selection_strategy=candidate_selection_strategy,
         reflection_lm=reflection_lm,
@@ -387,12 +393,14 @@ def run_gepa(
             metadata={
                 "status": status,
                 "duration_seconds": duration,
+                "auto": auto,
                 "max_full_evals": max_full_evals,
                 "train_rows": len(trainset),
                 "validation_rows": len(valset),
                 "test_rows_seen": 0,
                 "seed_program_path": str(seed_program_path) if seed_program_path else None,
                 "candidate_selection_strategy": candidate_selection_strategy,
+                "use_merge": False,
                 "task_history": task_summary,
                 "reflection_history": reflection_summary,
                 "error": error_message,
@@ -406,6 +414,7 @@ def run_gepa(
                 "status": status,
                 "duration_seconds": duration,
                 "stage_cap_usd": stage_cap_usd,
+                "use_merge": False,
                 "cost": combined_summary,
                 "error": error_message,
             },
@@ -437,6 +446,8 @@ def run_gepa(
         "test_rows_seen": 0,
         "seed_program_path": str(seed_program_path) if seed_program_path else None,
         "candidate_selection_strategy": candidate_selection_strategy,
+        "use_merge": False,
+        "auto": auto,
         "max_full_evals": max_full_evals,
         "best_candidate_index": best_idx,
         "internal_validation_score": internal_score,
@@ -467,8 +478,8 @@ def evaluate_repeated(
 
     if split_name not in {"validation", "test"}:
         raise ValueError("only validation and test evaluation are supported")
-    if repeats < 3 or repeats % 2 == 0:
-        raise ValueError("repeats must be an odd number of at least three")
+    if repeats < 1 or repeats % 2 == 0:
+        raise ValueError("repeats must be a positive odd number")
     if split_name == "test":
         if validation_summary_path is None or not validation_summary_path.exists():
             raise ValueError("locked-test evaluation requires a persisted validation summary")
@@ -541,13 +552,21 @@ def evaluate_repeated(
         repeat_summaries.append(repeat)
         repeat_records.append(evaluation["predictions"])
 
-    majority = majority_vote(repeat_records)
+    majority = (
+        majority_vote(repeat_records)
+        if repeats > 1
+        else [dict(record) for record in repeat_records[0]]
+    )
     majority_correct = sum(int(record["correct"]) for record in majority)
     write_jsonl(output_dir / "majority_predictions.jsonl", majority)
     summary = {
         "split": split_name,
         "program_path": str(program_path),
-        "reference_strategy": "per-example majority vote across fresh uncached runs",
+        "reference_strategy": (
+            "per-example majority vote across fresh uncached runs"
+            if repeats > 1
+            else "one fresh uncached run"
+        ),
         "repeat_count": repeats,
         "row_count": len(majority),
         "accuracies_pct": [repeat["accuracy_pct"] for repeat in repeat_summaries],
@@ -792,7 +811,9 @@ def build_parser() -> argparse.ArgumentParser:
     gepa = subparsers.add_parser("gepa")
     gepa.add_argument("--mode", choices=("smoke", "full"), required=True)
     gepa.add_argument("--output-dir", type=Path, required=True)
-    gepa.add_argument("--max-full-evals", type=int, required=True)
+    budget = gepa.add_mutually_exclusive_group(required=True)
+    budget.add_argument("--max-full-evals", type=int)
+    budget.add_argument("--auto", choices=("light", "medium", "heavy"))
     gepa.add_argument("--stage-cap-usd", type=float, default=10.0)
     gepa.add_argument("--threads", type=int, default=4)
     gepa.add_argument("--seed-program", type=Path)
@@ -830,6 +851,7 @@ def main(argv: Sequence[str] | None = None) -> None:
             mode=args.mode,
             output_dir=args.output_dir,
             max_full_evals=args.max_full_evals,
+            auto=args.auto,
             stage_cap_usd=args.stage_cap_usd,
             threads=args.threads,
             seed_program_path=args.seed_program,

@@ -143,6 +143,41 @@ class ExpandedDatasetExperimentTest(unittest.TestCase):
                     validation_summary_path=None,
                 )
 
+    def test_single_pass_evaluation_is_supported(self) -> None:
+        from chapter06.experiments.gepa_expanded.run_experiment import build_parser
+
+        args = build_parser().parse_args(
+            [
+                "evaluate",
+                "--program",
+                "program.json",
+                "--split",
+                "validation",
+                "--output-dir",
+                "validation",
+                "--repeats",
+                "1",
+            ]
+        )
+        self.assertEqual(args.repeats, 1)
+
+    def test_gepa_native_auto_budget_is_supported(self) -> None:
+        from chapter06.experiments.gepa_expanded.run_experiment import build_parser
+
+        args = build_parser().parse_args(
+            [
+                "gepa",
+                "--mode",
+                "full",
+                "--output-dir",
+                "gepa-light",
+                "--auto",
+                "light",
+            ]
+        )
+        self.assertEqual(args.auto, "light")
+        self.assertIsNone(args.max_full_evals)
+
     def test_saved_gepa_candidates_can_be_materialized_without_api_calls(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
@@ -184,8 +219,11 @@ class ExpandedDatasetExperimentTest(unittest.TestCase):
                 self.recorded = kwargs
 
         class FakeGEPA:
+            last_kwargs: dict[str, object] = {}
+
             def __init__(self, **kwargs: object) -> None:
                 self.kwargs = kwargs
+                type(self).last_kwargs = kwargs
 
             def compile(
                 self,
@@ -247,6 +285,8 @@ class ExpandedDatasetExperimentTest(unittest.TestCase):
                     threads=1,
                 )
             self.assertEqual(summary["test_rows_seen"], 0)
+            self.assertFalse(summary["use_merge"])
+            self.assertIs(FakeGEPA.last_kwargs["use_merge"], False)
             self.assertTrue((output_dir / "optimized_program.json").exists())
             self.assertTrue((output_dir / "learned_prompt.json").exists())
 

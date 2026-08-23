@@ -1,0 +1,47 @@
+{
+  "split": "validation",
+  "program_path": "chapter06/results/gepa_light_standard/run/optimized_program.json",
+  "reference_strategy": "one fresh uncached run",
+  "repeat_count": 1,
+  "row_count": 60,
+  "accuracies_pct": [
+    80.0
+  ],
+  "majority_correct": 48,
+  "majority_accuracy_pct": 80.0,
+  "mean_latency_seconds": 2.491723637498217,
+  "p95_latency_seconds": 3.5704887500032783,
+  "cost_usd": 0.01647598,
+  "repeats": [
+    {
+      "repeat": 1,
+      "run_id": "optimized-validation-repeat-1-20260810T001452.656399Z",
+      "row_count": 60,
+      "correct": 48,
+      "accuracy_pct": 80.0,
+      "mean_latency_seconds": 2.491723637498217,
+      "p95_latency_seconds": 3.5704887500032783,
+      "duration_seconds": 45.85942212503869,
+      "cost": {
+        "request_count": 61,
+        "cache_hits": 0,
+        "prompt_tokens": 120971,
+        "completion_tokens": 11079,
+        "reasoning_tokens": 3839,
+        "total_tokens": 132050,
+        "cost_usd": 0.01647598,
+        "models": {
+          "openai/gpt-5.6-luna": {
+            "request_count": 61,
+            "cache_hits": 0,
+            "prompt_tokens": 120971,
+            "completion_tokens": 11079,
+            "reasoning_tokens": 3839,
+            "total_tokens": 132050,
+            "cost_usd": 0.01647598
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,4 @@
+{
+    "reasoning": "The passage contains specific Rails terminology and implementation details such as `article_params`, `app/views/articles/edit.html.erb`, Turbo, and a 4XX status code. Its wording is somewhat awkward and locally phrased (\u201cfor the app to work fine with Turbo\u201d) rather than uniformly polished or generically summarized, which is more consistent with human-authored technical documentation. The structured update flow alone is not sufficient evidence of AI generation.",
+    "is_ai": false
+}
