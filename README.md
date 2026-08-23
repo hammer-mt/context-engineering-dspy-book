@@ -67,10 +67,11 @@ Copy-Item .env.example .env
 explicit dependency update, not part of normal setup.
 
 `requirements.txt` is a generated, pip-compatible export of `uv.lock` used by
-the existing notebook bootstrap cells. Do not edit it by hand. A few notebooks
-still install specialized dependencies (LangGraph, CrewAI, Mem0, Qdrant client,
-MCP, Redis, Gradio, and MLflow MCP extras) in their own cells so the default
-environment stays manageable.
+the existing notebook bootstrap cells. Do not edit it by hand. The core
+environment includes MCP 1.x so the Chapter 8 stdio server runs from a fresh
+clone. A few notebooks still install specialized dependencies (LangGraph,
+CrewAI, Mem0, Qdrant client, Redis, Gradio, and MLflow MCP extras) in their own
+cells so the default environment stays manageable.
 
 ### Pip alternative
 
@@ -125,7 +126,7 @@ A few chapters need an extra service running locally. All commands below use loo
 | Qdrant | Ch 8 RAG variant | `docker run --rm -p 127.0.0.1:6333:6333 qdrant/qdrant` |
 | Redis | Ch 10 §10.2 cache variant | `docker run --rm -p 127.0.0.1:6379:6379 redis:alpine` |
 | Deno | Ch 7 §7.1.7–7.1.8 (PoT, CodeAct); Ch 9 §9.7 financial analyst PoT mode | `curl -fsSL https://deno.land/install.sh \| sh` |
-| MCP server | Ch 8 §8.2.5 MCP integration | Reader-provided. See https://modelcontextprotocol.io |
+| MCP server | Ch 8 §8.2.5 MCP integration | Included as `chapter08/mcp_server.py`; the notebook launches it automatically. |
 | Playwright browsers | Ch 11 landing-page optimizer | `playwright install` |
 | Claude Code CLI | Ch 11 landing-page + image-CLI optimizers | https://docs.claude.com/en/docs/claude-code |
 | Apple Silicon MPS or CPU | Ch 6 fine-tuning examples | PyTorch/Transformers/TRL/PEFT support the BootstrapFinetune and BetterTogether compile patterns; inspecting the published results requires no model download |

@@ -1,16 +1,19 @@
 from __future__ import annotations
 
 import ast
+import asyncio
 import json
 import sys
 import tempfile
 import types
 import unittest
+from functools import cache
 from pathlib import Path
 
 import dspy
 import pandas as pd
 from litellm import ModelResponse
+from dspy.utils.exceptions import AdapterParseError
 
 
 CHAPTER_DIR = Path(__file__).resolve().parents[1]
@@ -29,6 +32,7 @@ CODING_AGENT_NOTEBOOKS = (
 )
 
 
+@cache
 def load_notebook(filename: str) -> dict:
     return json.loads((CHAPTER_DIR / filename).read_text(encoding="utf-8"))
 
@@ -125,13 +129,17 @@ class ProductionNotebookTest(unittest.TestCase):
         self.assertNotIn("`log_feedback`", mlflow_all)
         self.assertNotIn("`log_expectation`", mlflow_all)
 
-        self.assertIn("from dspy.streaming import streaming_response", fastapi)
+        self.assertIn("async def sse_events", fastapi)
+        self.assertIn("json.dumps(data)", fastapi)
+        self.assertNotIn("from dspy.streaming import streaming_response", fastapi)
         self.assertNotIn("from dspy.utils.streaming", fastapi)
         self.assertIn("streaming_extractor = dspy.streamify(\n    extractor,", fastapi)
         self.assertNotIn("dspy.streamify(\n    async_extractor,", fastapi)
         self.assertIn("allow_pickle=True", fastapi)
         self.assertIn("Start with four for local testing", fastapi)
         self.assertNotIn("sixteen to twenty-four", fastapi)
+        self.assertIn("except dspy.LMError:", fastapi)
+        self.assertNotIn("from litellm.exceptions import", fastapi)
 
         self.assertIn("dspy.BootstrapFewShotWithRandomSearch", ui)
         self.assertIn("dspy.MIPROv2", ui)
@@ -219,6 +227,104 @@ class ProductionNotebookTest(unittest.TestCase):
             ],
         )
         self.assertTrue(callable(stream))
+
+    def test_sse_serializer_handles_listener_status_and_prediction_values(self) -> None:
+        notebook = load_notebook("fastapi-invoice-api.ipynb")
+
+        class InvoiceExtraction(dspy.Signature):
+            text: str = dspy.InputField()
+            rationale: str = dspy.OutputField()
+
+        from fastapi import FastAPI
+        from pydantic import BaseModel
+
+        class InvoiceRequest(BaseModel):
+            text: str
+
+        namespace = {
+            "app": FastAPI(),
+            "dspy": dspy,
+            "extractor": dspy.ChainOfThought(InvoiceExtraction),
+            "InvoiceRequest": InvoiceRequest,
+        }
+        exec(python_source(notebook["cells"][30]), namespace)
+
+        async def values():
+            yield dspy.streaming.StreamResponse(
+                predict_name="extractor",
+                signature_field_name="rationale",
+                chunk="because",
+                is_last_chunk=False,
+            )
+            yield dspy.streaming.StatusMessage("Running extractor...")
+            yield dspy.Prediction(company="Acme")
+
+        async def collect() -> list[str]:
+            return [value async for value in namespace["sse_events"](values())]
+
+        events = asyncio.run(collect())
+        self.assertIn('"field": "rationale"', events[0])
+        self.assertIn('"status": "Running extractor..."', events[1])
+        self.assertIn('"prediction": {"company": "Acme"}', events[2])
+        self.assertEqual(events[-1], "data: [DONE]\n\n")
+
+        async def failing_values():
+            yield dspy.streaming.StatusMessage("Starting...")
+            raise dspy.LMError("provider details that must not reach the client")
+
+        async def collect_failure() -> list[str]:
+            return [
+                value
+                async for value in namespace["sse_events"](failing_values())
+            ]
+
+        failure_events = asyncio.run(collect_failure())
+        self.assertIn('"status": "Starting..."', failure_events[0])
+        self.assertEqual(
+            failure_events[-1],
+            'event: error\ndata: {"error": "Language model request failed."}\n\n',
+        )
+        self.assertNotIn("[DONE]", "".join(failure_events))
+        self.assertNotIn("provider details", "".join(failure_events))
+
+    def test_markdown_adapter_changes_only_output_field_markers(self) -> None:
+        notebook = load_notebook("fastapi-invoice-api.ipynb")
+        namespace: dict[str, object] = {}
+        exec(python_source(notebook["cells"][6]), namespace)
+        adapter = namespace["MarkdownAdapter"]()
+
+        class Example(dspy.Signature):
+            question: str = dspy.InputField()
+            answer: str = dspy.OutputField()
+
+        messages = adapter.format(Example, demos=[], inputs={"question": "Why?"})
+        system = messages[0]["content"]
+        user = messages[-1]["content"]
+        assistant = adapter.format_assistant_message_content(
+            Example, {"answer": "Because."}
+        )
+
+        self.assertIn("[[ ## question ## ]]", system)
+        self.assertIn("[[ ## question ## ]]", user)
+        self.assertIn("## answer", system)
+        self.assertIn("## answer", assistant)
+        self.assertNotIn("[[ ## answer ## ]]", assistant)
+        self.assertIn("[[ ## completed ## ]]", assistant)
+
+        class TwoOutputs(dspy.Signature):
+            answer: str = dspy.OutputField()
+            confidence: float = dspy.OutputField()
+
+        with self.assertRaises(AdapterParseError):
+            adapter.parse(TwoOutputs, "## answer\nBecause.\n\n[[ ## completed ## ]]")
+
+        parsed = adapter.parse(
+            TwoOutputs,
+            "## answer\nBecause.\n\n## confidence\n0.85\n\n[[ ## completed ## ]]",
+        )
+        self.assertEqual(parsed["answer"], "Because.")
+        self.assertEqual(parsed["confidence"], 0.85)
+        self.assertIsInstance(parsed["confidence"], float)
 
     def test_redis_cache_example_preserves_litellm_response_type(self) -> None:
         class FakeRedis:
