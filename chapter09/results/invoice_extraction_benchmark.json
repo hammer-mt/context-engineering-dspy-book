@@ -1,0 +1,481 @@
+{
+  "generated_at": "2026-08-09T22:29:16.415662+00:00",
+  "status": "directional_synthetic_benchmark",
+  "task_model": "openai/gpt-4o-mini",
+  "reflection_model": "openai/gpt-5.6-sol",
+  "train_invoice_ids": [
+    "standard-us",
+    "european-iban",
+    "messy-layout"
+  ],
+  "holdout_invoice_ids": [
+    "missing-bank-details",
+    "non-standard-labels"
+  ],
+  "holdout_size": 2,
+  "inference_repeats": 3,
+  "approaches": {
+    "baseline": {
+      "exact_field_accuracy_pct": 81.25,
+      "partial_credit_score_pct": 90.62,
+      "inference_usage": {
+        "requests": 6,
+        "input_tokens": 2922,
+        "output_tokens": 1276,
+        "total_tokens": 4198,
+        "reported_cost_usd": 0.001204
+      },
+      "predictions": [
+        {
+          "repeat": 1,
+          "invoice_id": "missing-bank-details",
+          "exact_field_accuracy": 0.625,
+          "partial_credit_score": 0.8125,
+          "prediction": {
+            "company": "Building Supplies Co",
+            "billed_to": "HomeBuilder LLC",
+            "invoice_number": "BSC-2024-123",
+            "invoice_date": "May 15, 2024",
+            "total_amount": "$12,450.00",
+            "bank_name": "N/A",
+            "account_name": "N/A",
+            "account_number": "N/A"
+          }
+        },
+        {
+          "repeat": 1,
+          "invoice_id": "non-standard-labels",
+          "exact_field_accuracy": 1.0,
+          "partial_credit_score": 1.0,
+          "prediction": {
+            "company": "Green Energy Solutions",
+            "billed_to": "City Council",
+            "invoice_number": "GES-555",
+            "invoice_date": "2024-04-10",
+            "total_amount": "$5,200.00",
+            "bank_name": "Community Bank",
+            "account_name": "Green Energy Solutions",
+            "account_number": "5551234567"
+          }
+        },
+        {
+          "repeat": 2,
+          "invoice_id": "missing-bank-details",
+          "exact_field_accuracy": 0.625,
+          "partial_credit_score": 0.8125,
+          "prediction": {
+            "company": "Building Supplies Co",
+            "billed_to": "HomeBuilder LLC",
+            "invoice_number": "BSC-2024-123",
+            "invoice_date": "May 15, 2024",
+            "total_amount": "$12,450.00",
+            "bank_name": "N/A",
+            "account_name": "N/A",
+            "account_number": "N/A"
+          }
+        },
+        {
+          "repeat": 2,
+          "invoice_id": "non-standard-labels",
+          "exact_field_accuracy": 1.0,
+          "partial_credit_score": 1.0,
+          "prediction": {
+            "company": "Green Energy Solutions",
+            "billed_to": "City Council",
+            "invoice_number": "GES-555",
+            "invoice_date": "2024-04-10",
+            "total_amount": "$5,200.00",
+            "bank_name": "Community Bank",
+            "account_name": "Green Energy Solutions",
+            "account_number": "5551234567"
+          }
+        },
+        {
+          "repeat": 3,
+          "invoice_id": "missing-bank-details",
+          "exact_field_accuracy": 0.625,
+          "partial_credit_score": 0.8125,
+          "prediction": {
+            "company": "Building Supplies Co",
+            "billed_to": "HomeBuilder LLC",
+            "invoice_number": "BSC-2024-123",
+            "invoice_date": "May 15, 2024",
+            "total_amount": "$12,450.00",
+            "bank_name": "N/A",
+            "account_name": "N/A",
+            "account_number": "N/A"
+          }
+        },
+        {
+          "repeat": 3,
+          "invoice_id": "non-standard-labels",
+          "exact_field_accuracy": 1.0,
+          "partial_credit_score": 1.0,
+          "prediction": {
+            "company": "Green Energy Solutions",
+            "billed_to": "City Council",
+            "invoice_number": "GES-555",
+            "invoice_date": "2024-04-10",
+            "total_amount": "$5,200.00",
+            "bank_name": "Community Bank",
+            "account_name": "Green Energy Solutions",
+            "account_number": "5551234567"
+          }
+        }
+      ]
+    },
+    "few_shot": {
+      "exact_field_accuracy_pct": 87.5,
+      "partial_credit_score_pct": 90.62,
+      "inference_usage": {
+        "requests": 6,
+        "input_tokens": 6948,
+        "output_tokens": 1137,
+        "total_tokens": 8085,
+        "reported_cost_usd": 0.001494
+      },
+      "predictions": [
+        {
+          "repeat": 1,
+          "invoice_id": "missing-bank-details",
+          "exact_field_accuracy": 0.625,
+          "partial_credit_score": 0.8125,
+          "prediction": {
+            "company": "Building Supplies Co",
+            "billed_to": "HomeBuilder LLC",
+            "invoice_number": "BSC-2024-123",
+            "invoice_date": "May 15, 2024",
+            "total_amount": "$12,450.00",
+            "bank_name": "N/A",
+            "account_name": "N/A",
+            "account_number": "N/A"
+          }
+        },
+        {
+          "repeat": 1,
+          "invoice_id": "non-standard-labels",
+          "exact_field_accuracy": 1.0,
+          "partial_credit_score": 1.0,
+          "prediction": {
+            "company": "Green Energy Solutions",
+            "billed_to": "City Council",
+            "invoice_number": "GES-555",
+            "invoice_date": "2024-04-10",
+            "total_amount": "$5,200.00",
+            "bank_name": "Community Bank",
+            "account_name": "Green Energy Solutions",
+            "account_number": "5551234567"
+          }
+        },
+        {
+          "repeat": 2,
+          "invoice_id": "missing-bank-details",
+          "exact_field_accuracy": 1.0,
+          "partial_credit_score": 0.8125,
+          "prediction": {
+            "company": "Building Supplies Co",
+            "billed_to": "HomeBuilder LLC",
+            "invoice_number": "BSC-2024-123",
+            "invoice_date": "May 15, 2024",
+            "total_amount": "$12,450.00",
+            "bank_name": "",
+            "account_name": "",
+            "account_number": ""
+          }
+        },
+        {
+          "repeat": 2,
+          "invoice_id": "non-standard-labels",
+          "exact_field_accuracy": 1.0,
+          "partial_credit_score": 1.0,
+          "prediction": {
+            "company": "Green Energy Solutions",
+            "billed_to": "City Council",
+            "invoice_number": "GES-555",
+            "invoice_date": "2024-04-10",
+            "total_amount": "$5,200.00",
+            "bank_name": "Community Bank",
+            "account_name": "Green Energy Solutions",
+            "account_number": "5551234567"
+          }
+        },
+        {
+          "repeat": 3,
+          "invoice_id": "missing-bank-details",
+          "exact_field_accuracy": 0.625,
+          "partial_credit_score": 0.8125,
+          "prediction": {
+            "company": "Building Supplies Co",
+            "billed_to": "HomeBuilder LLC",
+            "invoice_number": "BSC-2024-123",
+            "invoice_date": "May 15, 2024",
+            "total_amount": "$12,450.00",
+            "bank_name": "N/A",
+            "account_name": "N/A",
+            "account_number": "N/A"
+          }
+        },
+        {
+          "repeat": 3,
+          "invoice_id": "non-standard-labels",
+          "exact_field_accuracy": 1.0,
+          "partial_credit_score": 1.0,
+          "prediction": {
+            "company": "Green Energy Solutions",
+            "billed_to": "City Council",
+            "invoice_number": "GES-555",
+            "invoice_date": "2024-04-10",
+            "total_amount": "$5,200.00",
+            "bank_name": "Community Bank",
+            "account_name": "Green Energy Solutions",
+            "account_number": "5551234567"
+          }
+        }
+      ]
+    },
+    "majority_voting": {
+      "exact_field_accuracy_pct": 81.25,
+      "partial_credit_score_pct": 90.62,
+      "inference_usage": {
+        "requests": 6,
+        "input_tokens": 2922,
+        "output_tokens": 3763,
+        "total_tokens": 6685,
+        "reported_cost_usd": 0.002696
+      },
+      "predictions": [
+        {
+          "repeat": 1,
+          "invoice_id": "missing-bank-details",
+          "exact_field_accuracy": 0.625,
+          "partial_credit_score": 0.8125,
+          "prediction": {
+            "company": "Building Supplies Co",
+            "billed_to": "HomeBuilder LLC",
+            "invoice_number": "BSC-2024-123",
+            "invoice_date": "May 15, 2024",
+            "total_amount": "$12,450.00",
+            "bank_name": "N/A",
+            "account_name": "N/A",
+            "account_number": "N/A"
+          }
+        },
+        {
+          "repeat": 1,
+          "invoice_id": "non-standard-labels",
+          "exact_field_accuracy": 1.0,
+          "partial_credit_score": 1.0,
+          "prediction": {
+            "company": "Green Energy Solutions",
+            "billed_to": "City Council",
+            "invoice_number": "GES-555",
+            "invoice_date": "2024-04-10",
+            "total_amount": "$5,200.00",
+            "bank_name": "Community Bank",
+            "account_name": "Green Energy Solutions",
+            "account_number": "5551234567"
+          }
+        },
+        {
+          "repeat": 2,
+          "invoice_id": "missing-bank-details",
+          "exact_field_accuracy": 0.625,
+          "partial_credit_score": 0.8125,
+          "prediction": {
+            "company": "Building Supplies Co",
+            "billed_to": "HomeBuilder LLC",
+            "invoice_number": "BSC-2024-123",
+            "invoice_date": "May 15, 2024",
+            "total_amount": "$12,450.00",
+            "bank_name": "N/A",
+            "account_name": "N/A",
+            "account_number": "N/A"
+          }
+        },
+        {
+          "repeat": 2,
+          "invoice_id": "non-standard-labels",
+          "exact_field_accuracy": 1.0,
+          "partial_credit_score": 1.0,
+          "prediction": {
+            "company": "Green Energy Solutions",
+            "billed_to": "City Council",
+            "invoice_number": "GES-555",
+            "invoice_date": "2024-04-10",
+            "total_amount": "$5,200.00",
+            "bank_name": "Community Bank",
+            "account_name": "Green Energy Solutions",
+            "account_number": "5551234567"
+          }
+        },
+        {
+          "repeat": 3,
+          "invoice_id": "missing-bank-details",
+          "exact_field_accuracy": 0.625,
+          "partial_credit_score": 0.8125,
+          "prediction": {
+            "company": "Building Supplies Co",
+            "billed_to": "HomeBuilder LLC",
+            "invoice_number": "BSC-2024-123",
+            "invoice_date": "May 15, 2024",
+            "total_amount": "$12,450.00",
+            "bank_name": "N/A",
+            "account_name": "N/A",
+            "account_number": "N/A"
+          }
+        },
+        {
+          "repeat": 3,
+          "invoice_id": "non-standard-labels",
+          "exact_field_accuracy": 1.0,
+          "partial_credit_score": 1.0,
+          "prediction": {
+            "company": "Green Energy Solutions",
+            "billed_to": "City Council",
+            "invoice_number": "GES-555",
+            "invoice_date": "2024-04-10",
+            "total_amount": "$5,200.00",
+            "bank_name": "Community Bank",
+            "account_name": "Green Energy Solutions",
+            "account_number": "5551234567"
+          }
+        }
+      ]
+    },
+    "gepa": {
+      "exact_field_accuracy_pct": 81.25,
+      "partial_credit_score_pct": 90.62,
+      "inference_usage": {
+        "requests": 6,
+        "input_tokens": 2922,
+        "output_tokens": 1388,
+        "total_tokens": 4310,
+        "reported_cost_usd": 0.001271
+      },
+      "predictions": [
+        {
+          "repeat": 1,
+          "invoice_id": "missing-bank-details",
+          "exact_field_accuracy": 0.625,
+          "partial_credit_score": 0.8125,
+          "prediction": {
+            "company": "Building Supplies Co",
+            "billed_to": "HomeBuilder LLC",
+            "invoice_number": "BSC-2024-123",
+            "invoice_date": "May 15, 2024",
+            "total_amount": "$12,450.00",
+            "bank_name": "N/A",
+            "account_name": "N/A",
+            "account_number": "N/A"
+          }
+        },
+        {
+          "repeat": 1,
+          "invoice_id": "non-standard-labels",
+          "exact_field_accuracy": 1.0,
+          "partial_credit_score": 1.0,
+          "prediction": {
+            "company": "Green Energy Solutions",
+            "billed_to": "City Council",
+            "invoice_number": "GES-555",
+            "invoice_date": "2024-04-10",
+            "total_amount": "$5,200.00",
+            "bank_name": "Community Bank",
+            "account_name": "Green Energy Solutions",
+            "account_number": "5551234567"
+          }
+        },
+        {
+          "repeat": 2,
+          "invoice_id": "missing-bank-details",
+          "exact_field_accuracy": 0.625,
+          "partial_credit_score": 0.8125,
+          "prediction": {
+            "company": "Building Supplies Co",
+            "billed_to": "HomeBuilder LLC",
+            "invoice_number": "BSC-2024-123",
+            "invoice_date": "May 15, 2024",
+            "total_amount": "$12,450.00",
+            "bank_name": "N/A",
+            "account_name": "N/A",
+            "account_number": "N/A"
+          }
+        },
+        {
+          "repeat": 2,
+          "invoice_id": "non-standard-labels",
+          "exact_field_accuracy": 1.0,
+          "partial_credit_score": 1.0,
+          "prediction": {
+            "company": "Green Energy Solutions",
+            "billed_to": "City Council",
+            "invoice_number": "GES-555",
+            "invoice_date": "2024-04-10",
+            "total_amount": "$5,200.00",
+            "bank_name": "Community Bank",
+            "account_name": "Green Energy Solutions",
+            "account_number": "5551234567"
+          }
+        },
+        {
+          "repeat": 3,
+          "invoice_id": "missing-bank-details",
+          "exact_field_accuracy": 0.625,
+          "partial_credit_score": 0.8125,
+          "prediction": {
+            "company": "Building Supplies Co",
+            "billed_to": "HomeBuilder LLC",
+            "invoice_number": "BSC-2024-123",
+            "invoice_date": "May 15, 2024",
+            "total_amount": "$12,450.00",
+            "bank_name": "N/A",
+            "account_name": "N/A",
+            "account_number": "N/A"
+          }
+        },
+        {
+          "repeat": 3,
+          "invoice_id": "non-standard-labels",
+          "exact_field_accuracy": 1.0,
+          "partial_credit_score": 1.0,
+          "prediction": {
+            "company": "Green Energy Solutions",
+            "billed_to": "City Council",
+            "invoice_number": "GES-555",
+            "invoice_date": "2024-04-10",
+            "total_amount": "$5,200.00",
+            "bank_name": "Community Bank",
+            "account_name": "Green Energy Solutions",
+            "account_number": "5551234567"
+          }
+        }
+      ]
+    }
+  },
+  "gepa_optimization_usage": {
+    "task_lm": {
+      "requests": 393,
+      "input_tokens": 198465,
+      "output_tokens": 90421,
+      "total_tokens": 288886,
+      "reported_cost_usd": 0.084022
+    },
+    "reflection_lm": {
+      "requests": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "total_tokens": 0,
+      "reported_cost_usd": 0.0
+    },
+    "configured_max_metric_calls": 392
+  },
+  "gepa_learned_instructions": [
+    "Extract structured invoice fields from free-form invoice text."
+  ],
+  "limitations": [
+    "Only two distinct synthetic invoices are held out.",
+    "Repeated stochastic runs do not replace additional invoice layouts.",
+    "GEPA uses the training set for Pareto tracking because this restored corpus has only five examples.",
+    "Use these measurements as directional evidence, not typical accuracy."
+  ]
+}

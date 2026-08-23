@@ -1,0 +1,4 @@
+{
+    "reasoning": "The passage is likely human-written. It contains concrete Rails-specific details such as `POST /articles`, the `create` action, `@article`, and `new.html.erb`, along with somewhat awkward phrasing (\u201cdoes attempt to save\u201d) and an imprecise \u201c4XX\u201d status-code reference. These uneven, locally authored details are less characteristic of a smoothly generalized AI summary.",
+    "is_ai": false
+}

@@ -502,16 +502,19 @@ def _compile_prompt_optimizer(
             minibatch_size=4 if smoke else 35,
         )
     if name == "gepa":
+        budget = {"max_full_evals": 1} if smoke else {"auto": "light"}
         return dspy.GEPA(
             metric=feedback_metric,
-            max_full_evals=1 if smoke else 6,
+            **budget,
             reflection_minibatch_size=3,
             reflection_lm=reflection_lm,
-            num_threads=1,
+            num_threads=4,
+            candidate_selection_strategy="pareto",
             use_merge=False,
             track_best_outputs=True,
+            track_stats=True,
             seed=42,
-            log_dir=str(artifact_dir / "optimizer_logs") if artifact_dir else None,
+            log_dir=str(artifact_dir / "optimizer_trace") if artifact_dir else None,
         ).compile(detector, trainset=trainset, valset=valset)
     if name == "simba":
         return dspy.SIMBA(

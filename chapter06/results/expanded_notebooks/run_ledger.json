@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-07-19T03:55:20.607781+00:00",
+  "generated_at": "2026-08-10T00:35:49.907483+00:00",
   "cost_scope": "all newly executed smoke/full results and recorded preflight attempts",
-  "recorded_cost_lower_bound_usd": 6.978873,
+  "recorded_cost_lower_bound_usd": 7.60092768,
   "cost_status": "lower_bound because COPRO/MIPROv2 copied LM histories were detached before the accounting fix and two paid BootstrapFinetune preflight attempts ended before their teacher cost could be recovered",
   "runs": [
     {
@@ -290,6 +290,19 @@
       "evaluation_cost_status": "recorded",
       "optimization_time_seconds": 1740.046647665993,
       "result_artifact": "chapter06/results/expanded_notebooks/better-together/full/result.json"
+    },
+    {
+      "optimizer": "gepa",
+      "mode": "full",
+      "status": "completed",
+      "started_at": "2026-08-10T00:04:25.085790Z",
+      "finished_at": "2026-08-10T00:16:46Z",
+      "optimization_cost_usd": 0.58243722,
+      "optimization_cost_status": "recorded",
+      "evaluation_cost_usd": 0.03961746,
+      "evaluation_cost_status": "recorded",
+      "optimization_time_seconds": 616.673543916957,
+      "result_artifact": "chapter06/results/gepa_light_standard/comparison.json"
     },
     {
       "optimizer": "better-together",

@@ -19,7 +19,7 @@ from chapter06.optimizer_runtime import DATA_PATH, RESULTS_ROOT, SPLIT_PATH
 
 
 CHAPTER_DIR = Path(__file__).resolve().parent
-GEPA_ROOT = CHAPTER_DIR / "results" / "gepa_expanded"
+GEPA_ROOT = CHAPTER_DIR / "results" / "gepa_light_standard"
 DISPLAY_NAMES = {
     spec["optimizer"]: spec["title"] for spec in NOTEBOOKS.values()
 }
@@ -84,6 +84,24 @@ def _build_run_ledger() -> dict[str, Any]:
                     "result_artifact": str(result_path.relative_to(CHAPTER_DIR.parent)),
                 }
             )
+    gepa_result = GEPA_ROOT / "comparison.json"
+    if gepa_result.exists():
+        gepa = _json(gepa_result)
+        runs.append(
+            {
+                "optimizer": "gepa",
+                "mode": "full",
+                "status": "completed",
+                "started_at": gepa.get("started_at"),
+                "finished_at": gepa.get("finished_at"),
+                "optimization_cost_usd": gepa["optimization_cost_usd"],
+                "optimization_cost_status": "recorded",
+                "evaluation_cost_usd": gepa["evaluation_cost_usd"],
+                "evaluation_cost_status": "recorded",
+                "optimization_time_seconds": gepa["optimization_time_seconds"],
+                "result_artifact": str(gepa_result.relative_to(CHAPTER_DIR.parent)),
+            }
+        )
     for failure_path in sorted(RESULTS_ROOT.glob("*/*/preflight_failures.json")):
         payload = _json(failure_path)
         for failure in payload.get("failures", []):
@@ -128,42 +146,7 @@ def _build_run_ledger() -> dict[str, Any]:
 
 
 def _gepa_row() -> dict[str, Any]:
-    summary = _json(GEPA_ROOT / "final" / "summary.json")
-    validation = _json(GEPA_ROOT / "gepa_candidate_2" / "validation" / "summary.json")
-    statistical = _json(GEPA_ROOT / "final" / "statistical_analysis.json")
-    return {
-        "optimizer": "gepa",
-        "display_name": DISPLAY_NAMES["gepa"],
-        "status": "completed",
-        "evaluation_protocol": "three fresh uncached runs with per-example majority vote",
-        "task_model": summary["task_model"],
-        "reflection_model": summary["reflection_model"],
-        "baseline_accuracy_pct": summary["baseline_test_accuracy_pct"],
-        "optimized_validation_accuracy_pct": validation["majority_accuracy_pct"],
-        "locked_test_accuracy_pct": summary["optimized_test_accuracy_pct"],
-        "locked_test_correct": summary["optimized_test_correct"],
-        "locked_test_rows": 80,
-        "absolute_uplift_pct_points": summary["absolute_uplift_pct_points"],
-        "relative_uplift_pct": summary["relative_uplift_pct"],
-        "optimization_cost_usd": summary["optimize_cost_usd"],
-        "evaluation_cost_usd": summary["optimized_evaluation_cost_usd"],
-        "optimization_time_seconds": summary["optimize_time_seconds"],
-        "mean_inference_latency_seconds": summary["optimized_mean_latency_seconds"],
-        "p95_inference_latency_seconds": summary["optimized_p95_latency_seconds"],
-        "paired_mcnemar_p_value": summary["paired_mcnemar_p_value"],
-        "paired_bootstrap_ci_low_pct_points": summary[
-            "paired_bootstrap_ci_low_pct_points"
-        ],
-        "paired_bootstrap_ci_high_pct_points": summary[
-            "paired_bootstrap_ci_high_pct_points"
-        ],
-        "program_artifact": "chapter06/results/gepa_expanded/final/optimized_program.json",
-        "prompt_artifact": "chapter06/results/gepa_expanded/final/learned_prompt.json",
-        "result_artifact": "chapter06/results/gepa_expanded/final/summary.json",
-        "predictions_artifact": "chapter06/results/gepa_expanded/final/test_predictions.jsonl",
-        "statistical_analysis": statistical,
-        "source_run": "PR #8 frozen reference run",
-    }
+    return _json(GEPA_ROOT / "comparison.json")
 
 
 def _run_row(
@@ -269,15 +252,12 @@ def _run_row(
 
 
 def build() -> dict[str, Any]:
-    canonical_baseline = _json(GEPA_ROOT / "final" / "summary.json")[
-        "baseline_test_accuracy_pct"
-    ]
     quickstart_result = RESULTS_ROOT / "quickstart" / "full" / "result.json"
     quickstart = _json(quickstart_result) if quickstart_result.exists() else None
+    if quickstart is None:
+        raise FileNotFoundError(quickstart_result)
     baseline_predictions = quickstart["final"]["predictions"] if quickstart else None
-    single_pass_baseline = (
-        float(quickstart["final"]["accuracy"]) if quickstart else canonical_baseline
-    )
+    single_pass_baseline = float(quickstart["final"]["accuracy"])
     rows = []
     for optimizer in ORDER:
         rows.append(
@@ -299,14 +279,13 @@ def build() -> dict[str, Any]:
         "split_sha256": _sha256(SPLIT_PATH),
         "split_rows": {"train": 160, "validation": 60, "test": 80},
         "selection_policy": "optimizer choices use train/validation only; locked test is evaluated after the program is frozen",
-        "canonical_luna_baseline_accuracy_pct": canonical_baseline,
+        "canonical_luna_baseline_accuracy_pct": single_pass_baseline,
         "completed_count": len(completed),
         "total_count": len(rows),
         "new_run_cost_usd": sum(
             _money(row.get("optimization_cost_usd"))
             + _money(row.get("evaluation_cost_usd"))
             for row in completed
-            if row["optimizer"] != "gepa"
         ),
         "new_run_cost_status": "recorded_lower_bound; COPRO and MIPROv2 detached some copied LM histories before the shared-history fix",
         "rows": rows,
@@ -377,9 +356,9 @@ def markdown(comparison: dict[str, Any]) -> str:
     lines.extend(
         [
             "",
-            "GEPA is the frozen PR #8 result and uses three fresh uncached evaluation passes with "
-            "per-example majority vote. Newly executed rows report one uncached pass; that protocol "
-            "difference is retained explicitly rather than normalized away.",
+            "GEPA uses DSPy's native `auto='light'` budget with Pareto candidate selection and "
+            "`use_merge=False`. Like the other newly executed rows, it reports one fresh uncached "
+            "validation pass followed by one locked-test pass.",
             "",
             "`*` COPRO and MIPROv2 optimization cost is a recorded lower bound, and their "
             "evaluation cost is unavailable: those runs preceded the shared-history fix for "

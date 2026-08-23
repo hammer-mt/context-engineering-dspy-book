@@ -62,7 +62,7 @@ powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | ie
 Copy-Item .env.example .env
 ```
 
-`pyproject.toml` declares support for Python 3.12–3.14 and pins DSPy 3.2.1.
+`pyproject.toml` declares support for Python 3.12–3.14 and pins DSPy 3.3.0.
 `uv.lock` contains the complete resolved environment. Changing either is an
 explicit dependency update, not part of normal setup.
 

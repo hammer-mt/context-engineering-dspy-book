@@ -108,24 +108,64 @@ class ProductionNotebookTest(unittest.TestCase):
             self.assertNotIn(stale_model, source)
 
     def test_pinned_dspy_apis_are_used_in_executable_forms(self) -> None:
+        project = (REPO_ROOT / "pyproject.toml").read_text(encoding="utf-8")
         mlflow = notebook_code_source("mlflow-tracking.ipynb")
+        mlflow_all = notebook_source("mlflow-tracking.ipynb")
         fastapi = notebook_source("fastapi-invoice-api.ipynb")
         ui = notebook_source("dspyui-gradio.ipynb")
 
+        self.assertIn('"mlflow>=3.14"', project)
         self.assertIn('auto="light"', mlflow)
         self.assertIn("reflection_lm=reflection_lm", mlflow)
         self.assertNotIn("max_rounds=3", mlflow)
+        self.assertIn("mlflow[mcp]>=3.14.0", mlflow_all)
+        self.assertIn("log_trace_feedback", mlflow_all)
+        self.assertIn("log_trace_expectation", mlflow_all)
+        self.assertIn("evaluate_traces", mlflow_all)
+        self.assertNotIn("`log_feedback`", mlflow_all)
+        self.assertNotIn("`log_expectation`", mlflow_all)
 
         self.assertIn("from dspy.streaming import streaming_response", fastapi)
         self.assertNotIn("from dspy.utils.streaming", fastapi)
         self.assertIn("streaming_extractor = dspy.streamify(\n    extractor,", fastapi)
         self.assertNotIn("dspy.streamify(\n    async_extractor,", fastapi)
         self.assertIn("allow_pickle=True", fastapi)
+        self.assertIn("Start with four for local testing", fastapi)
+        self.assertNotIn("sixteen to twenty-four", fastapi)
 
         self.assertIn("dspy.BootstrapFewShotWithRandomSearch", ui)
         self.assertIn("dspy.MIPROv2", ui)
         self.assertIn("dspy.GEPA", ui)
         self.assertIn("save_path.parent.mkdir", ui)
+        self.assertIn("METRIC_OPTIONS", ui)
+        self.assertIn("Cosine Similarity", ui)
+        self.assertIn("LLM-as-a-Judge", ui)
+        self.assertIn("load_manual_and_split", ui)
+        self.assertIn('gr.Tab("Inference")', ui)
+        self.assertIn("run_saved_program", ui)
+        self.assertNotIn("10.3.4", ui)
+        self.assertIn("10.3.3 Optimization", ui)
+
+    def test_rlm_examples_use_portable_inputs_and_current_limits(self) -> None:
+        chapter11 = REPO_ROOT / "chapter11"
+        discovery = (chapter11 / "skill-discovery-rlm.ipynb").read_text(
+            encoding="utf-8"
+        )
+        rlm_examples = "\n".join(
+            path.read_text(encoding="utf-8")
+            for path in (
+                REPO_ROOT / "chapter07" / "codeact-and-rlm.ipynb",
+                REPO_ROOT / "chapter09" / "financial-analyst.ipynb",
+                chapter11 / "skill-discovery-rlm.ipynb",
+            )
+        )
+
+        self.assertNotIn("max_iterations", rlm_examples)
+        self.assertIn("max_iters", rlm_examples)
+        self.assertIn("session_texts: list[str]", discovery)
+        self.assertIn("result = rlm(session_texts=session_texts)", discovery)
+        self.assertIn('sub_lm = dspy.LM(\\\"openai/gpt-5.6-luna\\\")', discovery)
+        self.assertNotIn("PythonInterpreter", discovery)
 
     def test_signature_module_and_dataset_helpers_run_locally(self) -> None:
         notebook = load_notebook("dspyui-gradio.ipynb")
@@ -153,6 +193,12 @@ class ProductionNotebookTest(unittest.TestCase):
                 csv_path, ["question"], ["answer"]
             )
             self.assertEqual((len(trainset), len(devset)), (2, 1))
+
+            manual_rows = pd.DataFrame([["four", "4"], ["five", "5"]])
+            trainset, devset = namespace["load_manual_and_split"](
+                manual_rows, ["question"], ["answer"]
+            )
+            self.assertEqual((len(trainset), len(devset)), (1, 1))
 
     def test_state_round_trip_and_stream_listener_setup_run_without_paid_calls(self) -> None:
         class InvoiceExtraction(dspy.Signature):
@@ -209,6 +255,8 @@ class ProductionNotebookTest(unittest.TestCase):
             restored = cache.get(request)
             self.assertIsInstance(restored, ModelResponse)
             self.assertEqual(restored.choices[0].message.content, "world")
+            self.assertEqual(restored.usage, {})
+            self.assertTrue(restored.cache_hit)
         finally:
             dspy.cache = previous_cache
             if previous_module is None:

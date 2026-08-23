@@ -1,0 +1,4 @@
+{
+    "reasoning": "The passage uses specific Airflow terminology (`trigger_rule`, `all_success`, branching, downstream tasks) and has a compact, locally explanatory style. Its slightly awkward phrasing (\u201cshow up as skipped\u201d and \u201cthe skip caused by...\u201d) feels more like human technical documentation than a globally smoothed AI summary. There is not enough evidence to classify it as AI-generated.",
+    "is_ai": false
+}
