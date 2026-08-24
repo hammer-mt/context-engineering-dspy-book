@@ -13,7 +13,9 @@ PyTorch/Transformers/TRL/PEFT stack and can take several minutes.
 
 The full comparison and its limitations are in [`CHAPTER_RESULTS.md`](CHAPTER_RESULTS.md).
 Canonical programs, prompts, predictions, hashes, cost/timing ledgers, and bounded
-smoke-run evidence are under `results/expanded_notebooks/`. Fine-tuned model
+smoke-run evidence are under `results/expanded_notebooks/`. The artifact layout and
+the distinction between manuscript-canonical and retained historical runs are
+documented in [`results/README.md`](results/README.md). Fine-tuned model
 payloads remain local and Git-ignored; checked-in manifests preserve their file
 hashes, sizes, and storage policy. Credentials, provider request bodies, caches,
 and temporary training files are intentionally excluded.

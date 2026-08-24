@@ -9,7 +9,7 @@ All programs use the canonical 300-row dataset and locked pair-grouped split: 16
 | BootstrapFewShot | 53.75% | 66.67% | 67.50% (54/80) | +13.75 pp | $0.0030 | $0.1919 | 4.5s | 1.647s / 2.715s |
 | BootstrapFewShotWithRandomSearch (BootstrapRS) | 53.75% | 61.67% | 65.00% (52/80) | +11.25 pp | $0.8766 | $0.1902 | 1119.1s | 1.579s / 2.663s |
 | KNNFewShot | 53.75% | 71.67% | 72.50% (58/80) | +18.75 pp | $0.0000 | $0.2380 | 0.0s | 1.830s / 2.837s |
-| COPRO | 53.75% | 53.33% | 50.00% (40/80) | -3.75 pp | >=$0.0732* | unavailable* | 861.1s | 1.711s / 2.658s |
+| COPRO | 53.75% | 55.00% | 56.25% (45/80) | +2.50 pp | $0.8156 | $0.2113 | 1155.8s | 2.310s / 3.242s |
 | MIPROv2 | 53.75% | 76.67% | 66.25% (53/80) | +12.50 pp | >=$0.3052* | unavailable* | 270.8s | 1.628s / 2.874s |
 | GEPA | 53.75% | 80.00% | 80.00% (64/80) | +26.25 pp | $0.5824 | $0.0396 | 616.7s | 2.423s / 3.452s |
 | SIMBA | 53.75% | 51.67% | 47.50% (38/80) | -6.25 pp | $1.1413 | $0.1589 | 321.3s | 1.711s / 2.408s |
@@ -19,7 +19,7 @@ All programs use the canonical 300-row dataset and locked pair-grouped split: 16
 
 GEPA uses DSPy's native `auto='light'` budget with Pareto candidate selection and `use_merge=False`. Like the other newly executed rows, it reports one fresh uncached validation pass followed by one locked-test pass.
 
-`*` COPRO and MIPROv2 optimization cost is a recorded lower bound, and their evaluation cost is unavailable: those runs preceded the shared-history fix for deep-copied DSPy language models. Their scores and wall-clock timings remain valid.
+`*` MIPROv2 optimization cost is a recorded lower bound, and its evaluation cost is unavailable: that run preceded the shared-history fix for deep-copied DSPy language models. Its score and wall-clock timing remain valid.
 
 Machine-readable rows, paired statistics, hashes, model/version metadata, prompts, programs, predictions, cost, timing, and failure manifests are under `chapter06/results/expanded_notebooks/`.
 Local-model responses that could not be parsed are retained in the predictions as incorrect with `status: parse_error`; they are never dropped from a denominator.

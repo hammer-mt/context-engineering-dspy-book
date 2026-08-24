@@ -19,7 +19,7 @@ This inventory maps every approved item in `Final Manuscript Edit Guide.docx` to
 | Ch. 6 — KNN hashed embeddings and 0/4 demos | `chapter06/knn-few-shot.ipynb`, `optimizer_runtime.py` | Already aligned. |
 | Ch. 6 — remove false `dspy.Evaluate` warning | KNN notebook/docs | Already absent. |
 | Ch. 6 — COPRO compiles on validation split | `chapter06/copro.ipynb`, `optimizer_runtime.py` | Already aligned. |
-| Ch. 6 — actual COPRO instruction | COPRO checked-in learned prompt/program artifacts | Already aligned with the recorded run; artifacts remain unchanged. |
+| Ch. 6 — actual COPRO instruction | COPRO checked-in learned prompt/program artifacts | Promoted the existing `rerun-20260719-124750` result as the manuscript-canonical run; its saved prompt contains the corrected instruction. The earlier full run remains available as labeled history. |
 | Ch. 6 — SIMBA 6/2 and unchanged result | `chapter06/simba.ipynb`, builder/runtime/artifact | Settings were already aligned; explanatory text now states the saved program kept its original instruction and no demos. |
 | Ch. 7 — GEPA budget for Flex | `chapter07/modules-tour.ipynb` | Added a complete five-argument metric and `auto="light"` Flex/GEPA example. |
 | Ch. 7 — distinct `previous_draft` input | `chapter07/multi-stage-patterns.ipynb` | Changed signature and call. |
@@ -55,3 +55,4 @@ This inventory maps every approved item in `Final Manuscript Edit Guide.docx` to
 - Added `mcp>=1,<2` to the core environment so `uv run python chapter08/mcp_server.py` works after the documented fresh-clone setup, and pinned `huggingface-hub<1` for the locked Transformers/Datasets stack.
 - Updated the Chapter 8 MCP notebook bootstrap flow, setup checker, lockfile, generated `requirements.txt`, and README dependency description.
 - Added static and executable regression coverage for the alignment contract, including SSE event serialization and Markdown-adapter input/output marker behavior.
+- Removed unreferenced Chapter 6 prompt/benchmark snapshots that contradicted the manuscript-facing comparison, documented the retained raw-run history, and added regression coverage for the canonical COPRO and SIMBA artifacts.
