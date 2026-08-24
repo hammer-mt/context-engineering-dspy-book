@@ -138,7 +138,7 @@ class ProductionNotebookTest(unittest.TestCase):
         self.assertIn("allow_pickle=True", fastapi)
         self.assertIn("Start with four for local testing", fastapi)
         self.assertNotIn("sixteen to twenty-four", fastapi)
-        self.assertIn("except dspy.LMError:", fastapi)
+        self.assertIn("except (dspy.LMError, ExceptionGroup) as error:", fastapi)
         self.assertNotIn("from litellm.exceptions import", fastapi)
 
         self.assertIn("dspy.BootstrapFewShotWithRandomSearch", ui)
@@ -268,24 +268,42 @@ class ProductionNotebookTest(unittest.TestCase):
         self.assertIn('"prediction": {"company": "Acme"}', events[2])
         self.assertEqual(events[-1], "data: [DONE]\n\n")
 
-        async def failing_values():
-            yield dspy.streaming.StatusMessage("Starting...")
-            raise dspy.LMError("provider details that must not reach the client")
+        class FailingProgram(dspy.Module):
+            def forward(self):
+                raise dspy.LMError(
+                    "provider details that must not reach the client"
+                )
+
+        failing_stream = dspy.streamify(FailingProgram())()
 
         async def collect_failure() -> list[str]:
             return [
                 value
-                async for value in namespace["sse_events"](failing_values())
+                async for value in namespace["sse_events"](failing_stream)
             ]
 
         failure_events = asyncio.run(collect_failure())
-        self.assertIn('"status": "Starting..."', failure_events[0])
         self.assertEqual(
             failure_events[-1],
             'event: error\ndata: {"error": "Language model request failed."}\n\n',
         )
         self.assertNotIn("[DONE]", "".join(failure_events))
         self.assertNotIn("provider details", "".join(failure_events))
+
+        class UnexpectedProgram(dspy.Module):
+            def forward(self):
+                raise RuntimeError("unrelated application failure")
+
+        unexpected_stream = dspy.streamify(UnexpectedProgram())()
+
+        async def collect_unexpected_failure() -> list[str]:
+            return [
+                value
+                async for value in namespace["sse_events"](unexpected_stream)
+            ]
+
+        with self.assertRaises(ExceptionGroup):
+            asyncio.run(collect_unexpected_failure())
 
     def test_markdown_adapter_changes_only_output_field_markers(self) -> None:
         notebook = load_notebook("fastapi-invoice-api.ipynb")
