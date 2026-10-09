@@ -1,0 +1,2 @@
+# Results from your own runs of invoice-extraction.ipynb stay local.
+*.local.json

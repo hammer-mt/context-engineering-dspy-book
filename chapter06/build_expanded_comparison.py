@@ -1,4 +1,4 @@
-"""Build the Chapter 6 expanded-dataset comparison from durable run artifacts."""
+"""Build the Chapter 6 optimizer comparison (Table 6-1) from the saved run results."""
 
 from __future__ import annotations
 
@@ -24,15 +24,14 @@ DISPLAY_NAMES = {
     spec["optimizer"]: spec["title"] for spec in NOTEBOOKS.values()
 }
 ORDER = [spec["optimizer"] for spec in NOTEBOOKS.values()]
-MANUSCRIPT_RUN_DIRS = {
-    "copro": "rerun-20260719-124750",
+# Row labels as printed in Table 6-1 of the book.
+TABLE_LABELS = {
+    "bootstrap-random-search": "BootstrapRS",
+    "bootstrap-finetune": "BootstrapFinetune",
+    "better-together": "BetterTogether",
 }
-INCOMPLETE_COST_RUNS = {
-    ("copro", "smoke"),
-    ("copro", "full"),
-    ("miprov2", "smoke"),
-    ("miprov2", "full"),
-}
+# The saved run whose numbers appear in the chapter is always `<optimizer>/full`.
+PUBLISHED_RUN_NAME = "full"
 
 
 def _json(path: Path) -> dict[str, Any]:
@@ -55,18 +54,8 @@ def _money(value: Any) -> float:
     return 0.0 if value is None else float(value)
 
 
-def _manuscript_run_dir(optimizer: str) -> Path:
-    run_name = MANUSCRIPT_RUN_DIRS.get(optimizer, "full")
-    return RESULTS_ROOT / optimizer / run_name
-
-
-def _cost_status(optimizer: str, run_name: str) -> tuple[str, str]:
-    if (optimizer, run_name) in INCOMPLETE_COST_RUNS:
-        return (
-            "partial_lower_bound",
-            "unavailable_due_to_detached_dspy_history",
-        )
-    return "recorded", "recorded"
+def _published_run_dir(optimizer: str) -> Path:
+    return RESULTS_ROOT / optimizer / PUBLISHED_RUN_NAME
 
 
 def _build_run_ledger() -> dict[str, Any]:
@@ -74,29 +63,23 @@ def _build_run_ledger() -> dict[str, Any]:
     for optimizer in ORDER:
         if optimizer == "gepa":
             continue
-        canonical_dir = _manuscript_run_dir(optimizer)
+        published_dir = _published_run_dir(optimizer)
         for result_path in sorted((RESULTS_ROOT / optimizer).glob("*/result.json")):
             run_name = result_path.parent.name
             result = _json(result_path)
-            optimization_status, evaluation_status = _cost_status(
-                optimizer, run_name
-            )
-            evaluation_cost = result.get("evaluation_cost_usd")
-            if evaluation_status != "recorded":
-                evaluation_cost = None
             runs.append(
                 {
                     "optimizer": optimizer,
                     "mode": result.get("mode", run_name),
                     "run_name": run_name,
-                    "manuscript_canonical": result_path.parent == canonical_dir,
+                    "published_in_chapter": result_path.parent == published_dir,
                     "status": "completed",
                     "started_at": result.get("started_at"),
                     "finished_at": result.get("finished_at"),
                     "optimization_cost_usd": result.get("optimization_cost_usd"),
-                    "optimization_cost_status": optimization_status,
-                    "evaluation_cost_usd": evaluation_cost,
-                    "evaluation_cost_status": evaluation_status,
+                    "optimization_cost_status": "recorded",
+                    "evaluation_cost_usd": result.get("evaluation_cost_usd"),
+                    "evaluation_cost_status": "recorded",
                     "optimization_time_seconds": result.get("optimization_seconds"),
                     "result_artifact": str(result_path.relative_to(CHAPTER_DIR.parent)),
                 }
@@ -109,7 +92,7 @@ def _build_run_ledger() -> dict[str, Any]:
                 "optimizer": "gepa",
                 "mode": "full",
                 "run_name": "gepa_light_standard",
-                "manuscript_canonical": True,
+                "published_in_chapter": True,
                 "status": "completed",
                 "started_at": gepa.get("started_at"),
                 "finished_at": gepa.get("finished_at"),
@@ -121,35 +104,7 @@ def _build_run_ledger() -> dict[str, Any]:
                 "result_artifact": str(gepa_result.relative_to(CHAPTER_DIR.parent)),
             }
         )
-    for failure_path in sorted(RESULTS_ROOT.glob("*/*/preflight_failures.json")):
-        payload = _json(failure_path)
-        for failure in payload.get("failures", []):
-            paid = bool(failure.get("paid_requests_started"))
-            cost = failure.get("failed_attempt_cost_usd")
-            runs.append(
-                {
-                    "optimizer": payload["optimizer"],
-                    "mode": payload["mode"],
-                    "status": "failed_preflight",
-                    "classification": failure.get("classification"),
-                    "started_at": failure.get("observed_at"),
-                    "finished_at": failure.get("observed_at"),
-                    "paid_requests_started": paid,
-                    "paid_teacher_requests": failure.get("paid_teacher_requests"),
-                    "optimization_cost_usd": cost,
-                    "optimization_cost_status": (
-                        failure.get("cost_status", "unavailable_after_exception")
-                        if paid
-                        else "no_paid_requests"
-                    ),
-                    "evaluation_cost_usd": 0.0 if not paid else None,
-                    "evaluation_cost_status": "not_started",
-                    "failure_artifact": str(
-                        failure_path.relative_to(CHAPTER_DIR.parent)
-                    ),
-                }
-            )
-    recorded_lower_bound = sum(
+    recorded_cost = sum(
         _money(run.get("optimization_cost_usd"))
         + _money(run.get("evaluation_cost_usd"))
         for run in runs
@@ -157,9 +112,12 @@ def _build_run_ledger() -> dict[str, Any]:
     return {
         "schema_version": 1,
         "generated_at": datetime.now(timezone.utc).isoformat(),
-        "cost_scope": "all checked-in smoke/full/rerun results and recorded preflight attempts",
-        "recorded_cost_lower_bound_usd": recorded_lower_bound,
-        "cost_status": "lower_bound because historical COPRO/MIPROv2 smoke and full runs detached copied LM histories before the accounting fix and two paid BootstrapFinetune preflight attempts ended before their teacher cost could be recovered",
+        "cost_scope": (
+            "every run saved under chapter06/results/expanded_notebooks and "
+            "chapter06/results/gepa_light_standard"
+        ),
+        "total_recorded_cost_usd": recorded_cost,
+        "cost_note": "Each of these runs records all of its model requests.",
         "runs": runs,
     }
 
@@ -174,7 +132,7 @@ def _run_row(
     canonical_baseline: float,
     baseline_predictions: list[dict[str, Any]] | None,
 ) -> dict[str, Any]:
-    run_dir = _manuscript_run_dir(optimizer)
+    run_dir = _published_run_dir(optimizer)
     run_name = run_dir.name
     result_path = run_dir / "result.json"
     if not result_path.exists():
@@ -182,7 +140,7 @@ def _run_row(
             "optimizer": optimizer,
             "display_name": DISPLAY_NAMES[optimizer],
             "status": "pending",
-            "reason": "The expanded-dataset full run has not completed.",
+            "reason": "No saved full run is available for this optimizer.",
         }
     result = _json(result_path)
     final = result["final"]
@@ -195,12 +153,6 @@ def _run_row(
     else:
         baseline_accuracy = canonical_baseline
     uplift = final["accuracy"] - baseline_accuracy
-    optimization_cost_status, evaluation_cost_status = _cost_status(
-        optimizer, run_name
-    )
-    evaluation_cost = result["evaluation_cost_usd"]
-    if evaluation_cost_status != "recorded":
-        evaluation_cost = None
     validation_parse_errors = sum(
         item.get("status", "completed") != "completed"
         for item in validation["predictions"]
@@ -229,16 +181,16 @@ def _run_row(
         "absolute_uplift_pct_points": uplift,
         "relative_uplift_pct": 100 * uplift / baseline_accuracy if baseline_accuracy else None,
         "optimization_cost_usd": result["optimization_cost_usd"],
-        "optimization_cost_status": optimization_cost_status,
-        "evaluation_cost_usd": evaluation_cost,
-        "evaluation_cost_status": evaluation_cost_status,
+        "optimization_cost_status": "recorded",
+        "evaluation_cost_usd": result["evaluation_cost_usd"],
+        "evaluation_cost_status": "recorded",
         "optimization_time_seconds": result["optimization_seconds"],
         "mean_inference_latency_seconds": final["mean_latency_seconds"],
         "p95_inference_latency_seconds": final["p95_latency_seconds"],
         "accepted_trace_labels": result.get("accepted_trace_labels"),
         "validation_parse_error_count": validation_parse_errors,
         "locked_test_parse_error_count": test_parse_errors,
-        "manuscript_run_name": run_name,
+        "run_name": run_name,
         "program_artifact": str(
             (run_dir / "optimized_program.json").relative_to(CHAPTER_DIR.parent)
         ),
@@ -312,12 +264,11 @@ def build() -> dict[str, Any]:
         "canonical_luna_baseline_accuracy_pct": single_pass_baseline,
         "completed_count": len(completed),
         "total_count": len(rows),
-        "new_run_cost_usd": sum(
+        "total_recorded_cost_usd": sum(
             _money(row.get("optimization_cost_usd"))
             + _money(row.get("evaluation_cost_usd"))
             for row in completed
         ),
-        "new_run_cost_status": "recorded_lower_bound; MIPROv2 detached some copied LM histories before the shared-history fix",
         "rows": rows,
     }
     RESULTS_ROOT.mkdir(parents=True, exist_ok=True)
@@ -352,52 +303,53 @@ def build() -> dict[str, Any]:
 
 def markdown(comparison: dict[str, Any]) -> str:
     lines = [
-        "# Chapter 6 expanded-dataset optimizer results",
+        "# Chapter 6 optimizer results (Table 6-1)",
         "",
-        "All programs use the canonical 300-row dataset and locked pair-grouped split: "
-        "160 train, 60 validation, and 80 test rows. Optimizer selection used validation only; "
-        "the locked test was released after each program was frozen.",
+        "All programs use the same 300-row dataset and locked pair-grouped split: "
+        "160 train, 60 validation, and 80 test rows. Optimizers select programs with the "
+        "training and validation rows only; the locked test is evaluated once, after each "
+        "program is frozen.",
+        "",
+        "The Locked test, Uplift, Opt. cost, and Opt. time columns are the Accuracy, Uplift, "
+        "Optimization cost, and Optimization time columns of Table 6-1 in the book (page 157). "
+        "The remaining columns match the result block printed for each optimizer in the chapter.",
         "",
         "| Optimizer | Baseline | Validation | Locked test | Uplift | Opt. cost | Eval. cost | Opt. time | Mean / p95 latency |",
         "|---|---:|---:|---:|---:|---:|---:|---:|---:|",
     ]
     for row in comparison["rows"]:
+        label = TABLE_LABELS.get(row["optimizer"], row["display_name"])
         if row["status"] != "completed":
             lines.append(
-                f"| {row['display_name']} | — | — | {row['status']} | — | — | — | — | — |"
+                f"| {label} | — | — | {row['status']} | — | — | — | — | — |"
             )
             continue
-        cost = row["optimization_cost_usd"]
-        cost_text = f"${cost:.4f}"
-        if row.get("optimization_cost_status") == "partial_lower_bound":
-            cost_text = f">={cost_text}*"
-        evaluation_cost = row.get("evaluation_cost_usd")
-        evaluation_cost_text = (
-            f"${evaluation_cost:.4f}" if evaluation_cost is not None else "unavailable*"
-        )
         lines.append(
-            "| {display_name} | {baseline_accuracy_pct:.2f}% | "
+            f"| {label} | "
+            "{baseline_accuracy_pct:.2f}% | "
             "{optimized_validation_accuracy_pct:.2f}% | {locked_test_accuracy_pct:.2f}% "
             "({locked_test_correct}/{locked_test_rows}) | {absolute_uplift_pct_points:+.2f} pp | "
-            f"{cost_text} | {evaluation_cost_text} | "
+            "${optimization_cost_usd:.4f} | ${evaluation_cost_usd:.4f} | "
             "{optimization_time_seconds:.1f}s | {mean_inference_latency_seconds:.3f}s / "
             "{p95_inference_latency_seconds:.3f}s |".format(**row)
         )
     lines.extend(
         [
             "",
+            "Baseline is the same-model baseline: 53.75% for the prompt optimizers, which run "
+            "on `openai/gpt-5.6-luna`, and 51.25% for BootstrapFinetune and BetterTogether, "
+            "which run on the local `Qwen/Qwen2.5-0.5B-Instruct` model.",
+            "",
             "GEPA uses DSPy's native `auto='light'` budget with Pareto candidate selection and "
-            "`use_merge=False`. Like the other newly executed rows, it reports one fresh uncached "
-            "validation pass followed by one locked-test pass.",
+            "`use_merge=False`. Every row reports one fresh uncached validation pass followed "
+            "by one locked-test pass.",
             "",
-            "`*` MIPROv2 optimization cost is a recorded lower bound, and its evaluation cost "
-            "is unavailable: that run preceded the shared-history fix for deep-copied DSPy "
-            "language models. Its score and wall-clock timing remain valid.",
-            "",
-            "Machine-readable rows, paired statistics, hashes, model/version metadata, prompts, "
-            "programs, predictions, cost, timing, and failure manifests are under "
-            "`chapter06/results/expanded_notebooks/`.",
-            "Local-model responses that could not be parsed are retained in the predictions as "
+            "Machine-readable rows, paired statistics, hashes, model and version metadata, "
+            "prompts, programs, predictions, cost, and timing are under "
+            "`chapter06/results/expanded_notebooks/` (GEPA: "
+            "`chapter06/results/gepa_light_standard/`). "
+            "[`results/README.md`](results/README.md) describes the layout.",
+            "Local-model responses that could not be parsed are kept in the predictions as "
             "incorrect with `status: parse_error`; they are never dropped from a denominator.",
             "",
         ]
@@ -411,7 +363,7 @@ def main() -> None:
         markdown(comparison), encoding="utf-8"
     )
     print(
-        f"Built expanded comparison: {comparison['completed_count']}/{comparison['total_count']} completed"
+        f"Built Chapter 6 comparison: {comparison['completed_count']}/{comparison['total_count']} completed"
     )
 
 

@@ -1,4 +1,4 @@
-"""Run one Chapter 6 optimizer over the expanded locked split and save artifacts."""
+"""Run one Chapter 6 optimizer on the frozen 300-row benchmark and save its results."""
 
 from __future__ import annotations
 

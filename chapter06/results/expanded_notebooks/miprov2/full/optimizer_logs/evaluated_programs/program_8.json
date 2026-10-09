@@ -6,13 +6,13 @@
       {
         "augmented": true,
         "text": "In general, we advise you to try and keep the topology (the layout) of your DAG tasks relatively stable; dynamic DAGs are usually better used for dynamically loading configuration options or changing operator options.",
-        "reasoning": "The passage has the concise, authoritative style of technical documentation and presents a specific recommendation about DAG stability without the formulaic elaboration often associated with generated text. It is more likely human-authored.",
+        "reasoning": "The passage is concise, domain-specific guidance with natural technical phrasing and a documentation-like style. It does not show strong signs of AI-generated text, so it is more likely human-authored.",
         "is_ai": false
       },
       {
         "augmented": true,
         "text": "In general, try to keep the topology (that is, the layout) of your DAG tasks reasonably stable; dynamic DAGs tend to work better for loading configuration values dynamically or adjusting operator options as needed.",
-        "reasoning": "The passage has a polished, generalized instructional tone and uses a parenthetical clarification, which are common characteristics of AI-generated technical prose. Its wording is somewhat formulaic and lacks specific context or examples.",
+        "reasoning": "The passage is concise and polished, with a generalized instructional tone and explicit parenthetical clarification, which are common characteristics of AI-generated technical prose. Its wording also feels somewhat formulaic and lacks context or personal specificity. Therefore, it is likely AI-generated.",
         "is_ai": true
       }
     ],
@@ -48,7 +48,7 @@
   },
   "metadata": {
     "dependency_versions": {
-      "python": "3.11",
+      "python": "3.12",
       "dspy": "3.2.1",
       "cloudpickle": "3.1"
     }

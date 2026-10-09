@@ -20,6 +20,7 @@ REQUIRED_PACKAGES = (
     ("jupyterlab", "jupyterlab", None),
     ("mcp", "mcp", None),
     ("ipykernel", "ipykernel", None),
+    ("pip", "pip", None),
     ("python-dotenv", "dotenv", None),
 )
 API_KEYS = (
@@ -82,7 +83,10 @@ def check_packages() -> list[str]:
             module_spec = None
 
         if module_spec is None:
-            message = f"Missing package: {distribution}; run `uv sync --frozen`"
+            message = (
+                f"Missing package: {distribution}; run `uv sync --frozen` "
+                "(without uv: `python -m pip install -r requirements.txt`)"
+            )
             print(f"[error] {message}")
             errors.append(message)
             continue
@@ -166,7 +170,10 @@ def main(argv: list[str] | None = None) -> int:
         print(f"\nSetup check failed with {len(errors)} error(s).")
         return 1
 
-    print("\nSetup check passed. Start Jupyter with `uv run jupyter lab`.")
+    print(
+        "\nSetup check passed. Start Jupyter with `uv run jupyter lab` "
+        "(without uv: `python -m jupyter lab`)."
+    )
     return 0
 
 

@@ -28,6 +28,8 @@ dependencies = [
     "pandas>=2.3",
     "peft>=0.17,<1",
     "pillow>=12",
+    # pip lets the notebooks' `%pip install` cells work under `uv run jupyter lab`.
+    "pip>=24",
     "playwright>=1.57",
     "presidio-analyzer>=2.2.363",
     "presidio-anonymizer>=2.2.363",
@@ -42,3 +44,11 @@ dependencies = [
 
 [tool.uv]
 package = false
+# Python 3.14 only: use releases that publish prebuilt Python 3.14 wheels, so that
+# `uv sync --frozen` and `pip install -r requirements.txt` need no compiler.
+# Python 3.12 and 3.13 keep the versions the examples were validated with.
+constraint-dependencies = [
+    "grpcio>=1.75.1 ; python_version >= '3.14'",
+    "levenshtein>=0.27.3 ; python_version >= '3.14'",
+    "litellm==1.80.10 ; python_version >= '3.14'",
+]

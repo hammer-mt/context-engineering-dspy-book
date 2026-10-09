@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Acme Analytics</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  body { margin: 0; background: #FAFAFA; color: #111827; font-family: Inter, system-ui, sans-serif; line-height: 1.5; }
+  .hero { max-width: 1040px; margin: 0 auto; padding: 88px 24px; display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; }
+  .brand { margin: 0 0 32px; font-size: 14px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: #4338CA; }
+  h1 { margin: 0 0 16px; font-size: 40px; line-height: 1.15; }
+  .subhead { margin: 0 0 32px; font-size: 18px; }
+  form { display: flex; flex-wrap: wrap; gap: 12px; }
+  label { flex-basis: 100%; font-size: 14px; font-weight: 600; }
+  input[type="email"] { flex: 1 1 220px; min-width: 0; padding: 12px 14px; border: 1px solid #111827; border-radius: 6px; background: #FAFAFA; color: #111827; font: inherit; }
+  button { padding: 12px 24px; border: 0; border-radius: 6px; background: #4338CA; color: #FAFAFA; font: inherit; font-weight: 600; cursor: pointer; }
+  .hero-image { display: block; width: 100%; aspect-ratio: 16 / 9; border-radius: 6px; object-fit: cover; }
+  @media (max-width: 760px) { .hero { grid-template-columns: 1fr; padding: 56px 20px; } h1 { font-size: 30px; } }
+</style>
+</head>
+<body>
+<main>
+  <section class="hero">
+    <div>
+      <p class="brand">Acme Analytics</p>
+      <h1>Analytics built for operations teams</h1>
+      <p class="subhead">Acme Analytics brings throughput, backlog, and service-level data into one reporting layer, so your team measures performance from a single source.</p>
+      <form action="#" method="post">
+        <label for="email">Work email</label>
+        <input id="email" name="email" type="email" placeholder="name@company.com" autocomplete="email" required>
+        <button type="submit">Request access</button>
+      </form>
+    </div>
+    <img class="hero-image" src="/placeholders/hero.png" alt="Abstract arrangement of connected data points" data-image-brief="Minimal abstract composition of connected data points and thin lines on a light background, indigo accents, generous empty space, no people, no text.">
+  </section>
+</main>
+</body>
+</html>

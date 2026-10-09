@@ -63,8 +63,9 @@ def local_capabilities() -> dict[str, Any]:
 def make_model_spec(base_model: str, adapter_path: str | Path | None = None) -> str:
     """Return DSPy's native local model identifier.
 
-    adapter_path remains supported only for reloading the previous publication
-    artifact; new native LocalProvider runs save a merged model directory.
+    Pass adapter_path only to load a base model together with a separately
+    saved PEFT adapter. DSPy's LocalProvider saves a merged model directory, so
+    the Chapter 6 fine-tuning runs do not need it.
     """
 
     if adapter_path is None:
@@ -76,7 +77,7 @@ def make_model_spec(base_model: str, adapter_path: str | Path | None = None) -> 
 
 
 def parse_model_spec(model: str) -> tuple[str, Path | None]:
-    """Resolve a native merged model or the prior adapter-based model format."""
+    """Resolve a merged local model or a base model plus a PEFT adapter path."""
 
     if model.startswith(LOCAL_MODEL_PREFIX):
         return model[len(LOCAL_MODEL_PREFIX) :], None
