@@ -1,37 +1,80 @@
-# Cross-notebook inline-copy registry.
+# Definitions that appear in more than one notebook.
 #
-# When a class, signature, or module is defined in one notebook and re-defined
-# inline in another, list the canonical source and every duplicate location
-# here. A simple grep+diff over these entries detects drift.
+# The notebooks do not import from one another, so a class, signature, or
+# function that a later notebook builds on is defined again there. Each copy
+# follows the listing printed in its own chapter of the book, so the copies
+# are related but not always identical. If you change one of them, check the
+# other locations listed here.
 #
 # Format:
 #   - symbol: <class-or-function-name>
-#     canonical: <path-to-canonical-notebook>
+#     canonical: <notebook where the book introduces it>
 #     duplicates:
-#       - <path-to-notebook-with-inline-copy>
+#       - <notebook that defines it again>
+#     note: <how the copies relate>
 
 duplications:
+  - symbol: HumanizeAIText
+    canonical: chapter03/dspy-in-8-steps.ipynb
+    duplicates:
+      - chapter03/humanize-quickstart.ipynb
+    note: Same signature in both notebooks.
+
+  - symbol: cosine_similarity
+    canonical: chapter05/semantic-similarity.ipynb
+    duplicates:
+      - chapter09/blog-writer.ipynb
+    note: Same function; Chapter 9 reuses it for the style-consistency metric.
+
   - symbol: MarkdownAdapter
     canonical: chapter07/adapters.ipynb
     duplicates:
       - chapter10/fastapi-invoice-api.ipynb
+    note: Identical copies; chapter10/tests checks that they match.
 
-  - symbol: SentimentClassifier
+  - symbol: calculate
+    canonical: chapter08/react-basics.ipynb
+    duplicates:
+      - chapter08/framework-comparison.ipynb
+      - chapter08/web-search-and-multihop.ipynb
+    note: Same tool in all three notebooks.
+
+  - symbol: SimpleRAG
+    canonical: chapter08/rag-inmemory.ipynb
+    duplicates:
+      - chapter08/rag-qdrant.ipynb
+    note: Same module; only the retriever passed to it changes.
+
+  - symbol: search_knowledge_base
+    canonical: chapter08/rag-inmemory.ipynb
+    duplicates:
+      - chapter08/web-search-and-multihop.ipynb
+    note: >-
+      Same retrieval tool. chapter08/react-basics.ipynb and
+      chapter08/framework-comparison.ipynb define their own versions of the
+      tool under the same name, each as printed in its section of the chapter.
+
+  - symbol: web_search
+    canonical: chapter08/web-search-and-multihop.ipynb
+    duplicates:
+      - chapter09/news-researcher.ipynb
+    note: >-
+      The Tavily tool. Chapter 9 defines it when TAVILY_API_KEY is set and a
+      local stand-in otherwise. chapter08/react-basics.ipynb,
+      chapter08/mcp-integration.ipynb, and chapter08/history-mem0-rlm.ipynb
+      define placeholder tools with the same name.
+
+  - symbol: accuracy
     canonical: chapter09/sentiment-classifier.ipynb
     duplicates:
       - chapter10/mlflow-tracking.ipynb
+    note: Same metric; Chapter 10 reuses it for its tracking examples.
 
   - symbol: InvoiceExtraction
     canonical: chapter09/invoice-extraction.ipynb
     duplicates:
       - chapter10/fastapi-invoice-api.ipynb
-
-  - symbol: MajorityVotingExtractor
-    canonical: chapter09/invoice-extraction.ipynb
-    duplicates:
-      - chapter10/fastapi-invoice-api.ipynb
-
-  - symbol: FIELD_KEYS
-    canonical: chapter09/invoice-extraction.ipynb
-    duplicates:
-      - chapter10/fastapi-invoice-api.ipynb
+    note: >-
+      The Chapter 10 notebook follows the listings printed in Chapter 10: the
+      full signature for the API route, then the abbreviated guardrail version
+      that adds is_invoice.

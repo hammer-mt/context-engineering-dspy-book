@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Outpost</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: #FFFCF5;
+    color: #2D5016;
+    font-family: Georgia, "Times New Roman", serif;
+    line-height: 1.6;
+  }
+  section {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 64px 24px;
+  }
+  .brand {
+    margin: 0 0 32px;
+    font-size: 22px;
+    font-weight: bold;
+    letter-spacing: 0.02em;
+  }
+  h1 {
+    margin: 0 0 16px;
+    font-size: 44px;
+    line-height: 1.15;
+    font-weight: normal;
+  }
+  h2 {
+    margin: 0 0 32px;
+    font-size: 30px;
+    font-weight: normal;
+  }
+  h3 {
+    margin: 16px 0 8px;
+    font-size: 20px;
+  }
+  p { margin: 0 0 16px; }
+  .subhead {
+    max-width: 620px;
+    margin-bottom: 28px;
+    font-size: 19px;
+  }
+  .cta {
+    display: inline-block;
+    padding: 14px 28px;
+    border-radius: 4px;
+    background: #2D5016;
+    color: #FFFCF5;
+    font-size: 18px;
+    text-decoration: none;
+  }
+  .rule {
+    width: 72px;
+    height: 3px;
+    margin: 0 0 24px;
+    border: 0;
+    background: #C8A865;
+  }
+  img {
+    display: block;
+    width: 100%;
+    border: 1px solid #C8A865;
+    border-radius: 4px;
+    background: rgba(200, 168, 101, 0.15);
+    object-fit: cover;
+    font-size: 14px;
+  }
+  .hero-image {
+    aspect-ratio: 16 / 9;
+    margin-top: 48px;
+  }
+  .features {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 32px;
+  }
+  .features img { aspect-ratio: 4 / 3; }
+  .closing {
+    padding-top: 0;
+    border-top: 1px solid #C8A865;
+    font-size: 16px;
+  }
+  .closing p { margin-top: 24px; }
+  @media (max-width: 720px) {
+    section { padding: 48px 20px; }
+    h1 { font-size: 32px; }
+    .features { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<main>
+  <section class="hero">
+    <p class="brand">Outpost</p>
+    <hr class="rule">
+    <h1>Good gear, from people who actually use it</h1>
+    <p class="subhead">Outpost is a marketplace for tents, packs, and boots that have already proven themselves on the trail. Find something that fits your next trip, or pass along the gear you have outgrown.</p>
+    <a class="cta" href="#gear">Have a look around</a>
+    <img class="hero-image" src="/placeholders/hero.png" alt="A tent pitched in a pine clearing at first light" data-image-brief="Wide photograph of a small canvas tent in a pine clearing at first light, a worn pack leaning against a log, forest greens and warm tan tones, natural and unstaged, no people facing the camera.">
+  </section>
+
+  <section id="gear">
+    <h2>What you will find here</h2>
+    <div class="features">
+      <div>
+        <img src="/placeholders/feature-1.png" alt="A well-used hiking pack on a wooden bench" data-image-brief="Close photograph of a well-used hiking pack on a wooden bench, soft daylight, forest green and tan palette, honest wear visible.">
+        <h3>Gear with a few miles on it</h3>
+        <p>Every listing says where the gear has been and how it held up, so you know what you are getting before it shows up at your door.</p>
+      </div>
+      <div>
+        <img src="/placeholders/feature-2.png" alt="Two people looking over a trail map at a kitchen table" data-image-brief="Photograph of two people looking over a paper trail map at a kitchen table, mugs nearby, warm indoor light, relaxed and friendly.">
+        <h3>Sellers you can talk to</h3>
+        <p>Ask the person who carried it. Our sellers are hikers, climbers, and paddlers, and they are happy to tell you what worked and what did not.</p>
+      </div>
+      <div>
+        <img src="/placeholders/feature-3.png" alt="Hands waxing a pair of leather boots" data-image-brief="Close photograph of hands waxing a pair of leather hiking boots on a workbench, warm tan tones, calm and careful mood.">
+        <h3>Looked over before it ships</h3>
+        <p>We check zips, seams, and soles ourselves. If something is not right when it arrives, send it back and we will sort it out.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="closing">
+    <p>Outpost is run by a small team that would rather be outside. Write to us any time at hello@outpost.example.</p>
+  </section>
+</main>
+</body>
+</html>

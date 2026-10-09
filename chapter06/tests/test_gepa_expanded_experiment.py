@@ -1,3 +1,11 @@
+"""Offline checks for the larger GEPA experiment in Chapter 6.
+
+The experiment behind ``gepa-expanded-dataset-experiment.ipynb`` uses a
+300-text dataset with a locked test split. These tests check the dataset,
+the split, the saved baseline, and the experiment runner. The runner tests
+use stand-in optimizers and models, so nothing here calls a model API.
+"""
+
 from __future__ import annotations
 
 import json
@@ -17,8 +25,6 @@ from chapter06.experiments.gepa_expanded.guardrails import atomic_write_json, wr
 
 from chapter06.experiments.gepa_expanded.dataset import (
     DATA_PATH,
-    LOCK_PATH,
-    ORIGINAL_DATA_PATH,
     RESULTS_DIR,
     SPLIT_PATH,
     assert_lock_unchanged,
@@ -89,11 +95,14 @@ class ExpandedDatasetExperimentTest(unittest.TestCase):
         )
         self.assertEqual(prediction_count, 80)
 
-    def test_budget_guard_preserves_safety_reserve(self) -> None:
+    def test_checked_in_budget_ledger_is_unspent_and_within_its_ceiling(self) -> None:
+        # A reader who reruns the experiment starts from an empty ledger; the
+        # runner refuses to spend past the ceiling recorded here.
         ledger = json.loads((RESULTS_DIR / "budget_ledger.json").read_text(encoding="utf-8"))
         self.assertEqual(ledger["ceiling_usd"], 95)
-        self.assertLess(ledger["total_cost_usd"], ledger["ceiling_usd"])
-        self.assertGreater(ledger["remaining_usd"], 5)
+        self.assertEqual(ledger["entries"], [])
+        self.assertEqual(ledger["total_cost_usd"], 0)
+        self.assertEqual(ledger["remaining_usd"], ledger["ceiling_usd"])
 
     def test_majority_and_paired_statistics_are_pair_aware(self) -> None:
         expected = {
@@ -290,7 +299,7 @@ class ExpandedDatasetExperimentTest(unittest.TestCase):
             self.assertTrue((output_dir / "optimized_program.json").exists())
             self.assertTrue((output_dir / "learned_prompt.json").exists())
 
-    def test_finalizer_emits_copy_ready_cost_latency_table(self) -> None:
+    def test_finalizer_writes_the_cost_and_latency_table(self) -> None:
         baseline_rows = [
             json.loads(line)
             for line in (RESULTS_DIR / "baseline_confirmation" / "majority_predictions.jsonl")

@@ -1,0 +1,51 @@
+question,predicted,gold,is_good
+What is the capital of Japan?,Tokyo,Tokyo,True
+What is the capital of Australia?,Sydney,Canberra,False
+Who painted the Mona Lisa?,Leonardo da Vinci,Leonardo da Vinci,True
+What is the largest planet in our solar system?,Jupiter is the largest planet in our solar system.,Jupiter,True
+What is the chemical symbol for sodium?,So,Na,False
+How many sides does a hexagon have?,Six,6,True
+Who wrote Romeo and Juliet?,William Shakespeare,William Shakespeare,True
+What is the boiling point of water at sea level in degrees Celsius?,100 degrees Celsius,100,True
+What is the longest river in South America?,The Amazon River,Amazon,True
+Which planet is known as the Red Planet?,Venus,Mars,False
+What is the square root of 144?,12,12,True
+Who was the first person to walk on the Moon?,Buzz Aldrin,Neil Armstrong,False
+What is the smallest prime number?,2,2,True
+In which country is the Great Pyramid of Giza?,Egypt,Egypt,True
+What gas do plants absorb from the atmosphere for photosynthesis?,Oxygen,Carbon dioxide,False
+How many days are there in a leap year?,366,366,True
+What is the capital of Canada?,It is one of the big cities in Canada.,Ottawa,False
+Who developed the theory of general relativity?,Albert Einstein,Albert Einstein,True
+What is the hardest natural substance?,Diamond,Diamond,True
+What is the largest ocean on Earth?,The Pacific Ocean,Pacific Ocean,True
+Who wrote the novel Nineteen Eighty-Four?,Aldous Huxley,George Orwell,False
+What is the chemical formula for water?,H2O,H2O,True
+How many players does a soccer team have on the field at one time?,Eleven,11,True
+What is the capital of Italy?,Rome,Rome,True
+Which element has the atomic number 1?,Helium,Hydrogen,False
+What is the tallest mountain on Earth above sea level?,Mount Everest,Mount Everest,True
+In what year did the Berlin Wall fall?,1989,1989,True
+What is the largest animal on Earth?,The African elephant,Blue whale,False
+Who composed the opera The Magic Flute?,Wolfgang Amadeus Mozart,Mozart,True
+What is the currency of Japan?,The yen,Yen,True
+How many minutes are in an hour?,60,60,True
+What is the capital of Spain?,Barcelona,Madrid,False
+Which organ pumps blood through the human body?,The heart,Heart,True
+What is the freezing point of water in degrees Fahrenheit?,0 degrees Fahrenheit,32,False
+Who discovered penicillin?,Alexander Fleming,Alexander Fleming,True
+What is the largest continent by area?,Asia,Asia,True
+How many strings does a standard guitar have?,Six,6,True
+What language is mainly spoken in Brazil?,Spanish,Portuguese,False
+What is the nearest star to Earth?,The Sun,The Sun,True
+Who was the first President of the United States?,George Washington,George Washington,True
+What is the capital of Germany?,Berlin,Berlin,True
+How many legs does a spider have?,Six,Eight,False
+What is the chemical symbol for iron?,Fe,Fe,True
+Who is the ancient Greek poet credited with the Odyssey?,Homer,Homer,True
+What is the smallest planet in our solar system?,Mars,Mercury,False
+How many sides does a triangle have?,Three,3,True
+What is the capital of Egypt?,Cairo,Cairo,True
+Which ocean lies between Europe and North America?,The Indian Ocean,Atlantic Ocean,False
+What is the main ingredient in guacamole?,Avocado,Avocado,True
+How many hours are in a day?,There are 24 hours in a day.,24,True

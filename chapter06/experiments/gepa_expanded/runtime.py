@@ -4,7 +4,6 @@ from __future__ import annotations
 
 import json
 import os
-import subprocess
 import time
 from datetime import datetime, timezone
 from pathlib import Path
@@ -13,7 +12,7 @@ from typing import Any, Sequence
 import dspy
 from dotenv import load_dotenv
 
-from .dataset import RESULTS_DIR, as_bool, append_jsonl
+from .dataset import REPO_ROOT, RESULTS_DIR, as_bool, append_jsonl
 from .guardrails import (
     BudgetLedger,
     classify_api_error,
@@ -76,29 +75,33 @@ def feedback_metric(
     return dspy.Prediction(score=score, feedback=feedback)
 
 
-def load_project_env() -> Path:
+def load_project_env() -> Path | None:
+    """Load API keys for a live run and return the .env file that was used.
+
+    An OPENAI_API_KEY that is already exported in the shell is enough. Otherwise
+    the key is read from the file named by CHAPTER06_ENV_FILE, the .env file in
+    the repository root, or a .env file in the current directory.
+    """
+
     candidates: list[Path] = []
     explicit = os.getenv("CHAPTER06_ENV_FILE")
     if explicit:
         candidates.append(Path(explicit).expanduser())
-    try:
-        common = subprocess.check_output(
-            ["git", "rev-parse", "--git-common-dir"], text=True
-        ).strip()
-        common_path = Path(common)
-        if not common_path.is_absolute():
-            common_path = Path.cwd() / common_path
-        candidates.append(common_path.resolve().parent / ".env")
-    except (OSError, subprocess.CalledProcessError):
-        pass
+    candidates.append(REPO_ROOT / ".env")
     candidates.append(Path.cwd() / ".env")
+    loaded: Path | None = None
     for candidate in candidates:
         if candidate.exists():
             load_dotenv(candidate)
+            loaded = loaded or candidate
             if os.getenv("OPENAI_API_KEY"):
-                os.environ.setdefault("DSPY_CACHEDIR", str(RESULTS_DIR / ".dspy_cache"))
-                return candidate
-    raise EnvironmentError("OPENAI_API_KEY was not found in the worktree or primary repo .env")
+                break
+    if not os.getenv("OPENAI_API_KEY"):
+        raise EnvironmentError(
+            "OPENAI_API_KEY was not found; add it to the .env file in the repository root."
+        )
+    os.environ.setdefault("DSPY_CACHEDIR", str(RESULTS_DIR / ".dspy_cache"))
+    return loaded
 
 
 def make_lm(model: str, *, cache: bool = False, max_tokens: int | None = None) -> dspy.LM:

@@ -1,4 +1,4 @@
-"""Emit the ce-optimize hard metrics for the current final or baseline state."""
+"""Print dataset and result summary metrics as JSON."""
 
 from __future__ import annotations
 

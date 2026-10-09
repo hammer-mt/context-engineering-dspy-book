@@ -1,4 +1,4 @@
-"""Helpers for previews of the checked-in Chapter 6 program artifacts."""
+"""Helpers that preview the saved Chapter 6 programs and prompts."""
 
 from __future__ import annotations
 
@@ -28,46 +28,9 @@ def optimizer_row(
         ) from exc
 
 
-def _seconds(value: float | None) -> str:
-    if value is None:
-        return "—"
-    return f"{value:.1f}s" if value < 60 else f"{value / 60:.1f}min"
-
-
-def benchmark_snapshot(optimizer: str) -> str:
-    """Return the one comparable publication number: final test accuracy."""
-
-    row = optimizer_row(optimizer)
-    lines = [
-        f"{row['display_name']} — frozen full-profile rerun",
-        f"status: {row['status']}",
-    ]
-    if row["status"] == "completed":
-        accuracy = row["locked_test_accuracy_pct"]
-        lines.extend(
-            [
-                f"task model: {row.get('task_model', '—')}",
-                f"validation accuracy: {row['optimized_validation_accuracy_pct']:.1f}%",
-                f"locked-test accuracy: {accuracy:.1f}% ({row['locked_test_correct']}/{row['locked_test_rows']})",
-                f"optimization cost: ${row['optimization_cost_usd']:.4f}",
-                f"optimization time: {_seconds(row['optimization_time_seconds'])}",
-            ]
-        )
-        counts = row.get("accepted_trace_labels")
-        if counts:
-            lines.append(
-                f"accepted traces: human={counts['human']}, AI={counts['ai']}"
-            )
-    else:
-        lines.append(
-            f"reason: {row.get('reason', 'No runnable artifact is available.')}"
-        )
-    return "\n".join(lines)
-
-
 def artifact_paths(optimizer: str) -> str:
     row = optimizer_row(optimizer)
-    lines = ["Published artifacts:"]
+    lines = ["Saved artifacts:"]
     if row["status"] == "completed":
         lines.extend(
             [
@@ -80,7 +43,7 @@ def artifact_paths(optimizer: str) -> str:
 
 
 def learned_program_preview(optimizer: str, *, instruction_chars: int = 1_800) -> str:
-    """Show learned instructions and demonstrations without dumping large JSON blobs."""
+    """Show the saved instruction and demonstrations in a compact form."""
 
     row = optimizer_row(optimizer)
     prompt_path = REPO_ROOT / row.get(
@@ -97,7 +60,7 @@ def learned_program_preview(optimizer: str, *, instruction_chars: int = 1_800) -
         if len(instruction) > instruction_chars:
             instruction = (
                 instruction[:instruction_chars].rstrip()
-                + "\n… [preview truncated; open prompts.json for all text]"
+                + "\n… [preview truncated; open the prompt snapshot listed above for the full text]"
             )
         demos = state.get("demos", [])
         lines.extend(
@@ -116,13 +79,13 @@ def learned_program_preview(optimizer: str, *, instruction_chars: int = 1_800) -
             lines.append(f"{index}. is_ai={label}: {text}")
         if len(demos) > 4:
             lines.append(
-                f"… {len(demos) - 4} more demos in the complete prompt artifact"
+                f"… {len(demos) - 4} more demonstrations in the prompt snapshot"
             )
     return "\n".join(lines)
 
 
 def verify_prompt_artifact(optimizer: str) -> dict[str, Any]:
-    """Check that the frozen program state contains the separately extracted prompt."""
+    """Check that the saved program contains the separately saved prompt."""
 
     row = optimizer_row(optimizer)
     prompt_path = REPO_ROOT / row.get(

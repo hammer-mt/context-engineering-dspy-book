@@ -2,22 +2,9 @@
   "detect.predict": {
     "traces": [],
     "train": [],
-    "demos": [
-      {
-        "augmented": true,
-        "text": "Ravasi and Schultz (2006) describe organizational culture as shared assumptions that shape behavior, along with the recurring pattern of collective actions and beliefs passed to newcomers as the expected way to perceive, think, and even feel (an awkwardly broad reach). It influences how individuals and groups deal with one another, with clients, and with stakeholders. It may also determine how strongly you and other employees identify with the organization, shaping both outward interaction and inward affiliation.",
-        "reasoning": "The passage has a polished, textbook-like structure and smoothly synthesizes a cited definition with explanatory implications. Its generalized phrasing, parallel sentence construction, and inserted evaluative aside suggest AI-assisted or AI-generated prose rather than spontaneous human writing.",
-        "is_ai": true
-      },
-      {
-        "pair_id": "docs-rails-started-v7.0.0-001",
-        "example_id": "docs-rails-started-v7.0.0-001-ai",
-        "text": "Rails is a web application framework built in Ruby. It simplifies development by assuming the common pieces you need at the outset (rather than making you choose every detail), so you can produce more functionality with less code than many other languages and frameworks require. Experienced Rails developers also say it makes building web applications more enjoyable: fewer decisions, fewer lines, better momentum.",
-        "is_ai": true
-      }
-    ],
+    "demos": [],
     "signature": {
-      "instructions": "You are a forensic editor specializing in distinguishing human-written software documentation from AI-paraphrased technical prose. Given a passage, decide whether it is likely AI-generated or human-authored.\n\nBase the judgment primarily on stylistic evidence rather than technical subject matter. AI paraphrases often sound unusually polished or generalized and may contain explicit transitions, parenthetical explanations, balanced contrasts, elevated or inconsistent diction, dense punctuation, redundant restatements, or formulaic phrases such as “that is,” “as needed,” and “tend to.” Human documentation is often more direct, compact, project-specific, informal, or editorially imperfect. Treat length, formatting, correct terminology, and grammaticality as weak signals because both classes may preserve these features.\n\nEvaluate the passage holistically and comparatively: ask whether its wording resembles an original documentation sentence or a smoothed, explanatory rewrite. Do not label text as AI merely because it is polished, technical, or lacks examples. Prefer `False` when there is no meaningful AI-style evidence.\n\nReturn:\n- `reasoning`: a brief, concrete explanation citing the most diagnostic stylistic features.\n- `is_ai`: `True` if the passage is likely AI-generated; otherwise `False`.",
+      "instructions": "You are a forensic editor specializing in technical documentation and AI-rewrite detection. Decide whether the supplied passage is likely AI-generated (`True`) or human-authored (`False`) by focusing on stylistic rewrite artifacts rather than its topic, terminology, correctness, or technical sophistication.\n\nAI rewrites in this benchmark often preserve the original meaning while making the prose more editorially polished and structurally elaborate. Look for clusters of signals such as:\n- unnecessary clarifications, parenthetical explanations, or interpretive commentary;\n- explicit causal or logical links where concise documentation would leave them implicit;\n- generalized, elevated, formulaic, or overly balanced wording;\n- slogan-like restatements or repetition of the same point in refined language;\n- unusually smooth transitions, symmetrical sentence construction, or elaborate punctuation;\n- expansion of simple guidance into polished explanatory prose.\n\nHuman-authored passages more often use direct, compact, documentation-native phrasing, concrete local context, mild informality, idiosyncratic wording, contractions, or occasional awkwardness. Do not classify based on length alone: concise text can be AI-generated, and polished text can be human-authored. Likewise, do not treat domain-specific vocabulary as evidence of human authorship. Judge whether the wording feels naturally written for the documentation context or unnecessarily rewritten and polished.\n\nProvide a brief, passage-specific explanation citing the most diagnostic stylistic cues. Avoid generic claims that could apply to any technical text. Then return `is_ai` as exactly `True` for likely AI-generated text or `False` for likely human-authored text.\n\nOutput:\nReasoning: <concise justification>\nIs Ai: <True or False>",
       "fields": [
         {
           "prefix": "Text:",
@@ -48,7 +35,7 @@
   },
   "metadata": {
     "dependency_versions": {
-      "python": "3.11",
+      "python": "3.12",
       "dspy": "3.2.1",
       "cloudpickle": "3.1"
     }

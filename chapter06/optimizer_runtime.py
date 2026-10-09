@@ -1,8 +1,13 @@
-"""Shared executable runtime for the Chapter 6 optimizer notebooks.
+"""Shared runtime for the Chapter 6 optimizer notebooks.
 
 Every notebook loads the same frozen, pair-grouped dataset through this module.
-Prompt optimizers use Luna/Sol; weight optimizers train Qwen locally through DSPy
-and the Apple Silicon provider in :mod:`chapter06.apple_finetune`.
+Prompt optimizers use GPT-5.6-luna with GPT-5.6-sol as the teacher; weight
+optimizers train Qwen locally through DSPy and the Apple Silicon provider in
+:mod:`chapter06.apple_finetune`.
+
+``run_optimizer`` is the runner that produced the saved results under
+``chapter06/results``. The notebooks run the listings printed in the chapter and
+display those saved results.
 """
 
 from __future__ import annotations
@@ -22,8 +27,14 @@ from typing import Any, Sequence
 import dspy
 import numpy as np
 from dotenv import load_dotenv
+from dspy.utils.exceptions import AdapterParseError
 
 from chapter06.experiments.gepa_expanded.guardrails import summarize_history
+
+# DSPy 3.3.0 imports NumPy lazily. Load it now so that embeddings cached by
+# ``dspy.Embedder`` (used in the KNNFewShot listing) can be read back the next
+# time the listing runs in a fresh kernel.
+np.zeros(0)
 
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
@@ -88,6 +99,12 @@ def feedback_metric(
     pred_name: str | None = None,
     pred_trace: Any = None,
 ):
+    """Feedback metric used by ``run_optimizer("gepa")``.
+
+    The chapter's GEPA listing defines its own ``exact_match_with_feedback``
+    metric, which ``gepa.ipynb`` runs as printed.
+    """
+
     del trace, pred_name, pred_trace
     score = exact_match(example, prediction)
     feedback = (
@@ -134,6 +151,7 @@ def load_frozen_examples() -> dict[str, list[dspy.Example]]:
                         example_id=row["example_id"],
                         text=row["text"],
                         is_ai=as_bool(row["is_ai"]),
+                        notes=row["notes"],
                     ).with_inputs("text")
                 )
         result[split_name] = examples
@@ -217,9 +235,24 @@ def boolean_majority(predictions: list[Any]):
     )
 
 
-def evaluate(program: dspy.Module, examples: Sequence[dspy.Example]) -> dict[str, Any]:
+def evaluate(
+    program: dspy.Module,
+    examples: Sequence[dspy.Example],
+    *,
+    stop_after_failed_calls: int = 0,
+) -> dict[str, Any]:
+    """Score ``program`` on ``examples``, one prediction at a time.
+
+    A prediction that raises is kept as an incorrect row. With
+    ``stop_after_failed_calls=N``, scoring stops with a ``RuntimeError`` when
+    the first ``N`` predictions all fail before the model returns an answer
+    (for example a rejected API key or no network connection). An answer that
+    arrives but cannot be read as a boolean never stops the run.
+    """
+
     predictions: list[dict[str, Any]] = []
     latencies: list[float] = []
+    failed_calls = 0
     for example in examples:
         started = time.monotonic()
         try:
@@ -233,6 +266,16 @@ def evaluate(program: dspy.Module, examples: Sequence[dspy.Example]) -> dict[str
             predicted = None
             status = "parse_error"
             error = f"{type(exc).__name__}: {exc}"[:240]
+            if not isinstance(exc, (ValueError, AdapterParseError)):
+                failed_calls += 1
+            if (
+                stop_after_failed_calls
+                and failed_calls == len(predictions) + 1 == stop_after_failed_calls
+            ):
+                raise RuntimeError(
+                    f"The first {failed_calls} model calls failed, so scoring "
+                    f"stopped. First error: {predictions[0]['error'] if predictions else error}"
+                ) from exc
         elapsed = time.monotonic() - started
         latencies.append(elapsed)
         row = {
@@ -314,77 +357,235 @@ def _combined_usage(*lms: Any) -> dict[str, Any]:
     return summarize_history(histories)
 
 
+RESULT_HEADINGS = {
+    "quickstart": "BASELINE: Unoptimized program",
+    "labeled-few-shot": "OPTIMIZER: LabeledFewShot",
+    "bootstrap-few-shot": "OPTIMIZER: BootstrapFewShot",
+    "bootstrap-random-search": "OPTIMIZER: BootstrapFewShotWithRandomSearch",
+    "knn-few-shot": "OPTIMIZER: KNNFewShot",
+    "copro": "OPTIMIZER: COPRO",
+    "miprov2": "OPTIMIZER: MIPROv2",
+    "gepa": "OPTIMIZER: GEPA",
+    "simba": "OPTIMIZER: SIMBA",
+    "ensemble": "TRANSFORMATION: Ensemble",
+    "bootstrap-finetune": "OPTIMIZER: BootstrapFinetune",
+    "better-together": "OPTIMIZER: BetterTogether",
+}
+_RULE_WIDTH = 60
+_LABEL_WIDTH = 23
+
+
+def _whole_count(accuracy_pct: float | None, total: int | None) -> int | None:
+    """Return the number of correct answers behind a percentage, if it is whole."""
+
+    if accuracy_pct is None or not total:
+        return None
+    count = accuracy_pct * total / 100
+    return round(count) if abs(count - round(count)) < 1e-6 else None
+
+
 def published_result(optimizer: str) -> dict[str, Any]:
+    """Read one optimizer's saved result from ``results/expanded_notebooks/comparison.json``."""
+
     summary = json.loads(SUMMARY_PATH.read_text(encoding="utf-8"))
     row = next(row for row in summary["rows"] if row["optimizer"] == optimizer)
     if row["status"] != "completed":
         return {
             "optimizer": optimizer,
             "status": row["status"],
-            "reason": row.get("reason", "No completed expanded-dataset run is available."),
+            "reason": row.get("reason", "No completed run is available."),
         }
-    accuracy = row["locked_test_accuracy_pct"]
     test_examples = row["locked_test_rows"]
+    validation_examples = summary.get("split_rows", {}).get("validation")
+    validation_accuracy = row.get("optimized_validation_accuracy_pct")
+    baseline_accuracy = row.get("baseline_accuracy_pct")
     result = {
         "optimizer": optimizer,
         "status": "completed",
         "task_model": row["task_model"],
-        "final_accuracy": accuracy,
+        "final_accuracy": row["locked_test_accuracy_pct"],
         "correct": row["locked_test_correct"],
         "test_examples": test_examples,
-        "baseline_accuracy": row.get("baseline_accuracy_pct"),
+        "baseline_accuracy": baseline_accuracy,
+        "baseline_correct": _whole_count(baseline_accuracy, test_examples),
         "uplift_points": row.get("absolute_uplift_pct_points"),
-        "validation_accuracy": row.get("optimized_validation_accuracy_pct"),
+        "validation_accuracy": validation_accuracy,
+        "validation_correct": _whole_count(validation_accuracy, validation_examples),
+        "validation_examples": validation_examples,
         "optimization_cost_usd": row.get("optimization_cost_usd"),
+        "evaluation_cost_usd": row.get("evaluation_cost_usd"),
         "optimization_seconds": row["optimization_time_seconds"],
         "mean_latency_seconds": row["mean_inference_latency_seconds"],
         "p95_latency_seconds": row["p95_inference_latency_seconds"],
     }
+    if optimizer in WEIGHT_OPTIMIZERS and row.get("reflection_model"):
+        result["teacher_model"] = row["reflection_model"]
     if row.get("accepted_trace_labels"):
         result["accepted_trace_labels"] = row["accepted_trace_labels"]
+    if row.get("usage"):
+        result["usage"] = row["usage"]
     return result
 
 
 def format_result(result: dict[str, Any]) -> str:
+    """Format a result in the layout of the benchmark blocks printed in Chapter 6."""
+
     if result.get("status") and result["status"] != "completed":
         return (
             f"optimizer: {result['optimizer']}\n"
             f"status: {result['status']}\n"
             f"reason: {result['reason']}"
         )
-    lines = [
-        f"optimizer: {result['optimizer']}",
-        f"task model: {result['task_model']}",
-        (
-            f"final test accuracy: {result['final_accuracy']:.1f}% "
-            f"({result['correct']}/{result['test_examples']})"
-        ),
-    ]
+
+    def line(label: str, value: str) -> str:
+        return f"{label + ':':<{_LABEL_WIDTH}}{value}"
+
+    def accuracy(pct: float, correct: int | None, total: int | None) -> str:
+        counts = f" ({correct}/{total})" if correct is not None and total else ""
+        return f"{pct:.2f}%{counts}"
+
+    optimizer = result["optimizer"]
+    is_baseline = optimizer == "quickstart"
+    rule = "=" * _RULE_WIDTH
+    lines = [rule, RESULT_HEADINGS.get(optimizer, f"OPTIMIZER: {optimizer}"), rule]
+    if optimizer in WEIGHT_OPTIMIZERS:
+        lines.append(line("Student Model", result["task_model"]))
+        if result.get("teacher_model"):
+            lines.append(line("Teacher Model", result["teacher_model"]))
     if result.get("validation_accuracy") is not None:
         lines.append(
-            f"optimized validation accuracy: {result['validation_accuracy']:.1f}%"
+            line(
+                "Validation Accuracy",
+                accuracy(
+                    result["validation_accuracy"],
+                    result.get("validation_correct"),
+                    result.get("validation_examples"),
+                ),
+            )
         )
-    if result.get("baseline_accuracy") is not None:
-        lines.extend(
-            [
-                f"same-model baseline: {result['baseline_accuracy']:.1f}%",
-                f"uplift: {result['uplift_points']:+.1f} points",
-            ]
+    if result.get("mode") == "smoke":
+        # A smoke run stops after validation and never reads the test split.
+        lines.append(line("Locked Test Accuracy", "not scored (smoke mode)"))
+    else:
+        lines.append(
+            line(
+                "Locked Test Accuracy",
+                accuracy(
+                    result["final_accuracy"], result["correct"], result["test_examples"]
+                ),
+            )
         )
+    if not is_baseline and result.get("baseline_accuracy") is not None:
+        baseline_correct = result.get("baseline_correct")
+        if baseline_correct is None:
+            baseline_correct = _whole_count(
+                result["baseline_accuracy"], result["test_examples"]
+            )
+        lines.append(
+            line(
+                "Same-Model Baseline",
+                accuracy(
+                    result["baseline_accuracy"], baseline_correct, result["test_examples"]
+                ),
+            )
+        )
+        if result.get("uplift_points") is not None:
+            lines.append(
+                line(
+                    "Accuracy Uplift",
+                    f"{result['uplift_points']:+.2f} percentage points",
+                )
+            )
     if result.get("accepted_trace_labels"):
         counts = result["accepted_trace_labels"]
         lines.append(
-            f"accepted traces: human={counts['human']}, AI={counts['ai']}"
+            line("Accepted Traces", f"{counts['human']} human / {counts['ai']} AI")
         )
-    if result.get("optimization_cost_usd") is not None:
-        lines.append(f"optimization cost: ${result['optimization_cost_usd']:.4f}")
-    lines.extend(
-        [
-            f"optimization time: {result['optimization_seconds']:.1f}s",
-            f"mean inference latency: {result['mean_latency_seconds']:.3f}s",
-            f"p95 inference latency: {result['p95_latency_seconds']:.3f}s",
-        ]
+    lines.append("-" * _RULE_WIDTH)
+    usage = result.get("usage") or {}
+    if usage.get("total_tokens") is not None:
+        lines.append(line("Total Tokens", f"{usage['total_tokens']:,}"))
+        if usage.get("prompt_tokens") is not None:
+            lines.append(line("  - Prompt", f"{usage['prompt_tokens']:,}"))
+        if usage.get("completion_tokens") is not None:
+            lines.append(line("  - Completion", f"{usage['completion_tokens']:,}"))
+    optimization_cost = result.get("optimization_cost_usd")
+    evaluation_cost = result.get("evaluation_cost_usd")
+    if optimization_cost is not None:
+        lines.append(line("Optimization Cost", f"${optimization_cost:.4f}"))
+    if evaluation_cost is not None:
+        lines.append(line("Evaluation Cost", f"${evaluation_cost:.4f}"))
+    if optimization_cost is not None and evaluation_cost is not None:
+        lines.append(
+            line("Total Recorded Cost", f"${optimization_cost + evaluation_cost:.4f}")
+        )
+    seconds = result["optimization_seconds"]
+    minutes = f" ({seconds / 60:.1f} minutes)" if seconds >= 60 else ""
+    lines.append(line("Optimization Time", f"{seconds:.1f}s{minutes}"))
+    lines.append(
+        line(
+            "Mean / p95 Latency",
+            f"{result['mean_latency_seconds']:.3f}s / {result['p95_latency_seconds']:.3f}s",
+        )
     )
+    lines.append(rule)
+    return "\n".join(lines)
+
+
+def score_summary(
+    program: dspy.Module,
+    valset: Sequence[dspy.Example],
+    testset: Sequence[dspy.Example],
+) -> str:
+    """Score a compiled program on validation, then once on the locked test.
+
+    The notebooks call this in live mode on the program their listing compiled.
+    Every prediction is a fresh model call. A call that fails or returns an
+    answer that cannot be read counts as a wrong prediction, and the summary
+    then ends with a ``Failed Calls`` line. If the first three validation calls
+    fail before the model answers, or no validation prediction can be scored,
+    a ``RuntimeError`` reports the first error.
+    """
+
+    validation = evaluate(program, valset, stop_after_failed_calls=3)
+    failed = [row for row in validation["predictions"] if row["status"] != "completed"]
+    if failed and len(failed) == len(validation["predictions"]):
+        # ``evaluate`` counts a failed call or an unreadable answer as a wrong
+        # prediction. When that happens to every validation example, the cause
+        # is the setup or the program, so stop here instead of reporting 0% and
+        # going on to the locked test.
+        raise RuntimeError(
+            "No validation prediction could be scored. "
+            f"First error: {failed[0].get('error', 'unknown error')}"
+        )
+    locked_test = evaluate(program, testset)
+    failed += [row for row in locked_test["predictions"] if row["status"] != "completed"]
+
+    def line(label: str, value: str) -> str:
+        return f"{label + ':':<{_LABEL_WIDTH}}{value}"
+
+    lines = [
+        line(
+            "Validation Accuracy",
+            f"{validation['accuracy']:.2f}% "
+            f"({validation['correct']}/{validation['count']})",
+        ),
+        line(
+            "Locked Test Accuracy",
+            f"{locked_test['accuracy']:.2f}% "
+            f"({locked_test['correct']}/{locked_test['count']})",
+        ),
+        line(
+            "Mean / p95 Latency",
+            f"{locked_test['mean_latency_seconds']:.3f}s / "
+            f"{locked_test['p95_latency_seconds']:.3f}s",
+        ),
+    ]
+    if failed:
+        total = validation["count"] + locked_test["count"]
+        lines.append(
+            line("Failed Calls", f"{len(failed)} of {total} (counted as wrong)")
+        )
     return "\n".join(lines)
 
 
@@ -396,14 +597,27 @@ def _openai_lm(model: str) -> dspy.LM:
 
 
 class SharedHistoryLM(dspy.LM):
-    """Keep one accounting history when DSPy deep-copies candidate programs."""
+    """Keep one accounting history when DSPy copies an LM or a program.
+
+    Optimizers deep-copy candidate programs, and some (MIPROv2's instruction
+    proposer, SIMBA) call ``LM.copy()`` to vary the temperature. Both kinds of
+    copy record their calls in the original history, so ``run_optimizer``
+    reports the usage and cost of every call.
+    """
 
     def __deepcopy__(self, memo: dict[int, Any]):
         del memo
         return self
 
+    def copy(self, **kwargs: Any):
+        clone = super().copy(**kwargs)
+        clone.history = self.history
+        return clone
 
-def _finetune_kwargs(output_dir: Path) -> dict[str, Any]:
+
+def finetune_training_config(output_dir: Path) -> dict[str, Any]:
+    """Return the ``train_kwargs`` used for the local Qwen fine-tuning runs."""
+
     from chapter06.apple_finetune import resolve_device
 
     device_preference = os.getenv("CHAPTER06_FINETUNE_DEVICE", "auto")
@@ -434,6 +648,13 @@ def _compile_prompt_optimizer(
     smoke: bool = False,
     artifact_dir: Path | None = None,
 ) -> dspy.Module:
+    """Compile one prompt optimizer the way the saved runs were compiled.
+
+    A few calls pass arguments that the printed listings do not show (for
+    example ``max_errors=1`` or ``seed=42``). Each notebook lists those
+    differences next to its saved result.
+    """
+
     if name == "quickstart":
         return detector
     if name == "labeled-few-shot":
@@ -562,7 +783,12 @@ def run_optimizer(
     artifact_dir: Path | None = None,
     mode: str = "full",
 ) -> OptimizerRun:
-    """Compile one optimizer and evaluate it on the shared untouched test split."""
+    """Compile one optimizer and evaluate it on the shared locked test split.
+
+    This is the runner behind ``python -m chapter06.run_live_optimizer`` and the
+    saved results. ``mode="smoke"`` is a quick trial on 8 training and 4
+    validation examples that never touches the locked test.
+    """
 
     if optimizer not in OPTIMIZERS:
         raise ValueError(f"unknown optimizer {optimizer!r}")
@@ -624,7 +850,7 @@ def run_optimizer(
     elif optimizer == "bootstrap-finetune":
         finetuner = BalancedBootstrapFinetune(
             metric=exact_match,
-            train_kwargs=_finetune_kwargs(actual_output_dir),
+            train_kwargs=finetune_training_config(actual_output_dir),
             exclude_demos=True,
             num_threads=1,
             min_examples_per_class=2,
@@ -635,7 +861,7 @@ def run_optimizer(
         max_errors = len(trainset) + len(valset)
         finetuner = BalancedBootstrapFinetune(
             metric=exact_match,
-            train_kwargs=_finetune_kwargs(actual_output_dir),
+            train_kwargs=finetune_training_config(actual_output_dir),
             exclude_demos=False,
             num_threads=1,
             min_examples_per_class=2,
@@ -669,9 +895,9 @@ def run_optimizer(
         accepted_counts = finetuner.accepted_label_counts or None
     optimization_seconds = time.monotonic() - started
     cost_after_compile = float(_combined_usage(task_lm, reflection_lm)["cost_usd"])
-    # Prompt optimizers often return a deep-copied program. Reattach the
-    # canonical task LM so standardized validation/test calls land in the same
-    # cost ledger. Weight optimizers must retain the newly fine-tuned LM.
+    # Prompt optimizers often return a deep-copied program. Reattach the task
+    # LM so the validation and test calls are counted in the same usage
+    # history. Weight optimizers must retain the newly fine-tuned LM.
     if optimizer in PROMPT_OPTIMIZERS:
         program.set_lm(task_lm)
     validation = evaluate(program, valset)

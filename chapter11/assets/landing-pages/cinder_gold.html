@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cinder</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: #FFFFFF;
+    color: #111111;
+    font-family: system-ui, sans-serif;
+    line-height: 1.5;
+  }
+  section {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 72px 24px;
+  }
+  .brand {
+    margin: 0 0 32px;
+    font-size: 20px;
+    font-weight: 800;
+    color: #DC2626;
+  }
+  h1 {
+    max-width: 720px;
+    margin: 0 0 16px;
+    font-size: 48px;
+    line-height: 1.1;
+    font-weight: 800;
+  }
+  .subhead {
+    max-width: 600px;
+    margin: 0 0 32px;
+    font-size: 20px;
+  }
+  .cta {
+    display: inline-block;
+    padding: 14px 28px;
+    border-radius: 4px;
+    background: #DC2626;
+    color: #FFFFFF;
+    font-size: 18px;
+    font-weight: 700;
+    text-decoration: none;
+  }
+  .hero-image {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    margin-top: 48px;
+    border: 1px solid #111111;
+    border-radius: 4px;
+    background: rgba(17, 17, 17, 0.04);
+    object-fit: cover;
+    font-size: 14px;
+  }
+  .features {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px;
+    padding-top: 0;
+  }
+  .card {
+    padding: 24px;
+    border: 1px solid #111111;
+    border-radius: 4px;
+  }
+  .card h2 {
+    margin: 0 0 8px;
+    font-size: 20px;
+  }
+  .card p { margin: 0; }
+  @media (max-width: 720px) {
+    section { padding: 48px 20px; }
+    h1 { font-size: 34px; }
+    .features { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<main>
+  <section class="hero">
+    <p class="brand">Cinder</p>
+    <h1>Write the newsletter. Keep the readers.</h1>
+    <p class="subhead">Cinder sends your writing to the people who asked for it and stays out of the way. Your list is yours. Export it whenever you like.</p>
+    <a class="cta" href="#start">Start writing</a>
+    <img class="hero-image" src="/placeholders/hero.png" alt="A plain text editor with a half-written newsletter draft" data-image-brief="Screenshot-style image of a plain text editor with a half-written newsletter draft, white background, black text, one red send button, no stock photography, no illustrations.">
+  </section>
+
+  <section class="features" id="start">
+    <div class="card">
+      <h2>You own the list</h2>
+      <p>Subscribers sign up to hear from you, not from us. Take the whole list with you in one file.</p>
+    </div>
+    <div class="card">
+      <h2>One flat price</h2>
+      <p>No cut of your subscriptions and no tiers to decode. You pay the same amount every month.</p>
+    </div>
+    <div class="card">
+      <h2>An editor that is just an editor</h2>
+      <p>Type, paste, send. There are no growth prompts and no pop-ups asking you to post more often.</p>
+    </div>
+  </section>
+</main>
+</body>
+</html>

@@ -475,7 +475,7 @@
   "limitations": [
     "Only two distinct synthetic invoices are held out.",
     "Repeated stochastic runs do not replace additional invoice layouts.",
-    "GEPA uses the training set for Pareto tracking because this restored corpus has only five examples.",
+    "GEPA uses the training set as its validation set because this example has only five invoices.",
     "Use these measurements as directional evidence, not typical accuracy."
   ]
 }

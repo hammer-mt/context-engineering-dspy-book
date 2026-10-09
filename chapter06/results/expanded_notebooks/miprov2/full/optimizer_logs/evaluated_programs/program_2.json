@@ -6,7 +6,7 @@
       {
         "augmented": true,
         "text": "Ravasi and Schultz (2006) describe organizational culture as shared assumptions that shape behavior, along with the recurring pattern of collective actions and beliefs passed to newcomers as the expected way to perceive, think, and even feel (an awkwardly broad reach). It influences how individuals and groups deal with one another, with clients, and with stakeholders. It may also determine how strongly you and other employees identify with the organization, shaping both outward interaction and inward affiliation.",
-        "reasoning": "The passage has a polished, textbook-like structure and smoothly synthesizes a cited definition with explanatory implications. Its generalized phrasing, parallel sentence construction, and inserted evaluative aside suggest AI-assisted or AI-generated prose rather than spontaneous human writing.",
+        "reasoning": "The passage is likely AI-generated. It presents a polished, synthesized explanation with a citation, broad paraphrasing, and an editorial aside in parentheses (“an awkwardly broad reach”) that resembles AI-assisted commentary. The consistent structure and generalized phrasing also support this classification.",
         "is_ai": true
       },
       {
@@ -17,7 +17,7 @@
       }
     ],
     "signature": {
-      "instructions": "Classify the passage as AI-generated or human-authored, focusing on stylistic rather than subject-matter cues. AI paraphrases often sound unusually polished, formulaic, explanatory, transition-heavy, rhetorically balanced, or redundant; human documentation is often more direct, concise, informal, or editorially imperfect. Treat length, formatting, technical terminology, and any single cue as weak evidence, and judge the overall pattern. Return a brief justification and `is_ai: True` for AI-generated text or `is_ai: False` for human-authored text.",
+      "instructions": "Classify the passage as AI-generated (`is_ai: True`) or human-authored (`is_ai: False`). Focus on rewrite-style artifacts rather than technical topic: AI rewrites often add editorial polish, explicit causal links, unnecessary clarifications, balanced restatements, elevated wording, or structural over-elaboration, while human documentation is typically more direct, concise, and occasionally awkward. Consider multiple signals rather than length or fluency alone. Provide a brief justification in `reasoning`, then the Boolean label.",
       "fields": [
         {
           "prefix": "Text:",
@@ -48,7 +48,7 @@
   },
   "metadata": {
     "dependency_versions": {
-      "python": "3.11",
+      "python": "3.12",
       "dspy": "3.2.1",
       "cloudpickle": "3.1"
     }

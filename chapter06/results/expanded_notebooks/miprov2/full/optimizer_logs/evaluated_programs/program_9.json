@@ -6,7 +6,7 @@
       {
         "augmented": true,
         "text": "This peculiar Operator bypasses every downstream task unless it belongs to the “latest” DAG run; that is, wall-clock time must fall between its execution_time and the next scheduled execution_time, and the run must not have been triggered externally.",
-        "reasoning": "The passage uses concise, technical documentation-style language and defines behavior through precise scheduling conditions. Its generic explanatory phrasing and slightly awkward wording (“peculiar Operator”) are consistent with AI-generated text, though the evidence is not definitive.",
+        "reasoning": "The passage uses a highly polished, compact explanatory style, with precise technical conditions and a parenthetical clarification. Its wording resembles an AI-generated paraphrase of software documentation rather than spontaneous human prose, so it is likely AI-generated.",
         "is_ai": true
       },
       {
@@ -17,7 +17,7 @@
       }
     ],
     "signature": {
-      "instructions": "Classify the passage as AI-generated or human-authored, focusing on stylistic rather than subject-matter cues. AI paraphrases often sound unusually polished, formulaic, explanatory, transition-heavy, rhetorically balanced, or redundant; human documentation is often more direct, concise, informal, or editorially imperfect. Treat length, formatting, technical terminology, and any single cue as weak evidence, and judge the overall pattern. Return a brief justification and `is_ai: True` for AI-generated text or `is_ai: False` for human-authored text.",
+      "instructions": "Classify the passage as AI-generated (`is_ai: True`) or human-authored (`is_ai: False`). Focus on rewrite-style artifacts rather than technical topic: AI rewrites often add editorial polish, explicit causal links, unnecessary clarifications, balanced restatements, elevated wording, or structural over-elaboration, while human documentation is typically more direct, concise, and occasionally awkward. Consider multiple signals rather than length or fluency alone. Provide a brief justification in `reasoning`, then the Boolean label.",
       "fields": [
         {
           "prefix": "Text:",
@@ -48,7 +48,7 @@
   },
   "metadata": {
     "dependency_versions": {
-      "python": "3.11",
+      "python": "3.12",
       "dspy": "3.2.1",
       "cloudpickle": "3.1"
     }

@@ -401,7 +401,7 @@ def freeze_dataset(
 
 
 def archive_locked_iteration(name: str) -> Path:
-    """Move a rejected pre-GEPA lock into a lossless iteration archive."""
+    """Archive a locked dataset version, unchanged, before building a new one."""
 
     if not re.fullmatch(r"iteration-[0-9]+", name):
         raise ValueError("archive name must look like iteration-1")

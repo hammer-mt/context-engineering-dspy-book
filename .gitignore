@@ -206,14 +206,65 @@ marimo/_static/
 marimo/_lsp/
 __marimo__/
 
-# Book-companion runtime artifacts (regenerable; do not ship)
+# ---------------------------------------------------------------------------
+# Files created by running the notebooks and the book's commands.
+# They are local to your machine and safe to delete.
+# ---------------------------------------------------------------------------
+
+# Local secrets and operating-system files
+.env.*
+!.env.example
+kaggle.json
+.DS_Store
+
+# MLflow (Chapters 3 and 10): `mlflow server` writes these where it is started
 mlruns/
+mlartifacts/
+mlflow.db
+*.sqlite
+
+# Chapter 3: programs saved with save_program=True
+chapter03/ai_detector/
+chapter03/text_transformer/
+
+# Chapter 4: optional Kaggle download
+chapter04/train.csv
+
+# Chapter 5: embedding cache and your own judge labels
+embedding_cache.pkl
+judge_dataset.jsonl
+
+# Chapter 6: fine-tuning outputs, optimizer state, and caches from optional reruns
 finetuned_models/
-chapter06/results/expanded_notebooks/*/*/model/
 sft_finetune_output/
 optimized_programs/*.pkl
+chapter06/results/expanded_notebooks/*/*/model/
+chapter06/results/**/optimizer_trace/gepa_state.bin
+chapter06/results/**/.dspy_cache/
+chapter06/results/gepa_light_standard/gepa_smoke/
+chapter06/results/gepa_light_standard/reproduction/
 
-# Per-chapter local outputs / caches
+# Chapter 7: your own media for the opt-in audio and video examples
+chapter07/assets/standup.wav
+chapter07/assets/sample_video.mp4
+
+# Chapter 10: saved programs, evaluation export, and the API server file you create
+chapter10/programs/
+chapter10/invoice_extractor/
+chapter10/evaluation_results.csv
+chapter10/api_server.py
+
+# Chapter 11: optimizer run directories and generated files
+chapter11/outputs/
+chapter11/gepa_logs/
+chapter11/fake_sessions/
+chapter11/proposed_skill.md
+chapter11/image_populator_optimized.json
+
+# Notebook checkpoints, bytecode caches, and local tool state
 chapter*/.ipynb_checkpoints/
 chapter*/__pycache__/
 /.context/
+
+# Chapter 6: results of your own smoke runs (python -m chapter06.run_live_optimizer --mode smoke)
+chapter06/results/expanded_notebooks/*/smoke/
