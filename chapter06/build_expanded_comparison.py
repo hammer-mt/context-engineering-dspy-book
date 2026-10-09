@@ -24,6 +24,15 @@ DISPLAY_NAMES = {
     spec["optimizer"]: spec["title"] for spec in NOTEBOOKS.values()
 }
 ORDER = [spec["optimizer"] for spec in NOTEBOOKS.values()]
+MANUSCRIPT_RUN_DIRS = {
+    "copro": "rerun-20260719-124750",
+}
+INCOMPLETE_COST_RUNS = {
+    ("copro", "smoke"),
+    ("copro", "full"),
+    ("miprov2", "smoke"),
+    ("miprov2", "full"),
+}
 
 
 def _json(path: Path) -> dict[str, Any]:
@@ -46,8 +55,13 @@ def _money(value: Any) -> float:
     return 0.0 if value is None else float(value)
 
 
-def _cost_status(optimizer: str) -> tuple[str, str]:
-    if optimizer in {"copro", "miprov2"}:
+def _manuscript_run_dir(optimizer: str) -> Path:
+    run_name = MANUSCRIPT_RUN_DIRS.get(optimizer, "full")
+    return RESULTS_ROOT / optimizer / run_name
+
+
+def _cost_status(optimizer: str, run_name: str) -> tuple[str, str]:
+    if (optimizer, run_name) in INCOMPLETE_COST_RUNS:
         return (
             "partial_lower_bound",
             "unavailable_due_to_detached_dspy_history",
@@ -60,19 +74,22 @@ def _build_run_ledger() -> dict[str, Any]:
     for optimizer in ORDER:
         if optimizer == "gepa":
             continue
-        for mode in ("smoke", "full"):
-            result_path = RESULTS_ROOT / optimizer / mode / "result.json"
-            if not result_path.exists():
-                continue
+        canonical_dir = _manuscript_run_dir(optimizer)
+        for result_path in sorted((RESULTS_ROOT / optimizer).glob("*/result.json")):
+            run_name = result_path.parent.name
             result = _json(result_path)
-            optimization_status, evaluation_status = _cost_status(optimizer)
+            optimization_status, evaluation_status = _cost_status(
+                optimizer, run_name
+            )
             evaluation_cost = result.get("evaluation_cost_usd")
             if evaluation_status != "recorded":
                 evaluation_cost = None
             runs.append(
                 {
                     "optimizer": optimizer,
-                    "mode": mode,
+                    "mode": result.get("mode", run_name),
+                    "run_name": run_name,
+                    "manuscript_canonical": result_path.parent == canonical_dir,
                     "status": "completed",
                     "started_at": result.get("started_at"),
                     "finished_at": result.get("finished_at"),
@@ -91,6 +108,8 @@ def _build_run_ledger() -> dict[str, Any]:
             {
                 "optimizer": "gepa",
                 "mode": "full",
+                "run_name": "gepa_light_standard",
+                "manuscript_canonical": True,
                 "status": "completed",
                 "started_at": gepa.get("started_at"),
                 "finished_at": gepa.get("finished_at"),
@@ -138,9 +157,9 @@ def _build_run_ledger() -> dict[str, Any]:
     return {
         "schema_version": 1,
         "generated_at": datetime.now(timezone.utc).isoformat(),
-        "cost_scope": "all newly executed smoke/full results and recorded preflight attempts",
+        "cost_scope": "all checked-in smoke/full/rerun results and recorded preflight attempts",
         "recorded_cost_lower_bound_usd": recorded_lower_bound,
-        "cost_status": "lower_bound because COPRO/MIPROv2 copied LM histories were detached before the accounting fix and two paid BootstrapFinetune preflight attempts ended before their teacher cost could be recovered",
+        "cost_status": "lower_bound because historical COPRO/MIPROv2 smoke and full runs detached copied LM histories before the accounting fix and two paid BootstrapFinetune preflight attempts ended before their teacher cost could be recovered",
         "runs": runs,
     }
 
@@ -155,7 +174,9 @@ def _run_row(
     canonical_baseline: float,
     baseline_predictions: list[dict[str, Any]] | None,
 ) -> dict[str, Any]:
-    result_path = RESULTS_ROOT / optimizer / "full" / "result.json"
+    run_dir = _manuscript_run_dir(optimizer)
+    run_name = run_dir.name
+    result_path = run_dir / "result.json"
     if not result_path.exists():
         return {
             "optimizer": optimizer,
@@ -174,7 +195,9 @@ def _run_row(
     else:
         baseline_accuracy = canonical_baseline
     uplift = final["accuracy"] - baseline_accuracy
-    optimization_cost_status, evaluation_cost_status = _cost_status(optimizer)
+    optimization_cost_status, evaluation_cost_status = _cost_status(
+        optimizer, run_name
+    )
     evaluation_cost = result["evaluation_cost_usd"]
     if evaluation_cost_status != "recorded":
         evaluation_cost = None
@@ -215,10 +238,17 @@ def _run_row(
         "accepted_trace_labels": result.get("accepted_trace_labels"),
         "validation_parse_error_count": validation_parse_errors,
         "locked_test_parse_error_count": test_parse_errors,
-        "program_artifact": f"chapter06/results/expanded_notebooks/{optimizer}/full/optimized_program.json",
-        "prompt_artifact": f"chapter06/results/expanded_notebooks/{optimizer}/full/learned_prompt.json",
-        "result_artifact": f"chapter06/results/expanded_notebooks/{optimizer}/full/result.json",
-        "predictions_artifact": f"chapter06/results/expanded_notebooks/{optimizer}/full/test_predictions.jsonl",
+        "manuscript_run_name": run_name,
+        "program_artifact": str(
+            (run_dir / "optimized_program.json").relative_to(CHAPTER_DIR.parent)
+        ),
+        "prompt_artifact": str(
+            (run_dir / "learned_prompt.json").relative_to(CHAPTER_DIR.parent)
+        ),
+        "result_artifact": str(result_path.relative_to(CHAPTER_DIR.parent)),
+        "predictions_artifact": str(
+            (run_dir / "test_predictions.jsonl").relative_to(CHAPTER_DIR.parent)
+        ),
         "dspy_version": result["dspy_version"],
         "seed": result["seed"],
         "started_at": result["started_at"],
@@ -287,7 +317,7 @@ def build() -> dict[str, Any]:
             + _money(row.get("evaluation_cost_usd"))
             for row in completed
         ),
-        "new_run_cost_status": "recorded_lower_bound; COPRO and MIPROv2 detached some copied LM histories before the shared-history fix",
+        "new_run_cost_status": "recorded_lower_bound; MIPROv2 detached some copied LM histories before the shared-history fix",
         "rows": rows,
     }
     RESULTS_ROOT.mkdir(parents=True, exist_ok=True)
@@ -360,9 +390,9 @@ def markdown(comparison: dict[str, Any]) -> str:
             "`use_merge=False`. Like the other newly executed rows, it reports one fresh uncached "
             "validation pass followed by one locked-test pass.",
             "",
-            "`*` COPRO and MIPROv2 optimization cost is a recorded lower bound, and their "
-            "evaluation cost is unavailable: those runs preceded the shared-history fix for "
-            "deep-copied DSPy language models. Their scores and wall-clock timings remain valid.",
+            "`*` MIPROv2 optimization cost is a recorded lower bound, and its evaluation cost "
+            "is unavailable: that run preceded the shared-history fix for deep-copied DSPy "
+            "language models. Its score and wall-clock timing remain valid.",
             "",
             "Machine-readable rows, paired statistics, hashes, model/version metadata, prompts, "
             "programs, predictions, cost, timing, and failure manifests are under "

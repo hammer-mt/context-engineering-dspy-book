@@ -2,7 +2,7 @@
 
 DSPy owns trace formatting, assistant-token masking, PEFT configuration, and the
 Transformers/TRL training loop. This module only supplies Mac-friendly local
-inference and maps one renamed TRL configuration argument for DSPy 3.2.1.
+inference and maps one renamed TRL configuration argument for DSPy 3.3.0.
 """
 
 from __future__ import annotations

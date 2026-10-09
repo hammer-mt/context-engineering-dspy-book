@@ -16,7 +16,9 @@ SUPPORTED_PYTHON = ((3, 12), (3, 15))
 REQUIRED_FILES = ("pyproject.toml", "uv.lock", "requirements.txt", ".env.example")
 REQUIRED_PACKAGES = (
     ("dspy", "dspy", "3.3.0"),
+    ("huggingface-hub", "huggingface_hub", None),
     ("jupyterlab", "jupyterlab", None),
+    ("mcp", "mcp", None),
     ("ipykernel", "ipykernel", None),
     ("python-dotenv", "dotenv", None),
 )

@@ -63,7 +63,7 @@ NOTEBOOKS: dict[str, dict[str, Any]] = {
             "two bootstrapped plus two labeled demos per candidate",
             "single evaluation thread by default",
         ],
-        "compile": "optimizer = dspy.BootstrapFewShotWithRandomSearch(\n    metric=exact_match, num_candidate_programs=profile.bootstrap_candidates,\n    max_bootstrapped_demos=2, max_labeled_demos=2, num_threads=1,\n)\noptimized_detector = optimizer.compile(detector, trainset=trainset, valset=valset)",
+        "compile": "optimizer = dspy.BootstrapFewShotWithRandomSearch(\n    metric=exact_match, num_candidate_programs=profile.bootstrap_candidates,\n    max_bootstrapped_demos=2, max_labeled_demos=2, num_threads=NUM_THREADS,\n)\noptimized_detector = optimizer.compile(detector, trainset=trainset, valset=valset)",
         "reading": "The extra compile spend buys candidate selection, not a new instruction. Check whether the held-out gain justifies the search relative to plain BootstrapFewShot.",
     },
     "knn-few-shot.ipynb": {
@@ -130,7 +130,7 @@ NOTEBOOKS: dict[str, dict[str, Any]] = {
         "optimizer": "simba",
         "idea": "Sample trajectories, identify difficult examples, and add reflective rules or demonstrations in a sequence of improvement steps.",
         "use_when": "You want iterative, example-driven improvement and can tolerate a relatively expensive reflective search.",
-        "changes": "The selected program may add rules or demonstrations; the saved artifact shows which mechanism won.",
+        "changes": "The published run returned the original instruction with no demonstrations; the optimizer made no durable program change.",
         "config": [
             "six steps and four candidates in the full profile",
             "batch size capped at eight",
@@ -138,7 +138,7 @@ NOTEBOOKS: dict[str, dict[str, Any]] = {
             "seed 42",
         ],
         "compile": "optimizer = dspy.SIMBA(\n    metric=exact_match, bsize=8, num_candidates=profile.simba_candidates,\n    max_steps=profile.simba_steps, max_demos=2, prompt_model=reflection_lm,\n)\noptimized_detector = optimizer.compile(detector, trainset=trainset, seed=42)",
-        "reading": "Compare the final training trajectory with the locked test score. A large gap is evidence that reflective search can still overfit a small benchmark.",
+        "reading": "The saved artifact preserves the original instruction and zero demonstrations. Its validation result did not generalize to the frozen test partition.",
     },
     "ensemble.ipynb": {
         "title": "Ensemble",
@@ -170,7 +170,7 @@ NOTEBOOKS: dict[str, dict[str, Any]] = {
         "platform_note": """
         ## LocalProvider on Apple Silicon and with standard SGLang
 
-        DSPy 3.2.1's `LocalProvider` has two separate jobs. Its **training** path
+        DSPy 3.3.0's `LocalProvider` has two separate jobs. Its **training** path
         already uses Transformers and TRL and selects CUDA, then MPS, then CPU.
         We keep that path: DSPy formats the accepted traces, masks non-assistant
         tokens, constructs the PEFT trainer, trains, and saves the merged model.
@@ -192,7 +192,7 @@ NOTEBOOKS: dict[str, dict[str, Any]] = {
         Apple Silicon needs a different serving backend. This chapter's
         `MacLocalProvider(LocalProvider)` overrides only `launch` and `kill` so
         the model is loaded by Transformers on MPS. Its `finetune` method calls
-        `LocalProvider.finetune` unchanged except for translating DSPy 3.2.1's
+        `LocalProvider.finetune` unchanged except for translating DSPy 3.3.0's
         `max_seq_length` keyword to the `max_length` name used by the pinned TRL
         0.24.0. There is no replacement training loop. The complete small shim is
         in `chapter06/apple_finetune.py`; the optimizer call below is identical on
@@ -204,7 +204,7 @@ NOTEBOOKS: dict[str, dict[str, Any]] = {
         "title": "BetterTogether (Apple Silicon / MPS)",
         "optimizer": "better-together",
         "idea": "Alternate prompt optimization and weight optimization, evaluate intermediate programs, and retain the best strategy stage.",
-        "use_when": "You have both a useful prompt optimizer and a trainable local model, and want them to improve each other rather than run in isolation.",
+        "use_when": "You have both a useful prompt optimizer and a trainable local model, and want to test whether combining them can outperform either technique alone.",
         "changes": "Prompt demonstrations first, then a Qwen LoRA adapter in the explicit `p -> w` candidate.",
         "config": [
             "BootstrapFewShotWithRandomSearch (`p`) plus BootstrapFinetune (`w`)",
@@ -285,6 +285,8 @@ def make_notebook(spec: dict[str, Any]) -> dict[str, Any]:
                 import sys
                 from pathlib import Path
 
+                import dspy
+
                 cwd = Path.cwd().resolve()
                 REPO_ROOT = cwd if (cwd / "chapter06").is_dir() else cwd.parent
                 if not (REPO_ROOT / "chapter06" / "results" / "expanded_notebooks" / "comparison.json").exists():
@@ -294,13 +296,17 @@ def make_notebook(spec: dict[str, Any]) -> dict[str, Any]:
 
                 from chapter06.notebook_support import artifact_paths, learned_program_preview, verify_prompt_artifact
                 from chapter06.optimizer_runtime import (
+                    AIDetector,
+                    exact_match,
                     format_result,
+                    hashed_ngram_embeddings,
                     load_frozen_examples,
                     published_result,
                     run_optimizer,
                     split_summary,
                 )
 
+                NUM_THREADS = 1
                 OPTIMIZER = {spec["optimizer"]!r}
                 splits = load_frozen_examples()
                 RUN_LIVE = os.getenv("CHAPTER06_RUN_LIVE", "0") == "1"
