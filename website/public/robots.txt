@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://context-engineering-dspy.pages.dev/sitemap.xml

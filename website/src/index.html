@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Context Engineering with DSPy: the O’Reilly book on DSPy, GEPA and prompt optimization</title>
+<meta name="description" content="Context Engineering with DSPy (O’Reilly) by Mike Taylor: a practical guide to context engineering, DSPy Signatures, LLM evaluation, GEPA and prompt optimization, and optimizing Claude skills and AGENTS.md. Buy the book and find DSPy tutorials, talks and code.">
+<link rel="canonical" href="__SITE__/">
+<meta property="og:type" content="book">
+<meta property="og:title" content="Context Engineering with DSPy">
+<meta property="og:description" content="Self-optimizing prompt pipelines for building reliable AI agents. The O’Reilly book by Mike Taylor.">
+<meta property="og:url" content="__SITE__/">
+<meta property="og:image" content="__SITE__/cover.jpg">
+<meta property="book:isbn" content="9798341671263">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:creator" content="@hammer_mt">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Schibsted+Grotesk:wght@500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap">
+<link rel="stylesheet" href="/styles.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+{"@type":"Book","@id":"__SITE__/#book","name":"Context Engineering with DSPy","alternativeHeadline":"Self-Optimizing Prompt Pipelines for Building Reliable AI Agents","author":{"@id":"__SITE__/#author"},"publisher":{"@type":"Organization","name":"O’Reilly Media"},"isbn":"9798341671263","inLanguage":"en","image":"__SITE__/cover.jpg","url":"__SITE__/","about":["DSPy","Context engineering","Prompt optimization","AI agents","LLM evaluation"],"sameAs":"__OREILLY__","workExample":{"@type":"Book","isbn":"9798341671263","bookFormat":"https://schema.org/Paperback","potentialAction":{"@type":"ReadAction","target":"__OREILLY__"}}},
+{"@type":"Person","@id":"__SITE__/#author","name":"Mike Taylor","url":"https://www.saxifrage.xyz","sameAs":["https://x.com/hammer_mt","https://www.linkedin.com/in/mjt145/","https://github.com/hammer-mt"]},
+{"@type":"FAQPage","mainEntity":[__FAQ_JSON__]}
+]}
+</script>
+</head>
+<body>
+<header class="site-head"><div class="wrap">
+  <a class="name" href="/">Context Engineering with DSPy</a>
+  <nav aria-label="Page">
+    <a href="#inside">What’s inside</a>
+    <a href="#eight-steps">Eight steps</a>
+    <a href="#resources">DSPy resources</a>
+    <a href="#faq">FAQ</a>
+    <a href="__OREILLY__">Buy</a>
+  </nav>
+</div></header>
+
+<main>
+<section class="hero"><div class="wrap">
+  <div>
+    <p class="eyebrow">O’Reilly Media</p>
+    <h1>Context Engineering with DSPy</h1>
+    <p class="sub">Self-Optimizing Prompt Pipelines for Building Reliable AI Agents</p>
+    <p class="byline">by Mike Taylor</p>
+    <p class="lede">AI models work best when you give them the right information, in the right format, at the right time. Too little and they guess. Too much and performance rots. This book shows you how to manage that with DSPy: define the task, collect examples, write a metric, and let an optimizer write the prompt.</p>
+    <div class="buy">
+      <a class="btn primary" href="__OREILLY__">Read on O’Reilly</a>
+      <a class="btn" href="__AMAZON__">Buy on Amazon</a>
+    </div>
+    <p class="fine">ISBN 979-8-341-67126-3 · <a href="https://github.com/hammer-mt/context-engineering-dspy-book">Companion code on GitHub</a></p>
+  </div>
+  <div class="coverbox">
+    <a href="__OREILLY__"><img class="cover" src="/cover.jpg" width="1000" height="1312" alt="Cover of Context Engineering with DSPy by Mike Taylor, published by O’Reilly, showing an illustrated fish"></a>
+  </div>
+</div></section>
+
+<section class="band"><div class="wrap">
+  <div class="narrow">
+    <p class="eyebrow">Why this book</p>
+    <h2>Stop tinkering with prompt strings</h2>
+    <p>As models have become better at reasoning, the wording of a prompt matters less than the inputs the model has to reason through. Context engineering is the discipline of curating what a language model receives so it performs well without wasting tokens or making errors.</p>
+    <p>DSPy is the framework for putting that into practice. You declare what your system should do as inputs and outputs, pair it with a dataset and an evaluation metric, and DSPy’s prompt optimizers improve the program for you. The result is portable across models, built from maintainable modules, and improved through evaluation instead of guesswork.</p>
+  </div>
+  <ul class="gains" aria-label="Results reported for DSPy optimizers">
+    <li><b>24% → 51%</b>success on question answering with search</li>
+    <li><b>66% → 87%</b>accuracy on classification tasks</li>
+    <li><b>+10%</b>document retrieval quality</li>
+    <li><b>10% to 100%+</b>improvements in the author’s own consulting work</li>
+  </ul>
+</div></section>
+
+<section id="inside"><div class="wrap">
+  <p class="eyebrow">What’s inside</p>
+  <h2>Eleven chapters, from first Signature to production</h2>
+  <ol class="toc">
+    <li><div><h3>Introduction to Context Engineering</h3><p>Context rot, the 11 ways long contexts fail, and the 10 techniques that fix them. No DSPy required.</p></div></li>
+    <li><div><h3>Introduction to DSPy</h3><p>Language models, Signatures, modules, evaluation and optimizers, and the philosophy behind the framework.</p></div></li>
+    <li><div><h3>DSPy in Eight Steps</h3><p>Build and optimize a program end to end: train an AI-text detector as a judge, then train a rewriter to beat it.</p></div></li>
+    <li><div><h3>Strategies for Collecting Datasets</h3><p>Error analysis, domain experts, third-party data and synthetic bootstrapping. Why 10 to 50 good examples is enough to start.</p></div></li>
+    <li><div><h3>Evaluation Metrics</h3><p>LLM evaluation in practice: string and semantic metrics, LLM-as-a-judge, training a judge from human labels, and panels of judges.</p></div></li>
+    <li><div><h3>Deep Dive into Prompt Optimizers</h3><p>GEPA, MIPROv2, BootstrapFewShot, SIMBA, fine-tuning and more, benchmarked on one task with cost and time for each.</p></div></li>
+    <li><div><h3>Custom Modules, Types, and Adapters</h3><p>ChainOfThought, ReAct, Refine, recursive language models (RLMs), multimodal types and the adapter system.</p></div></li>
+    <li><div><h3>Building AI Agents</h3><p>Agents versus workflows, ReAct agents with tools, MCP, retrieval, memory, and how DSPy compares with other agent frameworks.</p></div></li>
+    <li><div><h3>Real-World Use Cases</h3><p>Seven projects, from a sentiment classifier and invoice extraction to a customer service RAG agent and a financial analyst.</p></div></li>
+    <li><div><h3>Putting DSPy into Production</h3><p>Observability with MLflow, deployment with FastAPI, exporting optimized prompts, and a user interface for non-developers.</p></div></li>
+    <li><div><h3>Optimizing Coding Agents with DSPy</h3><p>Use GEPA to improve the Claude skills, SKILL.md, AGENTS.md and CLAUDE.md files your coding agent already runs on.</p></div></li>
+  </ol>
+</div></section>
+
+<section id="eight-steps" class="band"><div class="wrap">
+  <div class="narrow">
+    <p class="eyebrow">Chapter 3</p>
+    <h2>DSPy in eight steps</h2>
+    <p>The process the book uses for every DSPy program. The chapter applies it to a task with no obvious metric, rewriting AI-generated text to sound human, by training an LLM judge first and then optimizing against it. GEPA takes the judge from 85% to 100% accuracy and the rewriter from 0% to 40%.</p>
+  </div>
+  <ol class="steps">
+    <li><b>Specify your Signatures</b>Declare the task as inputs and outputs instead of a prompt.</li>
+    <li><b>Build your modules</b>Wrap each Signature in an inference strategy such as ChainOfThought.</li>
+    <li><b>Explore a few examples</b>Run the program, inspect the history and read the traces.</li>
+    <li><b>Collect your dataset</b>Load examples, convert them to DSPy format, split train and test.</li>
+    <li><b>Define your metrics</b>Start with exact match, then add an LLM judge for fuzzy tasks.</li>
+    <li><b>Establish a baseline</b>Evaluate the judge and the task before changing anything.</li>
+    <li><b>Optimize your program</b>Let GEPA rewrite the instructions against your metric.</li>
+    <li><b>Test and iterate</b>Try BestOfN, swap in another model, and measure again.</li>
+  </ol>
+  <p class="fine">Mike walked through this chapter live with DSPy lead maintainer Isaac Miller and Drew Breunig: <a href="https://www.youtube.com/live/k1mmJaqQky0">watch “Context Engineering With DSPy” on YouTube</a>.</p>
+</div></section>
+
+<section id="resources"><div class="wrap">
+  <p class="eyebrow">More from the author</p>
+  <h2>DSPy tutorials, talks and code</h2>
+  <div class="cols">
+    <div class="res-group">
+      <h3>Watch</h3>
+      <ul class="res">
+        <li><a href="https://www.youtube.com/live/k1mmJaqQky0">Context Engineering With DSPy (livestream)</a><span>Every’s launch session for the book, working through the eight-step process.</span></li>
+        <li><a href="https://www.youtube.com/watch?v=BeSgjRJiSFo">Solving the Long Prompt Problem</a><span>O’Reilly talk on using DSPy to make a prompt radically shorter at the same performance.</span></li>
+        <li><a href="https://x.com/hammer_mt/status/1972951482174714072">Train a judge, then optimize against it</a><span>Short demo of the evaluator-optimizer pattern for creative tasks.</span></li>
+      </ul>
+    </div>
+    <div class="res-group">
+      <h3>Read</h3>
+      <ul class="res">
+        <li><a href="https://every.to/also-true-for-humans/i-ve-stopped-writing-prompts-dspy-does-it-better">I’ve Stopped Writing Prompts—DSPy Does It Better</a><span>Every. Why a prompt engineer handed prompt writing to an optimizer.</span></li>
+        <li><a href="https://every.to/also-true-for-humans/this-prompt-optimizer-learns-from-its-mistakes-like-dna">This Prompt Optimizer Learns From Its Mistakes Like DNA</a><span>Every. How the GEPA optimizer works.</span></li>
+        <li><a href="https://every.to/also-true-for-humans/why-i-start-a-new-thread-in-claude-every-time">Context Engineering Is Knowing When to Start Over</a><span>Every. Seven causes of context rot, adapted from Chapter 1 for chat users.</span></li>
+        <li><a href="https://askrally.com/article/correcting-bias-in-llms-with-dspy">Correcting Bias in LLMs with DSPy</a><span>Ask Rally. Calibrating 500 AI personas against real election results.</span></li>
+        <li><a href="https://askrally.com/article/removing-political-bias-ai-reduces-other-biases">Optimizing to Remove Political Bias Removes Other Bias Too</a><span>Ask Rally. The follow-up experiment.</span></li>
+        <li><a href="https://www.saxifrage.xyz/post/pairwise-gold-triad-eval">The Pairwise Gold Triad</a><span>Saxifrage. Hill climbing with subjective evals.</span></li>
+      </ul>
+    </div>
+    <div class="res-group">
+      <h3>Build</h3>
+      <ul class="res">
+        <li><a href="https://github.com/hammer-mt/context-engineering-dspy-book">Companion code for the book</a><span>Notebooks for every chapter, pinned to DSPy 3.3.0 and Python 3.12 to 3.14.</span></li>
+        <li><a href="https://github.com/hammer-mt/DSPyUI">DSPyUI</a><span>An open source Gradio interface for defining Signatures, uploading data and running DSPy optimizers without code.</span></li>
+        <li><a href="https://github.com/IrrealityLabs/clawsona-plugin">Clawsona</a><span>Optimize an agent’s persona file against a rubric, from Chapter 11.</span></li>
+        <li><a href="https://dspy.ai">DSPy documentation</a><span>The official docs for the framework.</span></li>
+      </ul>
+    </div>
+  </div>
+</div></section>
+
+<section id="faq" class="band"><div class="wrap narrow faq">
+  <p class="eyebrow">Questions</p>
+  <h2>DSPy, GEPA and context engineering, explained</h2>
+  __FAQ_HTML__
+</div></section>
+
+<section id="author"><div class="wrap">
+  <div class="author">
+    <p class="eyebrow">About the author</p>
+    <h2>Mike Taylor</h2>
+    <p>Mike Taylor has been working with AI since the GPT-3 beta in 2020, and over 500,000 people have taken his AI engineering courses. He coauthored the O’Reilly book <a href="https://www.oreilly.com/library/view/prompt-engineering-for/9781098153427/"><em>Prompt Engineering for Generative AI</em></a>. His work focuses on evaluating and optimizing AI workflows. He is head of evals at <a href="https://every.to/@mike_2114">Every</a>, where he writes the column <em>Also True for Humans</em>.</p>
+    <p>Find him on <a href="https://x.com/hammer_mt">X</a>, <a href="https://www.linkedin.com/in/mjt145/">LinkedIn</a> and <a href="https://www.saxifrage.xyz">saxifrage.xyz</a>.</p>
+  </div>
+</div></section>
+
+<section class="band cta"><div class="wrap">
+  <h2>You work very hard on the eval, and the program works very hard to pass it.</h2>
+  <div class="buy">
+    <a class="btn primary" href="__OREILLY__">Read on O’Reilly</a>
+    <a class="btn" href="__AMAZON__">Buy on Amazon</a>
+  </div>
+</div></section>
+</main>
+
+<footer class="site-foot"><div class="wrap">
+  <p><em>Context Engineering with DSPy</em> by Mike Taylor. Published by O’Reilly Media. Cover image © O’Reilly Media, used to promote the book.</p>
+</div></footer>
+</body>
+</html>
