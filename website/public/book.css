@@ -1,0 +1,85 @@
+/* The free chapter, set to match the printed O'Reilly page: 7 x 9.19 in trim,
+   serif text justified with hyphenation, condensed semibold heads, Ubuntu Mono code.
+   The book uses Minion Pro and Myriad Pro Condensed; these are the closest open fonts. */
+:root {
+  --paper: #ffffff; --desk: #e9e9e6; --ink: #1a1a1a; --rule: #1a1a1a; --link: #9c0000; --soft: #666;
+  --kw: #000080; --cls: #00769e; --fn: #b4009e; --str: #cc3300; --com: #35586c; --num: #cc5500;
+  --text: "Crimson Pro", "Minion Pro", "Times New Roman", serif;
+  --head: "Open Sans", "Myriad Pro", "Arial Narrow", Arial, sans-serif;
+  --mono: "Ubuntu Mono", Menlo, Consolas, monospace;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--desk); color: var(--ink); font: 400 19px/1.36 var(--text); -webkit-text-size-adjust: 100%; }
+a { color: var(--link); text-decoration: none; }
+a:hover { text-decoration: underline; }
+img { max-width: 100%; height: auto; }
+
+.page { background: var(--paper); max-width: 760px; margin: 0 auto; padding: 84px clamp(20px, 11%, 96px) 40px; box-shadow: 0 1px 3px rgba(0,0,0,.18); }
+
+.opener { text-align: right; margin-bottom: 150px; font-family: var(--head); font-stretch: 75%; }
+.opener p { margin: 0; padding-bottom: 6px; border-bottom: 1px solid var(--rule); font-size: 22px; font-weight: 600; text-transform: uppercase; }
+.opener h1 { margin: 2px 0 0; font-size: 36px; font-weight: 600; line-height: 1.15; }
+
+article p { margin: 0 0 .62em; text-align: justify; hyphens: auto; -webkit-hyphens: auto; }
+article h2, article h3, article h4 { font-family: var(--head); font-stretch: 75%; font-weight: 600; line-height: 1.15; margin: 1.05em 0 .3em; text-align: left; }
+article h2 { font-size: 27px; }
+article h3 { font-size: 22px; }
+article h4 { font-size: 19px; }
+article ul, article ol { margin: 0 0 .62em; padding-left: 1.4em; }
+article li { margin-bottom: .2em; text-align: justify; hyphens: auto; }
+article em { font-style: italic; }
+
+article code { font: 400 .82em/1.3 var(--mono); }
+.code, article pre { margin: .5em 0 .8em; }
+article pre { font: 400 14.2px/1.32 var(--mono); padding: 0 0 0 1.75em; overflow-x: auto; white-space: pre; background: none; }
+article pre code { font-size: 1em; }
+/* syntax colours as printed */
+.code .k, .code .kn, .code .kc, .code .kd, .code .kr, .code .ow { color: var(--kw); font-weight: 700; }
+.code .nc, .code .nn { color: var(--cls); font-weight: 700; }
+.code .nf, .code .fm { color: var(--fn); }
+.code .s, .code .s1, .code .s2, .code .sa, .code .sd, .code .si, .code .se { color: var(--str); }
+.code .se, .code .si { font-weight: 700; }
+.code .c, .code .c1, .code .cm { color: var(--com); font-style: italic; }
+.code .mi, .code .mf { color: var(--num); }
+.code .n, .code .nb, .code .bp, .code .o, .code .p { color: var(--kw); }
+.code .err { color: inherit; }
+
+.note { display: grid; grid-template-columns: 62px minmax(0, 1fr); gap: 22px; align-items: start; margin: 1em 5% 1.1em 3%; font-size: .93em; }
+.note img { display: block; }
+.note p { margin: 0 0 .4em; }
+
+figure { margin: 1em 0 1.1em; }
+figure img { display: block; width: 100%; border: 1px solid var(--rule); }
+figcaption { font-style: italic; margin-top: .3em; text-align: left; }
+
+.tablebox { overflow-x: auto; margin: .8em 0 1em; }
+article table { border-collapse: collapse; width: 100%; font-size: .9em; }
+article th { font-family: var(--head); font-stretch: 75%; font-weight: 600; text-align: left; border-bottom: 1px solid var(--rule); padding: 3px 10px 3px 0; }
+article td { border-bottom: 1px solid #bbb; padding: 4px 10px 4px 0; vertical-align: top; }
+
+.running { display: flex; justify-content: space-between; gap: 16px; margin-top: 44px; padding-top: 7px; border-top: 1px solid var(--rule); font: 600 13px var(--head); font-stretch: 75%; }
+
+/* the only parts that are not the book: a slim strip top and bottom */
+.strip { background: var(--ink); color: #fff; font: 400 15px/1.35 var(--head); font-stretch: 100%; }
+.strip > div { max-width: 760px; margin: 0 auto; padding: 10px 20px; display: flex; gap: 14px; align-items: center; flex-wrap: wrap; }
+.strip img { display: block; border: 1px solid #555; }
+.strip p { margin: 0; flex: 1 1 260px; min-width: 0; }
+.strip a { color: #fff; text-decoration: underline; text-underline-offset: 3px; }
+.strip .links { flex: 0 1 auto; display: flex; gap: 8px; flex-wrap: wrap; }
+.strip .links a { text-decoration: none; border: 1px solid #fff; padding: 6px 12px; font-weight: 600; white-space: nowrap; }
+.strip .links a:hover { background: #fff; color: var(--ink); }
+.strip.end { margin-top: 28px; }
+.legal { max-width: 760px; margin: 0 auto; padding: 14px 20px 36px; font: 400 13px var(--head); color: var(--soft); }
+
+@media (max-width: 560px) {
+  body { font-size: 18px; }
+  .page { padding-top: 44px; }
+  .opener { margin-bottom: 70px; }
+  article pre { padding-left: .6em; font-size: 13px; }
+  .note { grid-template-columns: 46px minmax(0, 1fr); gap: 14px; margin-inline: 0; }
+}
+@media print {
+  body { background: #fff; }
+  .strip, .legal { display: none; }
+  .page { box-shadow: none; max-width: none; padding: 0; }
+}

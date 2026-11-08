@@ -23,7 +23,7 @@ Our workflow needs two DSPy programs. The `TextTransformer` takes AI-generated t
 
 ```text
 TextTransformer
-         ai_text -> human_text
+ai_text -> human_text
 
 AIDetector
 text -> is_ai: bool
@@ -162,7 +162,7 @@ First, you should run your program and see how it performs on a handful of diffe
 texts = [
     (
         "The city's architecture reflects a rich tapestry of influences—from "
-        "classical design to modern innovation."
+        "classical design to modern minimalism."
     ),
     (
         "In this discussion, we will delve into the underlying factors that "

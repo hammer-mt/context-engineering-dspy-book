@@ -7,3 +7,6 @@
 
 /dspy-in-eight-steps/*
   X-Robots-Tag: noindex
+
+/dspy-in-eight-steps.pdf
+  X-Robots-Tag: noindex

@@ -75,25 +75,41 @@ def fill(text):
             .replace("__SITE__", SITE).replace("__OREILLY__", OREILLY).replace("__AMAZON__", AMAZON))
 
 
+FIGURE_SIZES = {"1": (1600, 657), "2": (1600, 797), "3": (1600, 1261)}
+
+
 def chapter_html():
     src = CHAPTER_MD.read_text()
     src = src.split("\n---\n", 1)[1] if src.startswith("---") else src
     src = re.sub(r"\A\s*# .+\n", "", src)
-    # the PDF conversion left "# comment" lines inside code blocks intact; fenced blocks protect them
-    body = markdown.markdown(src, extensions=["fenced_code", "tables", "sane_lists"])
+
+    # program output and prompt dumps are printed plain in the book, so don't colour them as Python
+    def plain_output(m):
+        block = m.group(2)
+        is_output = "[[ ## " in block or re.search(r"^\d{4}/\d\d/\d\d ", block, flags=re.M) or "Average Metric" in block
+        return f"```{'text' if is_output else m.group(1)}\n{block}```"
+    src = re.sub(r"```(python|json)\n(.*?)```", plain_output, src, flags=re.S)
+    body = markdown.markdown(src, extensions=["fenced_code", "codehilite", "tables", "sane_lists"],
+                             extension_configs={"codehilite": {"guess_lang": False, "css_class": "code"}})
     body = body.replace("<table>", '<div class="tablebox"><table>').replace("</table>", "</table></div>")
-    body = re.sub(r"<p><em>(Figure \d+-\d+\..*?)</p>", r'<p class="caption"><em>\1</p>', body, flags=re.S)
+    # figures: the Markdown keeps only captions, so put each image back above its caption
+    def figure(m):
+        n = m.group(1)
+        cap = re.sub(r"</?em>", "", m.group(2)).strip()
+        alt = html.escape(re.sub(r"<[^>]+>", "", cap), quote=True)
+        w, h = FIGURE_SIZES[n]
+        return (f'<figure id="figure-3-{n}"><img src="figure-3-{n}.png" alt="{alt}" width="{w}" height="{h}">'
+                f'<figcaption>Figure 3-{n}. {cap}</figcaption></figure>')
+    body = re.sub(r"(?<!<em>)Figure 3-(\d+)", r'<a href="#figure-3-\1">Figure 3-\1</a>', body)
+    body = re.sub(r"<p><em>Figure 3-(\d+)\.(.*?)</p>", figure, body, flags=re.S)
+    # callouts: the book sets these beside an animal icon
+    body = body.replace("<blockquote>", '<aside class="note"><img src="note.png" alt="" width="62" height="81"><div>').replace("</blockquote>", "</div></aside>")
     return body
-
-
-def buybox(text):
-    return f'''<aside class="buybox"><a href="{OREILLY}"><img src="/cover.jpg" width="96" height="126" alt="Context Engineering with DSPy cover"></a>
-<div><p>{text}</p><a class="btn primary" href="{OREILLY}">Read on O’Reilly</a> <a class="btn" href="{AMAZON}">Buy on Amazon</a></div></aside>'''
 
 
 def build_chapter():
     robots = "" if CHAPTER_INDEXABLE else '<meta name="robots" content="noindex, nofollow">\n'
-    page = f'''<!doctype html>
+    page = f"""<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -107,31 +123,31 @@ def build_chapter():
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Schibsted+Grotesk:wght@500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap">
-<link rel="stylesheet" href="/styles.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,700;1,400&family=Open+Sans:wdth,wght@75,600;75,700&family=Ubuntu+Mono:ital,wght@0,400;0,700;1,400&display=swap">
+<link rel="stylesheet" href="/book.css">
 </head>
 <body>
-<header class="site-head"><div class="wrap">
-  <a class="name" href="/">Context Engineering with DSPy</a>
-  <nav aria-label="Page"><a href="/">About the book</a><a href="{OREILLY}">Buy</a></nav>
-</div></header>
-<main class="chapter"><div class="wrap">
-  <p class="eyebrow">Free chapter · Chapter 3</p>
-  <h1>DSPy in Eight Steps</h1>
-  <p class="byline">From <em>Context Engineering with DSPy</em> by Mike Taylor (O’Reilly)</p>
-  {buybox("You’re reading a free chapter. The full book covers datasets, evaluation metrics, every DSPy optimizer, agents, production and coding-agent skills.")}
-  <p class="fine">Prefer video? <a href="https://www.youtube.com/live/k1mmJaqQky0">Watch Mike work through this chapter live</a>. The notebook is in the <a href="https://github.com/hammer-mt/context-engineering-dspy-book">companion repository</a>. Figures are omitted here; they are in the book.</p>
-  <article class="prose">
+<div class="strip"><div>
+  <a href="/"><img src="/cover.jpg" width="38" height="50" alt=""></a>
+  <p>A free chapter from <a href="/"><em>Context Engineering with DSPy</em></a> by Mike Taylor</p>
+  <p class="links"><a href="/{CHAPTER_SLUG}.pdf">Download PDF</a><a href="{OREILLY}">O’Reilly</a><a href="{AMAZON}">Amazon</a></p>
+</div></div>
+<main class="page">
+  <header class="opener"><p>Chapter 3</p><h1>DSPy in Eight Steps</h1></header>
+  <article>
 {chapter_html()}
   </article>
-  {buybox("That was Chapter 3 of 11. Chapter 4 picks up where this one ends: where to find the examples for your dataset.")}
-</div></main>
-<footer class="site-foot"><div class="wrap">
-  <p>© Saxifrage, LLC. Excerpted from <em>Context Engineering with DSPy</em>, published by O’Reilly Media. Shared by the author.</p>
-</div></footer>
+  <footer class="running"><span>Chapter 3: DSPy in Eight Steps</span><span>Context Engineering with DSPy</span></footer>
+</main>
+<div class="strip end"><div>
+  <a href="/"><img src="/cover.jpg" width="38" height="50" alt=""></a>
+  <p>That was Chapter 3 of 11. Chapter 4 picks up where this one ends: where to find the examples for your dataset. <a href="https://www.youtube.com/live/k1mmJaqQky0">Watch Mike work through this chapter live</a>, or run the notebook in the <a href="https://github.com/hammer-mt/context-engineering-dspy-book">companion repository</a>.</p>
+  <p class="links"><a href="{OREILLY}">Read on O’Reilly</a><a href="{AMAZON}">Buy on Amazon</a></p>
+</div></div>
+<p class="legal">© Saxifrage, LLC. Excerpted from <em>Context Engineering with DSPy</em>, published by O’Reilly Media. Shared by the author.</p>
 </body>
 </html>
-'''
+"""
     out = PUBLIC / CHAPTER_SLUG
     out.mkdir(parents=True, exist_ok=True)
     (out / "index.html").write_text(page)
@@ -147,7 +163,7 @@ def main():
     (PUBLIC / "robots.txt").write_text(f"User-agent: *\nAllow: /\n\nSitemap: {SITE}/sitemap.xml\n")
     headers = "/*\n  X-Content-Type-Options: nosniff\n  Referrer-Policy: strict-origin-when-cross-origin\n\n/cover.jpg\n  Cache-Control: public, max-age=604800\n"
     if not CHAPTER_INDEXABLE:
-        headers += f"\n/{CHAPTER_SLUG}/*\n  X-Robots-Tag: noindex\n"
+        headers += f"\n/{CHAPTER_SLUG}/*\n  X-Robots-Tag: noindex\n\n/{CHAPTER_SLUG}.pdf\n  X-Robots-Tag: noindex\n"
     (PUBLIC / "_headers").write_text(headers)
     (PUBLIC / "favicon.svg").write_text('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="5" fill="#0b7a80"/><text x="16" y="22" font-family="Arial,sans-serif" font-size="15" font-weight="700" text-anchor="middle" fill="#fff">CE</text></svg>\n')
     (PUBLIC / "404.html").write_text(f'<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Page not found | Context Engineering with DSPy</title><link rel="stylesheet" href="/styles.css"></head><body><main class="chapter"><div class="wrap"><h1>Page not found</h1><p><a href="/">Back to the book</a></p></div></main></body></html>\n')
