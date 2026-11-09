@@ -79,23 +79,144 @@ CONTENTS = [("", "Preface", "xi"), ("1", "Introduction to Context Engineering", 
             ("11", "Optimizing Coding Agents with DSPy", "285"), ("", "Index", "313")]
 
 
-def book_parts(interactive):
-    """The book's faces. The hero copy is decorative, so it carries only the outside."""
+CHAPTERS = [
+    ("Introduction to Context Engineering",
+     "Why the wording of a prompt now matters less than what is in the context, and what goes wrong as the context grows. No DSPy required.",
+     ["The 11 ways long contexts fail, from context overflow to context poisoning",
+      "10 techniques that fix them, including context editing, tool loadout and subagents",
+      "How context engineering differs from prompt engineering"],
+     ["An agent that spends 100+ turns hunting for an item that doesn’t exist in Pokémon Red",
+      "A 1,784-token prompt cut to 43 tokens while accuracy moves from 64% to 67%",
+      "124 medical tools narrowed to the 3 a task needs"]),
+    ("Introduction to DSPy",
+     "The five abstractions DSPy is built on, and the design bets that have kept them stable while everything else in AI changed.",
+     ["Signatures, modules, evaluation and optimizers, and how they fit together",
+      "How to move between model providers by changing a line of code",
+      "Why you can skip engineering a solution but never specifying the problem"],
+     ["A refund-approval classifier built up from a single Signature",
+      "A ReAct agent with tools",
+      "500 synthetic voter personas calibrated to within two points of the real split"]),
+    ("DSPy in Eight Steps",
+     "Build and optimize a first program end to end, on a task with no obvious metric: rewriting AI-generated text to sound human.",
+     ["The eight-step process used for every program in the book",
+      "Training an LLM judge when you can’t write a formal metric",
+      "Running the GEPA optimizer and reading what it changed"],
+     ["An AI-text detector optimized from 85% to 100% accuracy",
+      "A rewriter that goes from fooling it 0% of the time to 40%, then 50% with best-of-five"]),
+    ("Strategies for Collecting Datasets",
+     "Where the examples come from. You need fewer than you think, and 10 to 50 well-chosen ones is enough to start.",
+     ["Error analysis: reading outputs and categorizing what goes wrong",
+      "Working with domain experts while respecting their time",
+      "Third-party and synthetic data for when you have none of your own"],
+     ["A video-analysis project that produced thousands of labels nobody needed",
+      "Public data and custom data: 78% and 81% alone, 87% combined",
+      "HotPotQA, GSM8K and SQuAD loaded as DSPy examples"]),
+    ("Evaluation Metrics",
+     "How to tell whether a program is getting better or worse, and why the agent doing the work should never be the one grading it.",
+     ["When string matching and semantic similarity are enough",
+      "Training an LLM judge from your own labels",
+      "Panels of judges with rubrics, weights and per-step feedback"],
+     ["A PowerPoint agent that declared success without looking at the deck",
+      "A labeling session that becomes the judge’s training data",
+      "A multi-hop question-answering program scored step by step"]),
+    ("Deep Dive into Prompt Optimizers",
+     "Every optimizer DSPy offers, run on the same task, with what each one gained and what it cost.",
+     ["What few-shot, instruction and fine-tuning optimizers each do",
+      "What a run costs in dollars and minutes",
+      "A decision tree for choosing one"],
+     ["11 optimization approaches on one 300-passage AI-detection task",
+      "GEPA reaches 80% from a 53.75% baseline; SIMBA lands below it",
+      "A 0.5B-parameter local model fine-tuned from 51.25% to 70%"]),
+    ("Custom Modules, Types, and Adapters",
+     "Modules are interchangeable strategies for spending more tokens well. Swap one and your Signature, dataset and metric stay the same.",
+     ["Ten built-in modules, and when to escalate beyond Predict",
+      "Five patterns for composing multistage programs in plain Python",
+      "Multimodal types, and the adapters that turn Signatures into prompts"],
+     ["A custom module for verbalized sampling",
+      "A video type built by subclassing",
+      "JSON, XML and two-step adapters"]),
+    ("Building AI Agents",
+     "What an agent actually is, when a fixed workflow is the better choice, and how to build agents you can measure.",
+     ["Agents versus workflows, and what each costs",
+      "ReAct agents with tools, subagents, MCP and retrieval",
+      "Memory strategies and their trade-offs"],
+     ["A customer service agent with knowledge-base, order-status and calculator tools",
+      "The same agent in LangChain, Pydantic AI, the OpenAI Agents SDK and CrewAI",
+      "Long-term memory with Mem0"]),
+    ("Real-World Use Cases",
+     "Seven projects based on real work, each paired with the failure mode it hit and the technique that fixed it.",
+     ["Matching each failure mode to its fix",
+      "Metrics for subjective work: weights, partial credit and semantic distance",
+      "Guardrails against prompt injection and privacy leaks"],
+     ["A sentiment classifier, invoice extraction and a marketing content generator",
+      "A news research summarizer and a fashion video generator",
+      "A customer service RAG agent and a financial analyst built on an RLM"]),
+    ("Putting DSPy into Production",
+     "From a notebook to something other people can use, including the honest answer on whether DSPy belongs in your runtime at all.",
+     ["Tracing and experiment tracking with MLflow",
+      "Serving with FastAPI: async, streaming, caching and retries",
+      "Exporting optimized prompts to run in any framework"],
+     ["A FastAPI route around a Chapter 9 program",
+      "DSPyUI, a Gradio interface for non-developers",
+      "DSPy ports in other languages"]),
+    ("Optimizing Coding Agents with DSPy",
+     "Point the optimizer at the instruction files your coding agent already runs on. No rewrite of your application needed.",
+     ["Turning failed sessions into test cases for a SKILL.md",
+      "Testing whether each rule in AGENTS.md or CLAUDE.md earns its place",
+      "Why the optimizer is a commodity and the eval is not"],
+     ["A landing-page skill and the image-generation CLI beneath it",
+      "A 20-case AGENTS.md benchmark, one case per antipattern",
+      "An agent persona file taken from 0.345 to 0.962 against a rubric"]),
+]
+
+
+def book_pages():
+    """Inside pages in reading order, after the quotes page that backs the cover."""
     e = html.escape
-    if not interactive:
-        inside = pages = back = ""
+    rows = "".join(f'<li><span class="n">{e(n)}</span><span>{e(t)}</span><span class="p">{e(pg)}</span></li>' for n, t, pg in CONTENTS)
+    pages = [f'<h3>Table of Contents</h3><ol class="b3-toc">{rows}</ol><p class="b3-foot">Turn the page for a summary of each chapter.</p>']
+    for i, (title, summary, learn, examples) in enumerate(CHAPTERS, 1):
+        li = lambda xs: "".join(f"<li>{e(x)}</li>" for x in xs)
+        pages.append(f'<p class="b3-ch">Chapter {i}</p><h3>{e(title)}</h3><p class="b3-sum">{e(summary)}</p>'
+                     f'<h4>You’ll learn</h4><ul>{li(learn)}</ul><h4>Examples</h4><ul>{li(examples)}</ul>')
+    pages.append(f"""<h3>About the author</h3>
+<p><strong>Mike Taylor</strong> has been working with AI since the GPT-3 beta in 2020, and over 500,000 people have taken his AI engineering courses. He coauthored the O’Reilly book <em>Prompt Engineering for Generative AI</em>. His work focuses on evaluating and optimizing AI workflows.</p>
+<p>Every example in the book has a notebook in the <a href="https://github.com/hammer-mt/context-engineering-dspy-book">companion repository</a>.</p>
+<p class="b3-buy"><a href="{OREILLY}">Read on O’Reilly</a><a href="{AMAZON}">Buy on Amazon</a></p>""")
+    return pages
+
+
+COVER_LABEL = "Cover of Context Engineering with DSPy by Mike Taylor, published by O’Reilly, showing an illustrated fish"
+SHELL = """<div class="b3-shadow"></div>{back}
+<div class="b3-edge t"></div><div class="b3-edge b"></div><div class="b3-edge r"></div>
+<div class="b3-spine"><span>Context Engineering with DSPy</span></div>"""
+
+
+def book_closed():
+    """The decorative closed book in the hero."""
+    return (f'<div class="b3" data-view="closed">{SHELL.format(back="")}'
+            f'<div class="b3-front"><div class="b3-face b3-out" role="img" aria-label="{COVER_LABEL}"></div></div></div>')
+
+
+def book_open():
+    """The book in the viewer: a cover and leaves that turn, and a back cover."""
+    e = html.escape
+    quotes = PRAISE or REMARKS
+    heading = "Praise for <em>Context Engineering with DSPy</em>" if PRAISE else "On DSPy and context engineering"
+    foot = "" if PRAISE else '<p class="b3-foot">Public remarks quoted in the book. They are not endorsements of it.</p>'
+    qs = "".join(f"<blockquote><p>“{e(q)}”</p><cite>{e(n)}, {e(r)}</cite></blockquote>" for q, n, r in quotes)
+    pages = book_pages()
+    last = pages.pop()  # the final right-hand page sits on the back board and never turns
+    assert len(pages) % 2 == 0, "inside pages must pair up into leaves"
+    leaves = [f'<div class="b3-leaf b3-cover" style="--i:0"><div class="b3-face b3-out" role="img" aria-label="{COVER_LABEL}"></div>'
+              f'<div class="b3-face b3-in b3-paper b3-q"><h3>{heading}</h3><div class="b3-quotes">{qs}</div>{foot}</div></div>']
+    for i in range(0, len(pages), 2):
+        leaves.append(f'<div class="b3-leaf" style="--i:{i // 2 + 1}"><div class="b3-face b3-r b3-paper">{pages[i]}</div>'
+                      f'<div class="b3-face b3-in b3-paper">{pages[i + 1]}</div></div>')
+    if (PUBLIC / "back-cover.jpg").exists():  # drop the real artwork in and it is used as is
+        back = '<div class="b3-back b3-img" style="background-image:url(/back-cover.jpg)" role="img" aria-label="Back cover"></div>'
     else:
-        quotes = PRAISE or REMARKS
-        heading = "Praise for <em>Context Engineering with DSPy</em>" if PRAISE else "On DSPy and context engineering"
-        foot = "" if PRAISE else '<p class="b3-foot">Public remarks quoted in the book. They are not endorsements of it.</p>'
-        qs = "".join(f"<blockquote><p>“{e(q)}”</p><cite>{e(n)}, {e(r)}</cite></blockquote>" for q, n, r in quotes)
-        inside = f'<div class="b3-face b3-in b3-paper" aria-hidden="true"><h3>{heading}</h3><div class="b3-quotes">{qs}</div>{foot}</div>'
-        rows = "".join(f'<li><span class="n">{e(n)}</span><span>{e(t)}</span><span class="p">{e(pg)}</span></li>' for n, t, pg in CONTENTS)
-        pages = f'<div class="b3-pages b3-paper" aria-hidden="true"><h3>Table of Contents</h3><ol class="b3-toc">{rows}</ol></div>'
-        if (PUBLIC / "back-cover.jpg").exists():  # drop the real artwork in and it is used as is
-            back = '<div class="b3-back b3-img" aria-hidden="true" style="background-image:url(/back-cover.jpg)" role="img" aria-label="Back cover"></div>'
-        else:
-            back = """<div class="b3-back b3-paper" aria-hidden="true">
+        back = """<div class="b3-back b3-paper">
 <h3>Stop tinkering with brittle prompt strings</h3>
 <p>AIs work best when you give them the right information, in the right format, at the right time. Get the context right, use AI to rewrite its own instructions, and your application becomes reliable, scalable, and useful. Get it wrong and you burn tokens, lose accuracy, or suffer from constant hallucinations.</p>
 <p>DSPy gives you three things every AI team needs:</p>
@@ -104,17 +225,13 @@ def book_parts(interactive):
 <li><em>Self-improving prompts</em> that evolve through evaluation, not guesswork</li></ul>
 <p class="bio"><strong>Mike Taylor</strong> has been working with AI since the GPT-3 beta in 2020, and over 500,000 people have taken his AI engineering courses. He coauthored the O’Reilly book <em>Prompt Engineering for Generative AI</em>. His work focuses on evaluating and optimizing AI workflows.</p>
 <p class="isbn">O’Reilly Media · ISBN 979-8-341-67126-3</p></div>"""
-    return f"""<div class="b3" data-view="closed" data-side="right">
-<div class="b3-shadow"></div>{back}
-<div class="b3-edge t"></div><div class="b3-edge b"></div><div class="b3-edge r"></div>
-<div class="b3-spine"><span>Context Engineering with DSPy</span></div>{pages}
-<div class="b3-front"><div class="b3-face b3-out" role="img" aria-label="Cover of Context Engineering with DSPy by Mike Taylor, published by O’Reilly, showing an illustrated fish"></div>{inside}</div>
-</div>"""
+    return (f'<div class="b3" data-view="closed" data-side="right" style="--n:{len(leaves)}">{SHELL.format(back=back)}'
+            f'<div class="b3-pages b3-r b3-paper">{last}</div>{"".join(reversed(leaves))}</div>')
 
 
 def book_hero():
     return f"""<button class="b3-hero" id="b3-open" type="button" aria-haspopup="dialog">
-      <span class="b3-stage">{book_parts(False)}</span>
+      <span class="b3-stage">{book_closed()}</span>
       <span class="b3-hint">Look inside</span>
     </button>
     <noscript><a href="{OREILLY}"><img class="cover" src="/cover.jpg" width="1000" height="1312" alt="Cover of Context Engineering with DSPy"></a></noscript>"""
@@ -123,10 +240,10 @@ def book_hero():
 def book_dialog():
     return f"""<dialog class="b3-dialog" id="b3-dialog" aria-label="Look inside the book">
   <div class="b3-view" data-view="closed">
-    <div class="b3-stage">{book_parts(True)}</div>
+    <div class="b3-stage">{book_open()}</div>
     <div class="b3-bar">
+      <span class="b3-turn"><button type="button" data-act="prev" aria-label="Previous page">←</button><span class="b3-count" aria-live="polite"></span><button type="button" data-act="next" aria-label="Next page">→</button></span>
       <button type="button" data-act="open">Open the book</button>
-      <button type="button" data-act="side" class="side">Facing page</button>
       <button type="button" data-act="turn">Back cover</button>
       <button type="button" data-act="close" class="x">Done</button>
     </div>
