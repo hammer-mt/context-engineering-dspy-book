@@ -1,3 +1,7 @@
+# Cloudflare Workers static-assets site. Deploy with `npx wrangler deploy` from this folder.
 name = "context-engineering-dspy"
-pages_build_output_dir = "public"
 compatibility_date = "2026-11-01"
+
+[assets]
+directory = "./public"
+not_found_handling = "404-page"

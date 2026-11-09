@@ -7,12 +7,14 @@ A static site for the book, ready for Cloudflare Pages. Everything served is in 
 
 ## Deploy
 
-**From the dashboard:** Workers & Pages → Create → Pages → Connect to Git → `hammer-mt/context-engineering-dspy-book`. Leave the build command empty and set the build output directory to `website/public`.
+The site deploys as a Cloudflare Worker serving static assets, configured in `wrangler.toml`.
+
+**From the dashboard:** Workers & Pages → Create → import the `hammer-mt/context-engineering-dspy-book` repository. Leave the build command empty, set the deploy command to `npx wrangler deploy`, and under advanced settings set the root directory to `website` and pick the branch to deploy.
 
 **From the command line:**
 
 ```bash
-npx wrangler pages deploy website/public --project-name context-engineering-dspy
+cd website && npx wrangler deploy
 ```
 
 ## Change things
