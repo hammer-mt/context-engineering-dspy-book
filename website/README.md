@@ -11,6 +11,8 @@ The site deploys as a Cloudflare Worker serving static assets, configured in `wr
 
 **From the dashboard:** Workers & Pages → Create → import the `hammer-mt/context-engineering-dspy-book` repository. Leave the build command empty, set the deploy command to `npx wrangler deploy`, and under advanced settings set the root directory to `website` and pick the branch to deploy.
 
+The Workers build settings that work: production branch set to the branch holding `website/`, build command empty, deploy command `npx wrangler deploy`, root directory `/website`. Every push to that branch redeploys.
+
 **From the command line:**
 
 ```bash
