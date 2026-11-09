@@ -14,7 +14,7 @@ from pathlib import Path
 import markdown
 
 # ---- settings -------------------------------------------------------------
-SITE = "https://context-engineering-dspy.mike-190.workers.dev"  # change when a custom domain is attached
+SITE = "https://dspy.saxifrage.xyz"  # change when a custom domain is attached
 OREILLY = "https://www.oreilly.com/library/view/context-engineering-with/0642572261603/"
 AMAZON = "https://a.co/d/04HgIVje"
 CHAPTER_SLUG = "dspy-in-eight-steps"  # unlisted: not linked, not in the sitemap, noindex
@@ -61,6 +61,80 @@ FAQ = [
 ]
 
 
+# ---- the 3D book ----------------------------------------------------------
+# Endorsements of the book go here as (quote, name, role). While the list is empty the
+# facing page shows public remarks about DSPy that the book itself quotes, labelled as such.
+PRAISE = []
+REMARKS = [
+    ("Severely under hyped.", "Tobi Lütke", "founder and CEO of Shopify, on DSPy and GEPA"),
+    ("Come for the prompt optimization, stay for the maintainability and DX.", "Drew Breunig", "on DSPy"),
+    ("People are realizing that prompt optimization, which they thought two years ago would be dead, is further entrenched.",
+     "Sherwin Wu", "who worked on the OpenAI API, discussing DSPy"),
+    ("+1 for context engineering over ‘prompt engineering.’", "Andrej Karpathy", "former Director of AI at Tesla"),
+]
+CONTENTS = [("", "Preface", "xi"), ("1", "Introduction to Context Engineering", "1"), ("2", "Introduction to DSPy", "31"),
+            ("3", "DSPy in Eight Steps", "53"), ("4", "Strategies for Collecting Datasets", "79"), ("5", "Evaluation Metrics", "107"),
+            ("6", "Deep Dive into Prompt Optimizers", "133"), ("7", "Custom Modules, Types, and Adapters", "161"),
+            ("8", "Building AI Agents", "195"), ("9", "Real-World Use Cases", "223"), ("10", "Putting DSPy into Production", "253"),
+            ("11", "Optimizing Coding Agents with DSPy", "285"), ("", "Index", "313")]
+
+
+def book_parts(interactive):
+    """The book's faces. The hero copy is decorative, so it carries only the outside."""
+    e = html.escape
+    if not interactive:
+        inside = pages = back = ""
+    else:
+        quotes = PRAISE or REMARKS
+        heading = "Praise for <em>Context Engineering with DSPy</em>" if PRAISE else "On DSPy and context engineering"
+        foot = "" if PRAISE else '<p class="b3-foot">Public remarks quoted in the book. They are not endorsements of it.</p>'
+        qs = "".join(f"<blockquote><p>“{e(q)}”</p><cite>{e(n)}, {e(r)}</cite></blockquote>" for q, n, r in quotes)
+        inside = f'<div class="b3-face b3-in b3-paper" aria-hidden="true"><h3>{heading}</h3><div class="b3-quotes">{qs}</div>{foot}</div>'
+        rows = "".join(f'<li><span class="n">{e(n)}</span><span>{e(t)}</span><span class="p">{e(pg)}</span></li>' for n, t, pg in CONTENTS)
+        pages = f'<div class="b3-pages b3-paper" aria-hidden="true"><h3>Table of Contents</h3><ol class="b3-toc">{rows}</ol></div>'
+        if (PUBLIC / "back-cover.jpg").exists():  # drop the real artwork in and it is used as is
+            back = '<div class="b3-back b3-img" aria-hidden="true" style="background-image:url(/back-cover.jpg)" role="img" aria-label="Back cover"></div>'
+        else:
+            back = """<div class="b3-back b3-paper" aria-hidden="true">
+<h3>Stop tinkering with brittle prompt strings</h3>
+<p>AIs work best when you give them the right information, in the right format, at the right time. Get the context right, use AI to rewrite its own instructions, and your application becomes reliable, scalable, and useful. Get it wrong and you burn tokens, lose accuracy, or suffer from constant hallucinations.</p>
+<p>DSPy gives you three things every AI team needs:</p>
+<ul><li><em>Portable programs</em> that run across different models and providers</li>
+<li><em>Maintainable modules</em> that are composable, reusable, and easily modified</li>
+<li><em>Self-improving prompts</em> that evolve through evaluation, not guesswork</li></ul>
+<p class="bio"><strong>Mike Taylor</strong> has been working with AI since the GPT-3 beta in 2020, and over 500,000 people have taken his AI engineering courses. He coauthored the O’Reilly book <em>Prompt Engineering for Generative AI</em>. His work focuses on evaluating and optimizing AI workflows.</p>
+<p class="isbn">O’Reilly Media · ISBN 979-8-341-67126-3</p></div>"""
+    return f"""<div class="b3" data-view="closed" data-side="right">
+<div class="b3-shadow"></div>{back}
+<div class="b3-edge t"></div><div class="b3-edge b"></div><div class="b3-edge r"></div>
+<div class="b3-spine"><span>Context Engineering with DSPy</span></div>{pages}
+<div class="b3-front"><div class="b3-face b3-out" role="img" aria-label="Cover of Context Engineering with DSPy by Mike Taylor, published by O’Reilly, showing an illustrated fish"></div>{inside}</div>
+</div>"""
+
+
+def book_hero():
+    return f"""<button class="b3-hero" id="b3-open" type="button" aria-haspopup="dialog">
+      <span class="b3-stage">{book_parts(False)}</span>
+      <span class="b3-hint">Look inside</span>
+    </button>
+    <noscript><a href="{OREILLY}"><img class="cover" src="/cover.jpg" width="1000" height="1312" alt="Cover of Context Engineering with DSPy"></a></noscript>"""
+
+
+def book_dialog():
+    return f"""<dialog class="b3-dialog" id="b3-dialog" aria-label="Look inside the book">
+  <div class="b3-view" data-view="closed">
+    <div class="b3-stage">{book_parts(True)}</div>
+    <div class="b3-bar">
+      <button type="button" data-act="open">Open the book</button>
+      <button type="button" data-act="side" class="side">Facing page</button>
+      <button type="button" data-act="turn">Back cover</button>
+      <button type="button" data-act="close" class="x">Done</button>
+    </div>
+  </div>
+</dialog>
+<script src="/book3d.js" defer></script>"""
+
+
 def faq_html():
     return "\n  ".join(
         f"<details><summary>{html.escape(q)}</summary><div><p>{html.escape(a)}</p></div></details>" for q, a in FAQ)
@@ -71,7 +145,7 @@ def faq_json():
 
 
 def fill(text):
-    return (text.replace("__FAQ_HTML__", faq_html()).replace("__FAQ_JSON__", faq_json())
+    return (text.replace("__BOOK_HERO__", book_hero()).replace("__BOOK_DIALOG__", book_dialog()).replace("__FAQ_HTML__", faq_html()).replace("__FAQ_JSON__", faq_json())
             .replace("__SITE__", SITE).replace("__OREILLY__", OREILLY).replace("__AMAZON__", AMAZON))
 
 

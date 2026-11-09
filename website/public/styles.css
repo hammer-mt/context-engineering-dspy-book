@@ -45,7 +45,7 @@ p { margin: 0 0 1em; }
 .btn.primary { background: var(--ink); color: var(--paper); }
 .btn.primary:hover { background: var(--teal); border-color: var(--teal); color: #fff; }
 .fine { font: 400 14px/1.5 var(--display); color: var(--muted); margin-top: 14px; }
-@media (max-width: 760px) { .hero .wrap { grid-template-columns: minmax(0, 1fr); } .hero .coverbox { order: -1; max-width: 240px; } }
+@media (max-width: 760px) { .hero .wrap { grid-template-columns: minmax(0, 1fr); } .hero .coverbox { order: -1; } }
 
 section { padding-block: clamp(40px, 6vw, 72px); }
 .band { background: var(--wash); border-block: 1px solid var(--line); }
