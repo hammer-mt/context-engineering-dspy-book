@@ -14,7 +14,7 @@ from pathlib import Path
 import markdown
 
 # ---- settings -------------------------------------------------------------
-SITE = "https://context-engineering-dspy.pages.dev"  # change when a custom domain is attached
+SITE = "https://context-engineering-dspy.mike-190.workers.dev"  # change when a custom domain is attached
 OREILLY = "https://www.oreilly.com/library/view/context-engineering-with/0642572261603/"
 AMAZON = "https://a.co/d/04HgIVje"
 CHAPTER_SLUG = "dspy-in-eight-steps"  # unlisted: not linked, not in the sitemap, noindex
